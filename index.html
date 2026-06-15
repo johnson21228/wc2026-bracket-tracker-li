@@ -143,6 +143,49 @@ rgba(7,17,31,.78);}
   font-size: 11px;
 }
 
+
+/* WB R32 source-pair bands */
+.bracketShell { position: relative; }
+.round.r32 .match {
+  border-radius: 18px;
+  padding: 8px 6px;
+  margin-left: -6px;
+  margin-right: 6px;
+  background: linear-gradient(90deg, rgba(124,199,255,.10), rgba(124,199,255,.025));
+  border: 1px solid rgba(124,199,255,.18);
+}
+.round.r32.right .match {
+  background: linear-gradient(270deg, rgba(124,199,255,.10), rgba(124,199,255,.025));
+}
+.round.r32 .match:nth-of-type(odd) {
+  background-color: rgba(255,255,255,.025);
+}
+.round.r32 .match:nth-of-type(even) {
+  background-color: rgba(255,255,255,.045);
+}
+.round.r32 .match::before {
+  content: attr(data-pair-label);
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #10243d;
+  border: 1px solid rgba(124,199,255,.35);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  z-index: 2;
+}
+.round.r32.right .match::before {
+  left: auto;
+  right: 12px;
+}
+.round.r32 .match::after {
+  border-top-color: rgba(124,199,255,.72);
+}
+
 @media print {
   header,.pool{display:none}
   main{display:block;padding:0}
@@ -156,7 +199,7 @@ rgba(7,17,31,.78);}
 <body>
 <header>
   <h1>World Cup 2026 Bracket Builder</h1>
-  <div class="sub">Drag teams into the bracket. Scroll sideways to see the full bracket. Use Export State to save or share your picks.</div>
+  <div class="sub">Drag teams into the bracket. Scroll sideways to see the full bracket. Use Export State to save or share your picks. Bands group each Round of 32 source match.</div>
   <div class="toolbar">
     <input id="search" placeholder="Search teams..." />
     <button id="exportBtn">Export State JSON</button>
@@ -275,6 +318,10 @@ function renderRound(label, matches, seedStart, side="left", topSpacer=0) {
   }
   for (let m=1; m<=matches; m++) {
     const match = document.createElement("div"); match.className="match";
+    if (label.startsWith("R32")) {
+      match.dataset.pairLabel = `${label.replace("-", " ")} Match ${m}`;
+      match.title = `${label.replace("-", " ")} Match ${m}: winner feeds the next Round of 16 slot.`;
+    }
     match.appendChild(createSlot(`${label}-M${m}A`, seedStart + (m-1)*2 + 1));
     match.appendChild(createSlot(`${label}-M${m}B`, seedStart + (m-1)*2 + 2));
     col.appendChild(match);
