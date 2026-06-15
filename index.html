@@ -266,6 +266,162 @@ rgba(7,17,31,.78);}
   gap: 12px !important;
 }
 
+
+/* WB compact bracket reflow: connectors and bands tied to square flag tiles */
+:root {
+  --slotw: 58px;
+  --sloth: 52px;
+  --gap: 8px;
+
+  --r16-top: 24px;
+  --r16-gap: 22px;
+  --qf-top: 78px;
+  --qf-gap: 124px;
+  --sf-top: 188px;
+  --sf-gap: 294px;
+  --final-top: 318px;
+}
+.bracketShell {
+  min-width: 980px !important;
+  min-height: 1160px !important;
+  padding: 14px 18px 28px !important;
+}
+.bracket {
+  grid-template-columns: 72px 70px 70px 70px 112px 70px 70px 70px 72px !important;
+  gap: 8px !important;
+  align-items: start !important;
+}
+.round h3 {
+  font-size: 18px !important;
+  letter-spacing: .05em !important;
+  margin: 0 0 8px !important;
+}
+.round .match {
+  min-height: calc(var(--sloth) * 2 + 6px) !important;
+  gap: 6px !important;
+  margin-bottom: 12px !important;
+}
+.round.r32 .match {
+  width: 66px !important;
+  min-height: calc(var(--sloth) * 2 + 10px) !important;
+  padding: 6px 3px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border-radius: 16px !important;
+}
+.round.r16 {
+  padding-top: var(--r16-top) !important;
+}
+.round.qf {
+  padding-top: var(--qf-top) !important;
+}
+.round.sf {
+  padding-top: var(--sf-top) !important;
+}
+.round.r16 .match {
+  margin-bottom: var(--r16-gap) !important;
+}
+.round.qf .match {
+  margin-bottom: var(--qf-gap) !important;
+}
+.round.sf .match {
+  margin-bottom: var(--sf-gap) !important;
+}
+.round.r16 .slot,
+.round.qf .slot,
+.round.sf .slot,
+.center .slot {
+  width: var(--slotw) !important;
+  height: var(--sloth) !important;
+  min-height: var(--sloth) !important;
+}
+.slot {
+  width: var(--slotw) !important;
+  height: var(--sloth) !important;
+  min-height: var(--sloth) !important;
+  padding: 3px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 14px !important;
+  gap: 0 !important;
+}
+.slot .seed,
+.slot .name,
+.slot .placeholder,
+.slot .meta,
+.slot .slotLabel,
+.slot .teamText {
+  display: none !important;
+}
+.slot .flag {
+  width: auto !important;
+  min-width: 0 !important;
+  font-size: 27px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+}
+.slot[data-drop-enabled="true"]:not(.filled) {
+  border-style: dashed !important;
+  opacity: .82 !important;
+}
+.slot[data-drop-enabled="false"] {
+  opacity: .54 !important;
+}
+.round.r32 .match::before {
+  top: -8px !important;
+  left: 4px !important;
+  right: auto !important;
+  max-width: 58px !important;
+  white-space: normal !important;
+  line-height: 1.05 !important;
+  padding: 1px 5px !important;
+  font-size: 9px !important;
+  transform: none !important;
+}
+.round.r32.right .match::before {
+  left: auto !important;
+  right: 4px !important;
+}
+.round.r32 .match::after {
+  width: 10px !important;
+  right: -10px !important;
+  top: 52px !important;
+}
+.round.r32.right .match::after {
+  left: -10px !important;
+  right: auto !important;
+}
+.round.r16 .match::after,
+.round.qf .match::after,
+.round.sf .match::after {
+  width: 10px !important;
+  right: -10px !important;
+  top: 24px !important;
+}
+.round.right.r16 .match::after,
+.round.right.qf .match::after,
+.round.right.sf .match::after {
+  left: -10px !important;
+  right: auto !important;
+}
+.center {
+  margin-top: var(--final-top) !important;
+  gap: 10px !important;
+}
+.trophy {
+  width: 108px !important;
+  min-height: 132px !important;
+}
+.trophy .cup {
+  font-size: 38px !important;
+}
+.trophy .champ {
+  min-height: 44px !important;
+}
+.tunerGrid {
+  grid-template-columns: 150px minmax(130px, 1fr) 58px !important;
+}
+
 @media print {
   header,.pool{display:none}
   main{display:block;padding:0}
@@ -301,13 +457,13 @@ rgba(7,17,31,.78);}
         <summary>Bracket spacing tuner</summary>
         <div class="sub">Adjust the spacing until the bracket looks right. Copy the chosen values into the next Capture Back.</div>
         <div class="tunerGrid">
-          <label for="r16Top">R16 top offset</label><input id="r16Top" type="range" min="0" max="160" value="31" data-var="--r16-top" /><span class="tunerValue" id="r16TopVal">31px</span>
-          <label for="r16Gap">R16 vertical gap</label><input id="r16Gap" type="range" min="0" max="180" value="34" data-var="--r16-gap" /><span class="tunerValue" id="r16GapVal">34px</span>
-          <label for="qfTop">QF top offset</label><input id="qfTop" type="range" min="0" max="260" value="95" data-var="--qf-top" /><span class="tunerValue" id="qfTopVal">95px</span>
-          <label for="qfGap">QF vertical gap</label><input id="qfGap" type="range" min="0" max="360" value="164" data-var="--qf-gap" /><span class="tunerValue" id="qfGapVal">164px</span>
-          <label for="sfTop">SF top offset</label><input id="sfTop" type="range" min="0" max="520" value="224" data-var="--sf-top" /><span class="tunerValue" id="sfTopVal">224px</span>
-          <label for="sfGap">SF vertical gap</label><input id="sfGap" type="range" min="0" max="700" value="387" data-var="--sf-gap" /><span class="tunerValue" id="sfGapVal">387px</span>
-          <label for="finalTop">Final top offset</label><input id="finalTop" type="range" min="0" max="800" value="372" data-var="--final-top" /><span class="tunerValue" id="finalTopVal">372px</span>
+          <label for="r16Top">R16 top offset</label><input id="r16Top" type="range" min="0" max="160" value="24" data-var="--r16-top" /><span class="tunerValue" id="r16TopVal">24px</span>
+          <label for="r16Gap">R16 vertical gap</label><input id="r16Gap" type="range" min="0" max="180" value="22" data-var="--r16-gap" /><span class="tunerValue" id="r16GapVal">22px</span>
+          <label for="qfTop">QF top offset</label><input id="qfTop" type="range" min="0" max="260" value="78" data-var="--qf-top" /><span class="tunerValue" id="qfTopVal">78px</span>
+          <label for="qfGap">QF vertical gap</label><input id="qfGap" type="range" min="0" max="360" value="124" data-var="--qf-gap" /><span class="tunerValue" id="qfGapVal">124px</span>
+          <label for="sfTop">SF top offset</label><input id="sfTop" type="range" min="0" max="520" value="188" data-var="--sf-top" /><span class="tunerValue" id="sfTopVal">188px</span>
+          <label for="sfGap">SF vertical gap</label><input id="sfGap" type="range" min="0" max="700" value="294" data-var="--sf-gap" /><span class="tunerValue" id="sfGapVal">294px</span>
+          <label for="finalTop">Final top offset</label><input id="finalTop" type="range" min="0" max="800" value="318" data-var="--final-top" /><span class="tunerValue" id="finalTopVal">318px</span>
         </div>
         <div class="tunerActions">
           <button type="button" id="copyTunerValues">Copy chosen CSS values</button>
@@ -553,7 +709,7 @@ function initSpacingTuner() {
   const reset = document.getElementById("resetTunerValues");
   if (reset) {
     reset.addEventListener("click", () => {
-      const defaults = { r16Top:31, r16Gap:34, qfTop:95, qfGap:164, sfTop:224, sfGap:387, finalTop:372 };
+      const defaults = { r16Top:24, r16Gap:22, qfTop:78, qfGap:124, sfTop:188, sfGap:294, finalTop:318 };
       Object.entries(defaults).forEach(([id, value]) => {
         const el = document.getElementById(id);
         if (el) {
