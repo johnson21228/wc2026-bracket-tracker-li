@@ -1,0 +1,16 @@
+{
+  "version": "pixelated-runtime-flag-background-v1",
+  "defaultBackgroundTeamAbbr": "USA",
+  "usesRuntimeTeamFlagResource": true,
+  "rendering": {
+    "imageRendering": ["pixelated", "crisp-edges"],
+    "opacity": 0.10,
+    "scale": 1.90,
+    "purpose": "large low-resolution flag color blocks behind the bracket board"
+  },
+  "behavior": {
+    "autoAdoptFirstPick": true,
+    "manualBackgroundSelectionLocksAutoAdoption": true
+  },
+  "layerPosition": "bottom layer, beneath gradient/readability wash and bracket template"
+}
