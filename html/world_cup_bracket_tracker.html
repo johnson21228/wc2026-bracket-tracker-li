@@ -183,6 +183,12 @@ rgba(7,17,31,.78);}
   border-top-color: rgba(124,199,255,.72);
 }
 
+/* WB hide public team identifiers */
+.team .meta,
+.slot .meta {
+  display: none !important;
+}
+""
 @media print {
   header,.pool{display:none}
   main{display:block;padding:0}
@@ -263,7 +269,7 @@ const rightRounds = [
 ];
 
 function teamHtml(t) {
-  return `<span class="flag">${t.flag}</span><span class="name">${t.name}</span><span class="meta">${t.abbr} · G${t.group}</span>`;
+  return `<span class="flag">${t.flag}</span><span class="name">${t.name}</span>`;
 }
 function renderPool() {
   const q = document.getElementById("search").value.trim().toLowerCase();
@@ -416,7 +422,7 @@ function paintState() {
       const t = TEAMS.find(x=>x.abbr===abbr) || {name:abbr, abbr, flag:""};
       slot.classList.add("filled");
       slot.classList.remove("emptyLabeled");
-      slot.innerHTML = `${seed}<span class="flag">${t.flag}</span><span class="teamText"><span class="name">${t.name}</span>${labelHtml}</span><span class="meta">${t.abbr} - G${t.group}</span><button class="remove" title="Remove" onclick="clearSlot('${id}')">×</button>`;
+      slot.innerHTML = `${seed}<span class="flag">${t.flag}</span><span class="teamText"><span class="name">${t.name}</span>${labelHtml}</span><button class="remove" title="Remove" onclick="clearSlot('${id}')">×</button>`;
     } else {
       slot.classList.remove("filled");
       if (label) slot.classList.add("emptyLabeled"); else slot.classList.remove("emptyLabeled");
