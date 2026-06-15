@@ -21,7 +21,7 @@ button{background:#18395f;color:var(--ink);border:1px solid #31577e;border-radiu
 button:hover{background:#245080}
 button.danger{background:#4b2330;border-color:#8c4054}
 input{background:#0b1829;border:1px solid #31577e;color:var(--ink);border-radius:10px;padding:9px 12px;min-width:260px}
-main{display:grid;grid-template-columns:390px 1fr;gap:18px;padding:18px;align-items:start}
+main{display:grid;grid-template-columns:390px 1fr;gap:8px;padding:18px;align-items:start}
 .panel{background:rgba(14,28,49,.92);border:1px solid #243b59;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
 .pool{padding:14px;position:sticky;top:124px;max-height:calc(100vh - 144px);overflow:auto}
 .pool h2,.bracketPanel h2{font-size:16px;margin:0 0 10px}
@@ -40,7 +40,7 @@ rgba(7,17,31,.78);}
 .bracketTitle{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid #25405e;padding-bottom:12px;margin-bottom:16px}
 .bracketTitle h2{font-size:26px;margin:0}
 .bracketTitle small{color:var(--muted)}
-.bracket{display:grid;grid-template-columns:250px 230px 230px 230px 270px 230px 230px 230px 250px;gap:18px;align-items:start}
+.bracket{display:grid;grid-template-columns:250px 230px 230px 230px 270px 230px 230px 230px 250px;gap:8px;align-items:start}
 .round{display:flex;flex-direction:column;gap:0}
 .round h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#bcd0ea;margin:0 0 4px;text-align:center}
 .slot{height:var(--sloth);width:var(--slotw);border:2px dashed #406083;border-radius:14px;background:rgba(12,28,48,.86);display:flex;align-items:center;gap:9px;padding:6px 9px;position:relative}
@@ -54,7 +54,7 @@ rgba(7,17,31,.78);}
 .right .match::after{left:-16px;right:auto}
 .connector{height:52px;border-right:2px solid var(--line);margin-right:0}
 .spacer1{height:52px} .spacer2{height:156px} .spacer3{height:364px} .spacer4{height:780px}
-.center{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:558px}
+.center{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:558px}
 .trophy{width:250px;min-height:180px;border:2px solid #577da6;border-radius:24px;background:radial-gradient(circle at 50% 20%,rgba(255,209,102,.25),transparent 45%),rgba(12,28,48,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
 .trophy .cup{font-size:46px}
 .trophy .label{color:var(--warn);font-weight:900;letter-spacing:.08em}
@@ -552,6 +552,39 @@ section:first-of-type {
 }
 body {
   overflow-x: auto;
+}
+
+
+/* WB tight outer pane gutter */
+:root {
+  --pane-gutter: 8px;
+}
+.main {
+  display: grid !important;
+  grid-template-columns: 300px minmax(0, 1fr) !important;
+  gap: var(--pane-gutter) !important;
+  column-gap: var(--pane-gutter) !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+.panel {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.panel:first-child {
+  width: 300px !important;
+  max-width: 300px !important;
+}
+.panel:nth-child(2) {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+.bracketShell {
+  margin-left: 0 !important;
+}
+/* stronger fallback when an earlier overlay left a visual spacer */
+.main > * + * {
+  margin-left: 0 !important;
 }
 
 @media print {
