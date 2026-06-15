@@ -1,0 +1,734 @@
+{
+  "version": "poster-derived-v001",
+  "sourceImage": "source/images/match_schedule_group_stage_poster_michelob_ultra.jpeg",
+  "authority": "poster-derived; pending official verification",
+  "matches": [
+    {
+      "matchId": "GS-2026-06-11-A1",
+      "date": "2026-06-11",
+      "group": "A",
+      "home": "Mexico",
+      "away": "South Africa",
+      "homeAbbr": "MEX",
+      "awayAbbr": "RSA",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-11-A2",
+      "date": "2026-06-11",
+      "group": "A",
+      "home": "Korea Republic",
+      "away": "Czechia",
+      "homeAbbr": "KOR",
+      "awayAbbr": "CZE",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-12-B1",
+      "date": "2026-06-12",
+      "group": "B",
+      "home": "Canada",
+      "away": "Bosnia and Herzegovina",
+      "homeAbbr": "CAN",
+      "awayAbbr": "BIH",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-12-D1",
+      "date": "2026-06-12",
+      "group": "D",
+      "home": "USA",
+      "away": "Paraguay",
+      "homeAbbr": "USA",
+      "awayAbbr": "PAR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-13-C1",
+      "date": "2026-06-13",
+      "group": "C",
+      "home": "Haiti",
+      "away": "Scotland",
+      "homeAbbr": "HAI",
+      "awayAbbr": "SCO",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-13-D2",
+      "date": "2026-06-13",
+      "group": "D",
+      "home": "Australia",
+      "away": "Türkiye",
+      "homeAbbr": "AUS",
+      "awayAbbr": "TUR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-13-C2",
+      "date": "2026-06-13",
+      "group": "C",
+      "home": "Brazil",
+      "away": "Morocco",
+      "homeAbbr": "BRA",
+      "awayAbbr": "MAR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-13-B2",
+      "date": "2026-06-13",
+      "group": "B",
+      "home": "Qatar",
+      "away": "Switzerland",
+      "homeAbbr": "QAT",
+      "awayAbbr": "SUI",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-14-E1",
+      "date": "2026-06-14",
+      "group": "E",
+      "home": "Côte d’Ivoire",
+      "away": "Ecuador",
+      "homeAbbr": "CIV",
+      "awayAbbr": "ECU",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-14-E2",
+      "date": "2026-06-14",
+      "group": "E",
+      "home": "Germany",
+      "away": "Curaçao",
+      "homeAbbr": "GER",
+      "awayAbbr": "CUW",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-14-F1",
+      "date": "2026-06-14",
+      "group": "F",
+      "home": "Netherlands",
+      "away": "Japan",
+      "homeAbbr": "NED",
+      "awayAbbr": "JPN",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-14-F2",
+      "date": "2026-06-14",
+      "group": "F",
+      "home": "Sweden",
+      "away": "Tunisia",
+      "homeAbbr": "SWE",
+      "awayAbbr": "TUN",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-15-H1",
+      "date": "2026-06-15",
+      "group": "H",
+      "home": "Saudi Arabia",
+      "away": "Uruguay",
+      "homeAbbr": "KSA",
+      "awayAbbr": "URU",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-15-H2",
+      "date": "2026-06-15",
+      "group": "H",
+      "home": "Spain",
+      "away": "Cabo Verde",
+      "homeAbbr": "ESP",
+      "awayAbbr": "CPV",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-15-G1",
+      "date": "2026-06-15",
+      "group": "G",
+      "home": "IR Iran",
+      "away": "New Zealand",
+      "homeAbbr": "IRN",
+      "awayAbbr": "NZL",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-15-G2",
+      "date": "2026-06-15",
+      "group": "G",
+      "home": "Belgium",
+      "away": "Egypt",
+      "homeAbbr": "BEL",
+      "awayAbbr": "EGY",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-16-I1",
+      "date": "2026-06-16",
+      "group": "I",
+      "home": "France",
+      "away": "Senegal",
+      "homeAbbr": "FRA",
+      "awayAbbr": "SEN",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-16-I2",
+      "date": "2026-06-16",
+      "group": "I",
+      "home": "Iraq",
+      "away": "Norway",
+      "homeAbbr": "IRQ",
+      "awayAbbr": "NOR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-16-J1",
+      "date": "2026-06-16",
+      "group": "J",
+      "home": "Argentina",
+      "away": "Algeria",
+      "homeAbbr": "ARG",
+      "awayAbbr": "ALG",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-16-J2",
+      "date": "2026-06-16",
+      "group": "J",
+      "home": "Austria",
+      "away": "Jordan",
+      "homeAbbr": "AUT",
+      "awayAbbr": "JOR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-17-L1",
+      "date": "2026-06-17",
+      "group": "L",
+      "home": "Ghana",
+      "away": "Panama",
+      "homeAbbr": "GHA",
+      "awayAbbr": "PAN",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-17-L2",
+      "date": "2026-06-17",
+      "group": "L",
+      "home": "England",
+      "away": "Croatia",
+      "homeAbbr": "ENG",
+      "awayAbbr": "CRO",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-17-K1",
+      "date": "2026-06-17",
+      "group": "K",
+      "home": "Portugal",
+      "away": "Congo DR",
+      "homeAbbr": "POR",
+      "awayAbbr": "COD",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-17-K2",
+      "date": "2026-06-17",
+      "group": "K",
+      "home": "Uzbekistan",
+      "away": "Colombia",
+      "homeAbbr": "UZB",
+      "awayAbbr": "COL",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-18-A3",
+      "date": "2026-06-18",
+      "group": "A",
+      "home": "Czechia",
+      "away": "South Africa",
+      "homeAbbr": "CZE",
+      "awayAbbr": "RSA",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-18-B3",
+      "date": "2026-06-18",
+      "group": "B",
+      "home": "Switzerland",
+      "away": "Bosnia and Herzegovina",
+      "homeAbbr": "SUI",
+      "awayAbbr": "BIH",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-18-B4",
+      "date": "2026-06-18",
+      "group": "B",
+      "home": "Canada",
+      "away": "Qatar",
+      "homeAbbr": "CAN",
+      "awayAbbr": "QAT",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-18-A4",
+      "date": "2026-06-18",
+      "group": "A",
+      "home": "Mexico",
+      "away": "Korea Republic",
+      "homeAbbr": "MEX",
+      "awayAbbr": "KOR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-19-C3",
+      "date": "2026-06-19",
+      "group": "C",
+      "home": "Brazil",
+      "away": "Haiti",
+      "homeAbbr": "BRA",
+      "awayAbbr": "HAI",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-19-C4",
+      "date": "2026-06-19",
+      "group": "C",
+      "home": "Scotland",
+      "away": "Morocco",
+      "homeAbbr": "SCO",
+      "awayAbbr": "MAR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-19-D3",
+      "date": "2026-06-19",
+      "group": "D",
+      "home": "Türkiye",
+      "away": "Paraguay",
+      "homeAbbr": "TUR",
+      "awayAbbr": "PAR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-19-D4",
+      "date": "2026-06-19",
+      "group": "D",
+      "home": "USA",
+      "away": "Australia",
+      "homeAbbr": "USA",
+      "awayAbbr": "AUS",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-20-E3",
+      "date": "2026-06-20",
+      "group": "E",
+      "home": "Germany",
+      "away": "Côte d’Ivoire",
+      "homeAbbr": "GER",
+      "awayAbbr": "CIV",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-20-E4",
+      "date": "2026-06-20",
+      "group": "E",
+      "home": "Ecuador",
+      "away": "Curaçao",
+      "homeAbbr": "ECU",
+      "awayAbbr": "CUW",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-20-F3",
+      "date": "2026-06-20",
+      "group": "F",
+      "home": "Netherlands",
+      "away": "Sweden",
+      "homeAbbr": "NED",
+      "awayAbbr": "SWE",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-20-F4",
+      "date": "2026-06-20",
+      "group": "F",
+      "home": "Tunisia",
+      "away": "Japan",
+      "homeAbbr": "TUN",
+      "awayAbbr": "JPN",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-21-H3",
+      "date": "2026-06-21",
+      "group": "H",
+      "home": "Uruguay",
+      "away": "Cabo Verde",
+      "homeAbbr": "URU",
+      "awayAbbr": "CPV",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-21-H4",
+      "date": "2026-06-21",
+      "group": "H",
+      "home": "Spain",
+      "away": "Saudi Arabia",
+      "homeAbbr": "ESP",
+      "awayAbbr": "KSA",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-21-G3",
+      "date": "2026-06-21",
+      "group": "G",
+      "home": "Belgium",
+      "away": "IR Iran",
+      "homeAbbr": "BEL",
+      "awayAbbr": "IRN",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-21-G4",
+      "date": "2026-06-21",
+      "group": "G",
+      "home": "New Zealand",
+      "away": "Egypt",
+      "homeAbbr": "NZL",
+      "awayAbbr": "EGY",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-22-I3",
+      "date": "2026-06-22",
+      "group": "I",
+      "home": "Norway",
+      "away": "Senegal",
+      "homeAbbr": "NOR",
+      "awayAbbr": "SEN",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-22-I4",
+      "date": "2026-06-22",
+      "group": "I",
+      "home": "France",
+      "away": "Iraq",
+      "homeAbbr": "FRA",
+      "awayAbbr": "IRQ",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-22-J3",
+      "date": "2026-06-22",
+      "group": "J",
+      "home": "Haiti",
+      "away": "Austria",
+      "homeAbbr": "HAI",
+      "awayAbbr": "AUT",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-22-J4",
+      "date": "2026-06-22",
+      "group": "J",
+      "home": "Jordan",
+      "away": "Algeria",
+      "homeAbbr": "JOR",
+      "awayAbbr": "ALG",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-23-L3",
+      "date": "2026-06-23",
+      "group": "L",
+      "home": "England",
+      "away": "Ghana",
+      "homeAbbr": "ENG",
+      "awayAbbr": "GHA",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-23-L4",
+      "date": "2026-06-23",
+      "group": "L",
+      "home": "Panama",
+      "away": "Croatia",
+      "homeAbbr": "PAN",
+      "awayAbbr": "CRO",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-23-K3",
+      "date": "2026-06-23",
+      "group": "K",
+      "home": "Portugal",
+      "away": "Uzbekistan",
+      "homeAbbr": "POR",
+      "awayAbbr": "UZB",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-23-K4",
+      "date": "2026-06-23",
+      "group": "K",
+      "home": "Colombia",
+      "away": "Congo DR",
+      "homeAbbr": "COL",
+      "awayAbbr": "COD",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-24-C5",
+      "date": "2026-06-24",
+      "group": "C",
+      "home": "Scotland",
+      "away": "Brazil",
+      "homeAbbr": "SCO",
+      "awayAbbr": "BRA",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-24-C6",
+      "date": "2026-06-24",
+      "group": "C",
+      "home": "Morocco",
+      "away": "Haiti",
+      "homeAbbr": "MAR",
+      "awayAbbr": "HAI",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-24-B5",
+      "date": "2026-06-24",
+      "group": "B",
+      "home": "Switzerland",
+      "away": "Canada",
+      "homeAbbr": "SUI",
+      "awayAbbr": "CAN",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-24-B6",
+      "date": "2026-06-24",
+      "group": "B",
+      "home": "Bosnia and Herzegovina",
+      "away": "Qatar",
+      "homeAbbr": "BIH",
+      "awayAbbr": "QAT",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-24-A5",
+      "date": "2026-06-24",
+      "group": "A",
+      "home": "Czechia",
+      "away": "Mexico",
+      "homeAbbr": "CZE",
+      "awayAbbr": "MEX",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-24-A6",
+      "date": "2026-06-24",
+      "group": "A",
+      "home": "South Africa",
+      "away": "Korea Republic",
+      "homeAbbr": "RSA",
+      "awayAbbr": "KOR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-25-E5",
+      "date": "2026-06-25",
+      "group": "E",
+      "home": "Curaçao",
+      "away": "Côte d’Ivoire",
+      "homeAbbr": "CUW",
+      "awayAbbr": "CIV",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-25-E6",
+      "date": "2026-06-25",
+      "group": "E",
+      "home": "Ecuador",
+      "away": "Germany",
+      "homeAbbr": "ECU",
+      "awayAbbr": "GER",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-25-F5",
+      "date": "2026-06-25",
+      "group": "F",
+      "home": "Japan",
+      "away": "Sweden",
+      "homeAbbr": "JPN",
+      "awayAbbr": "SWE",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-25-F6",
+      "date": "2026-06-25",
+      "group": "F",
+      "home": "Tunisia",
+      "away": "Netherlands",
+      "homeAbbr": "TUN",
+      "awayAbbr": "NED",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-25-D5",
+      "date": "2026-06-25",
+      "group": "D",
+      "home": "Türkiye",
+      "away": "USA",
+      "homeAbbr": "TUR",
+      "awayAbbr": "USA",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-25-D6",
+      "date": "2026-06-25",
+      "group": "D",
+      "home": "Paraguay",
+      "away": "Australia",
+      "homeAbbr": "PAR",
+      "awayAbbr": "AUS",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-26-I5",
+      "date": "2026-06-26",
+      "group": "I",
+      "home": "Norway",
+      "away": "France",
+      "homeAbbr": "NOR",
+      "awayAbbr": "FRA",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-26-I6",
+      "date": "2026-06-26",
+      "group": "I",
+      "home": "Senegal",
+      "away": "Iraq",
+      "homeAbbr": "SEN",
+      "awayAbbr": "IRQ",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-26-G5",
+      "date": "2026-06-26",
+      "group": "G",
+      "home": "Egypt",
+      "away": "IR Iran",
+      "homeAbbr": "EGY",
+      "awayAbbr": "IRN",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-26-G6",
+      "date": "2026-06-26",
+      "group": "G",
+      "home": "New Zealand",
+      "away": "Belgium",
+      "homeAbbr": "NZL",
+      "awayAbbr": "BEL",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-26-H5",
+      "date": "2026-06-26",
+      "group": "H",
+      "home": "Cabo Verde",
+      "away": "Saudi Arabia",
+      "homeAbbr": "CPV",
+      "awayAbbr": "KSA",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-26-H6",
+      "date": "2026-06-26",
+      "group": "H",
+      "home": "Uruguay",
+      "away": "Spain",
+      "homeAbbr": "URU",
+      "awayAbbr": "ESP",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-27-L5",
+      "date": "2026-06-27",
+      "group": "L",
+      "home": "Panama",
+      "away": "England",
+      "homeAbbr": "PAN",
+      "awayAbbr": "ENG",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-27-L6",
+      "date": "2026-06-27",
+      "group": "L",
+      "home": "Croatia",
+      "away": "Ghana",
+      "homeAbbr": "CRO",
+      "awayAbbr": "GHA",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-27-J5",
+      "date": "2026-06-27",
+      "group": "J",
+      "home": "Algeria",
+      "away": "Austria",
+      "homeAbbr": "ALG",
+      "awayAbbr": "AUT",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-27-J6",
+      "date": "2026-06-27",
+      "group": "J",
+      "home": "Jordan",
+      "away": "Argentina",
+      "homeAbbr": "JOR",
+      "awayAbbr": "ARG",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-27-K5",
+      "date": "2026-06-27",
+      "group": "K",
+      "home": "Colombia",
+      "away": "Portugal",
+      "homeAbbr": "COL",
+      "awayAbbr": "POR",
+      "source": "poster_image"
+    },
+    {
+      "matchId": "GS-2026-06-27-K6",
+      "date": "2026-06-27",
+      "group": "K",
+      "home": "Congo DR",
+      "away": "Uzbekistan",
+      "homeAbbr": "COD",
+      "awayAbbr": "UZB",
+      "source": "poster_image"
+    }
+  ],
+  "uncertainties": [
+    {
+      "matchId": "GS-2026-06-22-J3",
+      "issue": "Poster appears to show HAI vs AUT in Group J. This conflicts with the team/group list where Haiti appears in Group C. Needs official verification.",
+      "status": "needs_verification"
+    }
+  ]
+}

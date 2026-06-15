@@ -1,0 +1,9 @@
+{
+  "version": "v001",
+  "game": "round_of_32_qualifier_pick_game",
+  "status": "proposed",
+  "rules": {
+    "pointsPerCorrectAdvancingTeam": 1,
+    "bonusForPerfect32": null
+  }
+}

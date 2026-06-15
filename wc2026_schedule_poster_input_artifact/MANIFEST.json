@@ -1,0 +1,21 @@
+{
+  "artifactType": "world_cup_bracket_tracker_input_artifact",
+  "artifactVersion": "v001",
+  "createdAt": "2026-06-15T15:44:13Z",
+  "sourceImage": "source/images/match_schedule_group_stage_poster_michelob_ultra.jpeg",
+  "derivedFiles": [
+    "data/group_stage_matches_from_poster.json",
+    "data/groups_from_poster.json",
+    "source/text/poster_transcription.md",
+    "source/text/source_note.md"
+  ],
+  "authority": "poster-derived; pending official verification",
+  "matchCount": 72,
+  "uncertainties": [
+    {
+      "matchId": "GS-2026-06-22-J3",
+      "issue": "Poster appears to show HAI vs AUT in Group J. This conflicts with the team/group list where Haiti appears in Group C. Needs official verification.",
+      "status": "needs_verification"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "description": "Optional YouTube highlight metadata for a World Cup match.",
+  "type": "object",
+  "required": [
+    "youtubeUrl",
+    "youtubeId",
+    "source"
+  ],
+  "properties": {
+    "youtubeUrl": {
+      "type": "string",
+      "description": "Full YouTube URL."
+    },
+    "youtubeId": {
+      "type": "string",
+      "description": "Extracted YouTube video id."
+    },
+    "title": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "official",
+        "broadcaster",
+        "team",
+        "reputable_media",
+        "manual"
+      ]
+    },
+    "addedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "ISO-8601 timestamp."
+    },
+    "verifiedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "ISO-8601 timestamp."
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}
