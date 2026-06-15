@@ -1,0 +1,7 @@
+{
+  "version": "playfield-background-config-v1",
+  "defaultBackgroundTeamAbbr": "USA",
+  "bottomLayerMode": "teamFlagResource",
+  "middleLayerRule": "bracket graphics only; title and bottom banner regions remain empty",
+  "gradientWash": true
+}
