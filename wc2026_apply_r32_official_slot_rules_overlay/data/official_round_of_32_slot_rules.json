@@ -1,0 +1,297 @@
+{
+  "version": "official-slot-rules-v1",
+  "authority": "FIFA match schedule / tournament regulations Annex C summary; captured via public knockout schedule sources",
+  "note": "Site visual order maps the existing bracket tree to official Matches 73-88. Third-place formulas show candidate source groups; exact third-place assignment depends on which eight third-place teams advance.",
+  "siteSlotRules": {
+    "R32-L-M1A": {
+      "match": 73,
+      "short": "2A",
+      "long": "Runner-up Group A"
+    },
+    "R32-L-M1B": {
+      "match": 73,
+      "short": "2B",
+      "long": "Runner-up Group B"
+    },
+    "R32-L-M2A": {
+      "match": 75,
+      "short": "1F",
+      "long": "Winner Group F"
+    },
+    "R32-L-M2B": {
+      "match": 75,
+      "short": "2C",
+      "long": "Runner-up Group C"
+    },
+    "R32-L-M3A": {
+      "match": 74,
+      "short": "1E",
+      "long": "Winner Group E"
+    },
+    "R32-L-M3B": {
+      "match": 74,
+      "short": "3 A/B/C/D/F",
+      "long": "Best third-place team from Groups A/B/C/D/F"
+    },
+    "R32-L-M4A": {
+      "match": 77,
+      "short": "1I",
+      "long": "Winner Group I"
+    },
+    "R32-L-M4B": {
+      "match": 77,
+      "short": "3 C/D/F/G/H",
+      "long": "Best third-place team from Groups C/D/F/G/H"
+    },
+    "R32-L-M5A": {
+      "match": 76,
+      "short": "1C",
+      "long": "Winner Group C"
+    },
+    "R32-L-M5B": {
+      "match": 76,
+      "short": "2F",
+      "long": "Runner-up Group F"
+    },
+    "R32-L-M6A": {
+      "match": 78,
+      "short": "2E",
+      "long": "Runner-up Group E"
+    },
+    "R32-L-M6B": {
+      "match": 78,
+      "short": "2I",
+      "long": "Runner-up Group I"
+    },
+    "R32-L-M7A": {
+      "match": 79,
+      "short": "1A",
+      "long": "Winner Group A"
+    },
+    "R32-L-M7B": {
+      "match": 79,
+      "short": "3 C/E/F/H/I",
+      "long": "Best third-place team from Groups C/E/F/H/I"
+    },
+    "R32-L-M8A": {
+      "match": 80,
+      "short": "1L",
+      "long": "Winner Group L"
+    },
+    "R32-L-M8B": {
+      "match": 80,
+      "short": "3 E/H/I/J/K",
+      "long": "Best third-place team from Groups E/H/I/J/K"
+    },
+    "R32-R-M1A": {
+      "match": 83,
+      "short": "2K",
+      "long": "Runner-up Group K"
+    },
+    "R32-R-M1B": {
+      "match": 83,
+      "short": "2L",
+      "long": "Runner-up Group L"
+    },
+    "R32-R-M2A": {
+      "match": 84,
+      "short": "1H",
+      "long": "Winner Group H"
+    },
+    "R32-R-M2B": {
+      "match": 84,
+      "short": "2J",
+      "long": "Runner-up Group J"
+    },
+    "R32-R-M3A": {
+      "match": 81,
+      "short": "1D",
+      "long": "Winner Group D"
+    },
+    "R32-R-M3B": {
+      "match": 81,
+      "short": "3 B/E/F/I/J",
+      "long": "Best third-place team from Groups B/E/F/I/J"
+    },
+    "R32-R-M4A": {
+      "match": 82,
+      "short": "1G",
+      "long": "Winner Group G"
+    },
+    "R32-R-M4B": {
+      "match": 82,
+      "short": "3 A/E/H/I/J",
+      "long": "Best third-place team from Groups A/E/H/I/J"
+    },
+    "R32-R-M5A": {
+      "match": 86,
+      "short": "1J",
+      "long": "Winner Group J"
+    },
+    "R32-R-M5B": {
+      "match": 86,
+      "short": "2H",
+      "long": "Runner-up Group H"
+    },
+    "R32-R-M6A": {
+      "match": 88,
+      "short": "2D",
+      "long": "Runner-up Group D"
+    },
+    "R32-R-M6B": {
+      "match": 88,
+      "short": "2G",
+      "long": "Runner-up Group G"
+    },
+    "R32-R-M7A": {
+      "match": 85,
+      "short": "1B",
+      "long": "Winner Group B"
+    },
+    "R32-R-M7B": {
+      "match": 85,
+      "short": "3 E/F/G/I/J",
+      "long": "Best third-place team from Groups E/F/G/I/J"
+    },
+    "R32-R-M8A": {
+      "match": 87,
+      "short": "1K",
+      "long": "Winner Group K"
+    },
+    "R32-R-M8B": {
+      "match": 87,
+      "short": "3 D/E/I/J/L",
+      "long": "Best third-place team from Groups D/E/I/J/L"
+    }
+  },
+  "officialMatches": [
+    {
+      "siteMatch": "R32-L-M1",
+      "officialMatch": 73,
+      "a": "2A",
+      "aLong": "Runner-up Group A",
+      "b": "2B",
+      "bLong": "Runner-up Group B"
+    },
+    {
+      "siteMatch": "R32-L-M2",
+      "officialMatch": 75,
+      "a": "1F",
+      "aLong": "Winner Group F",
+      "b": "2C",
+      "bLong": "Runner-up Group C"
+    },
+    {
+      "siteMatch": "R32-L-M3",
+      "officialMatch": 74,
+      "a": "1E",
+      "aLong": "Winner Group E",
+      "b": "3 A/B/C/D/F",
+      "bLong": "Best third-place team from Groups A/B/C/D/F"
+    },
+    {
+      "siteMatch": "R32-L-M4",
+      "officialMatch": 77,
+      "a": "1I",
+      "aLong": "Winner Group I",
+      "b": "3 C/D/F/G/H",
+      "bLong": "Best third-place team from Groups C/D/F/G/H"
+    },
+    {
+      "siteMatch": "R32-L-M5",
+      "officialMatch": 76,
+      "a": "1C",
+      "aLong": "Winner Group C",
+      "b": "2F",
+      "bLong": "Runner-up Group F"
+    },
+    {
+      "siteMatch": "R32-L-M6",
+      "officialMatch": 78,
+      "a": "2E",
+      "aLong": "Runner-up Group E",
+      "b": "2I",
+      "bLong": "Runner-up Group I"
+    },
+    {
+      "siteMatch": "R32-L-M7",
+      "officialMatch": 79,
+      "a": "1A",
+      "aLong": "Winner Group A",
+      "b": "3 C/E/F/H/I",
+      "bLong": "Best third-place team from Groups C/E/F/H/I"
+    },
+    {
+      "siteMatch": "R32-L-M8",
+      "officialMatch": 80,
+      "a": "1L",
+      "aLong": "Winner Group L",
+      "b": "3 E/H/I/J/K",
+      "bLong": "Best third-place team from Groups E/H/I/J/K"
+    },
+    {
+      "siteMatch": "R32-R-M1",
+      "officialMatch": 83,
+      "a": "2K",
+      "aLong": "Runner-up Group K",
+      "b": "2L",
+      "bLong": "Runner-up Group L"
+    },
+    {
+      "siteMatch": "R32-R-M2",
+      "officialMatch": 84,
+      "a": "1H",
+      "aLong": "Winner Group H",
+      "b": "2J",
+      "bLong": "Runner-up Group J"
+    },
+    {
+      "siteMatch": "R32-R-M3",
+      "officialMatch": 81,
+      "a": "1D",
+      "aLong": "Winner Group D",
+      "b": "3 B/E/F/I/J",
+      "bLong": "Best third-place team from Groups B/E/F/I/J"
+    },
+    {
+      "siteMatch": "R32-R-M4",
+      "officialMatch": 82,
+      "a": "1G",
+      "aLong": "Winner Group G",
+      "b": "3 A/E/H/I/J",
+      "bLong": "Best third-place team from Groups A/E/H/I/J"
+    },
+    {
+      "siteMatch": "R32-R-M5",
+      "officialMatch": 86,
+      "a": "1J",
+      "aLong": "Winner Group J",
+      "b": "2H",
+      "bLong": "Runner-up Group H"
+    },
+    {
+      "siteMatch": "R32-R-M6",
+      "officialMatch": 88,
+      "a": "2D",
+      "aLong": "Runner-up Group D",
+      "b": "2G",
+      "bLong": "Runner-up Group G"
+    },
+    {
+      "siteMatch": "R32-R-M7",
+      "officialMatch": 85,
+      "a": "1B",
+      "aLong": "Winner Group B",
+      "b": "3 E/F/G/I/J",
+      "bLong": "Best third-place team from Groups E/F/G/I/J"
+    },
+    {
+      "siteMatch": "R32-R-M8",
+      "officialMatch": 87,
+      "a": "1K",
+      "aLong": "Winner Group K",
+      "b": "3 D/E/I/J/L",
+      "bLong": "Best third-place team from Groups D/E/I/J/L"
+    }
+  ]
+}
