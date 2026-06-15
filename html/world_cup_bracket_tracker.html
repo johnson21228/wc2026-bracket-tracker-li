@@ -189,6 +189,83 @@ rgba(7,17,31,.78);}
   display: none !important;
 }
 ""
+
+/* WB square flag-only bracket drop targets */
+:root {
+  --slotw: 58px;
+  --sloth: 52px;
+  --gap: 8px;
+}
+.bracketShell {
+  min-width: 1120px !important;
+}
+.bracket {
+  grid-template-columns: 86px 76px 76px 76px 126px 76px 76px 76px 86px !important;
+  gap: 10px !important;
+}
+.match {
+  gap: 7px !important;
+}
+.round.r32 .match {
+  width: 72px !important;
+  padding: 8px 4px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.slot {
+  width: var(--slotw) !important;
+  height: var(--sloth) !important;
+  min-height: var(--sloth) !important;
+  padding: 3px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 0 !important;
+  border-radius: 14px !important;
+}
+.slot .seed,
+.slot .name,
+.slot .placeholder,
+.slot .meta,
+.slot .slotLabel,
+.slot .teamText {
+  display: none !important;
+}
+.slot .flag {
+  width: auto !important;
+  min-width: 0 !important;
+  font-size: 27px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+}
+.slot.filled {
+  cursor: help;
+}
+.slot:not(.filled) {
+  cursor: default;
+}
+.slot[data-drop-enabled="true"]:not(.filled) {
+  border-style: dashed !important;
+  opacity: .78;
+  cursor: copy;
+}
+.slot[data-drop-enabled="false"] {
+  border-style: solid !important;
+  opacity: .55;
+}
+.round.r32 .match::before {
+  transform: scale(.86);
+  transform-origin: left center;
+}
+.round.r32.right .match::before {
+  transform-origin: right center;
+}
+.trophy {
+  width: 124px !important;
+}
+.center {
+  gap: 12px !important;
+}
+
 @media print {
   header,.pool{display:none}
   main{display:block;padding:0}
@@ -202,7 +279,7 @@ rgba(7,17,31,.78);}
 <body>
 <header>
   <h1>World Cup 2026 Bracket Builder</h1>
-  <div class="sub">Drag teams into the bracket. Scroll sideways to see the full bracket. Use Export State to save or share your picks.</div>
+  <div class="sub">Drag teams into the Round of 32. Scroll sideways to see the full bracket. Hover flags to identify teams.</div>
   <div class="toolbar">
     <input id="search" placeholder="Search teams..." />
     <button id="exportBtn">Export State JSON</button>
@@ -292,14 +369,15 @@ function renderPool() {
   });
 }
 
+
 function createSlot(id, seed) {
   const slot = document.createElement("div");
   slot.className="slot";
   slot.dataset.slot=id;
   const isR32 = id.startsWith("R32-");
   slot.dataset.dropEnabled = isR32 ? "true" : "false";
-  const placeholder = isR32 ? "Drop team" : "Advances here";
-  slot.innerHTML = `<span class="seed">${seed}</span><span class="placeholder">${placeholder}</span>`;
+  slot.title = isR32 ? "Drop a team here" : "Advancement slot";
+  slot.innerHTML = `<span class="seed">${seed}</span><span class="placeholder">${isR32 ? "Drop team" : "Advances here"}</span>`;
   if (isR32) {
     slot.addEventListener("dragover", e => { e.preventDefault(); slot.classList.add("over"); });
     slot.addEventListener("dragleave", () => slot.classList.remove("over"));
@@ -312,6 +390,7 @@ function createSlot(id, seed) {
   return slot;
 }
 function renderRound
+
 (label, matches, seedStart, side="left", topSpacer=0) {
   const col = document.createElement("div");
   col.className = "round " + roundClass(label) + " " + (side==="right" ? "right" : "");
