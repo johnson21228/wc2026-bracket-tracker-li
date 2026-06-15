@@ -1,0 +1,38 @@
+{
+  "description": "Source mapping for visual alignment of knockout bracket slots.",
+  "type": "object",
+  "properties": {
+    "slotId": {
+      "type": "string"
+    },
+    "round": {
+      "type": "string"
+    },
+    "sourceSlots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourceMatches": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "alignment": {
+      "type": "string",
+      "enum": [
+        "centered_between_sources",
+        "manual",
+        "pending"
+      ]
+    }
+  },
+  "required": [
+    "slotId",
+    "round",
+    "sourceMatches",
+    "alignment"
+  ]
+}
