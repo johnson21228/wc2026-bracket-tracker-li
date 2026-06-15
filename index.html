@@ -73,10 +73,7 @@ rgba(7,17,31,.78);}
 .round.r16 .match::after,
 .round.qf .match::after,
 .round.sf .match::after { top: 22px; }
-.slot .slotLabel { display:block; color:var(--muted); font-size:10px; line-height:1.05; margin-left:2px; max-width:150px; white-space:normal; }
-.slot .teamText { display:flex; flex-direction:column; min-width:0; }
 .slot.filled .name { font-size:13px; }
-.slot.emptyLabeled { border-color:#547393; background:rgba(22,44,72,.72); }
 
 
 /* WB bracket spacing tuner */
@@ -199,7 +196,7 @@ rgba(7,17,31,.78);}
 <body>
 <header>
   <h1>World Cup 2026 Bracket Builder</h1>
-  <div class="sub">Drag teams into the bracket. Scroll sideways to see the full bracket. Use Export State to save or share your picks. Bands group each Round of 32 source match.</div>
+  <div class="sub">Drag teams into the bracket. Scroll sideways to see the full bracket. Use Export State to save or share your picks.</div>
   <div class="toolbar">
     <input id="search" placeholder="Search teams..." />
     <button id="exportBtn">Export State JSON</button>
@@ -288,28 +285,28 @@ function renderPool() {
     pool.appendChild(box);
   });
 }
+
 function createSlot(id, seed) {
   const slot = document.createElement("div");
   slot.className="slot";
   slot.dataset.slot=id;
-  const rule = SLOT_RULES[id];
-  if (rule) {
-    slot.dataset.slotLabel = rule.label;
-    slot.dataset.tooltip = rule.tooltip;
-    slot.title = rule.tooltip;
+  const isR32 = id.startsWith("R32-");
+  slot.dataset.dropEnabled = isR32 ? "true" : "false";
+  const placeholder = isR32 ? "Drop team" : "Advances here";
+  slot.innerHTML = `<span class="seed">${seed}</span><span class="placeholder">${placeholder}</span>`;
+  if (isR32) {
+    slot.addEventListener("dragover", e => { e.preventDefault(); slot.classList.add("over"); });
+    slot.addEventListener("dragleave", () => slot.classList.remove("over"));
+    slot.addEventListener("drop", e => {
+      e.preventDefault(); slot.classList.remove("over");
+      const abbr = e.dataTransfer.getData("text/plain");
+      assignTeam(id, abbr);
+    });
   }
-  const labelHtml = rule ? `<span class="slotLabel">${rule.label}</span>` : "";
-  slot.innerHTML = `<span class="seed">${seed}</span><span class="teamText"><span class="placeholder">Drop team</span>${labelHtml}</span>`;
-  slot.addEventListener("dragover", e => { e.preventDefault(); slot.classList.add("over"); });
-  slot.addEventListener("dragleave", () => slot.classList.remove("over"));
-  slot.addEventListener("drop", e => {
-    e.preventDefault(); slot.classList.remove("over");
-    const abbr = e.dataTransfer.getData("text/plain");
-    assignTeam(id, abbr);
-  });
   return slot;
 }
-function renderRound(label, matches, seedStart, side="left", topSpacer=0) {
+function renderRound
+(label, matches, seedStart, side="left", topSpacer=0) {
   const col = document.createElement("div");
   col.className = "round " + roundClass(label) + " " + (side==="right" ? "right" : "");
   col.innerHTML = `<h3>${label.replace("-", " ")}</h3>`;
@@ -392,6 +389,9 @@ function renderBracket() {
   paintState();
 }
 function assignTeam(slotId, abbr) {
+  if (!slotId.startsWith("R32-")) {
+    return;
+  }
   const existingSlot = Object.keys(state.slots).find(k => state.slots[k] === abbr);
   if (existingSlot) delete state.slots[existingSlot];
   state.slots[slotId] = abbr;
@@ -411,8 +411,7 @@ function paintState() {
     const rule = SLOT_RULES[id] || null;
     const label = slot.dataset.slotLabel || rule?.label || "";
     const tooltip = slot.dataset.tooltip || rule?.tooltip || "";
-    if (tooltip) slot.title = tooltip;
-    const labelHtml = label ? `<span class="slotLabel">${label}</span>` : "";
+    const labelHtml = "";
     if (abbr) {
       const t = TEAMS.find(x=>x.abbr===abbr) || {name:abbr, abbr, flag:""};
       slot.classList.add("filled");
