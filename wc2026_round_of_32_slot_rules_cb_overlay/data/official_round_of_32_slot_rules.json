@@ -1,0 +1,21 @@
+{
+  "version": "v001",
+  "authority": "pending official verification",
+  "status": "slot_labels_needed",
+  "note": "Round-of-32 slots should preserve qualification labels before teams are known. Populate from official bracket rules when verified.",
+  "slots": [
+    {
+      "slotId": "R32-M1-A",
+      "matchId": "R32-M1",
+      "side": "A",
+      "label": "TBD qualification slot",
+      "qualificationRule": "manual",
+      "sourceGroup": null,
+      "thirdPlacePool": [],
+      "team": null,
+      "status": "needs_verification",
+      "source": "placeholder",
+      "notes": "Replace with official slot label, e.g. Winner Group A."
+    }
+  ]
+}
