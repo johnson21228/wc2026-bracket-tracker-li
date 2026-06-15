@@ -33,15 +33,15 @@ main{display:grid;grid-template-columns:390px 1fr;gap:18px;padding:18px;align-it
 .name{font-weight:750;font-size:14px}
 .meta{margin-left:auto;color:var(--muted);font-size:12px;font-weight:700}
 .bracketPanel{padding:14px;overflow:auto}
-.bracketShell{min-width:1760px;min-height:1350px;padding:24px;border-radius:18px;background:
+.bracketShell{min-width:1760px;min-height:1500px;padding:24px;border-radius:18px;background:
 linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/40px 40px,
 linear-gradient(0deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/40px 40px,
 rgba(7,17,31,.78);}
 .bracketTitle{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid #25405e;padding-bottom:12px;margin-bottom:16px}
 .bracketTitle h2{font-size:26px;margin:0}
 .bracketTitle small{color:var(--muted)}
-.bracket{display:grid;grid-template-columns:260px 230px 230px 230px 260px 230px 230px 230px 260px;gap:18px;align-items:start}
-.round{display:flex;flex-direction:column;gap:var(--gap)}
+.bracket{display:grid;grid-template-columns:250px 230px 230px 230px 270px 230px 230px 230px 250px;gap:18px;align-items:start}
+.round{display:flex;flex-direction:column;gap:0}
 .round h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#bcd0ea;margin:0 0 4px;text-align:center}
 .slot{height:var(--sloth);width:var(--slotw);border:2px dashed #406083;border-radius:14px;background:rgba(12,28,48,.86);display:flex;align-items:center;gap:9px;padding:6px 9px;position:relative}
 .slot.over{outline:3px solid var(--accent);background:#12365a}
@@ -49,17 +49,35 @@ rgba(7,17,31,.78);}
 .slot.filled{border-style:solid;border-color:#4d7aa8;background:#102b49}
 .slot .remove{margin-left:auto;background:transparent;border:0;color:#ffb3b3;padding:2px 5px;font-size:15px;display:none}
 .slot.filled:hover .remove{display:block}
-.match{display:flex;flex-direction:column;gap:8px;position:relative;margin-bottom:15px}
+.match{display:flex;flex-direction:column;gap:8px;position:relative;margin-bottom:16px}
 .match::after{content:"";position:absolute;right:-16px;top:22px;width:16px;border-top:2px solid var(--line)}
 .right .match::after{left:-16px;right:auto}
 .connector{height:52px;border-right:2px solid var(--line);margin-right:0}
 .spacer1{height:52px} .spacer2{height:156px} .spacer3{height:364px} .spacer4{height:780px}
-.center{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:420px}
+.center{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:558px}
 .trophy{width:250px;min-height:180px;border:2px solid #577da6;border-radius:24px;background:radial-gradient(circle at 50% 20%,rgba(255,209,102,.25),transparent 45%),rgba(12,28,48,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
 .trophy .cup{font-size:46px}
 .trophy .label{color:var(--warn);font-weight:900;letter-spacing:.08em}
 .notes{width:100%;height:90px;background:#0a1728;color:var(--ink);border:1px solid #31577e;border-radius:14px;padding:10px;margin-top:10px}
 .status{font-size:12px;color:var(--muted);margin-top:8px}
+
+/* WB aligned bracket tree layout */
+.round .match { min-height: calc(var(--sloth) * 2 + 8px); }
+.round.r16 .match { margin-bottom: 76px; }
+.round.qf .match { margin-bottom: 196px; }
+.round.sf .match { margin-bottom: 436px; }
+.round.r16 { padding-top: 54px; }
+.round.qf { padding-top: 154px; }
+.round.sf { padding-top: 356px; }
+.round.r32 .match::after { top: 49px; }
+.round.r16 .match::after,
+.round.qf .match::after,
+.round.sf .match::after { top: 22px; }
+.slot .slotLabel { display:block; color:var(--muted); font-size:10px; line-height:1.05; margin-left:2px; max-width:150px; white-space:normal; }
+.slot .teamText { display:flex; flex-direction:column; min-width:0; }
+.slot.filled .name { font-size:13px; }
+.slot.emptyLabeled { border-color:#547393; background:rgba(22,44,72,.72); }
+
 @media print {
   header,.pool{display:none}
   main{display:block;padding:0}
@@ -72,8 +90,8 @@ rgba(7,17,31,.78);}
 </head>
 <body>
 <header>
-  <h1>2026 World Cup Bracket Builder</h1>
-  <div class="sub">Drag any team from the 48-team pool into the 32-team knockout bracket. Use Export State after seeding, then paste that JSON back later so the next static HTML can preserve bracket/scoring history.</div>
+  <h1>World Cup 2026 Bracket Builder</h1>
+  <div class="sub">Drag teams into the bracket. Scroll sideways to see the full bracket. Use Export State to save or share your picks.</div>
   <div class="toolbar">
     <input id="search" placeholder="Search teams..." />
     <button id="exportBtn">Export State JSON</button>
@@ -146,7 +164,14 @@ function createSlot(id, seed) {
   const slot = document.createElement("div");
   slot.className="slot";
   slot.dataset.slot=id;
-  slot.innerHTML = `<span class="seed">${seed}</span><span class="placeholder">Drop team</span>`;
+  const rule = SLOT_RULES[id];
+  if (rule) {
+    slot.dataset.slotLabel = rule.label;
+    slot.dataset.tooltip = rule.tooltip;
+    slot.title = rule.tooltip;
+  }
+  const labelHtml = rule ? `<span class="slotLabel">${rule.label}</span>` : "";
+  slot.innerHTML = `<span class="seed">${seed}</span><span class="teamText"><span class="placeholder">Drop team</span>${labelHtml}</span>`;
   slot.addEventListener("dragover", e => { e.preventDefault(); slot.classList.add("over"); });
   slot.addEventListener("dragleave", () => slot.classList.remove("over"));
   slot.addEventListener("drop", e => {
@@ -158,7 +183,7 @@ function createSlot(id, seed) {
 }
 function renderRound(label, matches, seedStart, side="left", topSpacer=0) {
   const col = document.createElement("div");
-  col.className = "round " + (side==="right" ? "right" : "");
+  col.className = "round " + roundClass(label) + " " + (side==="right" ? "right" : "");
   col.innerHTML = `<h3>${label.replace("-", " ")}</h3>`;
   if (topSpacer) {
     const s=document.createElement("div"); s.style.height=topSpacer+"px"; col.appendChild(s);
@@ -171,14 +196,44 @@ function renderRound(label, matches, seedStart, side="left", topSpacer=0) {
   }
   return col;
 }
+
+function roundClass(label) {
+  if (label.startsWith("R32")) return "r32";
+  if (label.startsWith("R16")) return "r16";
+  if (label.startsWith("QF")) return "qf";
+  if (label.startsWith("SF")) return "sf";
+  return "";
+}
+const SLOT_RULES = {
+  "R16-L-S1": { label: "Winner R32-L M1/M2", tooltip: "This Round of 16 slot is fed by the winners of the first two left-side Round of 32 matches." },
+  "R16-L-S2": { label: "Winner R32-L M3/M4", tooltip: "This Round of 16 slot is fed by the winners of left-side Round of 32 matches 3 and 4." },
+  "R16-L-S3": { label: "Winner R32-L M5/M6", tooltip: "This Round of 16 slot is fed by the winners of left-side Round of 32 matches 5 and 6." },
+  "R16-L-S4": { label: "Winner R32-L M7/M8", tooltip: "This Round of 16 slot is fed by the winners of left-side Round of 32 matches 7 and 8." },
+  "QF-L-S1": { label: "Winner R16-L S1/S2", tooltip: "This quarterfinal slot is fed by the first two left-side Round of 16 winners." },
+  "QF-L-S2": { label: "Winner R16-L S3/S4", tooltip: "This quarterfinal slot is fed by the next two left-side Round of 16 winners." },
+  "SF-L-S1": { label: "Winner QF-L S1", tooltip: "This semifinal slot is fed by the first left-side quarterfinal winner." },
+  "SF-L-S2": { label: "Winner QF-L S2", tooltip: "This semifinal slot is fed by the second left-side quarterfinal winner." },
+  "R16-R-S1": { label: "Winner R32-R M1/M2", tooltip: "This Round of 16 slot is fed by the winners of the first two right-side Round of 32 matches." },
+  "R16-R-S2": { label: "Winner R32-R M3/M4", tooltip: "This Round of 16 slot is fed by the winners of right-side Round of 32 matches 3 and 4." },
+  "R16-R-S3": { label: "Winner R32-R M5/M6", tooltip: "This Round of 16 slot is fed by the winners of right-side Round of 32 matches 5 and 6." },
+  "R16-R-S4": { label: "Winner R32-R M7/M8", tooltip: "This Round of 16 slot is fed by the winners of right-side Round of 32 matches 7 and 8." },
+  "QF-R-S1": { label: "Winner R16-R S1/S2", tooltip: "This quarterfinal slot is fed by the first two right-side Round of 16 winners." },
+  "QF-R-S2": { label: "Winner R16-R S3/S4", tooltip: "This quarterfinal slot is fed by the next two right-side Round of 16 winners." },
+  "SF-R-S1": { label: "Winner QF-R S1", tooltip: "This semifinal slot is fed by the first right-side quarterfinal winner." },
+  "SF-R-S2": { label: "Winner QF-R S2", tooltip: "This semifinal slot is fed by the second right-side quarterfinal winner." },
+  "FINAL-A": { label: "Winner left semifinal", tooltip: "This final slot is fed by the left-side semifinal winner." },
+  "FINAL-B": { label: "Winner right semifinal", tooltip: "This final slot is fed by the right-side semifinal winner." },
+  "CHAMPION": { label: "Final winner", tooltip: "This slot is assigned to the winner of the final." }
+};
+
 function renderAdvancementRound(label, slots, topSpacer, side) {
   const col = document.createElement("div");
-  col.className = "round " + (side==="right" ? "right" : "");
+  col.className = "round " + roundClass(label) + " " + (side==="right" ? "right" : "");
   col.innerHTML = `<h3>${label.replace("-", " ")}</h3>`;
-  if (topSpacer) { const s=document.createElement("div"); s.style.height=topSpacer+"px"; col.appendChild(s); }
   for (let i=1; i<=slots; i++) {
     const match=document.createElement("div"); match.className="match";
-    match.appendChild(createSlot(`${label}-S${i}`, ""));
+    const id = `${label}-S${i}`;
+    match.appendChild(createSlot(id, ""));
     col.appendChild(match);
   }
   return col;
@@ -193,9 +248,9 @@ function renderBracket() {
   const center = document.createElement("div"); center.className="center";
   const final = document.createElement("div"); final.className="trophy";
   final.innerHTML = `<div class="cup">🏆</div><div class="label">FINAL / CHAMPION</div>`;
-  final.appendChild(createSlot("FINAL-A",""));
-  final.appendChild(createSlot("FINAL-B",""));
-  final.appendChild(createSlot("CHAMPION",""));
+  ["FINAL-A","FINAL-B","CHAMPION"].forEach(id => {
+    final.appendChild(createSlot(id, ""));
+  });
   center.appendChild(final);
   b.appendChild(center);
   b.appendChild(renderAdvancementRound("SF-R", 2, 242, "right"));
@@ -221,13 +276,20 @@ function paintState() {
     const id = slot.dataset.slot;
     const abbr = state.slots[id];
     const seed = slot.querySelector(".seed")?.outerHTML || "";
+    const rule = SLOT_RULES[id] || null;
+    const label = slot.dataset.slotLabel || rule?.label || "";
+    const tooltip = slot.dataset.tooltip || rule?.tooltip || "";
+    if (tooltip) slot.title = tooltip;
+    const labelHtml = label ? `<span class="slotLabel">${label}</span>` : "";
     if (abbr) {
       const t = TEAMS.find(x=>x.abbr===abbr) || {name:abbr, abbr, flag:""};
       slot.classList.add("filled");
-      slot.innerHTML = `${seed}${teamHtml(t)}<button class="remove" title="Remove" onclick="clearSlot('${id}')">×</button>`;
+      slot.classList.remove("emptyLabeled");
+      slot.innerHTML = `${seed}<span class="flag">${t.flag}</span><span class="teamText"><span class="name">${t.name}</span>${labelHtml}</span><span class="meta">${t.abbr} - G${t.group}</span><button class="remove" title="Remove" onclick="clearSlot('${id}')">×</button>`;
     } else {
       slot.classList.remove("filled");
-      slot.innerHTML = `${seed}<span class="placeholder">Drop team</span>`;
+      if (label) slot.classList.add("emptyLabeled"); else slot.classList.remove("emptyLabeled");
+      slot.innerHTML = `${seed}<span class="teamText"><span class="placeholder">Drop team</span>${labelHtml}</span>`;
     }
   });
   document.getElementById("filledCount").textContent = `${Object.keys(state.slots).filter(k=>k.startsWith("R32")).length} / 32 seeded`;
