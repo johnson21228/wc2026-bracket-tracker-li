@@ -81,13 +81,13 @@ rgba(7,17,31,.78);}
 
 /* WB bracket spacing tuner */
 :root {
-  --r16-top: 54px;
-  --r16-gap: 76px;
-  --qf-top: 154px;
-  --qf-gap: 196px;
-  --sf-top: 356px;
-  --sf-gap: 436px;
-  --final-top: 558px;
+  --r16-top: 31px;
+  --r16-gap: 34px;
+  --qf-top: 95px;
+  --qf-gap: 164px;
+  --sf-top: 224px;
+  --sf-gap: 387px;
+  --final-top: 372px;
 }
 .round.r16 { padding-top: var(--r16-top); }
 .round.qf { padding-top: var(--qf-top); }
@@ -221,13 +221,13 @@ rgba(7,17,31,.78);}
         <summary>Bracket spacing tuner</summary>
         <div class="sub">Adjust the spacing until the bracket looks right. Copy the chosen values into the next Capture Back.</div>
         <div class="tunerGrid">
-          <label for="r16Top">R16 top offset</label><input id="r16Top" type="range" min="0" max="160" value="54" data-var="--r16-top" /><span class="tunerValue" id="r16TopVal">54px</span>
-          <label for="r16Gap">R16 vertical gap</label><input id="r16Gap" type="range" min="0" max="180" value="76" data-var="--r16-gap" /><span class="tunerValue" id="r16GapVal">76px</span>
-          <label for="qfTop">QF top offset</label><input id="qfTop" type="range" min="0" max="260" value="154" data-var="--qf-top" /><span class="tunerValue" id="qfTopVal">154px</span>
-          <label for="qfGap">QF vertical gap</label><input id="qfGap" type="range" min="0" max="360" value="196" data-var="--qf-gap" /><span class="tunerValue" id="qfGapVal">196px</span>
-          <label for="sfTop">SF top offset</label><input id="sfTop" type="range" min="0" max="520" value="356" data-var="--sf-top" /><span class="tunerValue" id="sfTopVal">356px</span>
-          <label for="sfGap">SF vertical gap</label><input id="sfGap" type="range" min="0" max="700" value="436" data-var="--sf-gap" /><span class="tunerValue" id="sfGapVal">436px</span>
-          <label for="finalTop">Final top offset</label><input id="finalTop" type="range" min="0" max="800" value="558" data-var="--final-top" /><span class="tunerValue" id="finalTopVal">558px</span>
+          <label for="r16Top">R16 top offset</label><input id="r16Top" type="range" min="0" max="160" value="31" data-var="--r16-top" /><span class="tunerValue" id="r16TopVal">31px</span>
+          <label for="r16Gap">R16 vertical gap</label><input id="r16Gap" type="range" min="0" max="180" value="34" data-var="--r16-gap" /><span class="tunerValue" id="r16GapVal">34px</span>
+          <label for="qfTop">QF top offset</label><input id="qfTop" type="range" min="0" max="260" value="95" data-var="--qf-top" /><span class="tunerValue" id="qfTopVal">95px</span>
+          <label for="qfGap">QF vertical gap</label><input id="qfGap" type="range" min="0" max="360" value="164" data-var="--qf-gap" /><span class="tunerValue" id="qfGapVal">164px</span>
+          <label for="sfTop">SF top offset</label><input id="sfTop" type="range" min="0" max="520" value="224" data-var="--sf-top" /><span class="tunerValue" id="sfTopVal">224px</span>
+          <label for="sfGap">SF vertical gap</label><input id="sfGap" type="range" min="0" max="700" value="387" data-var="--sf-gap" /><span class="tunerValue" id="sfGapVal">387px</span>
+          <label for="finalTop">Final top offset</label><input id="finalTop" type="range" min="0" max="800" value="372" data-var="--final-top" /><span class="tunerValue" id="finalTopVal">372px</span>
         </div>
         <div class="tunerActions">
           <button type="button" id="copyTunerValues">Copy chosen CSS values</button>
@@ -469,7 +469,7 @@ function initSpacingTuner() {
   const reset = document.getElementById("resetTunerValues");
   if (reset) {
     reset.addEventListener("click", () => {
-      const defaults = { r16Top:54, r16Gap:76, qfTop:154, qfGap:196, sfTop:356, sfGap:436, finalTop:558 };
+      const defaults = { r16Top:31, r16Gap:34, qfTop:95, qfGap:164, sfTop:224, sfGap:387, finalTop:372 };
       Object.entries(defaults).forEach(([id, value]) => {
         const el = document.getElementById(id);
         if (el) {
