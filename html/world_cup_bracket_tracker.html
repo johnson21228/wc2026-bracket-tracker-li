@@ -422,6 +422,34 @@ rgba(7,17,31,.78);}
   grid-template-columns: 150px minmax(130px, 1fr) 58px !important;
 }
 
+
+/* WB compact 48-team well */
+.pool {
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)) !important;
+  gap: 6px !important;
+}
+.team {
+  min-height: 38px !important;
+  padding: 6px 7px !important;
+  gap: 6px !important;
+  border-radius: 12px !important;
+}
+.team .flag {
+  font-size: 20px !important;
+  width: 24px !important;
+  min-width: 24px !important;
+}
+.team .name {
+  font-size: 12px !important;
+  line-height: 1.05 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.team .meta {
+  display: none !important;
+}
+
 @media print {
   header,.pool{display:none}
   main{display:block;padding:0}
