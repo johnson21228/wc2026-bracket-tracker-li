@@ -1,41 +1,23 @@
-# Prompt — Apply Overlay Terminal Workflow
+# Apply Overlay Terminal Workflow
 
-## Capture Back apply workflow
-
-When giving a user an overlay apply command, make the command reviewable.
-
-Do not stop at unzip.
-
-A good command should:
-
-1. apply the overlay;
-2. run the apply script;
-3. verify the repo;
-4. pack the repo;
-5. show status;
-6. open the files that make the change understandable.
-
-## Example
+Use this shape when applying a Capture Back overlay to the WC2026 Bracket Tracker Workbench.
 
 ```bash
-cd /Users/stevejohnson/Developer/<repo>
+cd /Users/stevejohnson/Developer/wc2026-bracket-tracker-li
 
 unzip -o ~/Downloads/<overlay>.zip -d .
-
-python3 tools/<apply_script>.py
+python3 <overlay_dir>/<apply_script>.py
 
 make verify
 make pack
 
 git status --short
 
-open docs/<primary_doc>.md
-open li/<primary_rule>.md
-open CAPTURE_BACK_<NAME>.md
+open site/index.html
+open site/game1/index.html
+open site/game2/index.html
 ```
 
-## Why
+The app `open` commands are required review evidence for any overlay that changes site runtime, game data, game assets, game behavior, or shared board geometry.
 
-Workbench is a human-in-the-loop system.
-
-The apply step changes the repo. The open step creates the human review surface. The commit step remains a human decision.
+For LI-only overlays, open the changed LI/docs files and include app opens when the LI affects future Game 1 or Game 2 behavior.

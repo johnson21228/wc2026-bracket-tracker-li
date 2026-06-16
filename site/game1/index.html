@@ -1,205 +1,185 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>World Cup 2026 Game 1</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>WC2026 Game 1 — R32 Assignment Board</title>
 <style>
 :root {
-  --ink:#f8fbff; --muted:#b7c4d8; --accent:#ffe34d;
-  --pub-opacity:.42; --bracket-opacity:.95; --wash-opacity:.16;
-  --slot-fill:.82; --slot-border:.90; --slot-label:.96;
+  --page-bg: #05070b;
+  --board-w-px: 1536px;
+  --board-h-px: 1024px;
+  --review-pad: 24px;
+  --slotFillOpacity: .86;
 }
-* { box-sizing:border-box; }
-body { margin:0; background:#030812; color:var(--ink); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-header,.controls { background:#07111f; border-bottom:1px solid #203b57; padding:10px 16px; }
-h1 { margin:0; font-size:22px; }
-.sub { color:var(--muted); font-size:13px; margin-top:3px; }
-.controls { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-button,input,select { font:inherit; }
-button,select,input { border:1px solid #35638f; color:var(--ink); background:#143250; border-radius:10px; padding:8px 10px; }
-input[type="range"] { padding:0; width:110px; vertical-align:middle; }
-input { background:#0b1a2d; }
-.main { padding:12px; }
-.panel { background:rgba(9,20,35,.88); border:1px solid #254a6f; border-radius:18px; padding:12px; }
-.status { display:flex; justify-content:space-between; color:var(--muted); font-weight:800; margin-bottom:8px; }
-.scroller { overflow:auto; max-height:calc(100vh - 152px); -webkit-overflow-scrolling:touch; }
-.board { position:relative; width:1536px; max-width:none; aspect-ratio:3/2; margin:0 auto; overflow:hidden; border-radius:14px; border:1px solid #254a6f; background:#06101c; }
-.pubGameBg { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; background:#050b13; }
-.pubGameBg img { width:100%; height:100%; object-fit:cover; opacity:var(--pub-opacity); filter:saturate(1.08) contrast(.98) brightness(.92); }
-.pubGameBg::after { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.08),rgba(3,8,18,.44) 78%),linear-gradient(90deg,rgba(3,8,18,.26),rgba(3,8,18,.05) 50%,rgba(3,8,18,.26)); }
-.wash { position:absolute; inset:0; z-index:1; opacity:var(--wash-opacity); pointer-events:none; background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.28) 0,rgba(255,255,255,.14) 44%,rgba(255,255,255,.04) 100%),radial-gradient(circle at 50% 42%,rgba(4,10,20,.18) 0,rgba(4,10,20,.38) 62%,rgba(4,10,20,.60) 100%); }
-.bracketGeometry { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:var(--bracket-opacity); pointer-events:none; z-index:2; }
-.topTitle { position:absolute; left:3%; right:3%; top:1.4%; height:9%; display:flex; align-items:center; justify-content:center; pointer-events:none; text-align:center; z-index:3; }
-.topTitle h2 { margin:0; font-size:38px; letter-spacing:.04em; color:#f8fbff; text-shadow:0 2px 6px rgba(0,0,0,.8); }
-.hitLayer { position:absolute; inset:0; z-index:50; pointer-events:none; }
-.hotspot { position:absolute; z-index:51; border:2px solid rgba(255,255,255,var(--slot-border)); background:rgba(5,18,34,var(--slot-fill)); border-radius:8px; padding:0; cursor:pointer; pointer-events:auto; appearance:none; -webkit-appearance:none; box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),0 2px 10px rgba(0,0,0,.42); backdrop-filter:blur(1.5px); }
-.hotspot:hover,.hotspot.active { border-color:rgba(255,227,77,.98); background:rgba(22,48,76,.94); box-shadow:0 0 0 3px rgba(255,227,77,.28),inset 0 0 0 1px rgba(255,255,255,.26),0 2px 12px rgba(0,0,0,.45); }
-.showHitZones .hotspot { border-color:rgba(255,60,60,.96); background:rgba(255,60,60,.34); box-shadow:0 0 0 2px rgba(255,255,255,.32) inset,0 0 0 3px rgba(255,60,60,.18); }
-.hotspot .rule { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,var(--slot-label)); font-weight:950; font-size:12px; text-shadow:0 1px 2px rgba(0,0,0,.92); pointer-events:none; }
-.hotspot.picked .rule { display:none; }
-.hotspot .pick { position:absolute; inset:0; display:flex; align-items:center; gap:4px; justify-content:center; padding:2px 5px; color:#fff; font-weight:950; font-size:12px; line-height:1; text-shadow:0 1px 2px rgba(0,0,0,.94); pointer-events:none; }
-.hotspot .flag { font-size:18px; }
-.modalBackdrop { position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:1000; padding:18px; }
-.modalBackdrop.open { display:flex; }
-.modal { width:min(430px,94vw); max-height:88vh; overflow:auto; background:linear-gradient(180deg,#10243d,#071423); border:1px solid #4a739c; border-radius:18px; box-shadow:0 18px 60px rgba(0,0,0,.55); padding:16px; }
-.modalHead { display:flex; justify-content:space-between; align-items:center; }
-.closeBtn { font-size:22px; padding:5px 10px; background:#0a1728; }
-.ruleBig { font-size:30px; color:var(--accent); font-weight:950; margin-top:12px; }
-.long,.small { color:var(--muted); }
-.choices { display:grid; gap:8px; margin-top:12px; }
-.choice { display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:#102844; }
-.choice .flag { font-size:24px; width:30px; }
-.choice .name { font-weight:850; }
-.choice .meta { color:var(--muted); font-size:12px; margin-left:auto; }
-.danger { background:#592234; border-color:#b44963; }
-textarea { width:100%; min-height:110px; background:#06101c; color:var(--ink); border:1px solid #31577a; border-radius:12px; padding:10px; font-family:ui-monospace,monospace; font-size:12px; margin-top:10px; }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: var(--page-bg); }
+body { min-height: 100vh; overflow: auto; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: white; }
+.game1BoardViewport { width: max-content; min-width: calc(var(--board-w-px) + (var(--review-pad) * 2)); min-height: calc(var(--board-h-px) + (var(--review-pad) * 2)); padding: var(--review-pad); }
+.pixelNativeBoardPlane { position: relative; width: var(--board-w-px); height: var(--board-h-px); background-image: radial-gradient(circle at 50% 42%, rgba(255,255,255,.10), rgba(0,0,0,.36) 62%, rgba(0,0,0,.58) 100%), linear-gradient(90deg, rgba(0,0,0,.32), rgba(0,0,0,.08) 50%, rgba(0,0,0,.32)), url("../assets/playfield/game1_pub_options_background.jpeg"); background-size: 1536px 1024px, 1536px 1024px, 1536px 1024px; background-position: 0 0, 0 0, 0 0; background-repeat: no-repeat; box-shadow: 0 0 0 1px rgba(255,255,255,0.16), 0 28px 80px rgba(0,0,0,0.55); }
+.boardGeometry { position: absolute; inset: 0; width: 1536px; height: 1024px; pointer-events: none; user-select: none; }
+.hitLayer, .pickLayer { position: absolute; inset: 0; width: 1536px; height: 1024px; }
+.hotspot { position: absolute; padding: 0; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(0,0,0,.04); cursor: pointer; }
+.hotspot:hover, .hotspot:focus-visible { outline: 3px solid rgba(255,255,255,.92); background: rgba(255,255,255,.16); }
+.pickCard { position: absolute; display: flex; align-items: center; gap: 8px; height: 40px; padding: 4px 8px; border-radius: 7px; border: 1px solid rgba(0,0,0,.55); background: rgba(250,250,248,var(--slotFillOpacity)); color: #05070b; font-weight: 800; pointer-events: none; overflow: hidden; }
+.pickFlag { font-size: 22px; line-height: 1; }
+.pickText { display: flex; min-width: 0; flex-direction: column; line-height: 1.05; }
+.pickName { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pickRule { font-size: 9px; opacity: .64; white-space: nowrap; }
+.slotLabel { position: absolute; transform: translateY(-18px); font-size: 10px; letter-spacing: .04em; color: rgba(255,255,255,.78); text-shadow: 0 1px 4px rgba(0,0,0,.9); pointer-events: none; }
+.menuBackdrop { position: fixed; inset: 0; display: none; background: rgba(0,0,0,.42); z-index: 20; }
+.menuBackdrop.isOpen { display: block; }
+.tapMenu { position: fixed; z-index: 21; width: min(560px, calc(100vw - 32px)); max-height: min(720px, calc(100vh - 32px)); overflow: auto; border: 1px solid rgba(255,255,255,.24); border-radius: 18px; background: rgba(15,18,25,.96); box-shadow: 0 22px 70px rgba(0,0,0,.6); padding: 16px; display: none; }
+.tapMenu.isOpen { display: block; }
+.menuHeader { display: flex; justify-content: space-between; gap: 12px; align-items: start; margin-bottom: 12px; }
+.menuTitle { font-size: 18px; font-weight: 900; }
+.menuSub { color: rgba(255,255,255,.72); font-size: 13px; margin-top: 4px; }
+.closeBtn { border: 1px solid rgba(255,255,255,.24); background: rgba(255,255,255,.08); color: white; border-radius: 999px; padding: 8px 12px; cursor: pointer; }
+.groupChips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+.groupChip { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: 5px 9px; background: rgba(255,255,255,.08); font-weight: 800; font-size: 12px; }
+.teamGrid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+.teamTile { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left; border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 10px; background: rgba(255,255,255,.10); color: white; cursor: pointer; }
+.teamTile:hover, .teamTile:focus-visible { outline: 2px solid white; background: rgba(255,255,255,.18); }
+.teamFlag { font-size: 30px; width: 36px; text-align: center; }
+.teamMeta { min-width: 0; }
+.teamName { font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.teamDetail { font-size: 12px; color: rgba(255,255,255,.72); }
+.toolbar { position: sticky; left: 0; top: 0; z-index: 10; display: inline-flex; gap: 8px; margin-bottom: 10px; padding: 8px; border-radius: 14px; background: rgba(5,7,11,.78); backdrop-filter: blur(8px); }
+.toolbar button { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; background: rgba(255,255,255,.08); color: white; padding: 8px 12px; cursor: pointer; }
+.visuallyHidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.slotFillOpacitySentinel { display:none; }
+
+/* wc2026-game1-menu-flag-and-transparency-tune */
+.groupCard {
+  background: linear-gradient(180deg, rgba(16,36,61,.86), rgba(8,24,42,.82)) !important;
+  backdrop-filter: blur(8px);
+}
+.teamChoice {
+  gap: 14px !important;
+  padding: 10px 12px !important;
+  background: rgba(16, 40, 68, .62) !important;
+  border-color: rgba(123, 174, 224, .52) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 6px 16px rgba(0,0,0,.16);
+}
+.teamChoice:hover,
+.teamChoice:focus-visible {
+  background: rgba(23, 56, 94, .78) !important;
+  border-color: rgba(255, 227, 77, .86) !important;
+}
+.teamChoice .flag {
+  font-size: 32px !important;
+  width: 44px !important;
+  min-width: 44px !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.38));
+}
+.teamChoice .country {
+  font-size: 14px !important;
+  font-weight: 950 !important;
+}
+.teamChoice .abbr {
+  font-size: 12px !important;
+  opacity: .82;
+}
+
 </style>
 </head>
 <body>
-<header><h1>World Cup 2026 Game 1</h1><div class="sub">Tap a Round-of-32 slot. The chooser opens from the official slot rule.</div></header>
-<div class="controls">
-  <label>Pub BG <input id="pubOpacity" type="range" min="0" max="0.85" step="0.01" value="0.42"/></label>
-  <label>Bracket <input id="bracketOpacity" type="range" min="0.2" max="1" step="0.01" value="0.95"/></label>
-  <label>Wash <input id="washOpacity" type="range" min="0" max="0.7" step="0.01" value="0.16"/></label>
-  <label>Slot Fill <input id="slotFillOpacity" type="range" min="0.15" max="1" step="0.01" value="0.82"/></label>
-  <label>Slot Border <input id="slotBorder" type="range" min="0.15" max="1" step="0.01" value="0.90"/></label>
-  <label><input id="showHitZones" type="checkbox"/> Show hit zones</label>
-  <input id="playerName" placeholder="Player name"/>
-  <button id="exportBtn">Export JSON</button>
-  <button id="importBtn">Import JSON</button>
-  <button id="clearBtn">Clear picks</button>
-</div>
-<main class="main">
-  <section class="panel">
-    <div class="status"><span id="pickedCount">0 / 32 picked</span><span id="hitStatus">initializing hit targets</span></div>
-    <div class="scroller">
-      <div id="board" class="board">
-        <div class="pubGameBg" aria-hidden="true"><img src="../assets/playfield/game1_pub_options_background.jpeg" alt=""/></div>
-        <div class="wash" aria-hidden="true"></div>
-        <img class="bracketGeometry" src="../assets/playfield/r32_bracket_geometry_overlay.png" alt="Round of 32 bracket geometry"/>
-        <div class="topTitle"><h2>ROUND OF 32</h2></div>
-        <div id="hitLayer" class="hitLayer" aria-label="Round of 32 pick targets"></div>
-      </div>
-    </div>
-    <textarea id="jsonBox" placeholder="Exported/imported picks JSON appears here"></textarea>
-  </section>
-</main>
-<div id="modalBackdrop" class="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal">
-    <div class="modalHead"><h3 id="modalTitle">Choose team</h3><button id="closeModal" class="closeBtn" aria-label="Close">×</button></div>
-    <div id="ruleBig" class="ruleBig"></div>
-    <div id="ruleLong" class="long"></div>
-    <div id="choices" class="choices"></div>
-    <button id="clearSlot" class="danger">Clear this slot</button>
-  </div>
-</div>
-<script>
-const TEAMS = [{"group": "A", "name": "Mexico", "display": "Mexico", "abbr": "MEX", "flag": "🇲🇽"}, {"group": "A", "name": "South Africa", "display": "South Africa", "abbr": "RSA", "flag": "🇿🇦"}, {"group": "A", "name": "Korea Republic", "display": "South Korea", "abbr": "KOR", "flag": "🇰🇷"}, {"group": "A", "name": "Czechia", "display": "Czechia", "abbr": "CZE", "flag": "🇨🇿"}, {"group": "B", "name": "Canada", "display": "Canada", "abbr": "CAN", "flag": "🇨🇦"}, {"group": "B", "name": "Bosnia-Herzegovina", "display": "Bosnia-Herzegovina", "abbr": "BIH", "flag": "🇧🇦"}, {"group": "B", "name": "Qatar", "display": "Qatar", "abbr": "QAT", "flag": "🇶🇦"}, {"group": "B", "name": "Switzerland", "display": "Switzerland", "abbr": "SUI", "flag": "🇨🇭"}, {"group": "C", "name": "Brazil", "display": "Brazil", "abbr": "BRA", "flag": "🇧🇷"}, {"group": "C", "name": "Morocco", "display": "Morocco", "abbr": "MAR", "flag": "🇲🇦"}, {"group": "C", "name": "Haiti", "display": "Haiti", "abbr": "HAI", "flag": "🇭🇹"}, {"group": "C", "name": "Scotland", "display": "Scotland", "abbr": "SCO", "flag": "🏴"}, {"group": "D", "name": "USA", "display": "USA", "abbr": "USA", "flag": "🇺🇸"}, {"group": "D", "name": "Paraguay", "display": "Paraguay", "abbr": "PAR", "flag": "🇵🇾"}, {"group": "D", "name": "Australia", "display": "Australia", "abbr": "AUS", "flag": "🇦🇺"}, {"group": "D", "name": "Türkiye", "display": "Turkiye", "abbr": "TUR", "flag": "🇹🇷"}, {"group": "E", "name": "Germany", "display": "Germany", "abbr": "GER", "flag": "🇩🇪"}, {"group": "E", "name": "Curaçao", "display": "Curacao", "abbr": "CUW", "flag": "🇨🇼"}, {"group": "E", "name": "Côte d’Ivoire", "display": "Ivory Coast", "abbr": "CIV", "flag": "🇨🇮"}, {"group": "E", "name": "Ecuador", "display": "Ecuador", "abbr": "ECU", "flag": "🇪🇨"}, {"group": "F", "name": "Netherlands", "display": "Netherlands", "abbr": "NED", "flag": "🇳🇱"}, {"group": "F", "name": "Japan", "display": "Japan", "abbr": "JPN", "flag": "🇯🇵"}, {"group": "F", "name": "Sweden", "display": "Sweden", "abbr": "SWE", "flag": "🇸🇪"}, {"group": "F", "name": "Tunisia", "display": "Tunisia", "abbr": "TUN", "flag": "🇹🇳"}, {"group": "G", "name": "Belgium", "display": "Belgium", "abbr": "BEL", "flag": "🇧🇪"}, {"group": "G", "name": "Egypt", "display": "Egypt", "abbr": "EGY", "flag": "🇪🇬"}, {"group": "G", "name": "IR Iran", "display": "Iran", "abbr": "IRN", "flag": "🇮🇷"}, {"group": "G", "name": "New Zealand", "display": "New Zealand", "abbr": "NZL", "flag": "🇳🇿"}, {"group": "H", "name": "Spain", "display": "Spain", "abbr": "ESP", "flag": "🇪🇸"}, {"group": "H", "name": "Cabo Verde", "display": "Cape Verde", "abbr": "CPV", "flag": "🇨🇻"}, {"group": "H", "name": "Saudi Arabia", "display": "Saudi Arabia", "abbr": "KSA", "flag": "🇸🇦"}, {"group": "H", "name": "Uruguay", "display": "Uruguay", "abbr": "URU", "flag": "🇺🇾"}, {"group": "I", "name": "France", "display": "France", "abbr": "FRA", "flag": "🇫🇷"}, {"group": "I", "name": "Senegal", "display": "Senegal", "abbr": "SEN", "flag": "🇸🇳"}, {"group": "I", "name": "Iraq", "display": "Iraq", "abbr": "IRQ", "flag": "🇮🇶"}, {"group": "I", "name": "Norway", "display": "Norway", "abbr": "NOR", "flag": "🇳🇴"}, {"group": "J", "name": "Argentina", "display": "Argentina", "abbr": "ARG", "flag": "🇦🇷"}, {"group": "J", "name": "Algeria", "display": "Algeria", "abbr": "ALG", "flag": "🇩🇿"}, {"group": "J", "name": "Austria", "display": "Austria", "abbr": "AUT", "flag": "🇦🇹"}, {"group": "J", "name": "Jordan", "display": "Jordan", "abbr": "JOR", "flag": "🇯🇴"}, {"group": "K", "name": "Portugal", "display": "Portugal", "abbr": "POR", "flag": "🇵🇹"}, {"group": "K", "name": "Congo DR", "display": "DR Congo", "abbr": "COD", "flag": "🇨🇩"}, {"group": "K", "name": "Uzbekistan", "display": "Uzbekistan", "abbr": "UZB", "flag": "🇺🇿"}, {"group": "K", "name": "Colombia", "display": "Colombia", "abbr": "COL", "flag": "🇨🇴"}, {"group": "L", "name": "England", "display": "England", "abbr": "ENG", "flag": "🏴"}, {"group": "L", "name": "Croatia", "display": "Croatia", "abbr": "CRO", "flag": "🇭🇷"}, {"group": "L", "name": "Ghana", "display": "Ghana", "abbr": "GHA", "flag": "🇬🇭"}, {"group": "L", "name": "Panama", "display": "Panama", "abbr": "PAN", "flag": "🇵🇦"}];
-const RULES = {"R32-L-M1A": {"match": 73, "short": "2A", "long": "Runner-up Group A"}, "R32-L-M1B": {"match": 73, "short": "2B", "long": "Runner-up Group B"}, "R32-L-M2A": {"match": 75, "short": "1F", "long": "Winner Group F"}, "R32-L-M2B": {"match": 75, "short": "2C", "long": "Runner-up Group C"}, "R32-L-M3A": {"match": 74, "short": "1E", "long": "Winner Group E"}, "R32-L-M3B": {"match": 74, "short": "3 A/B/C/D/F", "long": "Best third-place team from Groups A/B/C/D/F"}, "R32-L-M4A": {"match": 77, "short": "1I", "long": "Winner Group I"}, "R32-L-M4B": {"match": 77, "short": "3 C/D/F/G/H", "long": "Best third-place team from Groups C/D/F/G/H"}, "R32-L-M5A": {"match": 76, "short": "1C", "long": "Winner Group C"}, "R32-L-M5B": {"match": 76, "short": "2F", "long": "Runner-up Group F"}, "R32-L-M6A": {"match": 78, "short": "2E", "long": "Runner-up Group E"}, "R32-L-M6B": {"match": 78, "short": "2I", "long": "Runner-up Group I"}, "R32-L-M7A": {"match": 79, "short": "1A", "long": "Winner Group A"}, "R32-L-M7B": {"match": 79, "short": "3 C/E/F/H/I", "long": "Best third-place team from Groups C/E/F/H/I"}, "R32-L-M8A": {"match": 80, "short": "1L", "long": "Winner Group L"}, "R32-L-M8B": {"match": 80, "short": "3 E/H/I/J/K", "long": "Best third-place team from Groups E/H/I/J/K"}, "R32-R-M1A": {"match": 83, "short": "2K", "long": "Runner-up Group K"}, "R32-R-M1B": {"match": 83, "short": "2L", "long": "Runner-up Group L"}, "R32-R-M2A": {"match": 84, "short": "1H", "long": "Winner Group H"}, "R32-R-M2B": {"match": 84, "short": "2J", "long": "Runner-up Group J"}, "R32-R-M3A": {"match": 81, "short": "1D", "long": "Winner Group D"}, "R32-R-M3B": {"match": 81, "short": "3 B/E/F/I/J", "long": "Best third-place team from Groups B/E/F/I/J"}, "R32-R-M4A": {"match": 82, "short": "1G", "long": "Winner Group G"}, "R32-R-M4B": {"match": 82, "short": "3 A/E/H/I/J", "long": "Best third-place team from Groups A/E/H/I/J"}, "R32-R-M5A": {"match": 86, "short": "1J", "long": "Winner Group J"}, "R32-R-M5B": {"match": 86, "short": "2H", "long": "Runner-up Group H"}, "R32-R-M6A": {"match": 88, "short": "2D", "long": "Runner-up Group D"}, "R32-R-M6B": {"match": 88, "short": "2G", "long": "Runner-up Group G"}, "R32-R-M7A": {"match": 85, "short": "1B", "long": "Winner Group B"}, "R32-R-M7B": {"match": 85, "short": "3 E/F/G/I/J", "long": "Best third-place team from Groups E/F/G/I/J"}, "R32-R-M8A": {"match": 87, "short": "1K", "long": "Winner Group K"}, "R32-R-M8B": {"match": 87, "short": "3 D/E/I/J/L", "long": "Best third-place team from Groups D/E/I/J/L"}};
-const HOTSPOTS = [["R32-L-M1A", 2.5, 13.8, 8.9, 4.0], ["R32-L-M1B", 2.5, 18.2, 8.9, 4.0], ["R32-L-M2A", 2.5, 23.0, 8.9, 4.0], ["R32-L-M2B", 2.5, 27.4, 8.9, 4.0], ["R32-L-M3A", 2.5, 32.2, 8.9, 4.0], ["R32-L-M3B", 2.5, 36.6, 8.9, 4.0], ["R32-L-M4A", 2.5, 41.4, 8.9, 4.0], ["R32-L-M4B", 2.5, 45.8, 8.9, 4.0], ["R32-L-M5A", 2.5, 51.0, 8.9, 4.0], ["R32-L-M5B", 2.5, 55.4, 8.9, 4.0], ["R32-L-M6A", 2.5, 60.2, 8.9, 4.0], ["R32-L-M6B", 2.5, 64.6, 8.9, 4.0], ["R32-L-M7A", 2.5, 69.4, 8.9, 4.0], ["R32-L-M7B", 2.5, 73.8, 8.9, 4.0], ["R32-L-M8A", 2.5, 78.6, 8.9, 4.0], ["R32-L-M8B", 2.5, 83.0, 8.9, 4.0], ["R32-R-M1A", 88.6, 13.8, 8.9, 4.0], ["R32-R-M1B", 88.6, 18.2, 8.9, 4.0], ["R32-R-M2A", 88.6, 23.0, 8.9, 4.0], ["R32-R-M2B", 88.6, 27.4, 8.9, 4.0], ["R32-R-M3A", 88.6, 32.2, 8.9, 4.0], ["R32-R-M3B", 88.6, 36.6, 8.9, 4.0], ["R32-R-M4A", 88.6, 41.4, 8.9, 4.0], ["R32-R-M4B", 88.6, 45.8, 8.9, 4.0], ["R32-R-M5A", 88.6, 51.0, 8.9, 4.0], ["R32-R-M5B", 88.6, 55.4, 8.9, 4.0], ["R32-R-M6A", 88.6, 60.2, 8.9, 4.0], ["R32-R-M6B", 88.6, 64.6, 8.9, 4.0], ["R32-R-M7A", 88.6, 69.4, 8.9, 4.0], ["R32-R-M7B", 88.6, 73.8, 8.9, 4.0], ["R32-R-M8A", 88.6, 78.6, 8.9, 4.0], ["R32-R-M8B", 88.6, 83.0, 8.9, 4.0]];
-const STORAGE_KEY = "wc2026.game1.reset.visible.hit.layer.v1";
-let state = {version:"game1-reset-visible-hit-layer-v1", playerName:"", picks:{}};
-let activeSlot = null;
-const $ = (id)=>document.getElementById(id);
-function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-function load(){ try{ const raw=localStorage.getItem(STORAGE_KEY); if(raw) state={...state,...JSON.parse(raw)}; }catch(e){ console.warn(e); } $("playerName").value=state.playerName||""; }
-function makeHotspots(){
-  const layer = $("hitLayer");
-  layer.innerHTML = "";
-  HOTSPOTS.forEach(([id,x,y,w,h])=>{
-    const btn=document.createElement("button");
-    btn.type="button"; btn.className="hotspot"; btn.dataset.slot=id;
-    btn.setAttribute("aria-label", `${RULES[id]?.short || id}: ${RULES[id]?.long || "Choose team"}`);
-    Object.assign(btn.style, {left:x+"%", top:y+"%", width:w+"%", height:h+"%"});
-    btn.innerHTML = `<span class="rule">${RULES[id]?.short || ""}</span>`;
-    btn.addEventListener("click", (ev)=>{ ev.preventDefault(); ev.stopPropagation(); openChooser(id); });
-    layer.appendChild(btn);
-  });
-  const count = layer.querySelectorAll(".hotspot").length;
-  $("hitStatus").textContent = `${count} opaque hit targets active`;
-  console.log("game1_reset_visible_hit_layer", count);
-  console.log("game1_runtime_duplicate_state_and_slotfill_fix", "ok");
-}
-
-function groupsForSlotRule(slot){
-  const rule = RULES[slot] || {};
-  const short = String(rule.short || "").trim().toUpperCase();
-  const long = String(rule.long || "").trim();
-  const source = `${short} ${long}`.toUpperCase();
-
-  // Direct winner/runner-up slots: 1A, 2F, etc.
-  const direct = short.match(/^[12]([A-L])$/);
-  if (direct) return [direct[1]];
-
-  // Third-place slots: 3 A/B/C/D/F, 3A/B/C/D/F, or long text mentioning Groups A/B/C/D/F.
-  const third = source.match(/3\s*([A-L](?:\/[A-L])*)/);
-  if (third) return third[1].split("/").filter(Boolean);
-
-  const groupsText = source.match(/GROUPS?\s+([A-L](?:\/[A-L])*)/i);
-  if (groupsText) return groupsText[1].toUpperCase().split("/").filter(Boolean);
-
-  return [];
-}
-
-function eligibleTeamsForSlot(slot){
-  const groups = groupsForSlotRule(slot);
-  if (!groups.length) return TEAMS;
-  const allowed = new Set(groups);
-  return TEAMS.filter(t => allowed.has(String(t.group || "").toUpperCase()));
-}
-
-function openChooser(slot){
-  activeSlot=slot;
-  document.querySelectorAll(".hotspot").forEach(h=>h.classList.toggle("active", h.dataset.slot===slot));
-  const rule=RULES[slot]||{short:slot,long:"Choose team"};
-  $("modalTitle").textContent = `Choose ${slot}`;
-  $("ruleBig").textContent = rule.short || slot;
-  const allowedGroups = groupsForSlotRule(slot);
-  $("ruleLong").textContent = `${rule.long || "Choose team"}${allowedGroups.length ? ` · Menu: Group ${allowedGroups.join("/")}` : ""}`;
-  const choices=$("choices"); choices.innerHTML="";
-  eligibleTeamsForSlot(slot).forEach(t=>{
-    const b=document.createElement("button"); b.type="button"; b.className="choice";
-    b.innerHTML=`<span class="flag">${t.flag}</span><span class="name">${t.display||t.name}</span><span class="meta">${t.group} · ${t.abbr}</span>`;
-    b.addEventListener("click",()=>{ state.picks[slot]={abbr:t.abbr,name:t.display||t.name,flag:t.flag,group:t.group}; save(); closeChooser(); render(); });
-    choices.appendChild(b);
-  });
-  $("modalBackdrop").classList.add("open");
-}
-function closeChooser(){ $("modalBackdrop").classList.remove("open"); activeSlot=null; document.querySelectorAll(".hotspot").forEach(h=>h.classList.remove("active")); }
-function render(){
-  document.querySelectorAll(".hotspot").forEach(h=>{
-    const pick=state.picks[h.dataset.slot];
-    h.classList.toggle("picked", !!pick);
-    h.innerHTML = pick ? `<span class="pick"><span class="flag">${pick.flag}</span><span>${pick.abbr}</span></span>` : `<span class="rule">${RULES[h.dataset.slot]?.short || ""}</span>`;
-  });
-  $("pickedCount").textContent = `${Object.keys(state.picks||{}).length} / 32 picked`;
-}
-function bindRange(id, varName, storeKey){
-  const el=$(id); if(!el) return;
-  const saved=localStorage.getItem(storeKey); if(saved!==null) el.value=saved;
-  document.documentElement.style.setProperty(varName, el.value);
-  el.addEventListener("input",()=>{ document.documentElement.style.setProperty(varName, el.value); localStorage.setItem(storeKey, el.value); });
-}
-function initControls(){
-  bindRange("pubOpacity", "--pub-opacity", "wc2026.pubOpacity");
-  bindRange("bracketOpacity", "--bracket-opacity", "wc2026.bracketOpacity");
-  bindRange("washOpacity", "--wash-opacity", "wc2026.washOpacity");
-  bindRange("slotFillOpacity", "--slot-fill", "wc2026.slotFillOpacity");
-  bindRange("slotBorder", "--slot-border", "wc2026.slotBorder");
-  $("showHitZones").addEventListener("change", e=>document.body.classList.toggle("showHitZones", e.target.checked));
-  $("playerName").addEventListener("input", e=>{ state.playerName=e.target.value; save(); });
-  $("closeModal").addEventListener("click", closeChooser);
-  $("modalBackdrop").addEventListener("click", e=>{ if(e.target.id==="modalBackdrop") closeChooser(); });
-  $("clearSlot").addEventListener("click",()=>{ if(activeSlot){ delete state.picks[activeSlot]; save(); render(); closeChooser(); } });
-  $("clearBtn").addEventListener("click",()=>{ if(confirm("Clear all Game 1 picks?")){ state.picks={}; save(); render(); } });
-  $("exportBtn").addEventListener("click",()=>{ $("jsonBox").value=JSON.stringify(state,null,2); });
-  $("importBtn").addEventListener("click",()=>{ try{ const incoming=JSON.parse($("jsonBox").value); state={...state,...incoming, picks:incoming.picks||{}}; save(); render(); }catch(e){ alert("Invalid JSON"); } });
-}
-function boot(){ load(); makeHotspots(); render(); initControls(); }
-if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", boot); else boot();
-console.log("game1_group_filtered_tap_menu_restore", "ok");
-</script>
-<!-- game1_group_filtered_tap_menu_restore -->
+  <main class="game1BoardViewport" aria-label="Game 1 R32 assignment board">
+    <div class="toolbar" aria-label="Game 1 tools"><button type="button" id="clearPicks">Clear picks</button><button type="button" id="exportPicks">Export picks</button></div>
+    <h1 class="visuallyHidden">Game 1 Round of 32 Assignment Board</h1>
+    <section class="pixelNativeBoardPlane" aria-label="Shared 1536 by 1024 pixel-native R32 game board" data-board-source="site/assets/playfield/r32_bracket_geometry_overlay.png" data-native-width="1536" data-native-height="1024" data-display-mode="native-pixel-scrollable" data-game="game1">
+      <img class="boardGeometry" src="../assets/playfield/r32_bracket_geometry_overlay.png" alt="Round of 32 game board" width="1536" height="1024" />
+      <div class="pickLayer" id="pickLayer" aria-hidden="true"></div>
+      <div class="hitLayer" id="hitLayer"></div>
+    </section>
+    <div class="slotFillOpacitySentinel" hidden aria-hidden="true">slotFillOpacity</div>
+  </main>
+  <div class="menuBackdrop" id="menuBackdrop"></div>
+  <aside class="tapMenu" id="tapMenu" aria-label="Team chooser" role="dialog" aria-modal="true">
+    <div class="menuHeader"><div><div class="menuTitle" id="menuTitle">Choose team</div><div class="menuSub" id="menuSub"></div></div><button class="closeBtn" type="button" id="closeMenu">Close</button></div>
+    <div class="groupChips" id="groupChips"></div>
+    <div class="teamGrid" id="teamGrid"></div>
+  </aside>
+  <script>
+    const STORAGE_KEY = "wc2026.game1.r32.picks";
+    const SLOT_RULES = [{"position":1,"logicalId":"game1.r32.slot01","slotId":"R32-L-M1A","round":"R32","side":"left","row":1,"slotRule":"2A","slotRuleLong":"Runner-up Group A","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["A"],"menuTitle":"Runner-up Group A","boundsPx":{"x":38,"y":142,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":142,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":2,"logicalId":"game1.r32.slot02","slotId":"R32-L-M1B","round":"R32","side":"left","row":2,"slotRule":"2B","slotRuleLong":"Runner-up Group B","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["B"],"menuTitle":"Runner-up Group B","boundsPx":{"x":38,"y":189,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":189,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":3,"logicalId":"game1.r32.slot03","slotId":"R32-L-M2A","round":"R32","side":"left","row":3,"slotRule":"1F","slotRuleLong":"Winner Group F","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["F"],"menuTitle":"Winner Group F","boundsPx":{"x":38,"y":236,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":236,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":4,"logicalId":"game1.r32.slot04","slotId":"R32-L-M2B","round":"R32","side":"left","row":4,"slotRule":"2C","slotRuleLong":"Runner-up Group C","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["C"],"menuTitle":"Runner-up Group C","boundsPx":{"x":38,"y":283,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":283,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":5,"logicalId":"game1.r32.slot05","slotId":"R32-L-M3A","round":"R32","side":"left","row":5,"slotRule":"1E","slotRuleLong":"Winner Group E","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["E"],"menuTitle":"Winner Group E","boundsPx":{"x":38,"y":330,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":330,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":6,"logicalId":"game1.r32.slot06","slotId":"R32-L-M3B","round":"R32","side":"left","row":6,"slotRule":"3 A/B/C/D/F","slotRuleLong":"Best third-place team from Groups A/B/C/D/F","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["A","B","C","D","F"],"menuTitle":"Third-place pool: A/B/C/D/F","boundsPx":{"x":38,"y":377,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":377,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":7,"logicalId":"game1.r32.slot07","slotId":"R32-L-M4A","round":"R32","side":"left","row":7,"slotRule":"1I","slotRuleLong":"Winner Group I","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["I"],"menuTitle":"Winner Group I","boundsPx":{"x":38,"y":424,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":424,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":8,"logicalId":"game1.r32.slot08","slotId":"R32-L-M4B","round":"R32","side":"left","row":8,"slotRule":"3 C/D/F/G/H","slotRuleLong":"Best third-place team from Groups C/D/F/G/H","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["C","D","F","G","H"],"menuTitle":"Third-place pool: C/D/F/G/H","boundsPx":{"x":38,"y":471,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":471,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":9,"logicalId":"game1.r32.slot09","slotId":"R32-L-M5A","round":"R32","side":"left","row":9,"slotRule":"1C","slotRuleLong":"Winner Group C","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["C"],"menuTitle":"Winner Group C","boundsPx":{"x":38,"y":518,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":518,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":10,"logicalId":"game1.r32.slot10","slotId":"R32-L-M5B","round":"R32","side":"left","row":10,"slotRule":"2F","slotRuleLong":"Runner-up Group F","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["F"],"menuTitle":"Runner-up Group F","boundsPx":{"x":38,"y":565,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":565,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":11,"logicalId":"game1.r32.slot11","slotId":"R32-L-M6A","round":"R32","side":"left","row":11,"slotRule":"2E","slotRuleLong":"Runner-up Group E","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["E"],"menuTitle":"Runner-up Group E","boundsPx":{"x":38,"y":612,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":612,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":12,"logicalId":"game1.r32.slot12","slotId":"R32-L-M6B","round":"R32","side":"left","row":12,"slotRule":"2I","slotRuleLong":"Runner-up Group I","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["I"],"menuTitle":"Runner-up Group I","boundsPx":{"x":38,"y":659,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":659,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":13,"logicalId":"game1.r32.slot13","slotId":"R32-L-M7A","round":"R32","side":"left","row":13,"slotRule":"1A","slotRuleLong":"Winner Group A","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["A"],"menuTitle":"Winner Group A","boundsPx":{"x":38,"y":706,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":706,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":14,"logicalId":"game1.r32.slot14","slotId":"R32-L-M7B","round":"R32","side":"left","row":14,"slotRule":"3 C/E/F/H/I","slotRuleLong":"Best third-place team from Groups C/E/F/H/I","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["C","E","F","H","I"],"menuTitle":"Third-place pool: C/E/F/H/I","boundsPx":{"x":38,"y":753,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":753,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":15,"logicalId":"game1.r32.slot15","slotId":"R32-L-M8A","round":"R32","side":"left","row":15,"slotRule":"1L","slotRuleLong":"Winner Group L","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["L"],"menuTitle":"Winner Group L","boundsPx":{"x":38,"y":800,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":800,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":16,"logicalId":"game1.r32.slot16","slotId":"R32-L-M8B","round":"R32","side":"left","row":16,"slotRule":"3 E/H/I/J/K","slotRuleLong":"Best third-place team from Groups E/H/I/J/K","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["E","H","I","J","K"],"menuTitle":"Third-place pool: E/H/I/J/K","boundsPx":{"x":38,"y":847,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":847,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":17,"logicalId":"game1.r32.slot17","slotId":"R32-R-M1A","round":"R32","side":"right","row":1,"slotRule":"2K","slotRuleLong":"Runner-up Group K","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["K"],"menuTitle":"Runner-up Group K","boundsPx":{"x":1350,"y":142,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":142,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":18,"logicalId":"game1.r32.slot18","slotId":"R32-R-M1B","round":"R32","side":"right","row":2,"slotRule":"2L","slotRuleLong":"Runner-up Group L","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["L"],"menuTitle":"Runner-up Group L","boundsPx":{"x":1350,"y":189,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":189,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":19,"logicalId":"game1.r32.slot19","slotId":"R32-R-M2A","round":"R32","side":"right","row":3,"slotRule":"1H","slotRuleLong":"Winner Group H","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["H"],"menuTitle":"Winner Group H","boundsPx":{"x":1350,"y":236,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":236,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":20,"logicalId":"game1.r32.slot20","slotId":"R32-R-M2B","round":"R32","side":"right","row":4,"slotRule":"2J","slotRuleLong":"Runner-up Group J","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["J"],"menuTitle":"Runner-up Group J","boundsPx":{"x":1350,"y":283,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":283,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":21,"logicalId":"game1.r32.slot21","slotId":"R32-R-M3A","round":"R32","side":"right","row":5,"slotRule":"1D","slotRuleLong":"Winner Group D","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["D"],"menuTitle":"Winner Group D","boundsPx":{"x":1350,"y":330,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":330,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":22,"logicalId":"game1.r32.slot22","slotId":"R32-R-M3B","round":"R32","side":"right","row":6,"slotRule":"3 B/E/F/I/J","slotRuleLong":"Best third-place team from Groups B/E/F/I/J","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["B","E","F","I","J"],"menuTitle":"Third-place pool: B/E/F/I/J","boundsPx":{"x":1350,"y":377,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":377,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":23,"logicalId":"game1.r32.slot23","slotId":"R32-R-M4A","round":"R32","side":"right","row":7,"slotRule":"1G","slotRuleLong":"Winner Group G","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["G"],"menuTitle":"Winner Group G","boundsPx":{"x":1350,"y":424,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":424,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":24,"logicalId":"game1.r32.slot24","slotId":"R32-R-M4B","round":"R32","side":"right","row":8,"slotRule":"3 A/E/H/I/J","slotRuleLong":"Best third-place team from Groups A/E/H/I/J","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["A","E","H","I","J"],"menuTitle":"Third-place pool: A/E/H/I/J","boundsPx":{"x":1350,"y":471,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":471,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":25,"logicalId":"game1.r32.slot25","slotId":"R32-R-M5A","round":"R32","side":"right","row":9,"slotRule":"1J","slotRuleLong":"Winner Group J","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["J"],"menuTitle":"Winner Group J","boundsPx":{"x":1350,"y":518,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":518,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":26,"logicalId":"game1.r32.slot26","slotId":"R32-R-M5B","round":"R32","side":"right","row":10,"slotRule":"2H","slotRuleLong":"Runner-up Group H","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["H"],"menuTitle":"Runner-up Group H","boundsPx":{"x":1350,"y":565,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":565,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":27,"logicalId":"game1.r32.slot27","slotId":"R32-R-M6A","round":"R32","side":"right","row":11,"slotRule":"2D","slotRuleLong":"Runner-up Group D","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["D"],"menuTitle":"Runner-up Group D","boundsPx":{"x":1350,"y":612,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":612,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":28,"logicalId":"game1.r32.slot28","slotId":"R32-R-M6B","round":"R32","side":"right","row":12,"slotRule":"2G","slotRuleLong":"Runner-up Group G","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["G"],"menuTitle":"Runner-up Group G","boundsPx":{"x":1350,"y":659,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":659,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":29,"logicalId":"game1.r32.slot29","slotId":"R32-R-M7A","round":"R32","side":"right","row":13,"slotRule":"1B","slotRuleLong":"Winner Group B","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["B"],"menuTitle":"Winner Group B","boundsPx":{"x":1350,"y":706,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":706,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":30,"logicalId":"game1.r32.slot30","slotId":"R32-R-M7B","round":"R32","side":"right","row":14,"slotRule":"3 E/F/G/I/J","slotRuleLong":"Best third-place team from Groups E/F/G/I/J","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["E","F","G","I","J"],"menuTitle":"Third-place pool: E/F/G/I/J","boundsPx":{"x":1350,"y":753,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":753,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":31,"logicalId":"game1.r32.slot31","slotId":"R32-R-M8A","round":"R32","side":"right","row":15,"slotRule":"1K","slotRuleLong":"Winner Group K","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["K"],"menuTitle":"Winner Group K","boundsPx":{"x":1350,"y":800,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":800,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":32,"logicalId":"game1.r32.slot32","slotId":"R32-R-M8B","round":"R32","side":"right","row":16,"slotRule":"3 D/E/I/J/L","slotRuleLong":"Best third-place team from Groups D/E/I/J/L","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["D","E","I","J","L"],"menuTitle":"Third-place pool: D/E/I/J/L","boundsPx":{"x":1350,"y":847,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":847,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"}];
+    const GROUPS = {"A":[{"name":"Mexico","abbr":"MEX","flagEmoji":"🇲🇽","group":"A","display":"Mexico"},{"name":"South Africa","abbr":"RSA","flagEmoji":"🇿🇦","group":"A","display":"South Africa"},{"name":"Korea Republic","abbr":"KOR","flagEmoji":"🇰🇷","displayNameFromImage":"South Korea","group":"A","display":"South Korea"},{"name":"Czechia","abbr":"CZE","flagEmoji":"🇨🇿","group":"A","display":"Czechia"}],"B":[{"name":"Canada","abbr":"CAN","flagEmoji":"🇨🇦","group":"B","display":"Canada"},{"name":"Bosnia-Herzegovina","abbr":"BIH","flagEmoji":"🇧🇦","group":"B","display":"Bosnia-Herzegovina"},{"name":"Qatar","abbr":"QAT","flagEmoji":"🇶🇦","group":"B","display":"Qatar"},{"name":"Switzerland","abbr":"SUI","flagEmoji":"🇨🇭","group":"B","display":"Switzerland"}],"C":[{"name":"Brazil","abbr":"BRA","flagEmoji":"🇧🇷","group":"C","display":"Brazil"},{"name":"Morocco","abbr":"MAR","flagEmoji":"🇲🇦","group":"C","display":"Morocco"},{"name":"Haiti","abbr":"HAI","flagEmoji":"🇭🇹","group":"C","display":"Haiti"},{"name":"Scotland","abbr":"SCO","flagEmoji":"🏴","group":"C","display":"Scotland"}],"D":[{"name":"USA","abbr":"USA","flagEmoji":"🇺🇸","group":"D","display":"USA"},{"name":"Paraguay","abbr":"PAR","flagEmoji":"🇵🇾","group":"D","display":"Paraguay"},{"name":"Australia","abbr":"AUS","flagEmoji":"🇦🇺","group":"D","display":"Australia"},{"name":"Türkiye","abbr":"TUR","flagEmoji":"🇹🇷","displayNameFromImage":"Turkiye","group":"D","display":"Turkiye"}],"E":[{"name":"Germany","abbr":"GER","flagEmoji":"🇩🇪","group":"E","display":"Germany"},{"name":"Curaçao","abbr":"CUW","flagEmoji":"🇨🇼","displayNameFromImage":"Curacao","group":"E","display":"Curacao"},{"name":"Côte d’Ivoire","abbr":"CIV","flagEmoji":"🇨🇮","displayNameFromImage":"Ivory Coast","group":"E","display":"Ivory Coast"},{"name":"Ecuador","abbr":"ECU","flagEmoji":"🇪🇨","group":"E","display":"Ecuador"}],"F":[{"name":"Netherlands","abbr":"NED","flagEmoji":"🇳🇱","group":"F","display":"Netherlands"},{"name":"Japan","abbr":"JPN","flagEmoji":"🇯🇵","group":"F","display":"Japan"},{"name":"Sweden","abbr":"SWE","flagEmoji":"🇸🇪","group":"F","display":"Sweden"},{"name":"Tunisia","abbr":"TUN","flagEmoji":"🇹🇳","group":"F","display":"Tunisia"}],"G":[{"name":"Belgium","abbr":"BEL","flagEmoji":"🇧🇪","group":"G","display":"Belgium"},{"name":"Egypt","abbr":"EGY","flagEmoji":"🇪🇬","group":"G","display":"Egypt"},{"name":"IR Iran","abbr":"IRN","flagEmoji":"🇮🇷","displayNameFromImage":"Iran","group":"G","display":"Iran"},{"name":"New Zealand","abbr":"NZL","flagEmoji":"🇳🇿","group":"G","display":"New Zealand"}],"H":[{"name":"Spain","abbr":"ESP","flagEmoji":"🇪🇸","group":"H","display":"Spain"},{"name":"Cabo Verde","abbr":"CPV","flagEmoji":"🇨🇻","displayNameFromImage":"Cape Verde","group":"H","display":"Cape Verde"},{"name":"Saudi Arabia","abbr":"KSA","flagEmoji":"🇸🇦","group":"H","display":"Saudi Arabia"},{"name":"Uruguay","abbr":"URU","flagEmoji":"🇺🇾","group":"H","display":"Uruguay"}],"I":[{"name":"France","abbr":"FRA","flagEmoji":"🇫🇷","group":"I","display":"France"},{"name":"Senegal","abbr":"SEN","flagEmoji":"🇸🇳","group":"I","display":"Senegal"},{"name":"Iraq","abbr":"IRQ","flagEmoji":"🇮🇶","group":"I","display":"Iraq"},{"name":"Norway","abbr":"NOR","flagEmoji":"🇳🇴","group":"I","display":"Norway"}],"J":[{"name":"Argentina","abbr":"ARG","flagEmoji":"🇦🇷","group":"J","display":"Argentina"},{"name":"Algeria","abbr":"ALG","flagEmoji":"🇩🇿","group":"J","display":"Algeria"},{"name":"Austria","abbr":"AUT","flagEmoji":"🇦🇹","group":"J","display":"Austria"},{"name":"Jordan","abbr":"JOR","flagEmoji":"🇯🇴","group":"J","display":"Jordan"}],"K":[{"name":"Portugal","abbr":"POR","flagEmoji":"🇵🇹","group":"K","display":"Portugal"},{"name":"Congo DR","abbr":"COD","flagEmoji":"🇨🇩","displayNameFromImage":"DR Congo","group":"K","display":"DR Congo"},{"name":"Uzbekistan","abbr":"UZB","flagEmoji":"🇺🇿","group":"K","display":"Uzbekistan"},{"name":"Colombia","abbr":"COL","flagEmoji":"🇨🇴","group":"K","display":"Colombia"}],"L":[{"name":"England","abbr":"ENG","flagEmoji":"🏴","group":"L","display":"England"},{"name":"Croatia","abbr":"CRO","flagEmoji":"🇭🇷","group":"L","display":"Croatia"},{"name":"Ghana","abbr":"GHA","flagEmoji":"🇬🇭","group":"L","display":"Ghana"},{"name":"Panama","abbr":"PAN","flagEmoji":"🇵🇦","group":"L","display":"Panama"}]};
+    const hitLayer = document.getElementById("hitLayer");
+    const pickLayer = document.getElementById("pickLayer");
+    const menu = document.getElementById("tapMenu");
+    const backdrop = document.getElementById("menuBackdrop");
+    const menuTitle = document.getElementById("menuTitle");
+    const menuSub = document.getElementById("menuSub");
+    const groupChips = document.getElementById("groupChips");
+    const teamGrid = document.getElementById("teamGrid");
+    let activeSlot = null;
+    function loadPicks() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; } }
+    function savePicks(picks) { localStorage.setItem(STORAGE_KEY, JSON.stringify(picks)); }
+    let picks = loadPicks();
+    function displayName(team) { return team.displayNameFromImage || team.display || team.name; }
+    function eligibleTeamsForSlot(slotId) { const rule = SLOT_RULES.find(s => s.slotId === slotId || s.logicalId === slotId); if (!rule) return []; return rule.eligibleGroups.flatMap(g => GROUPS[g] || []); }
+    function cssPx(n) { return `${Math.round(n)}px`; }
+    function createHotspots() {
+      hitLayer.innerHTML = "";
+      SLOT_RULES.forEach(rule => {
+        const b = rule.hitRegionPx || rule.boundsPx;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "hotspot";
+        btn.style.left = cssPx(b.x); btn.style.top = cssPx(b.y); btn.style.width = cssPx(b.w); btn.style.height = cssPx(b.h);
+        btn.dataset.slotId = rule.slotId;
+        btn.setAttribute("aria-label", `${rule.position}. ${rule.slotRuleLong}`);
+        btn.addEventListener("click", ev => openMenu(rule, ev));
+        hitLayer.appendChild(btn);
+        const lab = document.createElement("div");
+        lab.className = "slotLabel";
+        lab.style.left = cssPx(rule.boundsPx.x); lab.style.top = cssPx(rule.boundsPx.y);
+        lab.textContent = rule.slotRule;
+        hitLayer.appendChild(lab);
+      });
+    }
+    function renderPicks() {
+      pickLayer.innerHTML = "";
+      SLOT_RULES.forEach(rule => {
+        const pick = picks[rule.slotId];
+        if (!pick) return;
+        const b = rule.boundsPx;
+        const card = document.createElement("div");
+        card.className = "pickCard";
+        card.style.left = cssPx(b.x); card.style.top = cssPx(b.y); card.style.width = cssPx(b.w); card.style.height = cssPx(b.h);
+        card.innerHTML = `<span class="pickFlag">${pick.flagEmoji || pick.flag || "⚽"}</span><span class="pickText"><span class="pickName">${displayName(pick)}</span><span class="pickRule">${rule.slotRule}</span></span>`;
+        pickLayer.appendChild(card);
+      });
+    }
+    function openMenu(rule, ev) {
+      activeSlot = rule;
+      const teams = eligibleTeamsForSlot(rule.slotId);
+      menuTitle.textContent = rule.menuTitle || rule.slotRuleLong;
+      menuSub.textContent = `${rule.slotRuleLong} · Slot ${rule.position}`;
+      groupChips.innerHTML = "";
+      rule.eligibleGroups.forEach(g => { const chip = document.createElement("span"); chip.className = "groupChip"; chip.textContent = `Group ${g}`; groupChips.appendChild(chip); });
+      teamGrid.innerHTML = "";
+      teams.forEach(team => {
+        const tile = document.createElement("button");
+        tile.type = "button"; tile.className = "teamTile";
+        tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamMeta"><span class="teamName">${displayName(team)}</span><span class="teamDetail">${team.abbr || ""} · Group ${team.group || ""}</span></span>`;
+        tile.addEventListener("click", () => assignTeam(team));
+        teamGrid.appendChild(tile);
+      });
+      const left = Math.min(window.innerWidth - 580, Math.max(16, ev.clientX + 18));
+      const top = Math.min(window.innerHeight - 520, Math.max(16, ev.clientY - 24));
+      menu.style.left = `${left}px`; menu.style.top = `${top}px`;
+      backdrop.classList.add("isOpen"); menu.classList.add("isOpen");
+    }
+    function closeMenu() { activeSlot = null; backdrop.classList.remove("isOpen"); menu.classList.remove("isOpen"); }
+    function assignTeam(team) { if (!activeSlot) return; picks[activeSlot.slotId] = {...team, assignedSlotId: activeSlot.slotId, slotRule: activeSlot.slotRule, slotRuleLong: activeSlot.slotRuleLong}; savePicks(picks); renderPicks(); closeMenu(); }
+    document.getElementById("closeMenu").addEventListener("click", closeMenu);
+    backdrop.addEventListener("click", closeMenu);
+    document.getElementById("clearPicks").addEventListener("click", () => { picks = {}; savePicks(picks); renderPicks(); });
+    document.getElementById("exportPicks").addEventListener("click", async () => { const text = JSON.stringify({version:"game1-r32-user-picks-v001", picks}, null, 2); try { await navigator.clipboard.writeText(text); alert("Game 1 picks copied to clipboard."); } catch { console.log(text); alert("Could not copy; picks printed to console."); } });
+    createHotspots(); renderPicks();
+  </script>
 </body>
 </html>

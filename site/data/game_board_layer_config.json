@@ -1,6 +1,6 @@
 {
   "version": "game-board-layer-config-v1",
-  "boardTemplateAsset": "assets/playfield/r32_bracket_game_board_template.png",
+  "boardTemplateAsset": "assets/playfield/r32_game_board_hd.jpeg",
   "defaultBackgroundTeamAbbr": "USA",
   "intendedUses": [
     "Game 1: player predicts the Round of 32 by official slot",

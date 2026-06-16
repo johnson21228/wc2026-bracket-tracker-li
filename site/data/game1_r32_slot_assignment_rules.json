@@ -1,0 +1,619 @@
+{
+  "version": "v002-pixel-native-game1-slot-qualification-rules",
+  "source": "Recovered from earlier Game 1 playfield SLOT_RULES logic and remapped to r32-01..r32-32 pixel-native slots.",
+  "board": {
+    "image": "site/assets/playfield/r32_bracket_geometry_overlay.png",
+    "widthPx": 1536,
+    "heightPx": 1024
+  },
+  "slots": [
+    {
+      "slotId": "r32-01",
+      "legacySlotId": "R32-L-M1A",
+      "seedPosition": 1,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 73,
+      "shortLabel": "2A",
+      "longLabel": "Runner-up Group A",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "A"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "A"
+    },
+    {
+      "slotId": "r32-02",
+      "legacySlotId": "R32-L-M1B",
+      "seedPosition": 2,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 73,
+      "shortLabel": "2B",
+      "longLabel": "Runner-up Group B",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "B"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "B"
+    },
+    {
+      "slotId": "r32-03",
+      "legacySlotId": "R32-L-M2A",
+      "seedPosition": 3,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 75,
+      "shortLabel": "1F",
+      "longLabel": "Winner Group F",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "F"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "F"
+    },
+    {
+      "slotId": "r32-04",
+      "legacySlotId": "R32-L-M2B",
+      "seedPosition": 4,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 75,
+      "shortLabel": "2C",
+      "longLabel": "Runner-up Group C",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "C"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "C"
+    },
+    {
+      "slotId": "r32-05",
+      "legacySlotId": "R32-L-M3A",
+      "seedPosition": 5,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 74,
+      "shortLabel": "1E",
+      "longLabel": "Winner Group E",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "E"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "E"
+    },
+    {
+      "slotId": "r32-06",
+      "legacySlotId": "R32-L-M3B",
+      "seedPosition": 6,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 74,
+      "shortLabel": "3 A/B/C/D/F",
+      "longLabel": "Best third-place team from Groups A/B/C/D/F",
+      "qualification": {
+        "rank": 3,
+        "candidateGroups": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "F"
+        ],
+        "type": "thirdPlacePool"
+      },
+      "defaultGroup": "A"
+    },
+    {
+      "slotId": "r32-07",
+      "legacySlotId": "R32-L-M4A",
+      "seedPosition": 7,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 77,
+      "shortLabel": "1I",
+      "longLabel": "Winner Group I",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "I"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "I"
+    },
+    {
+      "slotId": "r32-08",
+      "legacySlotId": "R32-L-M4B",
+      "seedPosition": 8,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 77,
+      "shortLabel": "3 C/D/F/G/H",
+      "longLabel": "Best third-place team from Groups C/D/F/G/H",
+      "qualification": {
+        "rank": 3,
+        "candidateGroups": [
+          "C",
+          "D",
+          "F",
+          "G",
+          "H"
+        ],
+        "type": "thirdPlacePool"
+      },
+      "defaultGroup": "C"
+    },
+    {
+      "slotId": "r32-09",
+      "legacySlotId": "R32-L-M5A",
+      "seedPosition": 9,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 76,
+      "shortLabel": "1C",
+      "longLabel": "Winner Group C",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "C"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "C"
+    },
+    {
+      "slotId": "r32-10",
+      "legacySlotId": "R32-L-M5B",
+      "seedPosition": 10,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 76,
+      "shortLabel": "2F",
+      "longLabel": "Runner-up Group F",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "F"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "F"
+    },
+    {
+      "slotId": "r32-11",
+      "legacySlotId": "R32-L-M6A",
+      "seedPosition": 11,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 78,
+      "shortLabel": "2E",
+      "longLabel": "Runner-up Group E",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "E"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "E"
+    },
+    {
+      "slotId": "r32-12",
+      "legacySlotId": "R32-L-M6B",
+      "seedPosition": 12,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 78,
+      "shortLabel": "2I",
+      "longLabel": "Runner-up Group I",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "I"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "I"
+    },
+    {
+      "slotId": "r32-13",
+      "legacySlotId": "R32-L-M7A",
+      "seedPosition": 13,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 79,
+      "shortLabel": "1A",
+      "longLabel": "Winner Group A",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "A"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "A"
+    },
+    {
+      "slotId": "r32-14",
+      "legacySlotId": "R32-L-M7B",
+      "seedPosition": 14,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 79,
+      "shortLabel": "3 C/E/F/H/I",
+      "longLabel": "Best third-place team from Groups C/E/F/H/I",
+      "qualification": {
+        "rank": 3,
+        "candidateGroups": [
+          "C",
+          "E",
+          "F",
+          "H",
+          "I"
+        ],
+        "type": "thirdPlacePool"
+      },
+      "defaultGroup": "C"
+    },
+    {
+      "slotId": "r32-15",
+      "legacySlotId": "R32-L-M8A",
+      "seedPosition": 15,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 80,
+      "shortLabel": "1L",
+      "longLabel": "Winner Group L",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "L"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "L"
+    },
+    {
+      "slotId": "r32-16",
+      "legacySlotId": "R32-L-M8B",
+      "seedPosition": 16,
+      "side": "left",
+      "round": "R32",
+      "matchNumber": 80,
+      "shortLabel": "3 E/H/I/J/K",
+      "longLabel": "Best third-place team from Groups E/H/I/J/K",
+      "qualification": {
+        "rank": 3,
+        "candidateGroups": [
+          "E",
+          "H",
+          "I",
+          "J",
+          "K"
+        ],
+        "type": "thirdPlacePool"
+      },
+      "defaultGroup": "E"
+    },
+    {
+      "slotId": "r32-17",
+      "legacySlotId": "R32-R-M1A",
+      "seedPosition": 17,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 83,
+      "shortLabel": "2K",
+      "longLabel": "Runner-up Group K",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "K"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "K"
+    },
+    {
+      "slotId": "r32-18",
+      "legacySlotId": "R32-R-M1B",
+      "seedPosition": 18,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 83,
+      "shortLabel": "2L",
+      "longLabel": "Runner-up Group L",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "L"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "L"
+    },
+    {
+      "slotId": "r32-19",
+      "legacySlotId": "R32-R-M2A",
+      "seedPosition": 19,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 84,
+      "shortLabel": "1H",
+      "longLabel": "Winner Group H",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "H"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "H"
+    },
+    {
+      "slotId": "r32-20",
+      "legacySlotId": "R32-R-M2B",
+      "seedPosition": 20,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 84,
+      "shortLabel": "2J",
+      "longLabel": "Runner-up Group J",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "J"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "J"
+    },
+    {
+      "slotId": "r32-21",
+      "legacySlotId": "R32-R-M3A",
+      "seedPosition": 21,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 81,
+      "shortLabel": "1D",
+      "longLabel": "Winner Group D",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "D"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "D"
+    },
+    {
+      "slotId": "r32-22",
+      "legacySlotId": "R32-R-M3B",
+      "seedPosition": 22,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 81,
+      "shortLabel": "3 B/E/F/I/J",
+      "longLabel": "Best third-place team from Groups B/E/F/I/J",
+      "qualification": {
+        "rank": 3,
+        "candidateGroups": [
+          "B",
+          "E",
+          "F",
+          "I",
+          "J"
+        ],
+        "type": "thirdPlacePool"
+      },
+      "defaultGroup": "B"
+    },
+    {
+      "slotId": "r32-23",
+      "legacySlotId": "R32-R-M4A",
+      "seedPosition": 23,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 82,
+      "shortLabel": "1G",
+      "longLabel": "Winner Group G",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "G"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "G"
+    },
+    {
+      "slotId": "r32-24",
+      "legacySlotId": "R32-R-M4B",
+      "seedPosition": 24,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 82,
+      "shortLabel": "3 A/E/H/I/J",
+      "longLabel": "Best third-place team from Groups A/E/H/I/J",
+      "qualification": {
+        "rank": 3,
+        "candidateGroups": [
+          "A",
+          "E",
+          "H",
+          "I",
+          "J"
+        ],
+        "type": "thirdPlacePool"
+      },
+      "defaultGroup": "A"
+    },
+    {
+      "slotId": "r32-25",
+      "legacySlotId": "R32-R-M5A",
+      "seedPosition": 25,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 86,
+      "shortLabel": "1J",
+      "longLabel": "Winner Group J",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "J"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "J"
+    },
+    {
+      "slotId": "r32-26",
+      "legacySlotId": "R32-R-M5B",
+      "seedPosition": 26,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 86,
+      "shortLabel": "2H",
+      "longLabel": "Runner-up Group H",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "H"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "H"
+    },
+    {
+      "slotId": "r32-27",
+      "legacySlotId": "R32-R-M6A",
+      "seedPosition": 27,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 88,
+      "shortLabel": "2D",
+      "longLabel": "Runner-up Group D",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "D"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "D"
+    },
+    {
+      "slotId": "r32-28",
+      "legacySlotId": "R32-R-M6B",
+      "seedPosition": 28,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 88,
+      "shortLabel": "2G",
+      "longLabel": "Runner-up Group G",
+      "qualification": {
+        "rank": 2,
+        "candidateGroups": [
+          "G"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "G"
+    },
+    {
+      "slotId": "r32-29",
+      "legacySlotId": "R32-R-M7A",
+      "seedPosition": 29,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 85,
+      "shortLabel": "1B",
+      "longLabel": "Winner Group B",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "B"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "B"
+    },
+    {
+      "slotId": "r32-30",
+      "legacySlotId": "R32-R-M7B",
+      "seedPosition": 30,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 85,
+      "shortLabel": "3 E/F/G/I/J",
+      "longLabel": "Best third-place team from Groups E/F/G/I/J",
+      "qualification": {
+        "rank": 3,
+        "candidateGroups": [
+          "E",
+          "F",
+          "G",
+          "I",
+          "J"
+        ],
+        "type": "thirdPlacePool"
+      },
+      "defaultGroup": "E"
+    },
+    {
+      "slotId": "r32-31",
+      "legacySlotId": "R32-R-M8A",
+      "seedPosition": 31,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 87,
+      "shortLabel": "1K",
+      "longLabel": "Winner Group K",
+      "qualification": {
+        "rank": 1,
+        "candidateGroups": [
+          "K"
+        ],
+        "type": "groupPlace"
+      },
+      "defaultGroup": "K"
+    },
+    {
+      "slotId": "r32-32",
+      "legacySlotId": "R32-R-M8B",
+      "seedPosition": 32,
+      "side": "right",
+      "round": "R32",
+      "matchNumber": 87,
+      "shortLabel": "3 D/E/I/J/L",
+      "longLabel": "Best third-place team from Groups D/E/I/J/L",
+      "qualification": {
+        "rank": 3,
+        "candidateGroups": [
+          "D",
+          "E",
+          "I",
+          "J",
+          "L"
+        ],
+        "type": "thirdPlacePool"
+      },
+      "defaultGroup": "D"
+    }
+  ]
+}

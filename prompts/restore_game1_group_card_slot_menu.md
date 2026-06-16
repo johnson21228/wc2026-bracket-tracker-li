@@ -1,0 +1,1 @@
+Restore the Game 1 group-card tap menu. Keep the shared board PNG and pixel-native slots. Tapping an R32 slot should parse that slot qualification rule and show only the applicable group or third-place group pool, with team rows showing flag and country.
