@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WC2026 Game 1 Bracket Pick Store",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "required": ["assignedSlotId", "round"],
+    "properties": {
+      "assignedSlotId": {"type": "string"},
+      "assignmentTargetSlotId": {"type": "string"},
+      "round": {"type": "string", "enum": ["R32", "R16", "QF", "SF", "FINAL_FOUR", "UNKNOWN"]},
+      "name": {"type": "string"},
+      "team": {"type": "string"},
+      "abbr": {"type": "string"},
+      "flag": {"type": "string"},
+      "flagEmoji": {"type": "string"},
+      "sourceSlotIds": {"type": "array", "items": {"type": "string"}},
+      "storeContract": {"type": "string"}
+    }
+  }
+}
