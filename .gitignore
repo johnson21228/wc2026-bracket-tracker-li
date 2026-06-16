@@ -1,4 +1,5 @@
 .DS_Store
+*/.DS_Store
 __MACOSX/
 *.pyc
 __pycache__/
@@ -9,14 +10,18 @@ dist/*.zip
 # Generated history artifacts
 outputs/history/repo_history_for_llm_*.md
 
-# Overlay cruft
+# Overlay cruft / applied working directories
 overlay/
 files/
 apply_*_overlay.py
 *_overlay.zip
+wc2026_*_overlay/
+wc2026_bracket_tracker_cb_001/
+wc2026_schedule_poster_input_artifact/
 
 # Generated Workbench repo inventory snapshots
 artifacts/workbench_repo_inventory_*.md
+
 # Workbench local/bulk working areas
 work/inputs/
 work/runs/

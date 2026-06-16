@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/wc2026/player_pick_record_schema.json",
+  "title": "WC2026 Player Pick Record",
+  "type": "object",
+  "required": ["schemaVersion", "recordId", "gameId", "playerId", "status", "picks"],
+  "properties": {
+    "schemaVersion": { "const": "wc2026.playerPickRecord.v1" },
+    "recordId": { "type": "string", "minLength": 1 },
+    "gameId": { "type": "string", "enum": ["game1-r32-qualifier-picks", "game2-knockout-bracket-picks"] },
+    "playerId": { "type": "string", "minLength": 1 },
+    "displayName": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "submitted", "locked"] },
+    "seedSource": { "type": "string" },
+    "r32SeedId": { "type": "string" },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" },
+    "submittedAt": { "type": ["string", "null"] },
+    "lockedAt": { "type": ["string", "null"] },
+    "picks": { "type": "object", "additionalProperties": { "$ref": "#/$defs/teamPick" } }
+  },
+  "$defs": {
+    "teamPick": {
+      "type": "object",
+      "required": ["teamAbbr"],
+      "properties": {
+        "teamAbbr": { "type": "string", "minLength": 2 },
+        "teamName": { "type": "string" },
+        "flag": { "type": "string" },
+        "group": { "type": "string" },
+        "from": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    }
+  }
+}

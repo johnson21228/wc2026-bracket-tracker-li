@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WC2026 Bracket Tracker</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07111f; --panel:#10243d; --line:#2a77a8; --text:#f3f8ff; --muted:#a8bfd5; --accent:#7dd3fc; }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: radial-gradient(circle at top, #17375d 0%, var(--bg) 48%, #020611 100%); color:var(--text); display:grid; place-items:center; padding:32px; }
+    main { width:min(920px, 100%); }
+    .hero { border:1px solid rgba(125,211,252,.32); background:rgba(16,36,61,.78); border-radius:24px; padding:32px; box-shadow:0 24px 80px rgba(0,0,0,.35); }
+    .eyebrow { color:var(--accent); text-transform:uppercase; letter-spacing:.16em; font-size:13px; font-weight:800; }
+    h1 { margin:.25em 0 .35em; font-size:clamp(36px, 6vw, 68px); line-height:.95; }
+    p { color:var(--muted); font-size:18px; line-height:1.55; max-width:70ch; }
+    .games { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:18px; margin-top:28px; }
+    a.card { display:block; color:var(--text); text-decoration:none; border:1px solid rgba(125,211,252,.35); border-radius:18px; padding:22px; background:rgba(4,14,27,.62); transition:transform .15s ease, border-color .15s ease, background .15s ease; }
+    a.card:hover { transform:translateY(-2px); border-color:rgba(125,211,252,.85); background:rgba(10,31,55,.82); }
+    .card strong { display:block; font-size:22px; margin-bottom:8px; }
+    .card span { color:var(--muted); line-height:1.45; }
+    footer { margin-top:20px; color:#7f9bb6; font-size:13px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">World Cup 2026 Bracket Games</div>
+      <h1>Pick the field. Then pick the champion.</h1>
+      <p>This deployable site surface is isolated under <code>site/</code> for GitHub Pages. Game 1 handles the Round of 32 chooser board. Game 2 carries the bracket tracker surface.</p>
+      <div class="games">
+        <a class="card" href="game1/">
+          <strong>Open Game 1</strong>
+          <span>Choose the Round of 32 field on the shared game board.</span>
+        </a>
+        <a class="card" href="game2/">
+          <strong>Open Game 2</strong>
+          <span>Use the bracket tracker to pick winners through the final champion.</span>
+        </a>
+      </div>
+    </section>
+    <footer>WC2026 Bracket Tracker LI · Public site surface</footer>
+  </main>
+</body>
+</html>
