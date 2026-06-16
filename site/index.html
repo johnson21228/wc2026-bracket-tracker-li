@@ -703,6 +703,32 @@ body.wb-side-tooltip-open {
 }
 /* WC2026_ADORN_NOT_FINAL_ELIGIBLE_PICKS_END */
 
+
+/* WC2026_PAGES_REVIEW_PICK_ACCEPTANCE_CSS_START */
+.wc2026ReviewPickStatus {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 2147483647;
+  max-width: min(520px, calc(100vw - 24px));
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(10, 16, 28, .88);
+  border: 1px solid rgba(255,255,255,.22);
+  color: rgba(255,255,255,.92);
+  font: 12px/1.25 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  box-shadow: 0 8px 22px rgba(0,0,0,.35);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.wc2026ReviewPickStatus.isVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* WC2026_PAGES_REVIEW_PICK_ACCEPTANCE_CSS_END */
+
 </style>
 <style>
 /* WB_TOOLTIP_SIDE_PLACEMENT_START */
@@ -4602,5 +4628,226 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
 // WC2026_RUN_FINALITY_CHECK_DURING_PICK_RENDER_END
 
 </script>
+
+
+// WC2026_PAGES_REVIEW_PICK_ACCEPTANCE_START
+(function installPagesReviewPickAcceptance(){
+  if (window.WC2026_PAGES_REVIEW_PICK_ACCEPTANCE?.installed) return;
+
+  const STORAGE = {
+    bracket: "wc2026.game1.bracketPicks",
+    r32: "wc2026.game1.r32.picks",
+    r16: "wc2026.game1.r16.winnerPicks",
+    advance: "wc2026.game1.qfSf.winnerPicks"
+  };
+
+  function readJson(key){
+    try { return JSON.parse(localStorage.getItem(key) || "{}"); }
+    catch { return {}; }
+  }
+
+  function writeJson(key, value){
+    localStorage.setItem(key, JSON.stringify(value || {}));
+  }
+
+  function roundForSlot(slotId, fallback){
+    const id = String(slotId || "").toUpperCase();
+    const fb = String(fallback || "").toUpperCase();
+    if (id.includes("-R32-") || id.startsWith("R32-")) return "R32";
+    if (id.includes("-R16-")) return "R16";
+    if (id.includes("-QF-")) return "QF";
+    if (id.includes("-SF-")) return "SF";
+    if (id.includes("FINAL")) return "FINAL";
+    return fb || "UNKNOWN";
+  }
+
+  function teamLabel(team){
+    return String(team?.displayName || team?.display || team?.displayNameFromImage || team?.name || team?.abbr || team?.code || "Pick").trim();
+  }
+
+  function normalizeTeam(team, slotId, round, rule){
+    const label = teamLabel(team);
+    const abbr = String(team?.abbr || team?.code || team?.teamCode || team?.fifaCode || label.slice(0,3)).trim().toUpperCase();
+    return Object.assign({}, team || {}, {
+      name: team?.name || label,
+      displayName: team?.displayName || label,
+      display: team?.display || label,
+      abbr,
+      code: team?.code || abbr,
+      flag: team?.flag || team?.flagEmoji || "⚽",
+      flagEmoji: team?.flagEmoji || team?.flag || "⚽",
+      assignedSlotId: slotId,
+      assignmentTargetSlotId: slotId,
+      round,
+      sourceSlotIds: rule?.sourceSlotIds || team?.sourceSlotIds || [],
+      sourceR32SlotIds: rule?.sourceR32SlotIds || team?.sourceR32SlotIds || [],
+      reviewAcceptanceContract: "pages-review-pick-acceptance-v001"
+    });
+  }
+
+  function status(message){
+    let el = document.querySelector(".wc2026ReviewPickStatus");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "wc2026ReviewPickStatus";
+      document.body.appendChild(el);
+    }
+    el.textContent = message;
+    el.classList.add("isVisible");
+    clearTimeout(status._timer);
+    status._timer = setTimeout(() => el.classList.remove("isVisible"), 2600);
+  }
+
+  function allAliases(slotId){
+    const id = String(slotId || "");
+    const ids = new Set([id]);
+    let m = id.match(/^R32-([LR])-M(\d+)([AB])$/i);
+    if (m) {
+      const side = m[1].toUpperCase();
+      const matchIndex = Number(m[2]);
+      const offset = m[3].toUpperCase() === "A" ? 1 : 2;
+      ids.add(`${side}-R32-${String(((matchIndex - 1) * 2) + offset).padStart(2, "0")}`);
+    }
+    m = id.match(/^([LR])-R32-(\d+)$/i);
+    if (m) {
+      const side = m[1].toUpperCase();
+      const index = Number(m[2]);
+      ids.add(`R32-${side}-M${Math.ceil(index / 2)}${index % 2 === 1 ? "A" : "B"}`);
+    }
+    return Array.from(ids).filter(Boolean);
+  }
+
+  function mirrorIntoLegacyGlobals(slotId, stored, round){
+    try {
+      if (round === "R32" && typeof window.picks !== "undefined") window.picks[slotId] = stored;
+      if (round === "R16" && typeof window.r16Picks !== "undefined") window.r16Picks[slotId] = stored;
+      if ((round === "QF" || round === "SF" || round === "FINAL") && typeof window.advancementPicks !== "undefined") window.advancementPicks[slotId] = stored;
+      if (typeof window.game1KnockoutPicks !== "undefined") {
+        window.game1KnockoutPicks = Object.assign({}, window.game1KnockoutPicks || {}, {[slotId]: stored});
+      }
+    } catch {}
+  }
+
+  function persistPick(slotId, team, rule){
+    if (!slotId || !team) return null;
+    const round = roundForSlot(slotId, rule?.round);
+    const stored = normalizeTeam(team, slotId, round, rule);
+
+    try {
+      const api = window.WC2026_GAME1_BRACKET_PICK_STORE_API;
+      if (api?.set) api.set(slotId, stored);
+    } catch {}
+
+    const bracket = readJson(STORAGE.bracket);
+    allAliases(slotId).forEach(id => { bracket[id] = Object.assign({}, stored, {assignedSlotId: id, assignmentTargetSlotId: id}); });
+    writeJson(STORAGE.bracket, bracket);
+
+    if (round === "R32") {
+      const r32 = readJson(STORAGE.r32);
+      allAliases(slotId).forEach(id => { r32[id] = Object.assign({}, stored, {assignedSlotId: id, assignmentTargetSlotId: id}); });
+      writeJson(STORAGE.r32, r32);
+    } else if (round === "R16") {
+      const r16 = readJson(STORAGE.r16);
+      r16[slotId] = stored;
+      writeJson(STORAGE.r16, r16);
+    } else {
+      const adv = readJson(STORAGE.advance);
+      adv[slotId] = stored;
+      writeJson(STORAGE.advance, adv);
+    }
+
+    mirrorIntoLegacyGlobals(slotId, stored, round);
+    window.dispatchEvent(new CustomEvent("wc2026:review-pick-accepted", {detail: {slotId, round, pick: stored}}));
+    status(`Accepted ${teamLabel(stored)} for ${slotId}`);
+    setTimeout(() => {
+      try { if (typeof window.renderPicks === "function") window.renderPicks(); }
+      catch (err) { console.warn("WC2026 review pick render failed", err); }
+      try { if (typeof window.WC2026_ADORN_PICK_FINALITY === "function") window.WC2026_ADORN_PICK_FINALITY(); }
+      catch {}
+    }, 0);
+    return stored;
+  }
+
+  function activeRuleFromMenu(menu){
+    const slotId = String(menu?.dataset?.assignmentTargetSlotId || menu?.dataset?.assignmentSlotId || menu?.dataset?.activeSlotId || window.activeSlot?.slotId || window.activeSlot?.logicalId || "");
+    const round = roundForSlot(slotId, menu?.dataset?.assignmentRound || window.activeSlot?.round);
+    return Object.assign({}, window.activeSlot || {}, {slotId, logicalId: slotId, round});
+  }
+
+  function candidateTeams(rule){
+    try {
+      if (rule.round === "R16" && typeof window.r16CandidateTeams === "function") return window.r16CandidateTeams(rule) || [];
+      if (typeof window.advancementCandidateTeams === "function") return window.advancementCandidateTeams(rule) || [];
+    } catch {}
+    return [];
+  }
+
+  function teamFromTile(tile, rule){
+    const grid = tile.closest(".teamGrid, #teamGrid, [data-team-grid]");
+    const siblings = grid ? Array.from(grid.querySelectorAll("button, .teamTile, [role='button']")) : [];
+    const index = Math.max(0, siblings.indexOf(tile));
+    const candidates = candidateTeams(rule);
+    if (candidates[index]) return candidates[index];
+    const flag = tile.querySelector(".teamFlag,.flag,.pickFlag")?.textContent?.trim() || tile.dataset.flag || "⚽";
+    const name = tile.querySelector(".teamName,.name,.pickName")?.textContent?.trim() || tile.dataset.teamName || tile.textContent?.trim() || "Pick";
+    const abbr = tile.dataset.teamAbbr || tile.dataset.abbr || tile.dataset.code || name.slice(0,3).toUpperCase();
+    return {name, displayName: name, display: name, abbr, code: abbr, flag, flagEmoji: flag};
+  }
+
+  function isClearOrUtility(target){
+    return !!target.closest(".clearPickChip,.remove,[data-clear-r32-slot-id],[data-clear-slot-id],#clearPicks,#clearBtn,.groupChip,[data-group-filter]");
+  }
+
+  document.addEventListener("click", function reviewPickAcceptanceClick(ev){
+    const tile = ev.target.closest(".teamTile, .teamChoice, .menuChoice, .countryChoice, [data-team-id], [data-team-abbr]");
+    const menu = ev.target.closest(".tapMenu, #tapMenu, .choiceMenu, .teamMenu");
+    if (!tile || !menu || isClearOrUtility(ev.target)) return;
+    const rule = activeRuleFromMenu(menu);
+    if (!rule.slotId) return;
+    const team = teamFromTile(tile, rule);
+    setTimeout(() => persistPick(rule.slotId, team, rule), 0);
+  }, true);
+
+  function wrap(name, resolver){
+    const before = window[name];
+    if (typeof before !== "function" || before.__wc2026ReviewAcceptanceWrapped) return;
+    const wrapped = function wc2026ReviewAcceptanceWrappedFunction(...args){
+      let result;
+      try { result = before.apply(this, args); }
+      finally {
+        try {
+          const resolved = resolver(args);
+          if (resolved?.slotId && resolved?.team) persistPick(resolved.slotId, resolved.team, resolved.rule || resolved);
+        } catch (err) { console.warn(`WC2026 review acceptance wrapper failed for ${name}`, err); }
+      }
+      return result;
+    };
+    wrapped.__wc2026ReviewAcceptanceWrapped = true;
+    window[name] = wrapped;
+  }
+
+  wrap("assignR16Winner", args => {
+    const menu = document.querySelector(".tapMenu.isOpen,#tapMenu.isOpen,.choiceMenu.isOpen");
+    const rule = activeRuleFromMenu(menu || document.body);
+    return {slotId: rule.slotId, team: args[0], rule};
+  });
+
+  wrap("assignAdvancementWinner", args => {
+    const menu = document.querySelector(".tapMenu.isOpen,#tapMenu.isOpen,.choiceMenu.isOpen");
+    const rule = activeRuleFromMenu(menu || document.body);
+    return {slotId: rule.slotId, team: args[0], rule};
+  });
+
+  window.WC2026_PAGES_REVIEW_PICK_ACCEPTANCE = {
+    installed: true,
+    storageKeys: STORAGE,
+    persistPick,
+    status
+  };
+
+  status("Review pick acceptance patch loaded");
+})();
+// WC2026_PAGES_REVIEW_PICK_ACCEPTANCE_END
+
 </body>
 </html>
