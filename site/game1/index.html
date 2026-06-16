@@ -19,13 +19,66 @@ body { min-height: 100vh; overflow: auto; font-family: ui-sans-serif, system-ui,
 .pixelNativeBoardPlane { position: relative; width: var(--board-w-px); height: var(--board-h-px); background-image: radial-gradient(circle at 50% 42%, rgba(255,255,255,.10), rgba(0,0,0,.36) 62%, rgba(0,0,0,.58) 100%), linear-gradient(90deg, rgba(0,0,0,.32), rgba(0,0,0,.08) 50%, rgba(0,0,0,.32)), url("../assets/playfield/game1_pub_options_background.jpeg"); background-size: 1536px 1024px, 1536px 1024px, 1536px 1024px; background-position: 0 0, 0 0, 0 0; background-repeat: no-repeat; box-shadow: 0 0 0 1px rgba(255,255,255,0.16), 0 28px 80px rgba(0,0,0,0.55); }
 .boardGeometry { position: absolute; inset: 0; width: 1536px; height: 1024px; pointer-events: none; user-select: none; }
 .hitLayer, .pickLayer { position: absolute; inset: 0; width: 1536px; height: 1024px; }
+.hitLayer { z-index: 2; }
+.pickLayer { z-index: 3; pointer-events: none; }
 .hotspot { position: absolute; padding: 0; border: 1px solid rgba(255,255,255,.12); border-radius: 7px; background: rgba(0,0,0,.04); cursor: pointer; }
 .hotspot:hover, .hotspot:focus-visible { outline: 3px solid rgba(255,255,255,.92); background: rgba(255,255,255,.16); }
-.pickCard { position: absolute; display: flex; align-items: center; gap: 8px; height: 40px; padding: 4px 8px; border-radius: 7px; border: 1px solid rgba(0,0,0,.55); background: rgba(250,250,248,var(--slotFillOpacity)); color: #05070b; font-weight: 800; pointer-events: none; overflow: hidden; }
-.pickFlag { font-size: 22px; line-height: 1; }
-.pickText { display: flex; min-width: 0; flex-direction: column; line-height: 1.05; }
-.pickName { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pickRule { font-size: 9px; opacity: .64; white-space: nowrap; }
+:root {
+  --r32-pick-card-font-size: 14px;
+  --r32-pick-card-line-height: 14px;
+  --r32-pick-card-flag-width: 34px;
+  --r32-pick-card-flag-height: 32px;
+  --r32-pick-card-gap: 6px;
+  --r32-pick-card-pad-x: 6px;
+  --r32-pick-card-pad-y: 3px;
+}
+.pickCard {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,.55);
+  background: rgba(250,250,248,var(--slotFillOpacity));
+  color: #05070b;
+  pointer-events: auto;
+  overflow: hidden;
+  z-index: 8;
+}
+.pickFlag {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.25));
+}
+.pickText {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.pickName {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.pickRule { display: none; }
+.pickCard:hover, .pickCard:focus-visible { outline: 3px solid rgba(255,255,255,.92); z-index: 5; }
+.pickCard::after { content: attr(data-tooltip); position: absolute; left: 0; top: calc(100% + 8px); width: max-content; max-width: 280px; white-space: pre-line; padding: 9px 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,.22); background: rgba(10,12,18,.97); color: white; font-size: 12px; line-height: 1.3; font-weight: 700; box-shadow: 0 12px 32px rgba(0,0,0,.45); opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity .12s ease, transform .12s ease; z-index: 30; }
+.pickCard:hover::after, .pickCard:focus-visible::after { opacity: 1; transform: translateY(0); }
 .slotLabel { position: absolute; transform: translateY(-18px); font-size: 10px; letter-spacing: .04em; color: rgba(255,255,255,.78); text-shadow: 0 1px 4px rgba(0,0,0,.9); pointer-events: none; }
 .menuBackdrop { position: fixed; inset: 0; display: none; background: rgba(0,0,0,.42); z-index: 20; }
 .menuBackdrop.isOpen { display: block; }
@@ -41,9 +94,9 @@ body { min-height: 100vh; overflow: auto; font-family: ui-sans-serif, system-ui,
 .teamTile { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left; border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 10px; background: rgba(255,255,255,.10); color: white; cursor: pointer; }
 .teamTile:hover, .teamTile:focus-visible { outline: 2px solid white; background: rgba(255,255,255,.18); }
 .teamFlag { font-size: 30px; width: 36px; text-align: center; }
-.teamMeta { min-width: 0; }
+.teamMeta { min-width: 0; display: inline-flex; align-items: baseline; gap: 14px; max-width: 100%; }
 .teamName { font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.teamDetail { font-size: 12px; color: rgba(255,255,255,.72); }
+.teamDetail { display: inline-block; margin-left: 14px; font-size: 12px; color: rgba(255,255,255,.72); white-space: nowrap; }
 .toolbar { position: sticky; left: 0; top: 0; z-index: 10; display: inline-flex; gap: 8px; margin-bottom: 10px; padding: 8px; border-radius: 14px; background: rgba(5,7,11,.78); backdrop-filter: blur(8px); }
 .toolbar button { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; background: rgba(255,255,255,.08); color: white; padding: 8px 12px; cursor: pointer; }
 .visuallyHidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -83,29 +136,259 @@ body { min-height: 100vh; overflow: auto; font-family: ui-sans-serif, system-ui,
   opacity: .82;
 }
 
+
+/* R32 pick-card single tooltip/name-fit */
+.pickLayer { z-index: 6; pointer-events: none; }
+.hitLayer { z-index: 4; }
+.pickCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 292px;
+  height: 46px;
+  padding: 5px 16px 5px 12px;
+  border-radius: 13px;
+  border: 2px solid rgba(0,0,0,.62);
+  background: rgba(250,250,248,.94);
+  color: #03060a;
+  box-shadow: 0 2px 0 rgba(255,255,255,.62) inset, 0 4px 10px rgba(0,0,0,.38);
+  pointer-events: auto;
+  overflow: hidden;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+.pickCard:hover, .pickCard:focus-visible { outline: 3px solid rgba(255,255,255,.92); }
+.pickRule { display: none; }
+.r32PickDetails {
+  position: fixed;
+  z-index: 30;
+  display: none;
+  max-width: 310px;
+  padding: 11px 13px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.26);
+  background: rgba(5,7,11,.94);
+  color: white;
+  box-shadow: 0 14px 42px rgba(0,0,0,.55);
+  font-size: 15px;
+  line-height: 1.22;
+  pointer-events: none;
+}
+.r32PickDetails.isOpen { display: block; }
+.r32PickDetails strong { display: block; font-size: 17px; line-height: 1.12; margin-bottom: 4px; }
+.r32PickDetails .muted { color: rgba(255,255,255,.76); }
+
+
+/* r32-pick-card-slot-fit-overrides
+   The board slot bounds are the authority. Filled pick cards must fit inside
+   rule.boundsPx; content adapts to the slot, never the other way around. */
+.pickLayer { pointer-events: none; }
+.pickCard {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 40px;
+  padding: 3px 7px !important;
+  gap: 7px !important;
+  border-radius: 7px !important;
+  overflow: hidden !important;
+  pointer-events: auto;
+}
+.pickCard[data-r32-slot-fit="true"] {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.pickCode { display:block; font-size:22px; line-height:1; letter-spacing:.04em; font-weight:950; white-space:nowrap; }
+
+/* R32 pick-card abbreviation typography fit */
+.pickCard[data-r32-slot-fit="true"] {
+  padding: 2px 6px !important;
+  gap: 8px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  border-radius: 6px !important;
+  border-width: 1px !important;
+  overflow: hidden !important;
+  line-height: 1 !important;
+}
+.pickCard[data-r32-slot-fit="true"] .pickFlag {
+  flex: 0 0 42px !important;
+  width: 42px !important;
+  height: calc(100% - 4px) !important;
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+  overflow: visible !important;
+}
+.pickCard[data-r32-slot-fit="true"] .pickText {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+.pickCard[data-r32-slot-fit="true"] .pickName,
+.pickCard[data-r32-slot-fit="true"] .pickCode {
+  display: block !important;
+  font-family: "Avenir Next Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  font-weight: 950 !important;
+  letter-spacing: .045em !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+
+    /* R32 pick card abbreviation regular-weight authority. */
+    .r32-pick-abbr,
+    .r32-abbr-regular-weight {
+      font-weight: 500;
+      font-style: normal;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+  
+
+/* wc2026-r32-pick-card-abbreviation-quiet-typography */
+.pickCard[data-r32-slot-fit="true"] .pickName,
+.pickCard .pickName {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  font-weight: 500 !important;
+  font-style: normal !important;
+  letter-spacing: .02em !important;
+  text-transform: uppercase !important;
+  font-stretch: normal !important;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: none !important;
+}
+.pickCard[data-r32-slot-fit="true"] {
+  gap: 9px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+.pickCard[data-r32-slot-fit="true"] .pickFlag {
+  flex: 0 0 36px !important;
+  width: 36px !important;
+  height: calc(100% - 6px) !important;
+  min-height: 0 !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+}
+
+
+/* Game 1 implementation labels hidden: raw slot rules remain in data/debug but are not player-facing UI. */
+.slotLabel, .pickRule {
+  display: none !important;
+}
+
+
+/* game1_choice_legibility_hit_rule */
+.choice { gap: 14px; }
+.choice .choiceTeamName { font-weight: 850; margin-right: 0.45rem; white-space: nowrap; }
+.choice .choiceMeta { display: inline-flex; align-items: baseline; gap: 0.35rem; margin-left: 0; color: var(--muted); font-size: 16px; white-space: nowrap; }
+.choice .choiceAbbr { font-weight: 760; letter-spacing: 0.02em; color: rgba(255,255,255,0.86); }
+.choice .choiceGroup { color: var(--muted); }
+.choice .name { margin-right: 0.45rem; }
+.choice .meta { margin-left: 0; }
+
+
+/* game1_choice_text_spacing_repair */
+.choice .choiceText {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+.choice .choiceTeamName {
+  display: inline-block;
+  margin-right: 0 !important;
+  white-space: nowrap;
+}
+.choice .choiceMeta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin-left: 0 !important;
+  white-space: nowrap;
+}
+.choice .choiceMeta::before {
+  content: "";
+  display: inline-block;
+  width: 2px;
+}
+
 </style>
 </head>
 <body>
   <main class="game1BoardViewport" aria-label="Game 1 R32 assignment board">
     <div class="toolbar" aria-label="Game 1 tools"><button type="button" id="clearPicks">Clear picks</button><button type="button" id="exportPicks">Export picks</button></div>
     <h1 class="visuallyHidden">Game 1 Round of 32 Assignment Board</h1>
-    <section class="pixelNativeBoardPlane" aria-label="Shared 1536 by 1024 pixel-native R32 game board" data-board-source="site/assets/playfield/r32_bracket_geometry_overlay.png" data-native-width="1536" data-native-height="1024" data-display-mode="native-pixel-scrollable" data-game="game1">
-      <img class="boardGeometry" src="../assets/playfield/r32_bracket_geometry_overlay.png" alt="Round of 32 game board" width="1536" height="1024" />
-      <div class="pickLayer" id="pickLayer" aria-hidden="true"></div>
+    <section class="pixelNativeBoardPlane" aria-label="Game 1 uniform SVG gameboard visual with existing R32 interaction layer" data-board-source="site/assets/playfield/uniform_pick_card_gameboard.svg" data-native-width="1536" data-native-height="1024" data-display-mode="native-pixel-scrollable" data-board-visual-authority="uniform-svg-gameboard" data-placement-mode="uniform-svg-r32-manifest" data-game="game1">
+      <img class="boardGeometry" src="../assets/playfield/uniform_pick_card_gameboard.svg" alt="Uniform SVG World Cup bracket gameboard" width="1536" height="1024" data-board-geometry-authority="uniform-svg" data-board-layer-role="transparent-svg-linework" data-board-presentation-style="material-linework-prominent-r32" data-derived-png="../assets/playfield/uniform_pick_card_gameboard.png" />
+      <div class="pickLayer" id="pickLayer" aria-label="Filled Round of 32 picks"></div>
       <div class="hitLayer" id="hitLayer"></div>
     </section>
     <div class="slotFillOpacitySentinel" hidden aria-hidden="true">slotFillOpacity</div>
   </main>
+  <div class="r32PickDetails" id="r32PickDetails" role="tooltip" aria-hidden="true"></div>
   <div class="menuBackdrop" id="menuBackdrop"></div>
   <aside class="tapMenu" id="tapMenu" aria-label="Team chooser" role="dialog" aria-modal="true">
     <div class="menuHeader"><div><div class="menuTitle" id="menuTitle">Choose team</div><div class="menuSub" id="menuSub"></div></div><button class="closeBtn" type="button" id="closeMenu">Close</button></div>
     <div class="groupChips" id="groupChips"></div>
     <div class="teamGrid" id="teamGrid"></div>
   </aside>
+  <script src="../data/geometry/uniform_pick_card_gameboard_manifest.js">
+(function(){
+  const expected = {
+    "R32-L-M4A": ["I"],
+    "R32-L-M4B": ["C","D","F","G","H"],
+    "R32-L-M7B": ["C","E","F","H","I"],
+    "R32-L-M8B": ["E","H","I","J","K"],
+    "R32-R-M3B": ["B","E","F","I","J"],
+    "R32-R-M8B": ["D","E","I","J","L"]
+  };
+  const checks = Object.entries(expected).map(([slot, groups]) => {
+    const actual = typeof groupsForSlotRule === "function" ? groupsForSlotRule(slot) : [];
+    const ok = actual.join("/") === groups.join("/");
+    return { slot, expectedGroups: groups, actualGroups: actual, ok };
+  });
+  window.WC2026_GAME1_CHOICE_LEGIBILITY_HIT_RULE = {
+    ok: checks.every(c => c.ok),
+    checks
+  };
+})();
+
+
+(function(){
+  window.WC2026_GAME1_CHOICE_TEXT_SPACING_REPAIR = {
+    ok: true,
+    requiredVisibleSeparation: "team name and team abbreviation are separate spans inside .choiceText with CSS gap",
+    forbiddenExamples: ["MexicoMEX", "FranceFRA", "SenegalSEN"]
+  };
+})();
+
+</script>
+  <script src="../data/game1_data_bundle.js"></script>
   <script>
     const STORAGE_KEY = "wc2026.game1.r32.picks";
-    const SLOT_RULES = [{"position":1,"logicalId":"game1.r32.slot01","slotId":"R32-L-M1A","round":"R32","side":"left","row":1,"slotRule":"2A","slotRuleLong":"Runner-up Group A","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["A"],"menuTitle":"Runner-up Group A","boundsPx":{"x":38,"y":142,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":142,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":2,"logicalId":"game1.r32.slot02","slotId":"R32-L-M1B","round":"R32","side":"left","row":2,"slotRule":"2B","slotRuleLong":"Runner-up Group B","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["B"],"menuTitle":"Runner-up Group B","boundsPx":{"x":38,"y":189,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":189,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":3,"logicalId":"game1.r32.slot03","slotId":"R32-L-M2A","round":"R32","side":"left","row":3,"slotRule":"1F","slotRuleLong":"Winner Group F","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["F"],"menuTitle":"Winner Group F","boundsPx":{"x":38,"y":236,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":236,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":4,"logicalId":"game1.r32.slot04","slotId":"R32-L-M2B","round":"R32","side":"left","row":4,"slotRule":"2C","slotRuleLong":"Runner-up Group C","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["C"],"menuTitle":"Runner-up Group C","boundsPx":{"x":38,"y":283,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":283,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":5,"logicalId":"game1.r32.slot05","slotId":"R32-L-M3A","round":"R32","side":"left","row":5,"slotRule":"1E","slotRuleLong":"Winner Group E","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["E"],"menuTitle":"Winner Group E","boundsPx":{"x":38,"y":330,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":330,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":6,"logicalId":"game1.r32.slot06","slotId":"R32-L-M3B","round":"R32","side":"left","row":6,"slotRule":"3 A/B/C/D/F","slotRuleLong":"Best third-place team from Groups A/B/C/D/F","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["A","B","C","D","F"],"menuTitle":"Third-place pool: A/B/C/D/F","boundsPx":{"x":38,"y":377,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":377,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":7,"logicalId":"game1.r32.slot07","slotId":"R32-L-M4A","round":"R32","side":"left","row":7,"slotRule":"1I","slotRuleLong":"Winner Group I","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["I"],"menuTitle":"Winner Group I","boundsPx":{"x":38,"y":424,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":424,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":8,"logicalId":"game1.r32.slot08","slotId":"R32-L-M4B","round":"R32","side":"left","row":8,"slotRule":"3 C/D/F/G/H","slotRuleLong":"Best third-place team from Groups C/D/F/G/H","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["C","D","F","G","H"],"menuTitle":"Third-place pool: C/D/F/G/H","boundsPx":{"x":38,"y":471,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":471,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":9,"logicalId":"game1.r32.slot09","slotId":"R32-L-M5A","round":"R32","side":"left","row":9,"slotRule":"1C","slotRuleLong":"Winner Group C","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["C"],"menuTitle":"Winner Group C","boundsPx":{"x":38,"y":518,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":518,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":10,"logicalId":"game1.r32.slot10","slotId":"R32-L-M5B","round":"R32","side":"left","row":10,"slotRule":"2F","slotRuleLong":"Runner-up Group F","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["F"],"menuTitle":"Runner-up Group F","boundsPx":{"x":38,"y":565,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":565,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":11,"logicalId":"game1.r32.slot11","slotId":"R32-L-M6A","round":"R32","side":"left","row":11,"slotRule":"2E","slotRuleLong":"Runner-up Group E","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["E"],"menuTitle":"Runner-up Group E","boundsPx":{"x":38,"y":612,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":612,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":12,"logicalId":"game1.r32.slot12","slotId":"R32-L-M6B","round":"R32","side":"left","row":12,"slotRule":"2I","slotRuleLong":"Runner-up Group I","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["I"],"menuTitle":"Runner-up Group I","boundsPx":{"x":38,"y":659,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":659,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":13,"logicalId":"game1.r32.slot13","slotId":"R32-L-M7A","round":"R32","side":"left","row":13,"slotRule":"1A","slotRuleLong":"Winner Group A","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["A"],"menuTitle":"Winner Group A","boundsPx":{"x":38,"y":706,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":706,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":14,"logicalId":"game1.r32.slot14","slotId":"R32-L-M7B","round":"R32","side":"left","row":14,"slotRule":"3 C/E/F/H/I","slotRuleLong":"Best third-place team from Groups C/E/F/H/I","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["C","E","F","H","I"],"menuTitle":"Third-place pool: C/E/F/H/I","boundsPx":{"x":38,"y":753,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":753,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":15,"logicalId":"game1.r32.slot15","slotId":"R32-L-M8A","round":"R32","side":"left","row":15,"slotRule":"1L","slotRuleLong":"Winner Group L","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["L"],"menuTitle":"Winner Group L","boundsPx":{"x":38,"y":800,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":800,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":16,"logicalId":"game1.r32.slot16","slotId":"R32-L-M8B","round":"R32","side":"left","row":16,"slotRule":"3 E/H/I/J/K","slotRuleLong":"Best third-place team from Groups E/H/I/J/K","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["E","H","I","J","K"],"menuTitle":"Third-place pool: E/H/I/J/K","boundsPx":{"x":38,"y":847,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":38,"y":847,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":17,"logicalId":"game1.r32.slot17","slotId":"R32-R-M1A","round":"R32","side":"right","row":1,"slotRule":"2K","slotRuleLong":"Runner-up Group K","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["K"],"menuTitle":"Runner-up Group K","boundsPx":{"x":1350,"y":142,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":142,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":18,"logicalId":"game1.r32.slot18","slotId":"R32-R-M1B","round":"R32","side":"right","row":2,"slotRule":"2L","slotRuleLong":"Runner-up Group L","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["L"],"menuTitle":"Runner-up Group L","boundsPx":{"x":1350,"y":189,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":189,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":19,"logicalId":"game1.r32.slot19","slotId":"R32-R-M2A","round":"R32","side":"right","row":3,"slotRule":"1H","slotRuleLong":"Winner Group H","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["H"],"menuTitle":"Winner Group H","boundsPx":{"x":1350,"y":236,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":236,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":20,"logicalId":"game1.r32.slot20","slotId":"R32-R-M2B","round":"R32","side":"right","row":4,"slotRule":"2J","slotRuleLong":"Runner-up Group J","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["J"],"menuTitle":"Runner-up Group J","boundsPx":{"x":1350,"y":283,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":283,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":21,"logicalId":"game1.r32.slot21","slotId":"R32-R-M3A","round":"R32","side":"right","row":5,"slotRule":"1D","slotRuleLong":"Winner Group D","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["D"],"menuTitle":"Winner Group D","boundsPx":{"x":1350,"y":330,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":330,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":22,"logicalId":"game1.r32.slot22","slotId":"R32-R-M3B","round":"R32","side":"right","row":6,"slotRule":"3 B/E/F/I/J","slotRuleLong":"Best third-place team from Groups B/E/F/I/J","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["B","E","F","I","J"],"menuTitle":"Third-place pool: B/E/F/I/J","boundsPx":{"x":1350,"y":377,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":377,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":23,"logicalId":"game1.r32.slot23","slotId":"R32-R-M4A","round":"R32","side":"right","row":7,"slotRule":"1G","slotRuleLong":"Winner Group G","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["G"],"menuTitle":"Winner Group G","boundsPx":{"x":1350,"y":424,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":424,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":24,"logicalId":"game1.r32.slot24","slotId":"R32-R-M4B","round":"R32","side":"right","row":8,"slotRule":"3 A/E/H/I/J","slotRuleLong":"Best third-place team from Groups A/E/H/I/J","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["A","E","H","I","J"],"menuTitle":"Third-place pool: A/E/H/I/J","boundsPx":{"x":1350,"y":471,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":471,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":25,"logicalId":"game1.r32.slot25","slotId":"R32-R-M5A","round":"R32","side":"right","row":9,"slotRule":"1J","slotRuleLong":"Winner Group J","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["J"],"menuTitle":"Winner Group J","boundsPx":{"x":1350,"y":518,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":518,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":26,"logicalId":"game1.r32.slot26","slotId":"R32-R-M5B","round":"R32","side":"right","row":10,"slotRule":"2H","slotRuleLong":"Runner-up Group H","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["H"],"menuTitle":"Runner-up Group H","boundsPx":{"x":1350,"y":565,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":565,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":27,"logicalId":"game1.r32.slot27","slotId":"R32-R-M6A","round":"R32","side":"right","row":11,"slotRule":"2D","slotRuleLong":"Runner-up Group D","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["D"],"menuTitle":"Runner-up Group D","boundsPx":{"x":1350,"y":612,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":612,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":28,"logicalId":"game1.r32.slot28","slotId":"R32-R-M6B","round":"R32","side":"right","row":12,"slotRule":"2G","slotRuleLong":"Runner-up Group G","qualifierKind":"group_runner_up","qualifiedPlace":2,"eligibleGroups":["G"],"menuTitle":"Runner-up Group G","boundsPx":{"x":1350,"y":659,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":659,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":29,"logicalId":"game1.r32.slot29","slotId":"R32-R-M7A","round":"R32","side":"right","row":13,"slotRule":"1B","slotRuleLong":"Winner Group B","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["B"],"menuTitle":"Winner Group B","boundsPx":{"x":1350,"y":706,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":706,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":30,"logicalId":"game1.r32.slot30","slotId":"R32-R-M7B","round":"R32","side":"right","row":14,"slotRule":"3 E/F/G/I/J","slotRuleLong":"Best third-place team from Groups E/F/G/I/J","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["E","F","G","I","J"],"menuTitle":"Third-place pool: E/F/G/I/J","boundsPx":{"x":1350,"y":753,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":753,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":31,"logicalId":"game1.r32.slot31","slotId":"R32-R-M8A","round":"R32","side":"right","row":15,"slotRule":"1K","slotRuleLong":"Winner Group K","qualifierKind":"group_winner","qualifiedPlace":1,"eligibleGroups":["K"],"menuTitle":"Winner Group K","boundsPx":{"x":1350,"y":800,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":800,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"},{"position":32,"logicalId":"game1.r32.slot32","slotId":"R32-R-M8B","round":"R32","side":"right","row":16,"slotRule":"3 D/E/I/J/L","slotRuleLong":"Best third-place team from Groups D/E/I/J/L","qualifierKind":"third_place_pool","qualifiedPlace":3,"eligibleGroups":["D","E","I","J","L"],"menuTitle":"Third-place pool: D/E/I/J/L","boundsPx":{"x":1350,"y":847,"w":148,"h":40},"hitRegionPx":{"type":"rect","x":1350,"y":847,"w":148,"h":40},"source":"derived_from_existing_game2_r32_seed_slot_rules"}];
-    const GROUPS = {"A":[{"name":"Mexico","abbr":"MEX","flagEmoji":"🇲🇽","group":"A","display":"Mexico"},{"name":"South Africa","abbr":"RSA","flagEmoji":"🇿🇦","group":"A","display":"South Africa"},{"name":"Korea Republic","abbr":"KOR","flagEmoji":"🇰🇷","displayNameFromImage":"South Korea","group":"A","display":"South Korea"},{"name":"Czechia","abbr":"CZE","flagEmoji":"🇨🇿","group":"A","display":"Czechia"}],"B":[{"name":"Canada","abbr":"CAN","flagEmoji":"🇨🇦","group":"B","display":"Canada"},{"name":"Bosnia-Herzegovina","abbr":"BIH","flagEmoji":"🇧🇦","group":"B","display":"Bosnia-Herzegovina"},{"name":"Qatar","abbr":"QAT","flagEmoji":"🇶🇦","group":"B","display":"Qatar"},{"name":"Switzerland","abbr":"SUI","flagEmoji":"🇨🇭","group":"B","display":"Switzerland"}],"C":[{"name":"Brazil","abbr":"BRA","flagEmoji":"🇧🇷","group":"C","display":"Brazil"},{"name":"Morocco","abbr":"MAR","flagEmoji":"🇲🇦","group":"C","display":"Morocco"},{"name":"Haiti","abbr":"HAI","flagEmoji":"🇭🇹","group":"C","display":"Haiti"},{"name":"Scotland","abbr":"SCO","flagEmoji":"🏴","group":"C","display":"Scotland"}],"D":[{"name":"USA","abbr":"USA","flagEmoji":"🇺🇸","group":"D","display":"USA"},{"name":"Paraguay","abbr":"PAR","flagEmoji":"🇵🇾","group":"D","display":"Paraguay"},{"name":"Australia","abbr":"AUS","flagEmoji":"🇦🇺","group":"D","display":"Australia"},{"name":"Türkiye","abbr":"TUR","flagEmoji":"🇹🇷","displayNameFromImage":"Turkiye","group":"D","display":"Turkiye"}],"E":[{"name":"Germany","abbr":"GER","flagEmoji":"🇩🇪","group":"E","display":"Germany"},{"name":"Curaçao","abbr":"CUW","flagEmoji":"🇨🇼","displayNameFromImage":"Curacao","group":"E","display":"Curacao"},{"name":"Côte d’Ivoire","abbr":"CIV","flagEmoji":"🇨🇮","displayNameFromImage":"Ivory Coast","group":"E","display":"Ivory Coast"},{"name":"Ecuador","abbr":"ECU","flagEmoji":"🇪🇨","group":"E","display":"Ecuador"}],"F":[{"name":"Netherlands","abbr":"NED","flagEmoji":"🇳🇱","group":"F","display":"Netherlands"},{"name":"Japan","abbr":"JPN","flagEmoji":"🇯🇵","group":"F","display":"Japan"},{"name":"Sweden","abbr":"SWE","flagEmoji":"🇸🇪","group":"F","display":"Sweden"},{"name":"Tunisia","abbr":"TUN","flagEmoji":"🇹🇳","group":"F","display":"Tunisia"}],"G":[{"name":"Belgium","abbr":"BEL","flagEmoji":"🇧🇪","group":"G","display":"Belgium"},{"name":"Egypt","abbr":"EGY","flagEmoji":"🇪🇬","group":"G","display":"Egypt"},{"name":"IR Iran","abbr":"IRN","flagEmoji":"🇮🇷","displayNameFromImage":"Iran","group":"G","display":"Iran"},{"name":"New Zealand","abbr":"NZL","flagEmoji":"🇳🇿","group":"G","display":"New Zealand"}],"H":[{"name":"Spain","abbr":"ESP","flagEmoji":"🇪🇸","group":"H","display":"Spain"},{"name":"Cabo Verde","abbr":"CPV","flagEmoji":"🇨🇻","displayNameFromImage":"Cape Verde","group":"H","display":"Cape Verde"},{"name":"Saudi Arabia","abbr":"KSA","flagEmoji":"🇸🇦","group":"H","display":"Saudi Arabia"},{"name":"Uruguay","abbr":"URU","flagEmoji":"🇺🇾","group":"H","display":"Uruguay"}],"I":[{"name":"France","abbr":"FRA","flagEmoji":"🇫🇷","group":"I","display":"France"},{"name":"Senegal","abbr":"SEN","flagEmoji":"🇸🇳","group":"I","display":"Senegal"},{"name":"Iraq","abbr":"IRQ","flagEmoji":"🇮🇶","group":"I","display":"Iraq"},{"name":"Norway","abbr":"NOR","flagEmoji":"🇳🇴","group":"I","display":"Norway"}],"J":[{"name":"Argentina","abbr":"ARG","flagEmoji":"🇦🇷","group":"J","display":"Argentina"},{"name":"Algeria","abbr":"ALG","flagEmoji":"🇩🇿","group":"J","display":"Algeria"},{"name":"Austria","abbr":"AUT","flagEmoji":"🇦🇹","group":"J","display":"Austria"},{"name":"Jordan","abbr":"JOR","flagEmoji":"🇯🇴","group":"J","display":"Jordan"}],"K":[{"name":"Portugal","abbr":"POR","flagEmoji":"🇵🇹","group":"K","display":"Portugal"},{"name":"Congo DR","abbr":"COD","flagEmoji":"🇨🇩","displayNameFromImage":"DR Congo","group":"K","display":"DR Congo"},{"name":"Uzbekistan","abbr":"UZB","flagEmoji":"🇺🇿","group":"K","display":"Uzbekistan"},{"name":"Colombia","abbr":"COL","flagEmoji":"🇨🇴","group":"K","display":"Colombia"}],"L":[{"name":"England","abbr":"ENG","flagEmoji":"🏴","group":"L","display":"England"},{"name":"Croatia","abbr":"CRO","flagEmoji":"🇭🇷","group":"L","display":"Croatia"},{"name":"Ghana","abbr":"GHA","flagEmoji":"🇬🇭","group":"L","display":"Ghana"},{"name":"Panama","abbr":"PAN","flagEmoji":"🇵🇦","group":"L","display":"Panama"}]};
+    const GAME1_DATA = window.WC2026_GAME1_DATA;
+    const UNIFORM_SVG_GAMEBOARD_MANIFEST = window.WC2026_UNIFORM_PICK_CARD_GAMEBOARD_MANIFEST || null;
+    if (!GAME1_DATA) { throw new Error("WC2026 Game 1 data bundle did not load."); }
+    const SLOT_RULES = GAME1_DATA.slotRules;
+    const GROUPS = GAME1_DATA.groups;
+    const TEAMS = GAME1_DATA.teams;
     const hitLayer = document.getElementById("hitLayer");
     const pickLayer = document.getElementById("pickLayer");
     const menu = document.getElementById("tapMenu");
@@ -114,11 +397,167 @@ body { min-height: 100vh; overflow: auto; font-family: ui-sans-serif, system-ui,
     const menuSub = document.getElementById("menuSub");
     const groupChips = document.getElementById("groupChips");
     const teamGrid = document.getElementById("teamGrid");
+    const pickDetails = document.getElementById("r32PickDetails");
     let activeSlot = null;
+
+    function validateUniformSvgGameboardManifestForGame1(manifest) {
+      const result = {
+        status: "missing",
+        boardModelId: "",
+        slotCount: 0,
+        roundCounts: {},
+        errors: []
+      };
+      if (!manifest || typeof manifest !== "object") {
+        result.errors.push("uniform SVG gameboard manifest is not loaded");
+        return result;
+      }
+      result.status = "loaded";
+      result.boardModelId = manifest.boardModel?.id || "";
+      const size = manifest.nativeSizePx || {};
+      if (Number(size.width) !== 1536 || Number(size.height) !== 1024) {
+        result.errors.push("native board size is not 1536x1024");
+      }
+      const slots = Array.isArray(manifest.slots) ? manifest.slots : [];
+      result.slotCount = slots.length;
+      for (const slot of slots) {
+        const round = slot.round || "UNKNOWN";
+        result.roundCounts[round] = (result.roundCounts[round] || 0) + 1;
+        const b = slot.boundsPx || {};
+        const w = b.w ?? b.width;
+        const h = b.h ?? b.height;
+        if (![b.x, b.y, w, h].every(Number.isFinite)) {
+          result.errors.push(`slot ${slot.slotId || "unknown"} has incomplete boundsPx`);
+        }
+      }
+      const expected = {R32: 32, R16: 16, QF: 8, SF: 4, FINAL_FOUR: 1};
+      const expectedTotal = Object.values(expected).reduce((sum, value) => sum + value, 0);
+      if (result.slotCount !== expectedTotal) {
+        result.errors.push(`expected ${expectedTotal} manifest slots; found ${result.slotCount}`);
+      }
+      for (const [round, count] of Object.entries(expected)) {
+        if ((result.roundCounts[round] || 0) !== count) {
+          result.errors.push(`expected ${count} ${round} slots; found ${result.roundCounts[round] || 0}`);
+        }
+      }
+      result.status = result.errors.length ? "invalid" : "valid";
+      return result;
+    }
+
+    const uniformSvgManifestProbe = validateUniformSvgGameboardManifestForGame1(UNIFORM_SVG_GAMEBOARD_MANIFEST);
+    const boardPlane = document.querySelector(".pixelNativeBoardPlane");
+    if (boardPlane) {
+      boardPlane.dataset.uniformSvgManifestMode = "game1-transparent-svg-middle-layer";
+      boardPlane.dataset.uniformSvgBoardVisual = "visible";
+      boardPlane.dataset.uniformSvgPlacementMode = "uniform-svg-r32-manifest";
+      boardPlane.dataset.uniformSvgBoardPresentation = "material-linework-prominent-r32";
+      boardPlane.dataset.uniformSvgManifestStatus = uniformSvgManifestProbe.status;
+      boardPlane.dataset.uniformSvgManifestSlotCount = String(uniformSvgManifestProbe.slotCount || 0);
+      boardPlane.dataset.uniformSvgManifestBoardModel = uniformSvgManifestProbe.boardModelId || "unknown";
+    }
+    window.WC2026_GAME1_UNIFORM_SVG_MANIFEST_PROBE = uniformSvgManifestProbe;
+    if (uniformSvgManifestProbe.status !== "valid") {
+      console.warn("WC2026 Game 1 uniform SVG manifest probe failed", uniformSvgManifestProbe);
+    }
+
+
+    function normalizeUniformSvgManifestBounds(bounds) {
+      const b = bounds || {};
+      return {
+        x: Number(b.x),
+        y: Number(b.y),
+        w: Number(b.w ?? b.width),
+        h: Number(b.h ?? b.height)
+      };
+    }
+    function applyUniformSvgR32ManifestGeometryToGame1SlotRules(manifest, slotRules) {
+      const result = {status: "not_applied", mapped: 0, errors: []};
+      const slots = Array.isArray(manifest?.slots) ? manifest.slots : [];
+      const r32Slots = slots
+        .filter(slot => slot.round === "R32")
+        .slice()
+        .sort((a, b) => {
+          const sideOrder = {left: 0, right: 1};
+          const aSide = sideOrder[a.side] ?? 9;
+          const bSide = sideOrder[b.side] ?? 9;
+          if (aSide !== bSide) return aSide - bSide;
+          return Number(a.roundIndex || 0) - Number(b.roundIndex || 0);
+        });
+      if (r32Slots.length !== 32) {
+        result.errors.push(`expected 32 R32 manifest slots; found ${r32Slots.length}`);
+        return result;
+      }
+      const rules = (slotRules || []).slice().sort((a, b) => Number(a.position || 0) - Number(b.position || 0));
+      if (rules.length !== 32) {
+        result.errors.push(`expected 32 Game 1 slot rules; found ${rules.length}`);
+        return result;
+      }
+      rules.forEach((rule, index) => {
+        const manifestSlot = r32Slots[index];
+        const b = normalizeUniformSvgManifestBounds(manifestSlot.boundsPx);
+        if (![b.x, b.y, b.w, b.h].every(Number.isFinite)) {
+          result.errors.push(`manifest slot ${manifestSlot.slotId || index} has invalid bounds`);
+          return;
+        }
+        rule.uniformSvgSlotId = manifestSlot.slotId;
+        rule.uniformSvgRoundIndex = manifestSlot.roundIndex;
+        rule.uniformSvgGeometrySource = "site/data/geometry/uniform_pick_card_gameboard_manifest.json";
+        rule.boundsPx = {x: b.x, y: b.y, w: b.w, h: b.h};
+        rule.hitRegionPx = {type: "rect", x: b.x, y: b.y, w: b.w, h: b.h};
+        result.mapped += 1;
+      });
+      result.status = result.errors.length ? "invalid" : "applied";
+      return result;
+    }
+    const game1UniformSvgGeometryMap = applyUniformSvgR32ManifestGeometryToGame1SlotRules(UNIFORM_SVG_GAMEBOARD_MANIFEST, SLOT_RULES);
+    if (boardPlane) {
+      boardPlane.dataset.uniformSvgManifestMode = "game1-transparent-svg-middle-layer";
+      boardPlane.dataset.uniformSvgBoardVisual = "transparent-middle-layer";
+      boardPlane.dataset.uniformSvgPlacementMode = "uniform-svg-r32-manifest";
+      boardPlane.dataset.placementMode = "uniform-svg-r32-manifest";
+      boardPlane.dataset.uniformSvgMappedR32Slots = String(game1UniformSvgGeometryMap.mapped || 0);
+      boardPlane.dataset.uniformSvgGeometryMapStatus = game1UniformSvgGeometryMap.status;
+    }
+    window.WC2026_GAME1_UNIFORM_SVG_GEOMETRY_MAP = game1UniformSvgGeometryMap;
+    if (game1UniformSvgGeometryMap.status !== "applied") {
+      console.warn("WC2026 Game 1 uniform SVG R32 geometry projection failed", game1UniformSvgGeometryMap);
+    }
+
     function loadPicks() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; } }
     function savePicks(picks) { localStorage.setItem(STORAGE_KEY, JSON.stringify(picks)); }
     let picks = loadPicks();
     function displayName(team) { return team.displayNameFromImage || team.display || team.name; }
+    
+function r32PickFullName(team) {
+  return team?.displayNameFromImage || team?.display || team?.name || team?.fullName || "Team";
+}
+
+function r32TeamAbbreviation(team) {
+  const raw = String(team?.abbr || "").trim().toUpperCase();
+  if (raw.length === 3) return raw;
+  const fallback = String(team?.displayNameFromImage || team?.display || team?.name || team?.fullName || "TEAM");
+  return (fallback.replace(/[^A-Za-z]/g, "").toUpperCase() + "XXX").slice(0, 3);
+}
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch] || ch));
+    }
+    function r32PickTooltipText(pick, rule) {
+      const name = r32PickFullName(pick);
+      const abbr = r32TeamAbbreviation(pick);
+      const group = pick.group ? `Group ${pick.group}` : "Group unknown";
+      const path = rule.slotRuleLong || pick.slotRuleLong || rule.slotRule || pick.slotRule || "R32 slot";
+      const groups = Array.isArray(rule.eligibleGroups) ? rule.eligibleGroups.join("/") : "";
+      const source = groups ? `Eligible source: Group ${groups}` : "Eligible source: R32 slot rule";
+      return `${name}
+Team abbreviation: ${abbr} · ${group}
+Slot: ${rule.slotRule}
+${path}
+${source}
+Click/tap to change pick`;
+    }
+    function r32PickAriaLabel(pick, rule) {
+      return `${r32PickFullName(pick)} selected for ${rule.slotRuleLong || rule.slotRule}. Click to change pick.`;
+    }
     function eligibleTeamsForSlot(slotId) { const rule = SLOT_RULES.find(s => s.slotId === slotId || s.logicalId === slotId); if (!rule) return []; return rule.eligibleGroups.flatMap(g => GROUPS[g] || []); }
     function cssPx(n) { return `${Math.round(n)}px`; }
     function createHotspots() {
@@ -131,28 +570,220 @@ body { min-height: 100vh; overflow: auto; font-family: ui-sans-serif, system-ui,
         btn.style.left = cssPx(b.x); btn.style.top = cssPx(b.y); btn.style.width = cssPx(b.w); btn.style.height = cssPx(b.h);
         btn.dataset.slotId = rule.slotId;
         btn.setAttribute("aria-label", `${rule.position}. ${rule.slotRuleLong}`);
-        btn.addEventListener("click", ev => openMenu(rule, ev));
+        btn.addEventListener("click", ev => openMenuForResolvedGame1R32Rule(rule, ev));
         hitLayer.appendChild(btn);
         const lab = document.createElement("div");
-        lab.className = "slotLabel";
+        lab.className = "slotLabel"; lab.hidden = true; lab.setAttribute("aria-hidden", "true");
         lab.style.left = cssPx(rule.boundsPx.x); lab.style.top = cssPx(rule.boundsPx.y);
         lab.textContent = rule.slotRule;
         hitLayer.appendChild(lab);
       });
     }
+    function pickDetailsHtml(rule, pick) {
+      const name = r32PickFullName(pick);
+      const abbr = r32TeamAbbreviation(pick);
+      const group = pick.group ? ` · Group ${pick.group}` : "";
+      const eligible = (rule.eligibleGroups || []).join("/");
+      return `<strong>${name}</strong><span class="muted">Team abbreviation: ${abbr}${group}<br>Slot: ${rule.slotRule}<br>${rule.slotRuleLong}<br>${eligible ? `Eligible source: Group ${eligible}<br>` : ""}Click/tap to change pick</span>`;
+    }
+    function showPickDetails(card, rule, pick) {
+      if (!pickDetails) return;
+      pickDetails.innerHTML = pickDetailsHtml(rule, pick);
+      pickDetails.classList.add("isOpen");
+      pickDetails.setAttribute("aria-hidden", "false");
+      const r = card.getBoundingClientRect();
+      const w = Math.min(310, window.innerWidth - 24);
+      const left = Math.min(window.innerWidth - w - 12, Math.max(12, r.left + 14));
+      const top = Math.min(window.innerHeight - 150, Math.max(12, r.bottom + 8));
+      pickDetails.style.left = `${left}px`;
+      pickDetails.style.top = `${top}px`;
+      pickDetails.style.maxWidth = `${w}px`;
+    }
+    function hidePickDetails() {
+      if (!pickDetails) return;
+      pickDetails.classList.remove("isOpen");
+      pickDetails.setAttribute("aria-hidden", "true");
+    }
+    function computePickCardBox(rule, pick) {
+      const b = rule.boundsPx;
+      const nameLength = displayName(pick).length;
+      const desiredWidth = Math.max(b.w, Math.min(330, nameLength >= 12 ? 320 : 292));
+      const width = Math.min(desiredWidth, 1536);
+      const left = rule.side === "right" ? Math.max(0, b.x + b.w - width) : Math.min(b.x, 1536 - width);
+      const height = Math.max(b.h, 46);
+      const top = Math.max(0, b.y + Math.round((b.h - height) / 2));
+      return { left, top, width, height };
+    }
+    function fitPickCardName(card) {
+      // R32 abbreviation cards use fixed shared typography; no per-team fitting.
+    }
+
+    function game1ManifestBoundsForRulePosition(position) {
+      const manifest = window.WC2026_UNIFORM_PICK_CARD_GAMEBOARD_MANIFEST;
+      const slots = Array.isArray(manifest?.slots) ? manifest.slots : [];
+      const side = Number(position) <= 16 ? "left" : "right";
+      const sideIndex = side === "left" ? Number(position) - 1 : Number(position) - 17;
+      const r32 = slots
+        .filter(slot => slot.round === "R32" && slot.side === side)
+        .slice()
+        .sort((a, b) => Number(a.boundsPx?.y ?? 0) - Number(b.boundsPx?.y ?? 0));
+      const slot = r32[sideIndex];
+      if (!slot || !slot.boundsPx) return null;
+      const b = slot.boundsPx;
+      const x = Number(b.x);
+      const y = Number(b.y);
+      const w = Number(b.w ?? b.width);
+      const h = Number(b.h ?? b.height);
+      if (![x, y, w, h].every(Number.isFinite)) return null;
+      return {slot, bounds: {x, y, w, h, width: w, height: h}};
+    }
+    function applyGame1ManifestR32GeometryToSlotRules() {
+      const checks = [];
+      const expectedRules = new Map([
+        [6, "3 A/B/C/D/F"],
+        [7, "1I"],
+        [8, "3 C/D/F/G/H"],
+        [14, "3 C/E/F/H/I"],
+        [16, "3 E/H/I/J/K"]
+      ]);
+      let mapped = 0;
+      for (const rule of SLOT_RULES.filter(item => item.round === "R32")) {
+        const mappedBounds = game1ManifestBoundsForRulePosition(rule.position);
+        if (mappedBounds) {
+          rule.boundsPx = {...mappedBounds.bounds};
+          rule.hitRegionPx = {...mappedBounds.bounds};
+          rule.geometrySlotId = mappedBounds.slot.slotId;
+          rule.geometrySource = "uniform-svg-manifest-position-map";
+          mapped += 1;
+        }
+        if (expectedRules.has(rule.position)) {
+          const expected = expectedRules.get(rule.position);
+          checks.push({position: rule.position, expected, actual: rule.slotRule, ok: rule.slotRule === expected});
+        }
+      }
+      const ok = mapped === 32 && checks.every(check => check.ok);
+      window.WC2026_GAME1_R32_RULE_HIT_INTEGRITY = {
+        ok,
+        mappedR32Slots: mapped,
+        expectedMappedR32Slots: 32,
+        checks,
+        implementationLabelsHidden: true,
+        geometrySource: "uniform-svg-manifest-position-map"
+      };
+      const board = document.querySelector(".pixelNativeBoardPlane") || document.querySelector(".board") || document.body;
+      if (board) {
+        board.dataset.r32RuleHitIntegrity = ok ? "pass" : "fail";
+        board.dataset.implementationLabelsHidden = "true";
+      }
+      if (!ok) console.warn("WC2026 Game 1 R32 rule/hit integrity check failed", window.WC2026_GAME1_R32_RULE_HIT_INTEGRITY);
+      return window.WC2026_GAME1_R32_RULE_HIT_INTEGRITY;
+    }
+
     function renderPicks() {
+      hidePickDetails();
       pickLayer.innerHTML = "";
       SLOT_RULES.forEach(rule => {
         const pick = picks[rule.slotId];
         if (!pick) return;
-        const b = rule.boundsPx;
-        const card = document.createElement("div");
+        const box = computePickCardBox(rule, pick);
+        const card = document.createElement("button");
+        card.type = "button";
         card.className = "pickCard";
-        card.style.left = cssPx(b.x); card.style.top = cssPx(b.y); card.style.width = cssPx(b.w); card.style.height = cssPx(b.h);
-        card.innerHTML = `<span class="pickFlag">${pick.flagEmoji || pick.flag || "⚽"}</span><span class="pickText"><span class="pickName">${displayName(pick)}</span><span class="pickRule">${rule.slotRule}</span></span>`;
+        card.style.left = cssPx(box.left);
+        card.style.top = cssPx(box.top);
+        card.style.width = cssPx(box.width);
+        card.style.height = cssPx(box.height);
+        card.dataset.slotId = rule.slotId;
+        card.setAttribute("aria-label", `${r32PickFullName(pick)}. Team abbreviation ${r32TeamAbbreviation(pick)}. ${rule.slotRuleLong}. Click or tap to change pick.`);
+        const pickFlag = document.createElement("span");
+        pickFlag.className = "pickFlag";
+        pickFlag.textContent = pick.flagEmoji || pick.flag || "⚽";
+        const pickText = document.createElement("span");
+        pickText.className = "pickText";
+        const pickName = document.createElement("span");
+        pickName.className = "pickName";
+        pickName.textContent = r32TeamAbbreviation(pick);
+        const pickRule = document.createElement("span");
+        pickRule.className = "pickRule"; pickRule.hidden = true; pickRule.setAttribute("aria-hidden", "true");
+        pickRule.textContent = rule.slotRule;
+        pickText.appendChild(pickName);
+        pickText.appendChild(pickRule);
+        card.replaceChildren(pickFlag, pickText);
+        card.addEventListener("pointerenter", () => showPickDetails(card, rule, pick));
+        card.addEventListener("pointerleave", hidePickDetails);
+        card.addEventListener("focus", () => showPickDetails(card, rule, pick));
+        card.addEventListener("blur", hidePickDetails);
+        card.addEventListener("click", ev => openMenuForResolvedGame1R32Rule(rule, ev));
         pickLayer.appendChild(card);
+        requestAnimationFrame(() => fitPickCardName(card));
       });
     }
+
+    function game1BoardNativePointFromEvent(ev) {
+      const board = document.querySelector(".board") || boardPlane || document.body;
+      const rect = board.getBoundingClientRect();
+      const native = (window.WC2026_UNIFORM_PICK_CARD_GAMEBOARD_MANIFEST && window.WC2026_UNIFORM_PICK_CARD_GAMEBOARD_MANIFEST.nativeSizePx) || {width: 1536, height: 1024};
+      const width = Number(native.width || 1536);
+      const height = Number(native.height || 1024);
+      const x = ((ev.clientX - rect.left) / Math.max(1, rect.width)) * width;
+      const y = ((ev.clientY - rect.top) / Math.max(1, rect.height)) * height;
+      return {x, y};
+    }
+    function game1RuleRect(rule) {
+      const b = rule?.hitRegionPx || rule?.boundsPx || {};
+      return {
+        x: Number(b.x),
+        y: Number(b.y),
+        w: Number(b.w ?? b.width),
+        h: Number(b.h ?? b.height)
+      };
+    }
+    function game1PointDistanceToRuleCenter(point, rule) {
+      const b = game1RuleRect(rule);
+      const cx = b.x + b.w / 2;
+      const cy = b.y + b.h / 2;
+      return Math.hypot(point.x - cx, point.y - cy);
+    }
+    function resolveGame1R32RuleFromPointer(ev, fallbackRule) {
+      const point = game1BoardNativePointFromEvent(ev);
+      const fallbackSide = fallbackRule?.side || null;
+      const candidates = SLOT_RULES
+        .filter(rule => rule.round === "R32")
+        .filter(rule => !fallbackSide || rule.side === fallbackSide)
+        .map(rule => {
+          const b = game1RuleRect(rule);
+          const finite = [b.x, b.y, b.w, b.h].every(Number.isFinite);
+          const tolerance = 3;
+          const contains = finite && point.x >= b.x - tolerance && point.x <= b.x + b.w + tolerance && point.y >= b.y - tolerance && point.y <= b.y + b.h + tolerance;
+          return {rule, finite, contains, distance: finite ? game1PointDistanceToRuleCenter(point, rule) : Number.POSITIVE_INFINITY};
+        })
+        .filter(item => item.finite);
+      const contained = candidates.filter(item => item.contains).sort((a, b) => a.distance - b.distance);
+      const nearest = candidates.slice().sort((a, b) => a.distance - b.distance)[0];
+      const resolved = (contained[0] || nearest || {}).rule || fallbackRule;
+      return {rule: resolved, fallbackRule, point, source: contained.length ? "pointer-contained-manifest-slot" : "pointer-nearest-manifest-slot"};
+    }
+    function openMenuForResolvedGame1R32Rule(rule, ev) {
+      const resolved = resolveGame1R32RuleFromPointer(ev, rule);
+      if (resolved.rule && rule && resolved.rule.slotId !== rule.slotId) {
+        console.warn("WC2026 Game 1 corrected R32 menu rule from pointer geometry", {
+          domSlotId: rule.slotId,
+          domSlotRule: rule.slotRule,
+          resolvedSlotId: resolved.rule.slotId,
+          resolvedSlotRule: resolved.rule.slotRule,
+          source: resolved.source,
+          point: resolved.point
+        });
+      }
+      if (menu) {
+        menu.dataset.activeSlotId = resolved.rule?.slotId || "";
+        menu.dataset.activeSlotRule = resolved.rule?.slotRule || "";
+        menu.dataset.activeRuleSource = "pointer-resolved-manifest-slot";
+      }
+      window.WC2026_GAME1_R32_POINTER_RULE_RESOLVER = resolved;
+      return openMenu(resolved.rule || rule, ev);
+    }
+
     function openMenu(rule, ev) {
       activeSlot = rule;
       const teams = eligibleTeamsForSlot(rule.slotId);
@@ -164,7 +795,7 @@ body { min-height: 100vh; overflow: auto; font-family: ui-sans-serif, system-ui,
       teams.forEach(team => {
         const tile = document.createElement("button");
         tile.type = "button"; tile.className = "teamTile";
-        tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamMeta"><span class="teamName">${displayName(team)}</span><span class="teamDetail">${team.abbr || ""} · Group ${team.group || ""}</span></span>`;
+        tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamMeta" data-label-layout="team-name-plus-metadata"><span class="teamName">${displayName(team)}</span><span class="teamDetail">${team.abbr || ""} · Group ${team.group || ""}</span></span>`;
         tile.addEventListener("click", () => assignTeam(team));
         teamGrid.appendChild(tile);
       });
@@ -174,7 +805,42 @@ body { min-height: 100vh; overflow: auto; font-family: ui-sans-serif, system-ui,
       backdrop.classList.add("isOpen"); menu.classList.add("isOpen");
     }
     function closeMenu() { activeSlot = null; backdrop.classList.remove("isOpen"); menu.classList.remove("isOpen"); }
-    function assignTeam(team) { if (!activeSlot) return; picks[activeSlot.slotId] = {...team, assignedSlotId: activeSlot.slotId, slotRule: activeSlot.slotRule, slotRuleLong: activeSlot.slotRuleLong}; savePicks(picks); renderPicks(); closeMenu(); }
+    function assignTeam(team) { if (!activeSlot) return; picks[activeSlot.slotId] = {...team, assignedSlotId: activeSlot.slotId, slotRule: activeSlot.slotRule, slotRuleLong: activeSlot.slotRuleLong}; savePicks(picks); applyGame1ManifestR32GeometryToSlotRules();
+    renderPicks(); closeMenu(); }
+
+    function r32SlotFitRuleForCard(card) {
+      const slotId = card.dataset.slotId || card.getAttribute("data-slot-id") || card.getAttribute("data-slot");
+      if (slotId) {
+        const direct = SLOT_RULES.find(rule => rule.slotId === slotId || rule.logicalId === slotId);
+        if (direct) return direct;
+      }
+      const left = parseInt(card.style.left || "0", 10);
+      const top = parseInt(card.style.top || "0", 10);
+      return SLOT_RULES.find(rule => Math.abs((rule.boundsPx?.x || 0) - left) <= 3 && Math.abs((rule.boundsPx?.y || 0) - top) <= 3) || null;
+    }
+    function fitR32PickCardNames(root = pickLayer) {
+      root.querySelectorAll(".pickName").forEach(nameEl => { nameEl.style.fontSize = ""; });
+    }
+    function enforceR32PickCardSlotFit() {
+      pickLayer.querySelectorAll(".pickCard").forEach(card => {
+        const rule = r32SlotFitRuleForCard(card);
+        if (!rule || !rule.boundsPx) return;
+        const b = rule.boundsPx;
+        card.dataset.slotId = rule.slotId;
+        card.dataset.r32SlotFit = "true";
+        card.style.left = cssPx(b.x);
+        card.style.top = cssPx(b.y);
+        card.style.width = cssPx(b.w);
+        card.style.height = cssPx(b.h);
+      });
+      fitR32PickCardNames();
+    }
+    const __wc2026RenderPicksBeforeSlotFit = renderPicks;
+    renderPicks = function renderPicksWithR32SlotFit() {
+      __wc2026RenderPicksBeforeSlotFit();
+      enforceR32PickCardSlotFit();
+    };
+
     document.getElementById("closeMenu").addEventListener("click", closeMenu);
     backdrop.addEventListener("click", closeMenu);
     document.getElementById("clearPicks").addEventListener("click", () => { picks = {}; savePicks(picks); renderPicks(); });

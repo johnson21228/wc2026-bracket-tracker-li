@@ -1,0 +1,1 @@
+Repair Game 1 so R32 chooser selection resolves from the uniform SVG manifest slot under the pointer. Preserve current visible SVG board, pick-card rendering, menu behavior, and Game 2 unmigrated state.

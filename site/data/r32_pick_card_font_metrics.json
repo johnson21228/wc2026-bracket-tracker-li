@@ -1,0 +1,21 @@
+{
+  "version": "r32-pick-card-font-metrics-v001",
+  "appliesTo": ["game1.roundOf32", "game2.roundOf32"],
+  "slotBasisPx": { "w": 148, "h": 40 },
+  "cardPaddingPx": { "x": 6, "y": 3 },
+  "gapPx": 6,
+  "flagBoxPx": { "w": 34, "h": 32 },
+  "teamName": {
+    "fontSizePx": 14,
+    "lineHeightPx": 14,
+    "fontWeight": 900,
+    "maxLines": 2,
+    "wrap": "normal-word-boundary-or-approved-break"
+  },
+  "compactCardShowsSlotRule": false,
+  "notes": [
+    "Metrics are fixed for all teams; do not shrink individual team names.",
+    "Long names may wrap to two lines using word boundaries or approved display breaks.",
+    "Extended slot and rule details belong in tooltip/details surfaces."
+  ]
+}

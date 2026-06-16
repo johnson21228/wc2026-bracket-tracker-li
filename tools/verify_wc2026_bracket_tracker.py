@@ -105,18 +105,19 @@ def main() -> int:
         ["game1/", "game2/"],
     )
 
-    require_tokens(
-        "Game 1 layered board",
-        "site/game1/index.html",
-        [
-            "game1_pub_options_background.jpeg",
-            "r32_bracket_geometry_overlay.png",
-            "hitLayer",
-            ".hotspot",
-            "slotFillOpacity",
-            "eligibleTeamsForSlot",
-        ],
-    )
+    game1 = read("site/game1/index.html")
+    game1_required = [
+        "game1_pub_options_background.jpeg",
+        "hitLayer",
+        ".hotspot",
+        "slotFillOpacity",
+        "eligibleTeamsForSlot",
+    ]
+    missing_game1 = [token for token in game1_required if token not in game1]
+    if missing_game1:
+        fail("Game 1 layered board tokens missing:", [f"site/game1/index.html: {token}" for token in missing_game1])
+    if "r32_bracket_geometry_overlay.png" not in game1 and "uniform_pick_card_gameboard.svg" not in game1:
+        fail("Game 1 must reference an accepted board geometry layer:", ["site/game1/index.html: r32_bracket_geometry_overlay.png or uniform_pick_card_gameboard.svg"])
 
     storage_count = read("site/game1/index.html").count("const STORAGE_KEY")
     if storage_count != 1:

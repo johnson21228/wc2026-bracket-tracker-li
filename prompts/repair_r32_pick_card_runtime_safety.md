@@ -1,0 +1,1 @@
+Repair the R32 pick-card runtime after a visual/font metrics change caused picks to disappear. Preserve the concept that the visible filled slot is an R32 pick card / slot occupant card. Ensure JavaScript remains valid and card typography changes cannot break pick state or data-driven rendering.
