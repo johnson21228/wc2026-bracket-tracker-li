@@ -12,8 +12,6 @@ REQUIRED = [
     "LLM_READ_FIRST.md",
     "MAP.md",
     "site/index.html",
-    "site/game1/index.html",
-    "site/game2/index.html",
     "site/assets/playfield/game1_pub_options_background.jpeg",
     "site/assets/playfield/r32_bracket_geometry_overlay.png",
     "li/repo/site_entrypoint_hygiene_rule.md",
@@ -96,16 +94,10 @@ def main() -> int:
     if "site/" not in readme:
         fail("README must describe the deployable site/ folder:", ["README.md"])
 
-    for page in ["site/index.html", "site/game1/index.html", "site/game2/index.html"]:
+    for page in ["site/index.html"]:
         assert_html(page)
 
-    require_tokens(
-        "Site landing page",
-        "site/index.html",
-        ["game1/", "game2/"],
-    )
-
-    game1 = read("site/game1/index.html")
+    game1 = read("site/index.html")
     game1_required = [
         "game1_pub_options_background.jpeg",
         "hitLayer",
@@ -115,17 +107,13 @@ def main() -> int:
     ]
     missing_game1 = [token for token in game1_required if token not in game1]
     if missing_game1:
-        fail("Game 1 layered board tokens missing:", [f"site/game1/index.html: {token}" for token in missing_game1])
+        fail("Unified bracket board tokens missing:", [f"site/index.html: {token}" for token in missing_game1])
     if "r32_bracket_geometry_overlay.png" not in game1 and "uniform_pick_card_gameboard.svg" not in game1:
-        fail("Game 1 must reference an accepted board geometry layer:", ["site/game1/index.html: r32_bracket_geometry_overlay.png or uniform_pick_card_gameboard.svg"])
+        fail("Unified bracket board must reference an accepted board geometry layer:", ["site/index.html: r32_bracket_geometry_overlay.png or uniform_pick_card_gameboard.svg"])
 
-    storage_count = read("site/game1/index.html").count("const STORAGE_KEY")
+    storage_count = read("site/index.html").count("const STORAGE_KEY")
     if storage_count != 1:
         fail("Game 1 must contain exactly one const STORAGE_KEY declaration:", [f"found {storage_count}"])
-
-    game2 = read("site/game2/index.html")
-    if "game1_pub_options_background.jpeg" not in game2 or "r32_bracket_geometry_overlay.png" not in game2:
-        fail("Game 2 must share the layered board foundation:", ["site/game2/index.html"])
 
     for folder in [ROOT / "data", ROOT / "site" / "data"]:
         if not folder.exists():
