@@ -113,6 +113,7 @@ body {
   background-attachment:scroll, scroll, scroll, scroll !important;
 }
 </style>
+<script src="../data/geometry/uniform_pick_card_gameboard_manifest.js"></script>
 </head>
 <body>
   <main class="game2BoardOnlyViewport" aria-label="Game 2 scrollable board-only source review surface">
@@ -126,5 +127,63 @@ body {
       data-display-mode="native-pixel-scrollable"
     ></section>
   </main>
+
+<script>
+(function () {
+  function validateUniformSvgGameboardManifestForGame2(manifest) {
+    const result = {
+      status: "invalid",
+      boardModelId: manifest && (manifest.boardModelId || manifest.id || manifest.boardId),
+      slotCount: 0,
+      roundCounts: {},
+      errors: []
+    };
+    if (!manifest || typeof manifest !== "object") {
+      result.errors.push("manifest object missing");
+      return result;
+    }
+    const slots = Array.isArray(manifest.slots) ? manifest.slots : [];
+    result.slotCount = slots.length;
+    for (const slot of slots) {
+      const round = slot.round || slot.roundId || slot.stage || "UNKNOWN";
+      result.roundCounts[round] = (result.roundCounts[round] || 0) + 1;
+      const b = slot.boundsPx || slot.bounds || {};
+      const w = b.w ?? b.width;
+      const h = b.h ?? b.height;
+      if (![b.x, b.y, w, h].every(Number.isFinite)) {
+        result.errors.push(`slot ${slot.slotId || slot.id || "unknown"} has incomplete boundsPx`);
+      }
+    }
+    const expected = {R32: 32, R16: 16, QF: 8, SF: 4, FINAL_FOUR: 1};
+    const expectedTotal = Object.values(expected).reduce((sum, value) => sum + value, 0);
+    if (result.slotCount !== expectedTotal) {
+      result.errors.push(`expected ${expectedTotal} manifest slots; found ${result.slotCount}`);
+    }
+    for (const [round, count] of Object.entries(expected)) {
+      if ((result.roundCounts[round] || 0) !== count) {
+        result.errors.push(`expected ${count} ${round} slots; found ${result.roundCounts[round] || 0}`);
+      }
+    }
+    result.status = result.errors.length ? "invalid" : "valid";
+    return result;
+  }
+
+  const manifest = window.UNIFORM_SVG_GAMEBOARD_MANIFEST || window.WC2026_UNIFORM_SVG_GAMEBOARD_MANIFEST;
+  const probe = validateUniformSvgGameboardManifestForGame2(manifest);
+  const boardPlane = document.querySelector(".pixelNativeBoardPlane");
+  if (boardPlane) {
+    boardPlane.dataset.uniformSvgManifestMode = "game2-read-only-manifest-probe";
+    boardPlane.dataset.uniformSvgGame2GeometryMigration = "not-started";
+    boardPlane.dataset.uniformSvgManifestStatus = probe.status;
+    boardPlane.dataset.uniformSvgManifestSlotCount = String(probe.slotCount || 0);
+    boardPlane.dataset.uniformSvgManifestBoardModel = probe.boardModelId || "unknown";
+  }
+  window.WC2026_GAME2_UNIFORM_SVG_MANIFEST_PROBE = probe;
+  if (probe.status !== "valid") {
+    console.warn("WC2026 Game 2 uniform SVG manifest probe failed", probe);
+  }
+})();
+</script>
+
 </body>
 </html>
