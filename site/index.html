@@ -729,6 +729,46 @@ body.wb-side-tooltip-open {
 }
 /* WC2026_PAGES_REVIEW_PICK_ACCEPTANCE_CSS_END */
 
+
+/* WC2026_LONG_CHOICE_MENU_INTERNAL_SCROLL_START */
+.tapMenu,
+.choiceMenu,
+.r32ChoiceMenu,
+.knockoutChoiceMenu,
+.pickChoiceMenu,
+.teamChoiceMenu,
+[data-choice-menu],
+[role="menu"].tapMenu,
+.wc2026ChoiceMenu {
+  max-height: min(72vh, 680px) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+}
+
+.tapMenu .menuItems,
+.tapMenu .choiceList,
+.tapMenu .candidateList,
+.choiceMenu .menuItems,
+.choiceMenu .choiceList,
+.choiceMenu .candidateList,
+.knockoutChoiceMenu .menuItems,
+.knockoutChoiceMenu .choiceList,
+.knockoutChoiceMenu .candidateList,
+.r32ChoiceMenu .menuItems,
+.r32ChoiceMenu .choiceList,
+.r32ChoiceMenu .candidateList {
+  max-height: inherit !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+}
+/* WC2026_LONG_CHOICE_MENU_INTERNAL_SCROLL_END */
+
 </style>
 <style>
 /* WB_TOOLTIP_SIDE_PLACEMENT_START */
@@ -4541,6 +4581,10 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
   }
 
   function isBoardScrollTarget(target){
+      // WC2026_MENU_SCROLL_DOES_NOT_CLOSE_BOARD_SCROLL_START
+      if (window.WC2026_IS_CHOICE_MENU_SCROLL_TARGET && window.WC2026_IS_CHOICE_MENU_SCROLL_TARGET(target)) return false;
+      if (target && target.closest && target.closest('.tapMenu, .choiceMenu, .r32ChoiceMenu, .knockoutChoiceMenu, .pickChoiceMenu, .teamChoiceMenu, [data-choice-menu], [role="menu"], .wc2026ChoiceMenu')) return false;
+      // WC2026_MENU_SCROLL_DOES_NOT_CLOSE_BOARD_SCROLL_END
     if (!target) return false;
     if (target === document || target === window) return true;
 
