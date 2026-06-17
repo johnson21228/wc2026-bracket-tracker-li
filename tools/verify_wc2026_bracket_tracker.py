@@ -19,6 +19,7 @@ REQUIRED = [
     "site/js/app.js",
     "site/js/services/assetPaths.js",
     "site/js/services/domMounts.js",
+    "site/js/services/DebugConsole.js",
     "site/js/board/BoardShell.js",
     "site/js/board/BackgroundLayer.js",
     "site/js/dev/DeveloperFrame.js",

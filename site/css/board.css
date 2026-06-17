@@ -38,3 +38,46 @@
     radial-gradient(circle at 50% 42%, rgba(255,255,255,.10), rgba(0,0,0,.36) 62%, rgba(0,0,0,.58) 100%),
     linear-gradient(90deg, rgba(0,0,0,.32), rgba(0,0,0,.08) 50%, rgba(0,0,0,.32));
 }
+
+.gameboard-outline-svg {
+  filter:
+    drop-shadow(0 0 calc(2px * var(--gameboard-line-glow, 1)) var(--gameboard-line-color, rgba(255,255,255,0.96)))
+    drop-shadow(0 0 calc(7px * var(--gameboard-line-glow, 1)) rgba(0, 0, 0, 0.86));
+}
+
+.gameboard-outline-svg * {
+  stroke: var(--gameboard-line-color, rgba(255,255,255,0.96)) !important;
+  stroke-width: calc(var(--gameboard-line-width, 3) * 1px) !important;
+}
+
+.pick-identifier-layer {
+  z-index: 4;
+  pointer-events: none;
+  color: rgba(255,255,255,0.96);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.pick-identifier-label {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.52);
+  border-radius: 5px;
+  background: rgba(0,0,0,0.46);
+  color: rgba(255,255,255,0.96);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.95);
+  white-space: nowrap;
+}
+
+[data-show-pick-identifiers="false"] .pick-identifier-layer {
+  display: none;
+}
