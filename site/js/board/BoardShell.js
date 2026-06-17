@@ -1,5 +1,6 @@
 import { createBackgroundLayer } from "./BackgroundLayer.js";
 import { createSvgGameboardLayer } from "./SvgGameboardLayer.js";
+import { createGame1LifecycleStatusSurface } from "./Game1LifecycleStatusSurface.js";
 import { createPickIdentifierLayer } from "./PickIdentifierLayer.js";
 
 const BOARD_NATIVE_SIZE = Object.freeze({
@@ -42,6 +43,7 @@ async function createBoardShell({ truthResources }) {
       backgroundImage: truthResources.backgroundImage,
     }),
     createBackgroundGradientLayer(),
+    createGame1LifecycleStatusSurface(),
     await createSvgGameboardLayer({
       svgGameboardDefinition: truthResources.svgGameboardDefinition,
     }),
