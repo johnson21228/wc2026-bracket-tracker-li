@@ -769,6 +769,27 @@ body.wb-side-tooltip-open {
 }
 /* WC2026_LONG_CHOICE_MENU_INTERNAL_SCROLL_END */
 
+
+/* WC2026_BOARD_ATTACHED_CHOICE_MENU_CSS_START */
+.tapMenu,
+.choiceMenu,
+.r32ChoiceMenu,
+.knockoutChoiceMenu,
+.pickChoiceMenu,
+.teamChoiceMenu,
+[data-choice-menu],
+[role="menu"].tapMenu,
+.wc2026ChoiceMenu {
+  z-index: 9000 !important;
+}
+
+.wc2026-board-attached-choice-menu {
+  position: absolute !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+/* WC2026_BOARD_ATTACHED_CHOICE_MENU_CSS_END */
+
 </style>
 <style>
 /* WB_TOOLTIP_SIDE_PLACEMENT_START */
@@ -834,6 +855,86 @@ body.wb-side-tooltip-open [role="tooltip"]:not(#wb-side-tooltip) {
 /* WB_TOOLTIP_SINGLE_SURFACE_REPAIR_END */
 
 
+</style>
+<style>
+/* WC2026_OPAQUE_MENU_PUB_BACKGROUND_START */
+:root {
+  --wc2026-pub-wood-opaque: rgb(26, 17, 10);
+}
+
+.tapMenu,
+.tapMenu.isOpen,
+.choiceMenu,
+.choice-menu,
+.r32ChoiceMenu,
+.r32-choice-menu,
+.knockoutChoiceMenu,
+.knockout-choice-menu,
+.menuPanel,
+.menu-panel,
+.menuCard,
+.menu-card,
+.teamChoiceMenu,
+.team-choice-menu,
+[data-choice-menu],
+[data-r32-choice-menu] {
+  background: var(--wc2026-pub-wood-opaque) !important;
+  background-color: var(--wc2026-pub-wood-opaque) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-color: rgba(255, 255, 255, .42) !important;
+  color: white !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 12px 28px rgba(0,0,0,.62) !important;
+}
+
+.tapMenu *,
+.choiceMenu *,
+.choice-menu *,
+.r32ChoiceMenu *,
+.r32-choice-menu *,
+.knockoutChoiceMenu *,
+.knockout-choice-menu *,
+.menuPanel *,
+.menu-panel *,
+.teamChoiceMenu *,
+.team-choice-menu *,
+[data-choice-menu] *,
+[data-r32-choice-menu] * {
+  opacity: 1 !important;
+}
+
+.tapMenu .menuItem,
+.tapMenu .teamTile,
+.tapMenu button,
+.choiceMenu .menuItem,
+.choiceMenu .teamTile,
+.choiceMenu button,
+.choice-menu .menuItem,
+.choice-menu .teamTile,
+.choice-menu button,
+[data-choice-menu] .menuItem,
+[data-choice-menu] .teamTile,
+[data-choice-menu] button {
+  background: rgba(255, 255, 255, .08) !important;
+  color: white !important;
+}
+
+.tapMenu .menuItem:hover,
+.tapMenu .teamTile:hover,
+.tapMenu button:hover,
+.choiceMenu .menuItem:hover,
+.choiceMenu .teamTile:hover,
+.choiceMenu button:hover,
+.choice-menu .menuItem:hover,
+.choice-menu .teamTile:hover,
+.choice-menu button:hover,
+[data-choice-menu] .menuItem:hover,
+[data-choice-menu] .teamTile:hover,
+[data-choice-menu] button:hover {
+  background: rgba(255, 255, 255, .16) !important;
+}
+/* WC2026_OPAQUE_MENU_PUB_BACKGROUND_END */
 </style>
 </head>
 <body>
@@ -3018,6 +3119,8 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
 // WB_SCROLL_CLOSES_ALL_TOOLTIPS_START
 (function(){
   function wbCloseAllTooltipsForScroll(){
+    // WC2026_LEGACY_SCROLL_CLOSE_DISABLED_FOR_BOARD_ATTACHED_MENUS
+    return;
     try {
       const sideTooltip = document.getElementById('wb-side-tooltip');
       if (sideTooltip) {
@@ -3044,10 +3147,13 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
   }
 
   window.WC2026_CLOSE_ALL_TOOLTIPS_FOR_SCROLL = wbCloseAllTooltipsForScroll;
-  window.addEventListener('scroll', wbCloseAllTooltipsForScroll, { passive: true, capture: true });
-  document.addEventListener('scroll', wbCloseAllTooltipsForScroll, { passive: true, capture: true });
+  // WC2026_BOARD_ATTACHED_MENU_DROPS_CLOSE_ON_SCROLL: disabled window scroll close
+  // window.addEventListener('scroll', wbCloseAllTooltipsForScroll, { passive: true, capture: true });
+  // WC2026_BOARD_ATTACHED_MENU_DROPS_CLOSE_ON_SCROLL: disabled document scroll close
+  // document.addEventListener('scroll', wbCloseAllTooltipsForScroll, { passive: true, capture: true });
   document.addEventListener('wheel', wbCloseAllTooltipsForScroll, { passive: true, capture: true });
-  document.addEventListener('touchmove', wbCloseAllTooltipsForScroll, { passive: true, capture: true });
+  // WC2026_BOARD_ATTACHED_MENU_DROPS_CLOSE_ON_TOUCHMOVE: disabled document touchmove close
+  // document.addEventListener('touchmove', wbCloseAllTooltipsForScroll, { passive: true, capture: true });
 })();
 // WB_SCROLL_CLOSES_ALL_TOOLTIPS_END
 
@@ -4537,9 +4643,11 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
   document.addEventListener("pointerover", killTooltips, true);
   document.addEventListener("mouseover", killTooltips, true);
   document.addEventListener("focusin", killTooltips, true);
-  document.addEventListener("scroll", killTooltips, true);
+  // WC2026_BOARD_ATTACHED_MENU_DROPS_KILL_ON_SCROLL: disabled killTooltips scroll close
+  // document.addEventListener("scroll", killTooltips, true);
   document.addEventListener("wheel", killTooltips, true);
-  document.addEventListener("touchmove", killTooltips, true);
+  // WC2026_BOARD_ATTACHED_MENU_DROPS_KILL_ON_TOUCHMOVE: disabled killTooltips touchmove close
+  // document.addEventListener("touchmove", killTooltips, true);
   document.addEventListener("keydown", ev => {
     if (ev.key === "Escape") killTooltips();
   }, true);
@@ -4613,9 +4721,11 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
   }
 
   // Capture scroll from any nested board scroller.
-  document.addEventListener("scroll", closeOnce, true);
+  // WC2026_BOARD_ATTACHED_MENU_DROPS_CLOSE_ON_SCROLL: disabled closeOnce scroll close
+  // document.addEventListener("scroll", closeOnce, true);
   document.addEventListener("wheel", closeOnce, true);
-  document.addEventListener("touchmove", closeOnce, true);
+  // WC2026_BOARD_ATTACHED_MENU_DROPS_CLOSE_ON_TOUCHMOVE: disabled closeOnce touchmove close
+  // document.addEventListener("touchmove", closeOnce, true);
 
   window.WC2026_CLOSE_MENU_ON_BOARD_SCROLL = closeChoiceMenuForBoardScroll;
 })();
@@ -4893,6 +5003,143 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
   status("Review pick acceptance patch loaded");
 })();
 // WC2026_PAGES_REVIEW_PICK_ACCEPTANCE_END
+</script>
+
+
+<!-- WC2026_LONG_CHOICE_MENU_INTERNAL_SCROLL_INSTALLED -->
+
+<script>
+/* WC2026_LONG_CHOICE_MENU_INTERNAL_SCROLL_START
+// WC2026_LONG_CHOICE_MENU_INTERNAL_SCROLL_EVENT_GUARD */
+(function installLongChoiceMenuInternalScrollEventGuard() {
+  function isLongChoiceMenuTarget(target) {
+    return !!(
+      target &&
+      target.closest &&
+      target.closest(".tapMenu, .choiceMenu, .teamChoiceMenu, .r32ChoiceMenu, .knockoutChoiceMenu")
+    );
+  }
+
+  function stopMenuScrollFromMovingBoard(event) {
+    if (!isLongChoiceMenuTarget(event.target)) return;
+    event.stopPropagation();
+  }
+
+  document.addEventListener("wheel", stopMenuScrollFromMovingBoard, { capture: true, passive: false });
+  document.addEventListener("touchmove", stopMenuScrollFromMovingBoard, { capture: true, passive: false });
+})();
+</script>
+
+
+<script>
+// WC2026_DROP_CLOSE_ON_SCROLL_START
+(function dropChoiceMenuCloseOnScroll() {
+  const oldClose = window.WC2026_CLOSE_ALL_TOOLTIPS_FOR_SCROLL;
+  if (typeof oldClose === "function") {
+    window.removeEventListener("scroll", oldClose, true);
+    document.removeEventListener("scroll", oldClose, true);
+    document.removeEventListener("wheel", oldClose, true);
+    document.removeEventListener("touchmove", oldClose, true);
+  }
+  window.WC2026_CLOSE_ALL_TOOLTIPS_FOR_SCROLL = function wc2026ScrollDoesNotCloseChoiceMenus() {
+    return false;
+  };
+  window.WC2026_BOARD_SCROLL_DOES_NOT_CLOSE_CHOICE_MENU = true;
+})();
+// WC2026_DROP_CLOSE_ON_SCROLL_END
+
+// WC2026_BOARD_ATTACHED_CHOICE_MENU_START
+(function installBoardAttachedChoiceMenus() {
+  if (window.WC2026_BOARD_ATTACHED_CHOICE_MENU_INSTALLED) return;
+  window.WC2026_BOARD_ATTACHED_CHOICE_MENU_INSTALLED = true;
+
+  const MENU_SELECTOR = '.tapMenu, .choiceMenu, .r32ChoiceMenu, .knockoutChoiceMenu, .pickChoiceMenu, .teamChoiceMenu, [data-choice-menu], [role="menu"], .wc2026ChoiceMenu';
+  const BOARD_SELECTOR = '[data-playfield], [data-board], [data-game-board], .gameBoardSurface, .game-board-surface, .gameBoard, .game-board, .playfield, .playfieldLayer, .playfield-layer, .bracketPlane, .bracket-plane, .board, #board, #gameBoard, #playfield, main';
+
+  function closestMenu(target) {
+    return target && target.closest ? target.closest(MENU_SELECTOR) : null;
+  }
+
+  function findBoardForMenu(menu) {
+    if (!menu) return null;
+    const activeAnchor = document.querySelector('[data-wc2026-choice-menu-anchor="true"], .wc2026-choice-menu-anchor-active, .wb-tooltip-anchor-active');
+    const anchorBoard = activeAnchor && activeAnchor.closest ? activeAnchor.closest(BOARD_SELECTOR) : null;
+    if (anchorBoard) return anchorBoard;
+    const parentBoard = menu.parentElement && menu.parentElement.closest ? menu.parentElement.closest(BOARD_SELECTOR) : null;
+    if (parentBoard) return parentBoard;
+    return document.querySelector(BOARD_SELECTOR) || document.body;
+  }
+
+  function ensurePositioned(board) {
+    if (!board || board === document.body) return;
+    const style = window.getComputedStyle(board);
+    if (style.position === "static") {
+      board.style.position = "relative";
+    }
+  }
+
+  function attachMenuToBoard(menu) {
+    if (!menu || menu.dataset.wc2026BoardAttached === "true") return;
+    const board = findBoardForMenu(menu);
+    if (!board) return;
+    const menuRect = menu.getBoundingClientRect();
+    const boardRect = board.getBoundingClientRect();
+    const boardScrollLeft = board === document.body ? window.scrollX : board.scrollLeft;
+    const boardScrollTop = board === document.body ? window.scrollY : board.scrollTop;
+    const left = menuRect.left - boardRect.left + boardScrollLeft;
+    const top = menuRect.top - boardRect.top + boardScrollTop;
+
+    ensurePositioned(board);
+    menu.classList.add("wc2026-board-attached-choice-menu");
+    menu.dataset.wc2026BoardAttached = "true";
+    menu.style.position = "absolute";
+    menu.style.left = `${Math.max(0, Math.round(left))}px`;
+    menu.style.top = `${Math.max(0, Math.round(top))}px`;
+    menu.style.right = "auto";
+    menu.style.bottom = "auto";
+    menu.style.transform = "none";
+    if (menu.parentElement !== board) {
+      board.appendChild(menu);
+    }
+  }
+
+  function attachOpenMenus() {
+    document.querySelectorAll(MENU_SELECTOR).forEach((menu) => {
+      const rect = menu.getBoundingClientRect();
+      const visible = rect.width > 0 && rect.height > 0 && window.getComputedStyle(menu).display !== "none" && !menu.hidden;
+      if (visible) attachMenuToBoard(menu);
+    });
+  }
+
+  document.addEventListener("pointerdown", function rememberChoiceMenuAnchor(event) {
+    const menu = closestMenu(event.target);
+    if (menu) return;
+    document.querySelectorAll('[data-wc2026-choice-menu-anchor="true"], .wc2026-choice-menu-anchor-active').forEach((el) => {
+      el.removeAttribute("data-wc2026-choice-menu-anchor");
+      el.classList.remove("wc2026-choice-menu-anchor-active");
+    });
+    const anchor = event.target && event.target.closest ? event.target.closest('[data-slot], .slot, [data-choice-target], [data-pick-target]') : null;
+    if (anchor) {
+      anchor.dataset.wc2026ChoiceMenuAnchor = "true";
+      anchor.classList.add("wc2026-choice-menu-anchor-active");
+    }
+    window.setTimeout(attachOpenMenus, 0);
+    window.setTimeout(attachOpenMenus, 50);
+    window.setTimeout(attachOpenMenus, 150);
+  }, { capture: true, passive: true });
+
+  document.addEventListener("click", function attachChoiceMenuAfterClick() {
+    window.setTimeout(attachOpenMenus, 0);
+    window.setTimeout(attachOpenMenus, 50);
+  }, { capture: true, passive: true });
+
+  const observer = new MutationObserver(attachOpenMenus);
+  observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "style", "hidden", "open"] });
+  window.addEventListener("resize", attachOpenMenus, { passive: true });
+  window.WC2026_ATTACH_OPEN_CHOICE_MENUS_TO_BOARD = attachOpenMenus;
+  attachOpenMenus();
+})();
+// WC2026_BOARD_ATTACHED_CHOICE_MENU_END
 </script>
 
 </body>
