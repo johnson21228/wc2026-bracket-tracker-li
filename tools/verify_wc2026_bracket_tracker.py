@@ -21,7 +21,7 @@ REQUIRED = [
     "site/js/services/domMounts.js",
     "site/js/board/BoardShell.js",
     "site/js/board/BackgroundLayer.js",
-    "site/js/dev/DeveloperControlsPanel.js",
+    "site/js/dev/DeveloperFrame.js",
     "site/assets/board/pub_background.jpeg",
     "site/assets/board/gameboard.svg",
     "site/data/geometry/gameboard_manifest.json",
