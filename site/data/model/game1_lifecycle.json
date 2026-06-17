@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "tournamentId": "wc2026",
+  "gameId": "game1",
+  "productPromise": [
+    "Pick the bracket before FIFA locks it.",
+    "Watch the groups reshape the board.",
+    "See whether your read of the tournament was right."
+  ],
+  "allowedStates": [
+    "GROUP_STAGE_OPEN",
+    "R32_PROJECTION_LIVE",
+    "FIFA_R32_LOCKED",
+    "KNOCKOUT_PICKING_OPEN",
+    "KNOCKOUT_LIVE",
+    "COMPLETE"
+  ],
+  "initialState": "GROUP_STAGE_OPEN",
+  "stateDescriptions": {
+    "GROUP_STAGE_OPEN": "Players may make pre-lock R32 projection picks.",
+    "R32_PROJECTION_LIVE": "Curated standings projection may reshape projected R32 placement.",
+    "FIFA_R32_LOCKED": "Official FIFA R32 has been captured and frozen.",
+    "KNOCKOUT_PICKING_OPEN": "Players continue by picking knockout winners.",
+    "KNOCKOUT_LIVE": "Official knockout results are scoring the bracket.",
+    "COMPLETE": "Game 1 scoring is complete."
+  },
+  "truthLayers": {
+    "playerProjection": "The player's pre-lock R32 placement prediction.",
+    "curatedProjection": "The curator's current standings-derived projection.",
+    "officialLockedR32": "The official R32 once FIFA locks the bracket.",
+    "knockoutWinnerPicks": "The player's post-lock knockout winner picks.",
+    "history": "Lifecycle and scoring evidence events."
+  }
+}\n

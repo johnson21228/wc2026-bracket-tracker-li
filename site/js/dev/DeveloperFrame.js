@@ -269,6 +269,18 @@ function createDeveloperFrame({ boardPlane }) {
   const svgState = boardPlane?.querySelector(".board-svg-gameboard-layer")?.dataset.svgState;
   status.textContent = `Gameboard outline: ${svgState || "unavailable"}`;
 
+  controls.append(
+    makeToggle({
+      label: "Show pick identifiers",
+      checked: boardPlane?.dataset.showPickIdentifiers !== "false",
+      controlName: "toggle-pick-identifiers",
+      onChange: (checked) => {
+        if (boardPlane) boardPlane.dataset.showPickIdentifiers = checked ? "true" : "false";
+        afterChange();
+      },
+    })
+  );
+
   frame.append(title, controls, status, propertiesPanel);
   return frame;
 }
