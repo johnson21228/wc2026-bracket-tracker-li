@@ -5188,7 +5188,7 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
   window.__WC2026_MENU_FLAG_ABBR_ONLY_INSTALLED__ = true;
 
   const MENU_SELECTOR = ".tapMenu, .choiceMenu, .r32ChoiceMenu, .knockoutChoiceMenu, .pickChoiceMenu, .teamChoiceMenu, [data-choice-menu], [role='menu'], .wc2026ChoiceMenu";
-  const ITEM_SELECTOR = ".teamTile, .teamChoice, .menuChoice, .countryChoice, [data-team-id], [data-team-abbr], [data-country-code], [data-code], [role='menuitem']";
+  const ITEM_SELECTOR = ".teamTile, .teamChoice, .menuChoice, .countryChoice, .candidate, .candidateItem, .candidateRow, .choice, .choiceItem, .menuItem, button, li, [data-team-id], [data-team-abbr], [data-country-code], [data-code], [role='menuitem'], [role='option']";
 
   const NAME_TO_CODE = {
     "algeria":"DZA","argentina":"ARG","australia":"AUS","austria":"AUT","belgium":"BEL","bosnia and herzegovina":"BIH","bosnia":"BIH","brazil":"BRA","canada":"CAN","cape verde":"CPV","colombia":"COL","croatia":"CRO","curacao":"CUW","czechia":"CZE","czech republic":"CZE","dr congo":"COD","democratic republic of congo":"COD","ecuador":"ECU","egypt":"EGY","england":"ENG","france":"FRA","germany":"GER","ghana":"GHA","haiti":"HTI","iran":"IRI","iraq":"IRQ","ivory coast":"CIV","cote d'ivoire":"CIV","côte d’ivoire":"CIV","japan":"JPN","jordan":"JOR","mexico":"MEX","morocco":"MAR","netherlands":"NED","new zealand":"NZL","norway":"NOR","panama":"PAN","paraguay":"PAR","portugal":"POR","qatar":"QAT","saudi arabia":"KSA","scotland":"SCO","senegal":"SEN","south africa":"RSA","south korea":"KOR","korea republic":"KOR","spain":"ESP","sweden":"SWE","switzerland":"SUI","tunisia":"TUN","turkey":"TUR","türkiye":"TUR","united states":"USA","usa":"USA","uruguay":"URU","uzbekistan":"UZB"
@@ -5451,6 +5451,216 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
 
   const observer = new MutationObserver(() => anchorOpenMenus(lastPickTarget));
   observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "style", "aria-hidden", "data-open"] });
+})();
+</script>
+
+
+<style>
+/* WC2026_PREVENT_DUPLICATE_R32_MENU_ASSIGNMENTS_CSS
+   R32 choice menus must not offer a team already assigned to another R32 slot. */
+.wc2026DuplicateR32Choice,
+[data-wc2026-r32-duplicate-choice="true"] {
+  display: none !important;
+}
+.wc2026DuplicateR32ChoiceVisibleDebug {
+  opacity: 0.35 !important;
+  pointer-events: none !important;
+  filter: grayscale(1) !important;
+}
+</style>
+<script>
+/* WC2026_PREVENT_DUPLICATE_R32_MENU_ASSIGNMENTS_JS */
+/* WC2026_PREVENT_DUPLICATE_R32_MENU_ASSIGNMENTS_INCLUDES_GENERIC_THIRD_PLACE_ROWS */
+(function installPreventDuplicateR32MenuAssignments() {
+  if (window.__WC2026_PREVENT_DUPLICATE_R32_MENU_ASSIGNMENTS__) return;
+  window.__WC2026_PREVENT_DUPLICATE_R32_MENU_ASSIGNMENTS__ = true;
+
+  const MENU_SELECTOR = ".tapMenu, .choiceMenu, .r32ChoiceMenu, .knockoutChoiceMenu, .pickChoiceMenu, .teamChoiceMenu, [data-choice-menu], [role='menu'], .wc2026ChoiceMenu";
+  const ITEM_SELECTOR = ".teamTile, .teamChoice, .menuChoice, .countryChoice, [data-team-id], [data-team-abbr], [data-country-code], [data-code], [role='menuitem']";
+  const TARGET_SELECTOR = "[data-slot-id], [data-r32-slot-id], [data-pick-slot], [data-bracket-slot], [data-assignment-slot], [data-node-id], [data-slot], .r32PickCell, .r32Slot, .pickCell, .bracketSlot, .slotHitTarget, .hitTarget, .bracket-card, .bracketCard";
+  const R32_TARGET_SELECTOR = "[data-r32-slot-id], [data-assignment-slot], [data-slot-id*='R32'], [data-slot*='R32'], .r32PickCell, .r32Slot";
+
+  let lastChoiceTarget = null;
+
+  const NAME_TO_CODE = {
+    "algeria":"DZA","argentina":"ARG","australia":"AUS","austria":"AUT","belgium":"BEL","bosnia and herzegovina":"BIH","bosnia":"BIH","brazil":"BRA","canada":"CAN","cape verde":"CPV","colombia":"COL","croatia":"CRO","curacao":"CUW","czechia":"CZE","czech republic":"CZE","dr congo":"COD","democratic republic of congo":"COD","ecuador":"ECU","egypt":"EGY","england":"ENG","france":"FRA","germany":"GER","ghana":"GHA","haiti":"HTI","iran":"IRI","iraq":"IRQ","ivory coast":"CIV","cote d'ivoire":"CIV","côte d’ivoire":"CIV","japan":"JPN","jordan":"JOR","mexico":"MEX","morocco":"MAR","netherlands":"NED","new zealand":"NZL","norway":"NOR","panama":"PAN","paraguay":"PAR","portugal":"POR","qatar":"QAT","saudi arabia":"KSA","scotland":"SCO","senegal":"SEN","south africa":"RSA","south korea":"KOR","korea republic":"KOR","spain":"ESP","sweden":"SWE","switzerland":"SUI","tunisia":"TUN","turkey":"TUR","türkiye":"TUR","united states":"USA","usa":"USA","uruguay":"URU","uzbekistan":"UZB"
+  };
+
+  function normalizeCode(value) {
+    if (!value) return "";
+    const text = String(value).trim().toUpperCase();
+    return /^[A-Z]{3}$/.test(text) ? text : "";
+  }
+
+  function textToCode(text) {
+    const raw = String(text || "");
+    const paren = raw.match(/\(([A-Z]{3})\)/);
+    if (paren) return paren[1];
+    const upper = raw.match(/\b[A-Z]{3}\b/);
+    if (upper) return upper[0];
+    const normalized = raw.toLowerCase().replace(/[🇦-🇿]/gu, " ").replace(/[^a-z'’ ]+/g, " ").replace(/\s+/g, " ").trim();
+    for (const [name, code] of Object.entries(NAME_TO_CODE)) {
+      if (normalized === name || normalized.includes(name)) return code;
+    }
+    return "";
+  }
+
+  function inferTeamCodeFromElement(el) {
+    if (!el) return "";
+    const dataKeys = ["teamAbbr", "teamId", "countryCode", "code", "abbr", "team", "pickedTeam", "teamCode"];
+    for (const key of dataKeys) {
+      const code = normalizeCode(el.dataset && el.dataset[key]);
+      if (code) return code;
+    }
+    const aria = el.getAttribute && el.getAttribute("aria-label");
+    const title = el.getAttribute && el.getAttribute("title");
+    return textToCode([aria, title, el.textContent || ""].filter(Boolean).join(" "));
+  }
+
+  function walkJsonForCodes(value, out) {
+    if (value == null) return;
+    if (typeof value === "string") {
+      const code = normalizeCode(value) || textToCode(value);
+      if (code) out.add(code);
+      return;
+    }
+    if (Array.isArray(value)) {
+      value.forEach(v => walkJsonForCodes(v, out));
+      return;
+    }
+    if (typeof value === "object") {
+      Object.values(value).forEach(v => walkJsonForCodes(v, out));
+    }
+  }
+
+  function collectCodesFromR32LocalStorage() {
+    const out = new Set();
+    try {
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const key = localStorage.key(i) || "";
+        const keyOk = /wc2026/i.test(key) && /(r32|round.*32|assignment|bracketPicks|picks)/i.test(key) && !/(candidate|menu|teams|groups)/i.test(key);
+        if (!keyOk) continue;
+        const raw = localStorage.getItem(key);
+        if (!raw) continue;
+        try {
+          walkJsonForCodes(JSON.parse(raw), out);
+        } catch (_) {
+          walkJsonForCodes(raw, out);
+        }
+      }
+    } catch (_) {}
+    return out;
+  }
+
+  function collectCodesFromVisibleR32Slots(exceptTarget) {
+    const out = new Set();
+    document.querySelectorAll(R32_TARGET_SELECTOR).forEach(el => {
+      if (!el || el === exceptTarget) return;
+      if (exceptTarget && el.contains && el.contains(exceptTarget)) return;
+      if (el.closest && el.closest(MENU_SELECTOR)) return;
+      const code = inferTeamCodeFromElement(el);
+      if (code) out.add(code);
+    });
+    return out;
+  }
+
+  function getCurrentTargetCode() {
+    return inferTeamCodeFromElement(lastChoiceTarget);
+  }
+
+  function getUsedR32TeamCodesExceptCurrentSlot() {
+    const used = collectCodesFromR32LocalStorage();
+    collectCodesFromVisibleR32Slots(lastChoiceTarget).forEach(code => used.add(code));
+    const currentCode = getCurrentTargetCode();
+    if (currentCode) used.delete(currentCode);
+    return used;
+  }
+
+  function isR32ChoiceMenu(menu) {
+    if (!menu) return false;
+    const label = [menu.className || "", menu.id || "", menu.getAttribute("aria-label") || "", menu.getAttribute("data-slot-id") || "", menu.getAttribute("data-menu-kind") || ""].join(" ");
+    if (/r32|round.*32|third|3rd|third-place|thirdPlace/i.test(label)) return true;
+    // In the current prototype, team choice menus for assignment slots should use duplicate R32 prevention.
+    return !!lastChoiceTarget;
+  }
+
+  function markChoiceDuplicate(item, duplicate) {
+    item.classList.toggle("wc2026DuplicateR32Choice", duplicate);
+    item.dataset.wc2026R32DuplicateChoice = duplicate ? "true" : "false";
+    if (duplicate) {
+      item.setAttribute("aria-disabled", "true");
+      item.setAttribute("title", "Already picked in another R32 slot");
+    } else {
+      item.removeAttribute("aria-disabled");
+      if (item.getAttribute("title") === "Already picked in another R32 slot") item.removeAttribute("title");
+    }
+  }
+
+  function filterMenu(menu) {
+    if (!menu || !isR32ChoiceMenu(menu)) return;
+    const used = getUsedR32TeamCodesExceptCurrentSlot();
+    menu.querySelectorAll(ITEM_SELECTOR).forEach(item => {
+      if (item.matches && item.matches("[data-close], .close, .closeButton, .dismiss, .menuClose")) return;
+      const code = inferTeamCodeFromElement(item);
+      if (!code) return;
+      markChoiceDuplicate(item, used.has(code));
+    });
+    menu.dataset.wc2026DuplicateR32Filtered = "true";
+  }
+
+  function filterOpenMenus(root) {
+    const scope = root && root.querySelectorAll ? root : document;
+    scope.querySelectorAll(MENU_SELECTOR).forEach(filterMenu);
+    if (scope.matches && scope.matches(MENU_SELECTOR)) filterMenu(scope);
+  }
+
+  function scheduleFilter(root) {
+    requestAnimationFrame(() => filterOpenMenus(root || document));
+    setTimeout(() => filterOpenMenus(root || document), 50);
+    setTimeout(() => filterOpenMenus(root || document), 150);
+  }
+
+  function rememberChoiceTarget(event) {
+    const menu = event.target && event.target.closest && event.target.closest(MENU_SELECTOR);
+    if (menu) return;
+    const target = event.target && event.target.closest && event.target.closest(TARGET_SELECTOR);
+    if (!target) return;
+    lastChoiceTarget = target;
+    scheduleFilter(document);
+  }
+
+  function rejectDuplicateSelection(event) {
+    const item = event.target && event.target.closest && event.target.closest(ITEM_SELECTOR);
+    if (!item || !item.closest || !item.closest(MENU_SELECTOR)) return;
+    const code = inferTeamCodeFromElement(item);
+    if (!code) return;
+    const used = getUsedR32TeamCodesExceptCurrentSlot();
+    if (!used.has(code)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+    markChoiceDuplicate(item, true);
+  }
+
+  document.addEventListener("pointerdown", rememberChoiceTarget, true);
+  document.addEventListener("click", rememberChoiceTarget, true);
+  document.addEventListener("touchend", rememberChoiceTarget, true);
+  document.addEventListener("pointerdown", rejectDuplicateSelection, true);
+  document.addEventListener("click", rejectDuplicateSelection, true);
+  document.addEventListener("touchend", rejectDuplicateSelection, true);
+
+  const observer = new MutationObserver(mutations => {
+    for (const mutation of mutations) {
+      mutation.addedNodes.forEach(node => {
+        if (node && node.nodeType === 1) scheduleFilter(node);
+      });
+      if (mutation.target && mutation.target.nodeType === 1) scheduleFilter(mutation.target);
+    }
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "style", "aria-expanded", "data-open"] });
+
+  window.addEventListener("storage", () => scheduleFilter(document));
+  scheduleFilter(document);
 })();
 </script>
 
