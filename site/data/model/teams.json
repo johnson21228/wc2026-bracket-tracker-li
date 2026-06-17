@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "idPolicy": "Team.id is uppercase three-letter code and is the canonical team key.",
+  "teams": {
+    "ALG": {
+      "id": "ALG",
+      "name": "Algeria",
+      "flag": "🇩🇿"
+    },
+    "ARG": {
+      "id": "ARG",
+      "name": "Argentina",
+      "flag": "🇦🇷"
+    },
+    "AUS": {
+      "id": "AUS",
+      "name": "Australia",
+      "flag": "🇦🇺"
+    },
+    "AUT": {
+      "id": "AUT",
+      "name": "Austria",
+      "flag": "🇦🇹"
+    },
+    "BEL": {
+      "id": "BEL",
+      "name": "Belgium",
+      "flag": "🇧🇪"
+    },
+    "BIH": {
+      "id": "BIH",
+      "name": "Bosnia-Herzegovina",
+      "flag": "🇧🇦"
+    },
+    "BRA": {
+      "id": "BRA",
+      "name": "Brazil",
+      "flag": "🇧🇷"
+    },
+    "CAN": {
+      "id": "CAN",
+      "name": "Canada",
+      "flag": "🇨🇦"
+    },
+    "CIV": {
+      "id": "CIV",
+      "name": "Côte d’Ivoire",
+      "flag": "🇨🇮"
+    },
+    "COD": {
+      "id": "COD",
+      "name": "Congo DR",
+      "flag": "🇨🇩"
+    },
+    "COL": {
+      "id": "COL",
+      "name": "Colombia",
+      "flag": "🇨🇴"
+    },
+    "CPV": {
+      "id": "CPV",
+      "name": "Cabo Verde",
+      "flag": "🇨🇻"
+    },
+    "CRO": {
+      "id": "CRO",
+      "name": "Croatia",
+      "flag": "🇭🇷"
+    },
+    "CUW": {
+      "id": "CUW",
+      "name": "Curaçao",
+      "flag": "🇨🇼"
+    },
+    "CZE": {
+      "id": "CZE",
+      "name": "Czechia",
+      "flag": "🇨🇿"
+    },
+    "ECU": {
+      "id": "ECU",
+      "name": "Ecuador",
+      "flag": "🇪🇨"
+    },
+    "EGY": {
+      "id": "EGY",
+      "name": "Egypt",
+      "flag": "🇪🇬"
+    },
+    "ENG": {
+      "id": "ENG",
+      "name": "England",
+      "flag": "🏴"
+    },
+    "ESP": {
+      "id": "ESP",
+      "name": "Spain",
+      "flag": "🇪🇸"
+    },
+    "FRA": {
+      "id": "FRA",
+      "name": "France",
+      "flag": "🇫🇷"
+    },
+    "GER": {
+      "id": "GER",
+      "name": "Germany",
+      "flag": "🇩🇪"
+    },
+    "GHA": {
+      "id": "GHA",
+      "name": "Ghana",
+      "flag": "🇬🇭"
+    },
+    "HAI": {
+      "id": "HAI",
+      "name": "Haiti",
+      "flag": "🇭🇹"
+    },
+    "IRN": {
+      "id": "IRN",
+      "name": "IR Iran",
+      "flag": "🇮🇷"
+    },
+    "IRQ": {
+      "id": "IRQ",
+      "name": "Iraq",
+      "flag": "🇮🇶"
+    },
+    "JOR": {
+      "id": "JOR",
+      "name": "Jordan",
+      "flag": "🇯🇴"
+    },
+    "JPN": {
+      "id": "JPN",
+      "name": "Japan",
+      "flag": "🇯🇵"
+    },
+    "KOR": {
+      "id": "KOR",
+      "name": "Korea Republic",
+      "flag": "🇰🇷"
+    },
+    "KSA": {
+      "id": "KSA",
+      "name": "Saudi Arabia",
+      "flag": "🇸🇦"
+    },
+    "MAR": {
+      "id": "MAR",
+      "name": "Morocco",
+      "flag": "🇲🇦"
+    },
+    "MEX": {
+      "id": "MEX",
+      "name": "Mexico",
+      "flag": "🇲🇽"
+    },
+    "NED": {
+      "id": "NED",
+      "name": "Netherlands",
+      "flag": "🇳🇱"
+    },
+    "NOR": {
+      "id": "NOR",
+      "name": "Norway",
+      "flag": "🇳🇴"
+    },
+    "NZL": {
+      "id": "NZL",
+      "name": "New Zealand",
+      "flag": "🇳🇿"
+    },
+    "PAN": {
+      "id": "PAN",
+      "name": "Panama",
+      "flag": "🇵🇦"
+    },
+    "PAR": {
+      "id": "PAR",
+      "name": "Paraguay",
+      "flag": "🇵🇾"
+    },
+    "POR": {
+      "id": "POR",
+      "name": "Portugal",
+      "flag": "🇵🇹"
+    },
+    "QAT": {
+      "id": "QAT",
+      "name": "Qatar",
+      "flag": "🇶🇦"
+    },
+    "RSA": {
+      "id": "RSA",
+      "name": "South Africa",
+      "flag": "🇿🇦"
+    },
+    "SCO": {
+      "id": "SCO",
+      "name": "Scotland",
+      "flag": "🏴"
+    },
+    "SEN": {
+      "id": "SEN",
+      "name": "Senegal",
+      "flag": "🇸🇳"
+    },
+    "SUI": {
+      "id": "SUI",
+      "name": "Switzerland",
+      "flag": "🇨🇭"
+    },
+    "SWE": {
+      "id": "SWE",
+      "name": "Sweden",
+      "flag": "🇸🇪"
+    },
+    "TUN": {
+      "id": "TUN",
+      "name": "Tunisia",
+      "flag": "🇹🇳"
+    },
+    "TUR": {
+      "id": "TUR",
+      "name": "Türkiye",
+      "flag": "🇹🇷"
+    },
+    "URU": {
+      "id": "URU",
+      "name": "Uruguay",
+      "flag": "🇺🇾"
+    },
+    "USA": {
+      "id": "USA",
+      "name": "USA",
+      "flag": "🇺🇸"
+    },
+    "UZB": {
+      "id": "UZB",
+      "name": "Uzbekistan",
+      "flag": "🇺🇿"
+    }
+  }
+}
