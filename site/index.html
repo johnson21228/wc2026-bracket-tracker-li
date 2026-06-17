@@ -5142,5 +5142,317 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
 // WC2026_BOARD_ATTACHED_CHOICE_MENU_END
 </script>
 
+
+<style>
+/* WC2026_MENU_FLAG_ABBR_ONLY_INSTALLED */
+.wc2026MenuFlagAbbrOnly {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.45rem !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  pointer-events: none !important;
+}
+.wc2026MenuFlagAbbrOnly .wc2026MenuFlag {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  font-size: 1.35rem !important;
+  line-height: 1 !important;
+}
+.wc2026MenuFlagAbbrOnly .wc2026MenuFlag img,
+.wc2026MenuFlagAbbrOnly img.wc2026MenuFlagImage {
+  width: 1.75rem !important;
+  height: 1.2rem !important;
+  object-fit: cover !important;
+  image-rendering: auto !important;
+  border-radius: 0.12rem !important;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.18) !important;
+}
+.wc2026MenuFlagAbbrOnly .wc2026MenuAbbr {
+  flex: 0 0 auto !important;
+  font-weight: 900 !important;
+  font-size: 1.02rem !important;
+  letter-spacing: 0.08em !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+</style>
+<script>
+/* WC2026_MENU_FLAG_ABBR_ONLY_JS */
+(function installMenuFlagAbbrOnlyRendering() {
+  if (window.__WC2026_MENU_FLAG_ABBR_ONLY_INSTALLED__) return;
+  window.__WC2026_MENU_FLAG_ABBR_ONLY_INSTALLED__ = true;
+
+  const MENU_SELECTOR = ".tapMenu, .choiceMenu, .r32ChoiceMenu, .knockoutChoiceMenu, .pickChoiceMenu, .teamChoiceMenu, [data-choice-menu], [role='menu'], .wc2026ChoiceMenu";
+  const ITEM_SELECTOR = ".teamTile, .teamChoice, .menuChoice, .countryChoice, [data-team-id], [data-team-abbr], [data-country-code], [data-code], [role='menuitem']";
+
+  const NAME_TO_CODE = {
+    "algeria":"DZA","argentina":"ARG","australia":"AUS","austria":"AUT","belgium":"BEL","bosnia and herzegovina":"BIH","bosnia":"BIH","brazil":"BRA","canada":"CAN","cape verde":"CPV","colombia":"COL","croatia":"CRO","curacao":"CUW","czechia":"CZE","czech republic":"CZE","dr congo":"COD","democratic republic of congo":"COD","ecuador":"ECU","egypt":"EGY","england":"ENG","france":"FRA","germany":"GER","ghana":"GHA","haiti":"HTI","iran":"IRI","iraq":"IRQ","ivory coast":"CIV","cote d'ivoire":"CIV","côte d’ivoire":"CIV","japan":"JPN","jordan":"JOR","mexico":"MEX","morocco":"MAR","netherlands":"NED","new zealand":"NZL","norway":"NOR","panama":"PAN","paraguay":"PAR","portugal":"POR","qatar":"QAT","saudi arabia":"KSA","scotland":"SCO","senegal":"SEN","south africa":"RSA","south korea":"KOR","korea republic":"KOR","spain":"ESP","sweden":"SWE","switzerland":"SUI","tunisia":"TUN","turkey":"TUR","türkiye":"TUR","united states":"USA","usa":"USA","uruguay":"URU","uzbekistan":"UZB"
+  };
+
+  const FIFA_TO_REGIONAL = {
+    ARG:"AR", AUS:"AU", AUT:"AT", BEL:"BE", BIH:"BA", BRA:"BR", CAN:"CA", CIV:"CI", COD:"CD", COL:"CO", CPV:"CV", CUW:"CW", CZE:"CZ", DZA:"DZ", ECU:"EC", EGY:"EG", ENG:"GB", ESP:"ES", FRA:"FR", GER:"DE", GHA:"GH", HTI:"HT", IRI:"IR", IRQ:"IQ", JPN:"JP", JOR:"JO", KOR:"KR", KSA:"SA", MAR:"MA", MEX:"MX", NED:"NL", NOR:"NO", NZL:"NZ", PAN:"PA", PAR:"PY", POR:"PT", QAT:"QA", RSA:"ZA", SCO:"GB", SEN:"SN", SUI:"CH", SWE:"SE", TUN:"TN", TUR:"TR", URU:"UY", USA:"US", UZB:"UZ"
+  };
+
+  function flagEmojiFromRegionalCode(code) {
+    if (!code || code.length !== 2) return "";
+    return code.toUpperCase().replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt(0)));
+  }
+
+  function findExistingFlagNode(item) {
+    const img = item.querySelector("img");
+    if (img) {
+      const clone = img.cloneNode(true);
+      clone.classList.add("wc2026MenuFlagImage");
+      clone.removeAttribute("width");
+      clone.removeAttribute("height");
+      return clone;
+    }
+    const text = item.textContent || "";
+    const match = text.match(/[\u{1F1E6}-\u{1F1FF}]{2}/u);
+    if (match) return document.createTextNode(match[0]);
+    return null;
+  }
+
+  function inferCode(item) {
+    const dataKeys = ["teamAbbr", "teamId", "countryCode", "code", "abbr", "team"];
+    for (const key of dataKeys) {
+      const value = item.dataset && item.dataset[key];
+      if (value && /^[A-Za-z]{3}$/.test(value.trim())) return value.trim().toUpperCase();
+    }
+    const aria = item.getAttribute("aria-label") || "";
+    const title = item.getAttribute("title") || "";
+    const text = [aria, title, item.textContent || ""].join(" ");
+    const paren = text.match(/\(([A-Z]{3})\)/);
+    if (paren) return paren[1];
+    const upper = text.match(/\b[A-Z]{3}\b/);
+    if (upper) return upper[0];
+    const normalized = text.toLowerCase().replace(/[🇦-🇿]/gu, " ").replace(/[^a-z'’ ]+/g, " ").replace(/\s+/g, " ").trim();
+    for (const [name, code] of Object.entries(NAME_TO_CODE)) {
+      if (normalized === name || normalized.includes(name)) return code;
+    }
+    return "";
+  }
+
+  function isChoiceItem(item) {
+    if (!item || item.dataset.wc2026FlagAbbrOnly === "done") return false;
+    const menu = item.closest(MENU_SELECTOR);
+    if (!menu) return false;
+    const text = (item.textContent || "").trim();
+    if (!text && !item.querySelector("img")) return false;
+    if (item.matches("[data-close], .close, .closeButton, .dismiss, .menuClose")) return false;
+    return true;
+  }
+
+  function renderItem(item) {
+    if (!isChoiceItem(item)) return;
+    const code = inferCode(item);
+    if (!code || code.length !== 3) return;
+    const flagNode = findExistingFlagNode(item) || document.createTextNode(flagEmojiFromRegionalCode(FIFA_TO_REGIONAL[code]) || "🏳️");
+
+    item.dataset.wc2026FlagAbbrOnly = "done";
+    item.dataset.teamAbbr = item.dataset.teamAbbr || code;
+    item.setAttribute("aria-label", code);
+
+    const wrap = document.createElement("span");
+    wrap.className = "wc2026MenuFlagAbbrOnly";
+
+    const flag = document.createElement("span");
+    flag.className = "wc2026MenuFlag";
+    flag.appendChild(flagNode);
+
+    const abbr = document.createElement("span");
+    abbr.className = "wc2026MenuAbbr";
+    abbr.textContent = code;
+
+    wrap.appendChild(flag);
+    wrap.appendChild(abbr);
+
+    item.textContent = "";
+    item.appendChild(wrap);
+  }
+
+  function renderMenus(root) {
+    const scope = root && root.querySelectorAll ? root : document;
+    scope.querySelectorAll(MENU_SELECTOR).forEach(menu => {
+      menu.querySelectorAll(ITEM_SELECTOR).forEach(renderItem);
+    });
+    if (scope.matches && scope.matches(ITEM_SELECTOR)) renderItem(scope);
+  }
+
+  function scheduleRender(root) {
+    requestAnimationFrame(() => renderMenus(root || document));
+    setTimeout(() => renderMenus(root || document), 80);
+  }
+
+  document.addEventListener("pointerdown", event => scheduleRender(event.target), true);
+  document.addEventListener("click", event => scheduleRender(event.target), true);
+  document.addEventListener("focusin", event => scheduleRender(event.target), true);
+
+  const observer = new MutationObserver(mutations => {
+    for (const mutation of mutations) {
+      mutation.addedNodes.forEach(node => {
+        if (node && node.nodeType === 1) scheduleRender(node);
+      });
+      if (mutation.target && mutation.target.nodeType === 1) scheduleRender(mutation.target);
+    }
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "style", "aria-expanded"] });
+
+  scheduleRender(document);
+})();
+</script>
+
+
+<style>
+/* WC2026_CHOICE_MENU_ANCHORED_TO_PICK_TARGET_CSS
+   Choice menus are board-owned overlays. They sit next to the bracket item that opened them
+   and move with the board rather than floating in viewport space. */
+.tapMenu,
+.choiceMenu,
+.r32ChoiceMenu,
+.knockoutChoiceMenu,
+.pickChoiceMenu,
+.teamChoiceMenu,
+.wc2026ChoiceMenu,
+[data-choice-menu],
+[role="menu"] {
+  position: absolute !important;
+  transform: none !important;
+  z-index: 80 !important;
+}
+</style>
+
+
+<script>
+/* WC2026_CHOICE_MENU_ANCHORED_TO_PICK_TARGET_JS */
+(function installChoiceMenuAnchoredToPickedItem() {
+  const MENU_SELECTOR = ".tapMenu, .choiceMenu, .r32ChoiceMenu, .knockoutChoiceMenu, .pickChoiceMenu, .teamChoiceMenu, .wc2026ChoiceMenu, [data-choice-menu], [role='menu']";
+  const TARGET_SELECTOR = "[data-slot-id], [data-r32-slot-id], [data-pick-slot], [data-bracket-slot], [data-assignment-slot], [data-node-id], [data-slot], .r32PickCell, .r32Slot, .pickCell, .bracketSlot, .slotHitTarget, .hitTarget, .bracket-card, .bracketCard";
+  const BOARD_SELECTOR = "[data-board-surface], [data-playfield], [data-playfield-surface], .gameBoard, .boardSurface, .playfield, .playfieldSurface, .boardLayer, .bracketBoard, #bracketBoard, #gameBoard, main";
+  const GAP = 10;
+  let lastPickTarget = null;
+
+  function isVisible(el) {
+    if (!el || !el.getBoundingClientRect) return false;
+    const rect = el.getBoundingClientRect();
+    const style = window.getComputedStyle(el);
+    return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+  }
+
+  function isOpenMenu(el) {
+    if (!isVisible(el)) return false;
+    return el.classList.contains("isOpen") ||
+      el.classList.contains("open") ||
+      el.classList.contains("active") ||
+      el.getAttribute("aria-hidden") === "false" ||
+      el.getAttribute("data-open") === "true" ||
+      isVisible(el);
+  }
+
+  function findBoardFor(target) {
+    return (target && target.closest && target.closest(BOARD_SELECTOR)) || document.querySelector(BOARD_SELECTOR) || document.body;
+  }
+
+  function boardPointForRect(rect, board) {
+    const boardRect = board.getBoundingClientRect();
+    const scrollLeft = board === document.body ? window.scrollX : board.scrollLeft;
+    const scrollTop = board === document.body ? window.scrollY : board.scrollTop;
+    return {
+      left: rect.left - boardRect.left + scrollLeft,
+      right: rect.right - boardRect.left + scrollLeft,
+      top: rect.top - boardRect.top + scrollTop,
+      bottom: rect.bottom - boardRect.top + scrollTop,
+      midY: rect.top - boardRect.top + scrollTop + rect.height / 2
+    };
+  }
+
+  function attachMenuToBoard(menu, board) {
+    if (!menu || !board) return;
+    if (menu.parentElement === board) return;
+    const menuRect = menu.getBoundingClientRect();
+    const p = boardPointForRect(menuRect, board);
+    board.appendChild(menu);
+    menu.style.position = "absolute";
+    menu.style.left = `${Math.round(p.left)}px`;
+    menu.style.top = `${Math.round(p.top)}px`;
+  }
+
+  function anchorMenuToTarget(menu, target) {
+    if (!menu || !target || !target.getBoundingClientRect) return;
+    const board = findBoardFor(target);
+    attachMenuToBoard(menu, board);
+
+    const targetRect = target.getBoundingClientRect();
+    const p = boardPointForRect(targetRect, board);
+    const boardWidth = board === document.body ? window.innerWidth : board.clientWidth;
+    const boardHeight = board === document.body ? window.innerHeight : board.clientHeight;
+    const scrollLeft = board === document.body ? window.scrollX : board.scrollLeft;
+    const scrollTop = board === document.body ? window.scrollY : board.scrollTop;
+
+    menu.style.position = "absolute";
+    menu.style.transform = "none";
+    menu.dataset.wc2026AnchoredToPickTarget = "true";
+
+    const menuWidth = Math.max(menu.offsetWidth || menu.getBoundingClientRect().width || 220, 180);
+    const menuHeight = Math.max(menu.offsetHeight || menu.getBoundingClientRect().height || 120, 80);
+
+    let left = p.right + GAP;
+    const visibleRight = scrollLeft + boardWidth - GAP;
+    if (left + menuWidth > visibleRight) {
+      left = p.left - menuWidth - GAP;
+    }
+    if (left < scrollLeft + GAP) {
+      left = Math.min(p.right + GAP, visibleRight - menuWidth);
+    }
+
+    let top = p.midY - menuHeight / 2;
+    const visibleTop = scrollTop + GAP;
+    const visibleBottom = scrollTop + boardHeight - GAP;
+    if (top < visibleTop) top = visibleTop;
+    if (top + menuHeight > visibleBottom) top = Math.max(visibleTop, visibleBottom - menuHeight);
+
+    menu.style.left = `${Math.round(left)}px`;
+    menu.style.top = `${Math.round(top)}px`;
+    menu.style.right = "auto";
+    menu.style.bottom = "auto";
+  }
+
+  function openMenus() {
+    return Array.from(document.querySelectorAll(MENU_SELECTOR)).filter(isOpenMenu);
+  }
+
+  function anchorOpenMenus(target) {
+    const anchorTarget = target || lastPickTarget;
+    if (!anchorTarget || !document.contains(anchorTarget)) return;
+    openMenus().forEach((menu) => anchorMenuToTarget(menu, anchorTarget));
+  }
+
+  function rememberAnchorFromEvent(event) {
+    const menu = event.target && event.target.closest && event.target.closest(MENU_SELECTOR);
+    if (menu) return;
+    const target = event.target && event.target.closest && event.target.closest(TARGET_SELECTOR);
+    if (!target) return;
+    lastPickTarget = target;
+    window.setTimeout(() => anchorOpenMenus(target), 0);
+    window.setTimeout(() => anchorOpenMenus(target), 50);
+    window.setTimeout(() => anchorOpenMenus(target), 150);
+  }
+
+  document.addEventListener("pointerdown", rememberAnchorFromEvent, true);
+  document.addEventListener("click", rememberAnchorFromEvent, true);
+  document.addEventListener("touchend", rememberAnchorFromEvent, true);
+  window.addEventListener("resize", () => anchorOpenMenus(lastPickTarget), true);
+  window.addEventListener("scroll", () => anchorOpenMenus(lastPickTarget), true);
+
+  const observer = new MutationObserver(() => anchorOpenMenus(lastPickTarget));
+  observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "style", "aria-hidden", "data-open"] });
+})();
+</script>
+
 </body>
 </html>
