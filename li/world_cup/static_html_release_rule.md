@@ -1,30 +1,29 @@
-# Static HTML Release Rule
+# Static-Hostable Site Release Rule
 
 ## Purpose
 
-The tracker should remain usable as a single static HTML file.
+This rule replaces the older monolithic HTML release posture.
 
-The same static file can be:
+The WC2026 Bracket Tracker should remain easy to review and deploy as a static-hostable site, but the Workbench should not strive for a page-concentrated implementation or monolithic page implementation.
 
-- downloaded and opened locally
-- emailed or texted
-- hosted on GitHub Pages
-- hosted on a simple server
-- passed back into an II reasoner
+## Current direction
+
+The source should be modular and governed by the MVC/TDD boundary:
+
+- data files remain data files
+- model logic remains testable outside the DOM
+- view logic renders from model/controller outputs
+- controller logic coordinates user intent and state transitions
+- HTML files remain entry points, not the system of record
 
 ## Release rule
 
-Each meaningful update should create a new immutable release under `releases/`.
+Each meaningful update may create an immutable release snapshot under `releases/`, but release snapshots are evidence of a working version, not the preferred authoring surface.
 
-Example:
+The canonical implementation should live under `site/` and related source/data/test folders.
 
-```text
-releases/world_cup_bracket_tracker_v001.html
-releases/world_cup_bracket_tracker_v002.html
-```
+## Deployment rule
 
-For GitHub Pages, copy the current public release to:
+GitHub Pages compatibility is still acceptable when it does not conflict with modular structure.
 
-```text
-index.html
-```
+A deployable static site can include multiple HTML, JavaScript, CSS, JSON, image, and data assets.

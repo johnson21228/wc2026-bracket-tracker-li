@@ -790,6 +790,55 @@ body.wb-side-tooltip-open {
 }
 /* WC2026_BOARD_ATTACHED_CHOICE_MENU_CSS_END */
 
+
+/* WC2026_MENU_FLAG_ABBR_ONLY_CSS */
+.tapMenu .teamTile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tapMenu .teamTile .teamAbbrOnly {
+  color: #fff;
+  font-size: 26px;
+  font-weight: 950;
+  letter-spacing: .10em;
+  line-height: 1;
+}
+
+
+/* WC2026_CARD156_CANONICAL_RENDER_VISUAL_UNIFORMITY_START */
+/* All rendered knockout picks come from canonical state and share one normal baseline.
+   Persistent heavy white outline/glow is reserved for active hover/focus only. */
+.r16PickCard,
+.advancePickCard,
+.storedKnockoutPickCard,
+.r16PickCard[data-r32-slot-fit="true"],
+.advancePickCard[data-r32-slot-fit="true"],
+.storedKnockoutPickCard[data-r32-slot-fit="true"],
+.r16PickCard[data-choice-can-remain-final],
+.advancePickCard[data-choice-can-remain-final],
+.storedKnockoutPickCard[data-choice-can-remain-final],
+.r16PickCard.finalEligiblePick,
+.advancePickCard.finalEligiblePick,
+.storedKnockoutPickCard.finalEligiblePick {
+  outline: none !important;
+  border-color: rgba(74, 48, 31, .72) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), 0 4px 10px rgba(0,0,0,.38) !important;
+}
+
+.r16PickCard:hover,
+.r16PickCard:focus-visible,
+.advancePickCard:hover,
+.advancePickCard:focus-visible,
+.storedKnockoutPickCard:hover,
+.storedKnockoutPickCard:focus-visible {
+  outline: 3px solid rgba(255,255,255,.92) !important;
+  outline-offset: 0 !important;
+  z-index: 5;
+}
+/* WC2026_CARD156_CANONICAL_RENDER_VISUAL_UNIFORMITY_END */
+
 </style>
 <style>
 /* WB_TOOLTIP_SIDE_PLACEMENT_START */
@@ -1476,7 +1525,7 @@ Click/tap to change pick`;
       teams.forEach(team => {
         const tile = document.createElement("button");
         tile.type = "button"; tile.className = "teamTile";
-        tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamMeta" data-label-layout="team-name-plus-metadata"><span class="teamName">${displayName(team)}</span><span class="teamDetail">${team.abbr || ""} · Group ${team.group || ""}</span></span>`;
+        tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamAbbrOnly">${team.abbr || team.code || team.id || "TBD"}</span>`; // WC2026_MENU_FLAG_ABBR_ONLY_NORMALIZED
         tile.addEventListener("click", () => assignTeam(team));
         teamGrid.appendChild(tile);
       });
@@ -1647,7 +1696,7 @@ Click/tap to change pick`;
         const tile = document.createElement("button");
         tile.type = "button";
         tile.className = "teamTile";
-        tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamMeta"><span class="teamName">${displayName(team)}</span><span class="teamDetail">${team.abbr || ""}${team.group ? ` · Group ${team.group}` : ""}</span></span>`;
+        tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamAbbrOnly">${team.abbr || team.code || team.id || "TBD"}</span>`; // WC2026_MENU_FLAG_ABBR_ONLY_NORMALIZED
         tile.addEventListener("click", () => assignR16Winner(team));
         teamGrid.appendChild(tile);
       });
@@ -1793,7 +1842,7 @@ Click/tap to change pick`;
         const tile = document.createElement("button");
         tile.type = "button";
         tile.className = "teamTile";
-        tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamMeta"><span class="teamName">${displayName(team)}</span><span class="teamDetail">${team.abbr || ""}${team.group ? ` · Group ${team.group}` : ""}</span></span>`;
+        tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamAbbrOnly">${team.abbr || team.code || team.id || "TBD"}</span>`; // WC2026_MENU_FLAG_ABBR_ONLY_NORMALIZED
         tile.addEventListener("click", () => assignAdvancementWinner(team));
         teamGrid.appendChild(tile);
       });
@@ -1948,7 +1997,7 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
       const tile = document.createElement("button");
       tile.type = "button";
       tile.className = "teamTile";
-      tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamMeta"><span class="teamName">${displayName(team)}</span><span class="teamDetail">${team.abbr || team.code || ""}${team.group ? ` · Group ${team.group}` : ""}</span></span>`;
+      tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamAbbrOnly">${team.abbr || team.code || team.id || "TBD"}</span>`; // WC2026_MENU_FLAG_ABBR_ONLY_NORMALIZED
       tile.addEventListener("click", () => onPick(team));
       teamGrid.appendChild(tile);
     }
@@ -2247,7 +2296,7 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
     tile.className = "teamTile";
     tile.dataset.assignmentTargetSlotId = wc2026CanonicalRuleSlotId(rule);
     tile.dataset.assignmentRound = wc2026CanonicalRound(rule);
-    tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamMeta"><span class="teamName">${displayName(team)}</span><span class="teamDetail">${team.abbr || ""}${team.group ? ` · Group ${team.group}` : ""}</span></span>`;
+    tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamAbbrOnly">${team.abbr || team.code || team.id || "TBD"}</span>`; // WC2026_MENU_FLAG_ABBR_ONLY_NORMALIZED
     const apply = ev => {
       ev.preventDefault();
       ev.stopPropagation();
@@ -2319,110 +2368,16 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
 
 
 // WC2026_SHORT_TERM_R16_HOLD_START
-(function installShortTermR16HardcodedHold(){
-  const TARGET_R16_SLOT_ID = "L-R16-01";
-  const SOURCE_R32_ALIASES = ["L-R32-01", "R32-L-M1A"];
-
-  function wc2026ShortTermReadR32Picks(){
-    if (typeof picks !== "undefined" && picks && typeof picks === "object") return picks;
-    try { return JSON.parse(localStorage.getItem("wc2026.game1.r32.picks") || "{}"); }
-    catch { return {}; }
-  }
-
-  function wc2026ShortTermFindSourcePick(){
-    const currentPicks = wc2026ShortTermReadR32Picks();
-    for (const alias of SOURCE_R32_ALIASES) {
-      if (currentPicks && currentPicks[alias]) {
-        return {slotId: alias, pick: currentPicks[alias]};
-      }
-    }
-    return null;
-  }
-
-  function wc2026ShortTermTargetRule(){
-    if (typeof r16RuleForSlot === "function") {
-      const rule = r16RuleForSlot(TARGET_R16_SLOT_ID);
-      if (rule) return rule;
-    }
-    if (typeof r16SlotRulesFromManifest === "function") {
-      const rule = (r16SlotRulesFromManifest() || []).find(r => r.slotId === TARGET_R16_SLOT_ID || r.logicalId === TARGET_R16_SLOT_ID);
-      if (rule) return rule;
-    }
-    return {
-      slotId: TARGET_R16_SLOT_ID,
-      logicalId: TARGET_R16_SLOT_ID,
-      round: "R16",
-      sourceR32SlotIds: SOURCE_R32_ALIASES.slice(),
-      slotRule: "L R16 1",
-      slotRuleLong: "Round of 16 winner from L-R32-01 vs L-R32-02"
-    };
-  }
-
-  function wc2026ShortTermStoredPick(source, rule){
-    const team = source.pick || {};
-    return {
-      ...team,
-      assignedSlotId: TARGET_R16_SLOT_ID,
-      assignmentTargetSlotId: TARGET_R16_SLOT_ID,
-      round: "R16",
-      sourceR32SlotIds: rule.sourceR32SlotIds || SOURCE_R32_ALIASES.slice(),
-      shortTermSourceR32SlotId: source.slotId,
-      slotRule: rule.slotRule || TARGET_R16_SLOT_ID,
-      slotRuleLong: rule.slotRuleLong || TARGET_R16_SLOT_ID,
-      assignmentContract: "short-term-r16-hardcoded-hold-v001"
-    };
-  }
-
-  function wc2026ShortTermRenderTargetCell(rule, storedPick){
-    if (typeof renderPicks === "function") {
-      renderPicks();
-    }
-    const existing = document.querySelector(`.r16PickCard[data-slot-id="${TARGET_R16_SLOT_ID}"]`);
-    if (!existing && typeof renderOneR16Pick === "function") {
-      renderOneR16Pick(rule, storedPick);
-    }
-  }
-
-  function wc2026ShortTermApplyR16Hold(force = true){
-    const source = wc2026ShortTermFindSourcePick();
-    if (!source || !source.pick) {
-      console.warn("WC2026 short-term R16 hold: no source R32 pick found", SOURCE_R32_ALIASES);
-      return false;
-    }
-    const rule = wc2026ShortTermTargetRule();
-    const storedPick = wc2026ShortTermStoredPick(source, rule);
-    if (typeof r16Picks === "undefined" || !r16Picks) {
-      console.warn("WC2026 short-term R16 hold: r16Picks storage object missing");
-      return false;
-    }
-    if (!force && r16Picks[TARGET_R16_SLOT_ID]) {
-      return r16Picks[TARGET_R16_SLOT_ID];
-    }
-    r16Picks[TARGET_R16_SLOT_ID] = storedPick;
-    if (typeof saveR16Picks === "function") saveR16Picks(r16Picks);
-    wc2026ShortTermRenderTargetCell(rule, storedPick);
-    return storedPick;
-  }
-
-  function wc2026ShortTermClearR16Hold(){
-    if (typeof r16Picks !== "undefined" && r16Picks) {
-      delete r16Picks[TARGET_R16_SLOT_ID];
-      if (typeof saveR16Picks === "function") saveR16Picks(r16Picks);
-    }
-    if (typeof renderPicks === "function") renderPicks();
-    return true;
-  }
-
+// WC2026_DISABLE_SHORT_TERM_R16_AUTO_HOLD
+// WC2026_DISABLE_SHORT_TERM_R16_HOLD_FOR_CANONICAL_STATE
+(function disableShortTermR16HoldForCanonicalPickState(){
+  window.WC2026_DISABLE_SHORT_TERM_R16_HOLD = true;
   window.WC2026_SHORT_TERM_R16_HOLD = {
-    targetSlotId: TARGET_R16_SLOT_ID,
-    sourceAliases: SOURCE_R32_ALIASES.slice(),
-    findSource: wc2026ShortTermFindSourcePick,
-    apply: wc2026ShortTermApplyR16Hold,
-    clear: wc2026ShortTermClearR16Hold
+    disabled: true,
+    reason: "canonical-pick-state-lifecycle",
+    apply: function wc2026ShortTermR16HoldDisabledApply(){ return false; },
+    clear: function wc2026ShortTermR16HoldDisabledClear(){ return true; }
   };
-
-  // Short-term bridge: prove that R16 can hold and render a selected R32 winner.
-  setTimeout(() => wc2026ShortTermApplyR16Hold(false), 0);
 })();
 // WC2026_SHORT_TERM_R16_HOLD_END
 
@@ -2551,6 +2506,19 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
   if (typeof renderR16Picks === "function") {
     renderR16Picks = function renderR16PicksFromSitePickStore(){
       r16SlotRulesFromManifest().forEach(rule => {
+        const sourceTeams = typeof r16CandidateTeams === "function" ? (r16CandidateTeams(rule) || []) : [];
+        if (sourceTeams.length !== 2) {
+          // WC2026_R16_RENDER_SOURCE_GATED: stale R16 picks cannot render before both source R32 picks exist.
+          try { if (typeof r16Picks !== "undefined" && r16Picks) delete r16Picks[rule.slotId]; } catch {}
+          try { if (typeof saveR16Picks === "function" && typeof r16Picks !== "undefined") saveR16Picks(r16Picks); } catch {}
+          try {
+            const key = "wc2026.game1.bracketPicks";
+            const bracket = JSON.parse(localStorage.getItem(key) || "{}");
+            delete bracket[rule.slotId];
+            localStorage.setItem(key, JSON.stringify(bracket));
+          } catch {}
+          return;
+        }
         const pick = wc2026PickForSlot(rule.slotId);
         if (!pick) return;
         renderOneR16Pick(rule, pick);
@@ -2561,6 +2529,19 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
   if (typeof renderAdvancementPicks === "function") {
     renderAdvancementPicks = function renderAdvancementPicksFromSitePickStore(){
       advancementSlotRulesFromManifest().forEach(rule => {
+        const sourceTeams = typeof advancementCandidateTeams === "function" ? (advancementCandidateTeams(rule) || []) : [];
+        if (sourceTeams.length !== 2) {
+          // WC2026_ADVANCEMENT_RENDER_SOURCE_GATED: stale QF/SF picks cannot render before both source winners exist.
+          try { if (typeof advancementPicks !== "undefined" && advancementPicks) delete advancementPicks[rule.slotId]; } catch {}
+          try { if (typeof saveAdvancementPicks === "function" && typeof advancementPicks !== "undefined") saveAdvancementPicks(advancementPicks); } catch {}
+          try {
+            const key = "wc2026.game1.bracketPicks";
+            const bracket = JSON.parse(localStorage.getItem(key) || "{}");
+            delete bracket[rule.slotId];
+            localStorage.setItem(key, JSON.stringify(bracket));
+          } catch {}
+          return;
+        }
         const pick = wc2026PickForSlot(rule.slotId);
         if (!pick) return;
         renderOneAdvancementPick(rule, pick);
@@ -2658,7 +2639,21 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
     const contestants = round === "R16" ? r16CandidateTeams(rule) : advancementCandidateTeams(rule);
     if (!Array.isArray(contestants) || contestants.length !== 2) return false;
 
-    const currentPick = wc2026PickForSlot(rule.slotId);
+    // WC2026_SOURCE_GATE_CURRENT_KNOCKOUT_PICK_HIGHLIGHT
+    const hasRequiredSourcePicksForCurrentChoice =
+      typeof wc2026RuleHasRequiredSourcePicks === "function"
+        ? wc2026RuleHasRequiredSourcePicks(rule)
+        : true;
+
+    let currentPick = hasRequiredSourcePicksForCurrentChoice
+      ? wc2026PickForSlot(rule.slotId)
+      : null;
+
+    if (!hasRequiredSourcePicksForCurrentChoice) {
+      try { wc2026ClearPickForSlot(rule.slotId, round); } catch {}
+      try { if (typeof closeMenu === "function") closeMenu(); } catch {}
+      return false;
+    }
 
     wc2026CloseTooltipSurfacesForSiteStoreMenu();
     activeSlot = rule;
@@ -2694,19 +2689,15 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
     }
 
     contestants.forEach(team => {
-      const isCurrentChoice = wc2026MenuSameTeam(team, currentPick);
+      const isCurrentChoice = false; // WC2026_MENU_NO_PRESELECT_HIGHLIGHT
       const tile = document.createElement("button");
       tile.type = "button";
-      tile.className = `teamTile${isCurrentChoice ? " isCurrentChoice" : ""}`;
+      tile.className = "teamTile";
       tile.dataset.assignmentTargetSlotId = rule.slotId;
       tile.dataset.assignmentRound = round;
-      tile.dataset.currentChoice = isCurrentChoice ? "true" : "false";
-      tile.setAttribute("aria-pressed", isCurrentChoice ? "true" : "false");
-      if (isCurrentChoice) {
-        tile.style.outline = "3px solid rgba(255,255,255,.95)";
-        tile.style.boxShadow = "0 0 0 5px rgba(0,0,0,.35)";
-      }
-      tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamMeta"><span class="teamName">${displayName(team)}${isCurrentChoice ? " ✓" : ""}</span><span class="teamDetail">${team.abbr || ""}${team.group ? ` · Group ${team.group}` : ""}${isCurrentChoice ? " · Current choice" : ""}</span></span>`;
+      tile.dataset.currentChoice = "false";
+      tile.setAttribute("aria-pressed", "false");
+      tile.innerHTML = `<span class="teamFlag">${team.flagEmoji || team.flag || "⚽"}</span><span class="teamAbbrOnly">${team.abbr || team.code || team.id || "TBD"}</span>`; // WC2026_MENU_FLAG_ABBR_ONLY_NORMALIZED
       tile.addEventListener("click", ev2 => {
         ev2.preventDefault();
         ev2.stopPropagation();
@@ -2724,13 +2715,112 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
     return true;
   }
 
+  // WC2026_SOURCE_GATED_KNOCKOUT_MENU_OPEN
+  function wc2026MenuSourcePickExistsForSlot(slotId) {
+    const id = String(slotId || "").trim();
+    if (!id) return false;
+
+    const stores = [];
+    try { stores.push(picks); } catch {}
+    try { stores.push(r16Picks); } catch {}
+    try { stores.push(advancementPicks); } catch {}
+    try { stores.push(window.game1KnockoutPicks); } catch {}
+    try { stores.push(JSON.parse(localStorage.getItem("wc2026.game1.r32.picks") || "{}")); } catch {}
+    try { stores.push(JSON.parse(localStorage.getItem("wc2026.game1.bracketPicks") || "{}")); } catch {}
+    try { stores.push(JSON.parse(localStorage.getItem("wc2026.game1.r16.winnerPicks") || "{}")); } catch {}
+    try { stores.push(JSON.parse(localStorage.getItem("wc2026.game1.qfSf.winnerPicks") || "{}")); } catch {}
+
+    const upper = id.toUpperCase();
+    const compact = upper.replace(/[-_\s]/g, "");
+    const aliases = new Set([
+      id,
+      upper,
+      compact,
+      id.toLowerCase(),
+      upper.replace(/_/g, "-"),
+      upper.replace(/-/g, "_")
+    ]);
+
+    for (const store of stores) {
+      if (!store || typeof store !== "object") continue;
+      for (const alias of aliases) {
+        if (store[alias]) return true;
+      }
+      for (const [key, value] of Object.entries(store)) {
+        if (!value) continue;
+        const normalizedKey = String(key || "").toUpperCase().replace(/[-_\s]/g, "");
+        if (normalizedKey === compact) return true;
+      }
+    }
+    return false;
+  }
+
+  function wc2026MenuFeederSlotsForRule(rule) {
+    const slotId = String(rule?.slotId || rule?.targetSlotId || rule?.slot || "").toUpperCase();
+    const slotRule = String(rule?.slotRule || rule?.slotRuleLong || rule?.menuTitle || "").toUpperCase();
+
+    const explicit = []
+      .concat(rule?.sourceSlotIds || [])
+      .concat(rule?.sourceSlots || [])
+      .concat(rule?.feeders || [])
+      .filter(Boolean);
+
+    if (explicit.length >= 2) return explicit.slice(0, 2);
+
+    const combined = `${slotId} ${slotRule}`;
+
+    let match = combined.match(/R16[-_\s]*(\d+)/);
+    if (match) {
+      const n = Number(match[1]);
+      return [`R32-${(n * 2) - 1}`, `R32-${n * 2}`];
+    }
+
+    match = combined.match(/QF[-_\s]*(\d+)/);
+    if (match) {
+      const n = Number(match[1]);
+      return [`R16-${(n * 2) - 1}`, `R16-${n * 2}`];
+    }
+
+    match = combined.match(/SF[-_\s]*(\d+)/);
+    if (match) {
+      const n = Number(match[1]);
+      return [`QF-${(n * 2) - 1}`, `QF-${n * 2}`];
+    }
+
+    return [];
+  }
+
+  function wc2026RuleHasRequiredSourcePicks(rule) {
+    const feeders = wc2026MenuFeederSlotsForRule(rule);
+    if (feeders.length < 2) return false;
+    return feeders.every(wc2026MenuSourcePickExistsForSlot);
+  }
+
+  function wc2026RefuseKnockoutMenuUntilSourcePicks(rule, ev) {
+    try { ev?.preventDefault?.(); } catch {}
+    try { ev?.stopPropagation?.(); } catch {}
+    try { closeMenu(); } catch {}
+    console.info("WC2026 knockout menu blocked until source picks exist", {
+      slotId: rule?.slotId,
+      slotRule: rule?.slotRule,
+      feeders: wc2026MenuFeederSlotsForRule(rule)
+    });
+    return false;
+  }
+
   if (typeof openR16Menu === "function") {
     openR16Menu = function openR16MenuUsingSitePickStore(rule, ev){
+      if (!wc2026RuleHasRequiredSourcePicks(rule)) {
+        return wc2026RefuseKnockoutMenuUntilSourcePicks(rule, ev);
+      }
       return wc2026OpenSiteStoreChoiceMenu(rule, ev);
     };
   }
   if (typeof openAdvancementMenu === "function") {
     openAdvancementMenu = function openAdvancementMenuUsingSitePickStore(rule, ev){
+      if (!wc2026RuleHasRequiredSourcePicks(rule)) {
+        return wc2026RefuseKnockoutMenuUntilSourcePicks(rule, ev);
+      }
       return wc2026OpenSiteStoreChoiceMenu(rule, ev);
     };
   }
@@ -2756,7 +2846,42 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
 })();
 // WC2026_USE_SITE_PICK_STORE_RENDER_END
 
-    document.getElementById("clearPicks").addEventListener("click", () => { picks = {}; r16Picks = {}; advancementPicks = {}; savePicks(picks); saveR16Picks(r16Picks); saveAdvancementPicks(advancementPicks); renderPicks(); });
+    // WC2026_CLEAR_PICKS_CLEARS_ALL_GAME1_STORES
+    document.getElementById("clearPicks").addEventListener("click", () => {
+      // WC2026_CLEAR_PICKS_CANONICAL_ALL_GAME1_STATE
+      picks = {};
+      r16Picks = {};
+      advancementPicks = {};
+      try { window.game1KnockoutPicks = {}; } catch {}
+
+      try { savePicks({}); } catch {}
+      try { saveR16Picks({}); } catch {}
+      try { saveAdvancementPicks({}); } catch {}
+
+      [
+        STORAGE_KEY,
+        R16_STORAGE_KEY,
+        ADVANCEMENT_STORAGE_KEY,
+        "wc2026.game1.r32.picks",
+        "wc2026.game1.bracketPicks",
+        "wc2026.game1.r16.winnerPicks",
+        "wc2026.game1.qfSf.winnerPicks",
+        "wc2026.game1.knockoutPicks",
+        "wc2026.game1.picks",
+        "wc2026Game1Picks",
+        "wc2026Game1KnockoutPicks",
+        "game1KnockoutPicks"
+      ].forEach(key => {
+        try { if (key) localStorage.setItem(key, "{}"); } catch {}
+      });
+
+      try { if (typeof closeMenu === "function") closeMenu(); } catch {}
+      try { if (typeof applyGame1ManifestR32GeometryToSlotRules === "function") applyGame1ManifestR32GeometryToSlotRules(); } catch {}
+      try { if (typeof createHotspots === "function") createHotspots(); } catch {}
+      try { if (typeof renderPicks === "function") renderPicks(); } catch {}
+
+      console.info("WC2026 Clear picks reset canonical Game 1 state");
+    }); // WC2026_CLEAR_PICKS_CANONICAL_ALL_GAME1_STATE_END
     document.getElementById("exportPicks").addEventListener("click", async () => { const text = JSON.stringify({version:"game1-r32-r16-qf-sf-user-picks-v001", picks, r16WinnerPicks: r16Picks, advancementPicks}, null, 2); try { await navigator.clipboard.writeText(text); alert("Game 1 picks copied to clipboard."); } catch { console.log(text); alert("Could not copy; picks printed to console."); } });
     createHotspots(); renderPicks();
   </script>
@@ -3199,6 +3324,348 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
 // WC2026_CLOSE_MENU_AFTER_SELECTION_REPAIR_END
 
 
+<script>
+/* WC2026_GAME1_CANONICAL_PICK_STATE_MODEL_START */
+(function installGame1CanonicalPickStateModel(){
+  const MODEL_KEY = "wc2026.game1.bracketPicks";
+  const MODEL_CONTRACT = "wc2026-game1-canonical-pick-state-v1";
+  const MIRROR_KEYS = [
+    "wc2026.game1.r32.picks",
+    "wc2026.game1.r16.winnerPicks",
+    "wc2026.game1.qfSf.winnerPicks",
+    "wc2026.game1.knockoutPicks",
+    "wc2026.game1.picks",
+    "wc2026Game1Picks",
+    "wc2026Game1KnockoutPicks",
+    "game1KnockoutPicks"
+  ];
+
+  function readJson(key){
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function writeJson(key, value){
+    try { localStorage.setItem(key, JSON.stringify(value || {})); } catch {}
+  }
+
+  function nowIso(){
+    try { return new Date().toISOString(); } catch { return ""; }
+  }
+
+  function api(){
+    return window.WC2026_GAME1_BRACKET_PICK_STORE_API || null;
+  }
+
+  function normalizeSlotRule(rule){
+    return rule && typeof rule === "object" ? rule : {};
+  }
+
+  function slotRuleFor(slotId){
+    const id = String(slotId || "");
+    if (!id) return null;
+    try {
+      const fromApi = api()?.slotById?.(id);
+      if (fromApi) return normalizeSlotRule(fromApi);
+    } catch {}
+
+    const knownCollections = [
+      window.game1R32SlotAssignmentRules,
+      window.game1R32SlotMenuRules,
+      window.game1KnockoutSlotRules,
+      window.game1KnockoutChoiceRules,
+      window.game1R16ChoiceMenuRules,
+      window.WC2026_GAME1_SLOT_RULES,
+      window.WC2026_GAME1_R16_SLOT_RULES,
+      window.WC2026_GAME1_ADVANCEMENT_SLOT_RULES
+    ];
+
+    for (const collection of knownCollections) {
+      if (Array.isArray(collection)) {
+        const match = collection.find((rule) => rule && (rule.slotId === id || rule.id === id));
+        if (match) return normalizeSlotRule(match);
+      }
+      if (collection && typeof collection === "object") {
+        const direct = collection[id];
+        if (direct) return normalizeSlotRule(direct);
+        const values = Object.values(collection);
+        const match = values.find((rule) => rule && typeof rule === "object" && (rule.slotId === id || rule.id === id));
+        if (match) return normalizeSlotRule(match);
+      }
+    }
+    return null;
+  }
+
+  function inferRound(slotId, pick, rule){
+    const explicit = pick?.round || rule?.round || rule?.targetRound || rule?.stage;
+    if (explicit) return String(explicit).toUpperCase();
+    const id = String(slotId || "").toUpperCase();
+    if (id.includes("R32")) return "R32";
+    if (id.includes("R16")) return "R16";
+    if (id.includes("QF")) return "QF";
+    if (id.includes("SF")) return "SF";
+    if (id.includes("FINAL")) return "FINAL";
+    if (id.includes("CHAMP")) return "CHAMPION";
+    return "R32";
+  }
+
+  function teamIdentityFrom(raw){
+    const pick = raw && typeof raw === "object" ? raw : { abbr: raw };
+    const teamId = pick.teamId || pick.id || pick.team || pick.code || pick.abbr || pick.name || "";
+    const abbr = pick.abbr || pick.code || pick.teamId || pick.id || pick.team || pick.name || "";
+    const name = pick.name || pick.teamName || pick.label || pick.country || abbr || teamId || "";
+    const flagEmoji = pick.flagEmoji || pick.flag || pick.emoji || "";
+    return {
+      teamId: String(teamId || ""),
+      abbr: String(abbr || ""),
+      name: String(name || ""),
+      flagEmoji: String(flagEmoji || "")
+    };
+  }
+
+  function flattenSlotIds(value){
+    const out = [];
+    function visit(item){
+      if (!item) return;
+      if (typeof item === "string") { out.push(item); return; }
+      if (Array.isArray(item)) { item.forEach(visit); return; }
+      if (typeof item === "object") {
+        const direct = item.slotId || item.sourceSlotId || item.fromSlotId || item.id;
+        if (typeof direct === "string") out.push(direct);
+      }
+    }
+    visit(value);
+    return out;
+  }
+
+  function getSourceSlotIds(slotId){
+    const id = String(slotId || "");
+    const rule = slotRuleFor(id) || {};
+    const pick = getPick(id) || {};
+    const candidates = [
+      pick.sourceSlotIds,
+      rule.sourceSlotIds,
+      rule.feederSlotIds,
+      rule.fromSlotIds,
+      rule.inputSlotIds,
+      rule.candidateSlotIds,
+      rule.sources,
+      rule.sourceSlots,
+      rule.children,
+      rule.homeSlotId,
+      rule.awaySlotId,
+      rule.leftSlotId,
+      rule.rightSlotId,
+      rule.sourceA,
+      rule.sourceB,
+      rule.fromA,
+      rule.fromB
+    ];
+    const ids = [];
+    candidates.forEach((candidate) => flattenSlotIds(candidate).forEach((sourceId) => ids.push(sourceId)));
+    return Array.from(new Set(ids.map(String).filter(Boolean).filter((sourceId) => sourceId !== id)));
+  }
+
+  function normalizePick(slotId, raw, fallbackRule){
+    if (!slotId || !raw) return null;
+    const source = raw && typeof raw === "object" ? raw : { abbr: raw };
+    const rule = fallbackRule || slotRuleFor(slotId) || {};
+    const team = teamIdentityFrom(source);
+    if (!team.teamId && !team.abbr && !team.name) return null;
+    const round = inferRound(slotId, source, rule);
+    const explicitSources = flattenSlotIds(source.sourceSlotIds);
+    const ruleSources = explicitSources.length ? explicitSources : getSourceSlotIds(slotId);
+    return {
+      slotId: String(slotId),
+      round,
+      teamId: team.teamId || team.abbr || team.name,
+      abbr: team.abbr || team.teamId || team.name,
+      name: team.name || team.abbr || team.teamId,
+      flagEmoji: team.flagEmoji,
+      sourceSlotIds: Array.from(new Set(ruleSources.map(String).filter(Boolean))),
+      pickedAt: source.pickedAt || source.updatedAt || nowIso(),
+      storeContract: MODEL_CONTRACT
+    };
+  }
+
+  function extractPickMap(value){
+    if (!value || typeof value !== "object") return {};
+    if (value.picksBySlotId && typeof value.picksBySlotId === "object") return value.picksBySlotId;
+    if (value.picks && typeof value.picks === "object") return value.picks;
+    return value;
+  }
+
+  function load(){
+    const canonicalRaw = extractPickMap(readJson(MODEL_KEY));
+    const merged = {};
+
+    // Canonical wins. Legacy stores are migration inputs only.
+    Object.entries(canonicalRaw || {}).forEach(([slotId, raw]) => {
+      const pick = normalizePick(slotId, raw);
+      if (pick) merged[slotId] = pick;
+    });
+
+    MIRROR_KEYS.forEach((key) => {
+      const legacy = extractPickMap(readJson(key));
+      Object.entries(legacy || {}).forEach(([slotId, raw]) => {
+        if (merged[slotId]) return;
+        const pick = normalizePick(slotId, raw);
+        if (pick) merged[slotId] = pick;
+      });
+    });
+
+    return {
+      version: MODEL_CONTRACT,
+      storageKey: MODEL_KEY,
+      picksBySlotId: merged,
+      updatedAt: nowIso()
+    };
+  }
+
+  function save(nextState){
+    const source = nextState && typeof nextState === "object" ? nextState : { picksBySlotId: {} };
+    const sourcePicks = extractPickMap(source);
+    const normalized = {};
+    Object.entries(sourcePicks || {}).forEach(([slotId, raw]) => {
+      const pick = normalizePick(slotId, raw);
+      if (pick) normalized[slotId] = pick;
+    });
+    const saved = {
+      version: MODEL_CONTRACT,
+      storageKey: MODEL_KEY,
+      picksBySlotId: normalized,
+      updatedAt: nowIso()
+    };
+    writeJson(MODEL_KEY, saved.picksBySlotId);
+    return saved;
+  }
+
+  function getPick(slotId){
+    const state = load();
+    return state.picksBySlotId[String(slotId || "")] || null;
+  }
+
+  function setPick(slotId, team, rule){
+    const id = String(slotId || team?.slotId || rule?.slotId || "");
+    if (!id) return null;
+    const state = load();
+    const pick = normalizePick(id, Object.assign({}, team || {}, { slotId: id }), rule || slotRuleFor(id));
+    if (!pick) return null;
+    state.picksBySlotId[id] = pick;
+    save(state);
+    try { api()?.set?.(id, pick); } catch {}
+    return pick;
+  }
+
+  function clearPick(slotId){
+    const id = String(slotId || "");
+    if (!id) return false;
+    const state = load();
+    delete state.picksBySlotId[id];
+    save(state);
+    try { api()?.clear?.(id); } catch {}
+    try { delete window.picks?.[id]; } catch {}
+    try { delete window.r16Picks?.[id]; } catch {}
+    try { delete window.advancementPicks?.[id]; } catch {}
+    try { delete window.game1KnockoutPicks?.[id]; } catch {}
+    return true;
+  }
+
+  function roundForSlot(slotId){
+    const pick = getPick(slotId);
+    const rule = slotRuleFor(slotId) || {};
+    return inferRound(slotId, pick, rule);
+  }
+
+  function pickHasTeam(pick){
+    return !!(pick && (pick.teamId || pick.abbr || pick.name));
+  }
+
+  function isPickValid(slotId, seen){
+    const id = String(slotId || "");
+    if (!id) return false;
+    const guard = seen || new Set();
+    if (guard.has(id)) return false;
+    guard.add(id);
+
+    const pick = getPick(id);
+    if (!pickHasTeam(pick)) return false;
+
+    const round = String(pick.round || roundForSlot(id) || "").toUpperCase();
+    if (round === "R32") return true;
+
+    const sources = pick.sourceSlotIds && pick.sourceSlotIds.length ? pick.sourceSlotIds : getSourceSlotIds(id);
+    if (!sources.length) return false;
+    return sources.every((sourceId) => isPickValid(sourceId, guard));
+  }
+
+  function isSlotPickable(slotId){
+    const id = String(slotId || "");
+    if (!id) return false;
+    const round = String(roundForSlot(id) || "").toUpperCase();
+    if (round === "R32") return true;
+    const sources = getSourceSlotIds(id);
+    if (!sources.length) return false;
+    return sources.every((sourceId) => isPickValid(sourceId));
+  }
+
+  function getRenderablePicks(){
+    const state = load();
+    const renderable = {};
+    Object.keys(state.picksBySlotId || {}).forEach((slotId) => {
+      if (isPickValid(slotId)) renderable[slotId] = state.picksBySlotId[slotId];
+    });
+    return renderable;
+  }
+
+  function clear(){
+    writeJson(MODEL_KEY, {});
+    MIRROR_KEYS.forEach((key) => writeJson(key, {}));
+    try { window.picks = {}; } catch {}
+    try { window.r16Picks = {}; } catch {}
+    try { window.advancementPicks = {}; } catch {}
+    try { window.game1KnockoutPicks = {}; } catch {}
+    try { api()?.replaceAll?.({}); } catch {}
+    return load();
+  }
+
+  function inspect(){
+    const state = load();
+    return {
+      contract: MODEL_CONTRACT,
+      storageKey: MODEL_KEY,
+      pickCount: Object.keys(state.picksBySlotId || {}).length,
+      state,
+      renderablePicks: getRenderablePicks(),
+      mirrorKeys: MIRROR_KEYS.slice()
+    };
+  }
+
+  window.WC2026_GAME1_PICK_STATE = {
+    load,
+    save,
+    clear,
+    getPick,
+    setPick,
+    clearPick,
+    getSourceSlotIds,
+    isPickValid,
+    isSlotPickable,
+    getRenderablePicks,
+    inspect,
+    storageKey: MODEL_KEY,
+    contract: MODEL_CONTRACT
+  };
+})();
+/* WC2026_GAME1_CANONICAL_PICK_STATE_MODEL_END */
+</script>
+
 // WC2026_RENDER_STORED_KNOCKOUT_PICKS_FROM_SITE_STORE_START
 (function installStoredKnockoutPickRenderBridge(){
   function readJson(key){
@@ -3206,11 +3673,138 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
     catch { return {}; }
   }
 
+  // WC2026_CARD155_RENDER_FROM_CANONICAL_PICK_STATE
+  function wc2026CanonicalPickStateModel(){
+    return window.WC2026_GAME1_PICK_STATE || null;
+  }
+
   function storedPickForSlot(slotId){
+    const model = wc2026CanonicalPickStateModel();
+    if (model && typeof model.getPick === "function") {
+      return model.getPick(slotId) || null;
+    }
+
     const bracket = readJson("wc2026.game1.bracketPicks");
     const r16 = readJson("wc2026.game1.r16.winnerPicks");
     const qfSf = readJson("wc2026.game1.qfSf.winnerPicks");
     return bracket[slotId] || r16[slotId] || qfSf[slotId] || null;
+  }
+
+  function canonicalPickIsRenderableForRule(rule, pick){
+    if (!rule || !pick) return false;
+
+    const model = wc2026CanonicalPickStateModel();
+    if (model && typeof model.isPickValid === "function") {
+      return !!model.isPickValid(rule.slotId);
+    }
+
+    if (typeof storedKnockoutPickIsRenderable === "function") {
+      return storedKnockoutPickIsRenderable(rule, pick);
+    }
+
+    return true;
+  }
+
+  // WC2026_SOURCE_GATE_STORED_KNOCKOUT_RENDER
+  function writeJson(key, value){
+    try { localStorage.setItem(key, JSON.stringify(value || {})); } catch {}
+  }
+
+  function r32ManifestToCanonical(slotId){
+    const match = String(slotId || "").match(/^R32-([LR])-M(\d+)([AB])$/i);
+    if (!match) return slotId;
+    const side = match[1].toUpperCase();
+    const matchIndex = Number(match[2]);
+    const offset = match[3].toUpperCase() === "A" ? 1 : 2;
+    return `${side}-R32-${String(((matchIndex - 1) * 2) + offset).padStart(2, "0")}`;
+  }
+
+  function r32CanonicalToManifest(slotId){
+    const match = String(slotId || "").match(/^([LR])-R32-(\d+)$/i);
+    if (!match) return slotId;
+    const side = match[1].toUpperCase();
+    const index = Number(match[2]);
+    return `R32-${side}-M${Math.ceil(index / 2)}${index % 2 === 1 ? "A" : "B"}`;
+  }
+
+  function slotAliases(slotId){
+    const ids = new Set();
+    const id = String(slotId || "");
+    if (!id) return [];
+    ids.add(id);
+    ids.add(id.toUpperCase());
+    ids.add(id.toLowerCase());
+
+    const canonical = r32ManifestToCanonical(id);
+    if (canonical) {
+      ids.add(canonical);
+      ids.add(canonical.toUpperCase());
+      ids.add(canonical.toLowerCase());
+    }
+
+    const manifest = r32CanonicalToManifest(canonical);
+    if (manifest) {
+      ids.add(manifest);
+      ids.add(manifest.toUpperCase());
+      ids.add(manifest.toLowerCase());
+    }
+
+    return Array.from(ids).filter(Boolean);
+  }
+
+  function sourcePickExists(sourceSlotId){
+    const bracket = readJson("wc2026.game1.bracketPicks");
+    const r32 = readJson("wc2026.game1.r32.picks");
+    const r16 = readJson("wc2026.game1.r16.winnerPicks");
+    const qfSf = readJson("wc2026.game1.qfSf.winnerPicks");
+
+    return slotAliases(sourceSlotId).some(id =>
+      bracket[id] || r32[id] || r16[id] || qfSf[id]
+    );
+  }
+
+  function ruleSourceIds(rule, pick){
+    const api = window.WC2026_GAME1_BRACKET_PICK_STORE_API;
+    const meta = api && typeof api.slotById === "function" ? api.slotById(rule?.slotId) : null;
+    return Array.from(new Set([
+      ...(rule?.sourceSlotIds || []),
+      ...(rule?.sourceR32SlotIds || []),
+      ...(meta?.sourceSlotIds || []),
+      ...(pick?.sourceSlotIds || []),
+      ...(pick?.sourceR32SlotIds || [])
+    ].filter(Boolean)));
+  }
+
+  function storedKnockoutPickIsRenderable(rule, pick){
+    if (!pick) return false;
+    const sources = ruleSourceIds(rule, pick);
+    if (sources.length < 2) return false;
+    return sources.every(sourcePickExists);
+  }
+
+  function clearInvalidStoredKnockoutPick(rule){
+    const slotId = rule?.slotId;
+    if (!slotId) return;
+
+    const bracket = readJson("wc2026.game1.bracketPicks");
+    const r16 = readJson("wc2026.game1.r16.winnerPicks");
+    const qfSf = readJson("wc2026.game1.qfSf.winnerPicks");
+    const knockout = readJson("wc2026.game1.knockoutPicks");
+
+    delete bracket[slotId];
+    delete r16[slotId];
+    delete qfSf[slotId];
+    delete knockout[slotId];
+
+    writeJson("wc2026.game1.bracketPicks", bracket);
+    writeJson("wc2026.game1.r16.winnerPicks", r16);
+    writeJson("wc2026.game1.qfSf.winnerPicks", qfSf);
+    writeJson("wc2026.game1.knockoutPicks", knockout);
+
+    try { if (typeof r16Picks !== "undefined" && r16Picks) delete r16Picks[slotId]; } catch {}
+    try { if (typeof advancementPicks !== "undefined" && advancementPicks) delete advancementPicks[slotId]; } catch {}
+    try { if (window.game1KnockoutPicks) delete window.game1KnockoutPicks[slotId]; } catch {}
+    try { window.WC2026_GAME1_BRACKET_PICK_STORE_API?.clear?.(slotId); } catch {}
   }
 
   function removeExistingStoredCards(){
@@ -3225,7 +3819,10 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
 
     r16SlotRulesFromManifest().forEach(rule => {
       const pick = storedPickForSlot(rule.slotId);
-      if (!pick) return;
+      if (!canonicalPickIsRenderableForRule(rule, pick)) {
+        clearInvalidStoredKnockoutPick(rule);
+        return;
+      }
 
       const before = Array.from(document.querySelectorAll(`.r16PickCard[data-slot-id="${rule.slotId}"]`));
       before.forEach(el => el.remove());
@@ -3251,7 +3848,10 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
 
     advancementSlotRulesFromManifest().forEach(rule => {
       const pick = storedPickForSlot(rule.slotId);
-      if (!pick) return;
+      if (!canonicalPickIsRenderableForRule(rule, pick)) {
+        clearInvalidStoredKnockoutPick(rule);
+        return;
+      }
 
       const before = Array.from(document.querySelectorAll(`.advancePickCard[data-slot-id="${rule.slotId}"]`));
       before.forEach(el => el.remove());
@@ -3453,18 +4053,16 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
     card.setAttribute("aria-label", `${name} (${code}) selected for ${card.dataset.slotId || "slot"}. Click or tap to change winner.`);
   }
 
+  // WC2026_CARD155_PATCH_ADORNMENTS_FROM_CANONICAL_PICK_STATE
   function patchStoredKnockoutCards(){
-    let bracket = {};
-    let r16 = {};
-    let qfSf = {};
-    try { bracket = JSON.parse(localStorage.getItem("wc2026.game1.bracketPicks") || "{}"); } catch {}
-    try { r16 = JSON.parse(localStorage.getItem("wc2026.game1.r16.winnerPicks") || "{}"); } catch {}
-    try { qfSf = JSON.parse(localStorage.getItem("wc2026.game1.qfSf.winnerPicks") || "{}"); } catch {}
+    const model = window.WC2026_GAME1_PICK_STATE || null;
+    if (!model || typeof model.getPick !== "function") return;
 
     document.querySelectorAll(".r16PickCard, .advancePickCard").forEach(card => {
       const slotId = card.dataset.slotId;
-      const pick = bracket[slotId] || r16[slotId] || qfSf[slotId] || null;
+      const pick = model.getPick(slotId) || null;
       if (!pick) return;
+      if (typeof model.isPickValid === "function" && !model.isPickValid(slotId)) return;
       patchCardText(card, pick);
     });
   }
@@ -5453,6 +6051,8 @@ function wc2026CloseAllTooltipSurfacesForMenu() {
   observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "style", "aria-hidden", "data-open"] });
 })();
 </script>
+
+
 
 </body>
 </html>

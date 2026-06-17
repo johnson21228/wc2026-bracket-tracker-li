@@ -1,13 +1,13 @@
 # WC2026 Bracket Tracker LI
 
-Static World Cup 2026 bracket game site and Workbench LI repo.
+Modular World Cup 2026 bracket game site and Workbench LI repo.
 
 This repo currently preserves two separate game surfaces:
 
 - `index.html` — main bracket tracker / Game 2 knockout bracket surface
 - `game1_playfield.html` — Game 1 Round of 32 chooser playfield
 
-The repo is intentionally static-first: HTML, JSON data, source evidence, cards, LI rules, and release snapshots are kept together so the game can evolve through Capture Back without losing intent.
+The repo is intentionally modular-source-first: HTML entry points, JavaScript, JSON data, source evidence, cards, LI rules, tests, and release snapshots are kept together so the game can evolve through Capture Back without losing intent. Static hosting is a deployment property, not a page-concentrated source architecture goal.
 
 ## Verify
 

@@ -20,6 +20,10 @@ pack: clean-hygiene verify
 		-x '__MACOSX/*' \
 		-x '.DS_Store' \
 		-x '*/.DS_Store' \
+		-x '*/__pycache__/*' \
+		-x '*.pyc' \
 		-x 'wc2026_*_overlay/*' \
+		-x 'wc2026-*-cb-overlay/*' \
+		-x 'wb_*_overlay/*' \
 		-x 'wc2026_bracket_tracker_cb_001/*' \
 		-x 'wc2026_schedule_poster_input_artifact/*'

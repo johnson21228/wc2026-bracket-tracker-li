@@ -11,7 +11,7 @@ A source artifact may be:
 - PDF
 - webpage
 - exported JSON
-- static HTML release
+- deployed site snapshot or release artifact
 - manual note
 
 ## Preservation rule

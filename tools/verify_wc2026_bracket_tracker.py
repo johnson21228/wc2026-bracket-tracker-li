@@ -4,6 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 import json
 import sys
+import subprocess
 
 ROOT = Path.cwd()
 
@@ -131,6 +132,12 @@ def main() -> int:
         "Game 2 official seed tiebreaker LI",
         "li/world_cup/game2_official_seed_and_game1_tiebreaker_rule.md",
         ["official", "Game 1", "tiebreaker"],
+    )
+
+    subprocess.run(
+        [sys.executable, "tools/verify_wc2026_modular_source_boundary.py"],
+        cwd=ROOT,
+        check=True,
     )
 
     print("WC2026 Bracket Tracker verification passed.")

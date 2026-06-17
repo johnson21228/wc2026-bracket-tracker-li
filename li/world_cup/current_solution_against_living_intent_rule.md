@@ -19,7 +19,7 @@ LI state that explains and governs it
 The solution may be:
 
 - a poster-derived data artifact
-- a static HTML file
+- a modular static-hostable web app
 - a GitHub Pages site
 - a hosted pool
 - a scoring engine
@@ -36,7 +36,7 @@ A photo of a poster
 ↓
 structured schedule data
 ↓
-static HTML tracker
+modular bracket tracker
 ↓
 Game 1 Round-of-32 pick pool
 ↓
@@ -89,4 +89,4 @@ the current solution
 the Workbench state needed to continue evolving it
 ```
 
-For this project, the public user may see only the HTML site, but the Workbench must preserve the data, LI, source history, scoring rules, and Capture Back needed to keep that site current.
+For this project, the public user may see only the deployed site, but the Workbench must preserve the modular source, data, LI, source history, scoring rules, tests, and Capture Back needed to keep that site current.

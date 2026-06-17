@@ -1,10 +1,14 @@
-# Prompt — Generate Next Static HTML Release
+# Generate Next Site Release Snapshot
 
-```text
-Generate the next static HTML release from the current WB data.
+Deprecated naming note: this prompt used to steer toward a static HTML release. Do not use it to pursue a page-concentrated HTML architecture.
 
-The HTML must run locally with no server.
-It should be GitHub Pages compatible.
-It should include visible metadata and embedded/exportable JSON state.
-Preserve prior releases.
-```
+Generate the next static-hostable site release snapshot from the current modular source, data, and tests.
+
+It should be GitHub Pages compatible when practical, but the source should remain modular. Do not collapse model, view, controller, data, and tests into one HTML file.
+
+Expected evidence:
+
+- verifier output
+- any generated release/review snapshot
+- Capture Back summary
+- files changed
