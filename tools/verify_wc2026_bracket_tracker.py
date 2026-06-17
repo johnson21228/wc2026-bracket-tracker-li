@@ -13,8 +13,18 @@ REQUIRED = [
     "LLM_READ_FIRST.md",
     "MAP.md",
     "site/index.html",
-    "site/assets/playfield/game1_pub_options_background.jpeg",
-    "site/assets/playfield/r32_bracket_geometry_overlay.png",
+    "site/css/app.css",
+    "site/css/board.css",
+    "site/css/dev.css",
+    "site/js/app.js",
+    "site/js/services/assetPaths.js",
+    "site/js/services/domMounts.js",
+    "site/js/board/BoardShell.js",
+    "site/js/board/BackgroundLayer.js",
+    "site/js/dev/DeveloperControlsPanel.js",
+    "site/assets/board/pub_background.jpeg",
+    "site/assets/board/gameboard.svg",
+    "site/data/geometry/gameboard_manifest.json",
     "li/repo/site_entrypoint_hygiene_rule.md",
     "li/repo/github_pages_site_surface_rule.md",
     "li/world_cup/game2_official_seed_and_game1_tiebreaker_rule.md",
@@ -98,23 +108,66 @@ def main() -> int:
     for page in ["site/index.html"]:
         assert_html(page)
 
-    game1 = read("site/index.html")
-    game1_required = [
-        "game1_pub_options_background.jpeg",
+    root_html = read("site/index.html")
+    shell_required = [
+        '<main id="wc2026-app"',
+        '<script type="module" src="js/app.js"></script>',
+        'href="assets/board/pub_background.jpeg"',
+        'href="assets/board/gameboard.svg"',
+        'href="css/app.css"',
+        'href="css/board.css"',
+        'href="css/dev.css"',
+    ]
+    missing_shell = [token for token in shell_required if token not in root_html]
+    if missing_shell:
+        fail("Clean modular site shell tokens missing:", [f"site/index.html: {token}" for token in missing_shell])
+
+    forbidden_shell = [
         "hitLayer",
         ".hotspot",
         "slotFillOpacity",
         "eligibleTeamsForSlot",
+        "const STORAGE_KEY",
+        "localStorage",
+        "readJson(",
+        "RENDER_STORED",
+        "winnerPicks",
+        "knockoutPicks",
+        "choiceLockState",
     ]
-    missing_game1 = [token for token in game1_required if token not in game1]
-    if missing_game1:
-        fail("Unified bracket board tokens missing:", [f"site/index.html: {token}" for token in missing_game1])
-    if "r32_bracket_geometry_overlay.png" not in game1 and "uniform_pick_card_gameboard.svg" not in game1:
-        fail("Unified bracket board must reference an accepted board geometry layer:", ["site/index.html: r32_bracket_geometry_overlay.png or uniform_pick_card_gameboard.svg"])
+    present_forbidden = [token for token in forbidden_shell if token in root_html]
+    if present_forbidden:
+        fail("Clean modular site shell contains legacy/runtime tokens:", [f"site/index.html: {token}" for token in present_forbidden])
 
-    storage_count = read("site/index.html").count("const STORAGE_KEY")
-    if storage_count != 1:
-        fail("Game 1 must contain exactly one const STORAGE_KEY declaration:", [f"found {storage_count}"])
+    asset_paths = read("site/js/services/assetPaths.js")
+    asset_required = [
+        'backgroundImage: "assets/board/pub_background.jpeg"',
+        'svgGameboardDefinition: "assets/board/gameboard.svg"',
+        'geometryManifest: "data/geometry/gameboard_manifest.json"',
+    ]
+    missing_assets = [token for token in asset_required if token not in asset_paths]
+    if missing_assets:
+        fail("Clean modular asset path tokens missing:", [f"site/js/services/assetPaths.js: {token}" for token in missing_assets])
+
+    board_shell = read("site/js/board/BoardShell.js")
+    board_required = [
+        "pixel-native-board-plane",
+        "createBackgroundLayer",
+        "truthResources.backgroundImage",
+    ]
+    missing_board = [token for token in board_required if token not in board_shell]
+    if missing_board:
+        fail("Clean modular board shell tokens missing:", [f"site/js/board/BoardShell.js: {token}" for token in missing_board])
+
+    background_layer = read("site/js/board/BackgroundLayer.js")
+    background_required = [
+        'document.createElement("img")',
+        "layer.src = backgroundImage",
+        "bottom-background-authority",
+    ]
+    missing_background = [token for token in background_required if token not in background_layer]
+    if missing_background:
+        fail("Clean modular background layer tokens missing:", [f"site/js/board/BackgroundLayer.js: {token}" for token in missing_background])
 
     for folder in [ROOT / "data", ROOT / "site" / "data"]:
         if not folder.exists():
@@ -147,6 +200,4 @@ def main() -> int:
 if __name__ == "__main__":
     raise SystemExit(main())
 
-# Game 1 reset visible hit layer tokens are verified by static page checks in current workflow.
-
-# Game 1 reset visible hit layer tokens are verified by static page checks in current workflow.
+# Clean modular site root tokens are verified by module boundary checks in current workflow.
