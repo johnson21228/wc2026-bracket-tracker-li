@@ -526,3 +526,22 @@
   overflow: hidden;
 }
 
+
+/* Card 193: group button rail subtle visual state */
+.group-rail-tile {
+  opacity: .66;
+  background: rgba(20, 15, 14, .42);
+  border-color: rgba(255, 236, 205, .24);
+  transition: opacity .16s ease, background-color .16s ease, border-color .16s ease, box-shadow .16s ease, filter .16s ease;
+}
+
+.group-rail-tile:hover,
+.group-rail-tile:focus-visible,
+.group-rail-tile:active,
+.group-rail-tile.is-active {
+  opacity: 1;
+  background: rgba(64, 43, 34, .92);
+  border-color: rgba(255, 229, 159, .88);
+  box-shadow: 0 16px 42px rgba(0,0,0,.46);
+  filter: saturate(1.08);
+}
