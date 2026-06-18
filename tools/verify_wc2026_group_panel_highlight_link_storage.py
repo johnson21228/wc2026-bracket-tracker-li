@@ -39,7 +39,7 @@ if not view_path.exists():
     missing.append("missing site/js/mvc/view.js")
 else:
     view = view_path.read_text()
-    for term in ["highlightUrl", "group-panel-highlight-action", "target = "_blank"", "noopener noreferrer"]:
+    for term in ["highlightUrl", "group-panel-highlight-action", 'target = "_blank"', "noopener noreferrer"]:
         if term not in view:
             missing.append(f"site/js/mvc/view.js is missing required term: {term}")
 
