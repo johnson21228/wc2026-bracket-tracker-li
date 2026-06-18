@@ -1,0 +1,12 @@
+{
+  "schema": "wc2026.knockout_pub_calendar_background_asset.v1",
+  "source_image": "source/images/wc2026_knockout_pub_calendar_background.jpeg",
+  "runtime_projection": "site/assets/board/knockout_pub_background.jpeg",
+  "size_px": {
+    "width": 1536,
+    "height": 1024
+  },
+  "sha256": "a82b2f855fe5d4ee47b6c341d98f73c7042cdb3b9553d1741c2e8f0b67139279",
+  "correction": "Left chalkboard label is corrected to 32 TEAMS / 32 MATCHES / 1 CHAMPION. The prior generated image said 24 teams and is not acceptable as runtime truth.",
+  "schedule_text_policy": "Fine print in the pub image is decorative. Schedule truth lives in site/data/current/knockout_matches.json."
+}
