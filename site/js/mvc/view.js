@@ -85,7 +85,29 @@ export function createBracketView(root) {
 
       const value = document.createElement("span");
       value.className = "pick-slot-value";
-      value.textContent = slot.selectedTeam ? teamLabel(slot.selectedTeam) : slot.pickable ? "Pick" : "";
+
+      if (slot.selectedTeam) {
+        const identity = document.createElement("span");
+        identity.className = "picked-cell-identity";
+
+        const flag = document.createElement("span");
+        flag.className = "picked-cell-flag";
+        flag.textContent = slot.selectedTeam.flag || "";
+        flag.setAttribute("aria-hidden", "true");
+
+        if (slot.boundsPx?.height) {
+          flag.style.fontSize = `${Math.max(18, Math.floor(slot.boundsPx.height - 8))}px`;
+        }
+
+        const code = document.createElement("span");
+        code.className = "picked-cell-code";
+        code.textContent = slot.selectedTeam.abbr || slot.selectedTeam.id || "";
+
+        identity.append(flag, code);
+        value.append(identity);
+      } else {
+        value.textContent = slot.pickable ? "Pick" : "";
+      }
 
       button.append(label, value);
       if (slot.selectedTeam) button.classList.add("has-pick");

@@ -26,6 +26,7 @@ verify:
 	python3 tools/verify_wc2026_pages_publish_snapshot.py
 	python3 tools/verify_wc2026_pub_hero_header.py
 	python3 tools/verify_wc2026_hero_banner_spelling.py
+	python3 tools/verify_wc2026_picked_bracket_cell_identity_rendering.py
 	python3 tools/verify_wc2026_knockout_schedule_model.py
 	python3 tools/verify_wc2026_group_stage_full_match_times.py
 clean-hygiene:
