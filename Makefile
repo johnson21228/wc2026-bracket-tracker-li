@@ -30,6 +30,7 @@ verify:
 	python3 tools/verify_wc2026_update_results_prompt.py
 	python3 tools/verify_wc2026_knockout_schedule_model.py
 	python3 tools/verify_wc2026_group_stage_full_match_times.py
+	python3 tools/verify_wc2026_safe_group_result_cze_rsa.py
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py
 

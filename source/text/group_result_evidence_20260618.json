@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "captureName": "group_result_evidence_20260618",
+  "capturedAt": "2026-06-18T20:48:33Z",
+  "scope": "Confirmed final group-stage results patched into current runtime data.",
+  "items": [
+    {
+      "decision": "PATCH",
+      "matchId": "66456910",
+      "groupId": "A",
+      "teams": [
+        "Czechia",
+        "South Africa"
+      ],
+      "teamIds": [
+        "CZE",
+        "RSA"
+      ],
+      "kickoffLocal": "2026-06-18T12:00:00-04:00",
+      "status": "final",
+      "score": {
+        "CZE": 1,
+        "RSA": 1
+      },
+      "source": {
+        "provider": "Reuters",
+        "url": "https://www.reuters.com/sports/soccer/czechs-closer-victory-than-south-africa-says-koubek-2026-06-18/",
+        "capturedAt": "2026-06-18T20:48:33Z",
+        "statusEvidence": "Reuters recap describes Czechia and South Africa as having played out a 1-1 draw.",
+        "decision": "PATCH",
+        "confidence": "high"
+      }
+    }
+  ],
+  "watchlist": [
+    {
+      "decision": "WATCH",
+      "matchId": "66456922",
+      "groupId": "B",
+      "teams": [
+        "Switzerland",
+        "Bosnia and Herzegovina"
+      ],
+      "note": "Known live/in-progress at the time of this CB discussion; not patched as final."
+    }
+  ]
+}

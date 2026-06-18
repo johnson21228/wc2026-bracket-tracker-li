@@ -658,15 +658,15 @@
     {
       "matchId": "66456910",
       "groupId": "A",
-      "status": "scheduled",
+      "status": "final",
       "kickoffLocal": "2026-06-18T12:00:00-04:00",
       "homeTeamId": "CZE",
       "homeTeamName": "Czechia",
       "awayTeamId": "RSA",
       "awayTeamName": "South Africa",
-      "homeScore": null,
-      "awayScore": null,
-      "summary": "Czechia vs South Africa",
+      "homeScore": 1,
+      "awayScore": 1,
+      "summary": "Czechia 1-1 South Africa",
       "sourceProvider": "ESPN",
       "posterMatchId": "GS-2026-06-18-A3",
       "kickoffDate": "2026-06-18",
@@ -680,7 +680,11 @@
       "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
       "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
       "timeConfidence": "high",
-      "espnMatchId": "66456910"
+      "espnMatchId": "66456910",
+      "resultSourceProvider": "Reuters",
+      "resultSourceUrl": "https://www.reuters.com/sports/soccer/czechs-closer-victory-than-south-africa-says-koubek-2026-06-18/",
+      "resultStatusEvidence": "Reuters recap describes Czechia and South Africa as having played out a 1-1 draw.",
+      "resultCapturedAt": "2026-06-18T20:48:33Z"
     },
     {
       "matchId": "66456922",
