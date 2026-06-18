@@ -8,6 +8,8 @@ verify:
 	python3 tools/verify_wc2026_game1_r32_pick_controller.py
 	python3 tools/verify_wc2026_clean_mvc_single_site.py
 	python3 tools/verify_wc2026_group_standings_panel_li.py
+	python3 tools/verify_wc2026_pick_menu_group_panel_link_li.py
+	python3 tools/verify_wc2026_group_standings_model_data.py
 
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py

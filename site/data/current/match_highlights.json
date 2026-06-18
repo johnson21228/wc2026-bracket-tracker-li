@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "competition": "fifa.world",
+  "season": 2026,
+  "source": {
+    "provider": "Workbench CB",
+    "capturedAt": "2026-06-18T13:30:00Z",
+    "notes": [
+      "Highlight links are intentionally empty until verified. The runtime must not invent highlight URLs."
+    ]
+  },
+  "highlights": {}
+}

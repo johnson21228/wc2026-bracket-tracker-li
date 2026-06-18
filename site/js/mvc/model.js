@@ -8,6 +8,9 @@ const DATA_URLS = Object.freeze({
   r32Logic: "data/model/fifa_r32_logical_slot_order.json",
   teams: "data/model/teams.json",
   groups: "data/groups_from_flags_images.json",
+  currentStandings: "data/current/group_standings.json",
+  currentMatches: "data/current/group_matches.json",
+  currentHighlights: "data/current/match_highlights.json",
 });
 
 async function readJson(url) {
@@ -140,12 +143,24 @@ function saveToStorage(picks) {
 }
 
 export async function createBracketModel() {
-  const [geometry, r32Bridge, r32Logic, teamsPayload, groupsPayload] = await Promise.all([
+  const [
+    geometry,
+    r32Bridge,
+    r32Logic,
+    teamsPayload,
+    groupsPayload,
+    currentStandingsPayload,
+    currentMatchesPayload,
+    currentHighlightsPayload,
+  ] = await Promise.all([
     readJson(DATA_URLS.geometry),
     readJson(DATA_URLS.r32Bridge),
     readJson(DATA_URLS.r32Logic),
     readJson(DATA_URLS.teams),
     readJson(DATA_URLS.groups),
+    readJson(DATA_URLS.currentStandings),
+    readJson(DATA_URLS.currentMatches),
+    readJson(DATA_URLS.currentHighlights),
   ]);
 
   const nativeSize = geometry.nativeSizePx || BOARD_NATIVE_SIZE;
@@ -156,6 +171,15 @@ export async function createBracketModel() {
     return [normalized.id, normalized];
   }));
   const groupsById = groupTeamsFromPayload(groupsPayload, teamById);
+  const currentStandingsById = new Map(Object.entries(currentStandingsPayload.groups || {}));
+  const currentMatchesByGroupId = new Map();
+  for (const match of currentMatchesPayload.matches || []) {
+    const groupId = String(match.groupId || "").toUpperCase();
+    const list = currentMatchesByGroupId.get(groupId) || [];
+    list.push(match);
+    currentMatchesByGroupId.set(groupId, list);
+  }
+  const currentHighlightsByMatchId = new Map(Object.entries(currentHighlightsPayload.highlights || {}));
   const r32LogicByGeometryId = new Map();
   const r32LogicByFifaId = new Map((r32Logic.slots || []).map((slot) => [slot.fifaSlotId, slot]));
   for (const bridge of r32Bridge.slots || []) {
@@ -255,6 +279,37 @@ export async function createBracketModel() {
     return { ok: true, cleared: slots.map((slot) => slot.slotId) };
   }
 
+  function normalizeGroupId(groupId) {
+    return String(groupId || "").trim().toUpperCase().replace(/^GROUP\s+/, "");
+  }
+
+  function getGroupStandings(groupId) {
+    return currentStandingsById.get(normalizeGroupId(groupId)) || null;
+  }
+
+  function getGroupMatches(groupId) {
+    return [...(currentMatchesByGroupId.get(normalizeGroupId(groupId)) || [])];
+  }
+
+  function getMatchHighlights(matchId) {
+    return currentHighlightsByMatchId.get(String(matchId)) || null;
+  }
+
+  function getThirdPlaceTable() {
+    return [...(currentStandingsPayload.thirdPlaceTable || [])];
+  }
+
+  function getGroupContext(groupId) {
+    const normalizedGroupId = normalizeGroupId(groupId);
+    const standings = getGroupStandings(normalizedGroupId);
+    return {
+      groupId: normalizedGroupId,
+      standings,
+      matches: getGroupMatches(normalizedGroupId),
+      source: currentStandingsPayload.source || null,
+    };
+  }
+
   function getSlotViewModels() {
     return slots.map((slot) => {
       const team = selectedTeam(slot.slotId);
@@ -286,6 +341,11 @@ export async function createBracketModel() {
   return {
     nativeSize,
     getSlotViewModels,
+    getGroupStandings,
+    getGroupMatches,
+    getMatchHighlights,
+    getGroupContext,
+    getThirdPlaceTable,
     getChoices,
     setPick,
     clearPick,
