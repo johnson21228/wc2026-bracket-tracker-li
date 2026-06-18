@@ -14,6 +14,7 @@ const DATA_URLS = Object.freeze({
   currentStandings: "data/current/group_standings.json",
   currentMatches: "data/current/group_matches.json",
   currentHighlights: "data/current/match_highlights.json",
+  knockoutMatches: "data/current/knockout_matches.json",
 });
 
 async function readJson(url) {
@@ -155,6 +156,7 @@ export async function createBracketModel() {
     currentStandingsPayload,
     currentMatchesPayload,
     currentHighlightsPayload,
+    knockoutMatchesPayload,
   ] = await Promise.all([
     readJson(DATA_URLS.geometry),
     readJson(DATA_URLS.r32Bridge),
@@ -164,6 +166,7 @@ export async function createBracketModel() {
     readJson(DATA_URLS.currentStandings),
     readJson(DATA_URLS.currentMatches),
     readJson(DATA_URLS.currentHighlights),
+    readJson(DATA_URLS.knockoutMatches),
   ]);
 
   const nativeSize = geometry.nativeSizePx || BOARD_NATIVE_SIZE;
@@ -183,6 +186,8 @@ export async function createBracketModel() {
     currentMatchesByGroupId.set(groupId, list);
   }
   const currentHighlightsByMatchId = new Map(Object.entries(currentHighlightsPayload.highlights || {}));
+  const knockoutMatches = [...(knockoutMatchesPayload.matches || [])];
+  const knockoutMatchesById = new Map(knockoutMatches.map((match) => [String(match.match_id || match.matchNumber || match.match_number), match]));
   const r32LogicByGeometryId = new Map();
   const r32LogicByFifaId = new Map((r32Logic.slots || []).map((slot) => [slot.fifaSlotId, slot]));
   for (const bridge of r32Bridge.slots || []) {
@@ -339,6 +344,14 @@ export async function createBracketModel() {
 
   function getMatchHighlights(matchId) {
     return currentHighlightsByMatchId.get(String(matchId)) || null;
+  }
+
+  function getKnockoutMatches() {
+    return [...knockoutMatches];
+  }
+
+  function getKnockoutMatch(matchId) {
+    return knockoutMatchesById.get(String(matchId)) || null;
   }
 
   function getThirdPlaceTable() {
@@ -513,6 +526,8 @@ export async function createBracketModel() {
     getGroupStandings,
     getGroupMatches,
     getMatchHighlights,
+    getKnockoutMatches,
+    getKnockoutMatch,
     getGroupContext,
     getPickMenu,
     getThirdPlaceTable,
