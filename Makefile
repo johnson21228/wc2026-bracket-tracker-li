@@ -1,4 +1,4 @@
-.PHONY: verify pack clean-hygiene open-site
+.PHONY: verify pack clean-hygiene open-site publish-pages
 
 verify:
 	python3 tools/verify_wc2026_bracket_tracker.py
@@ -23,6 +23,7 @@ verify:
 	python3 tools/verify_wc2026_group_button_flag_hover_opacity.py
 	python3 tools/verify_wc2026_group_button_rail_visual_anchor.py
 
+	python3 tools/verify_wc2026_pages_publish_snapshot.py
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py
 
@@ -65,3 +66,7 @@ stopsite:
 		fi; \
 	fi
 
+.PHONY: publish-pages
+
+publish-pages:
+	python3 tools/publish_pages_snapshot.py
