@@ -310,6 +310,85 @@ export async function createBracketModel() {
     };
   }
 
+
+  function sourceTitleForSlot(slotId) {
+    const slot = slotsById.get(slotId);
+    const logic = r32LogicByGeometryId.get(slotId);
+    if (!slot) return slotId;
+
+    if (logic?.qualifierKind === "group-winner" && logic.groups?.length === 1) {
+      return `Group ${logic.groups[0]} winner`;
+    }
+    if (logic?.qualifierKind === "group-runner-up" && logic.groups?.length === 1) {
+      return `Group ${logic.groups[0]} runner-up`;
+    }
+    if (logic?.qualifierKind === "third-place-candidate-set" && logic.groups?.length) {
+      return `Third-place team from Group ${logic.groups.join("/")}`;
+    }
+    if (slot.round !== "R32") {
+      const feeders = dependencyMap.get(slotId) || [];
+      return feeders.length ? `Winner from ${feeders.join(" / ")}` : "Feeder path winner";
+    }
+    return logic?.fifaLabel ? `${logic.fifaLabel} choices` : `${slotId} choices`;
+  }
+
+  function choiceWithState(team, source = "projected") {
+    return {
+      ...team,
+      state: source,
+    };
+  }
+
+  function getGroupedPickChoices(slotId) {
+    const slot = slotsById.get(slotId);
+    if (!slot) return [];
+    const choices = getChoices(slotId);
+    const choiceIds = new Set(choices.map((team) => team.id));
+    const logic = r32LogicByGeometryId.get(slotId);
+
+    if (slot.round === "R32" && logic?.groups?.length) {
+      return logic.groups.map((groupId) => {
+        const groupChoices = (groupsById.get(groupId) || [])
+          .filter((team) => choiceIds.has(team.id))
+          .map((team) => choiceWithState(team, "projected"));
+        return {
+          groupId,
+          label: `Group ${groupId}`,
+          panelAvailable: Boolean(getGroupStandings(groupId)),
+          sourceRole: logic.qualifierKind || "group-source",
+          choices: groupChoices,
+        };
+      }).filter((group) => group.choices.length > 0);
+    }
+
+    return [{
+      groupId: null,
+      label: "Feeder choices",
+      panelAvailable: false,
+      sourceRole: "knockout-feeder",
+      choices: choices.map((team) => choiceWithState(team, "projected")),
+    }];
+  }
+
+  function getPickMenu(slotId) {
+    const slot = slotsById.get(slotId);
+    if (!slot) return null;
+    const choices = getChoices(slotId);
+    const currentPick = selectedTeam(slotId);
+    const logic = r32LogicByGeometryId.get(slotId);
+    return {
+      slotId,
+      title: sourceTitleForSlot(slotId),
+      sourceLabel: logic?.fifaLabel || slotId,
+      currentPick,
+      canClear: Boolean(currentPick),
+      anchorBoundsPx: slot.boundsPx,
+      groups: getGroupedPickChoices(slotId),
+      choices,
+      pickable: choices.length > 0,
+    };
+  }
+
   function getSlotViewModels() {
     return slots.map((slot) => {
       const team = selectedTeam(slot.slotId);
@@ -345,6 +424,7 @@ export async function createBracketModel() {
     getGroupMatches,
     getMatchHighlights,
     getGroupContext,
+    getPickMenu,
     getThirdPlaceTable,
     getChoices,
     setPick,

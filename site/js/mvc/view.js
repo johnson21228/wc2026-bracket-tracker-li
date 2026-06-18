@@ -15,20 +15,22 @@ function applyBounds(element, bounds) {
   element.style.height = `${bounds.height}px`;
 }
 
+function groupEntries(groupContext) {
+  return groupContext?.standings?.entries || [];
+}
+
 export function createBracketView(root) {
   const boardPlane = root.querySelector("[data-board-plane]");
   const statusPanel = root.querySelector("[data-status-panel]");
   const clearAllButton = root.querySelector('[data-action="clear-all"]');
   let handlers = {};
-  let openSlotId = null;
 
   function setHandlers(nextHandlers) {
     handlers = nextHandlers;
     clearAllButton?.addEventListener("click", () => handlers.onClearAll?.());
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        openSlotId = null;
-        renderMenu(null);
+        handlers.onCloseMenu?.();
       }
     });
   }
@@ -41,6 +43,7 @@ export function createBracketView(root) {
       <img class="board-linework-layer" src="assets/board/gameboard.svg" alt="" aria-hidden="true">
       <div class="board-pick-layer" data-pick-layer></div>
       <div class="board-menu-layer" data-menu-layer></div>
+      <div class="board-group-panel-layer" data-group-panel-layer></div>
     `;
   }
 
@@ -73,78 +76,205 @@ export function createBracketView(root) {
     }
   }
 
-  function renderMenu(slotModel) {
+  function visibleBoardViewport() {
+    const viewport = boardPlane.parentElement || boardPlane;
+    return {
+      left: viewport.scrollLeft || 0,
+      top: viewport.scrollTop || 0,
+      width: viewport.clientWidth || boardPlane.clientWidth,
+      height: viewport.clientHeight || boardPlane.clientHeight,
+    };
+  }
+
+  function placePickMenu(popover, anchorBoundsPx) {
+    // Placement is board-attached; the menu scrolls with the game board.
+    const viewport = visibleBoardViewport();
+    const margin = 12;
+    const width = popover.offsetWidth || 292;
+    const height = popover.offsetHeight || 420;
+    const visibleRight = viewport.left + viewport.width;
+    const visibleBottom = viewport.top + viewport.height;
+
+    let left = anchorBoundsPx.x + anchorBoundsPx.width + margin;
+    if (left + width > visibleRight - margin) {
+      left = anchorBoundsPx.x - width - margin;
+    }
+    left = Math.max(viewport.left + margin, Math.min(left, visibleRight - width - margin));
+
+    let top = anchorBoundsPx.y;
+    top = Math.max(viewport.top + margin, Math.min(top, visibleBottom - height - margin));
+
+    popover.style.left = `${Math.round(left)}px`;
+    popover.style.top = `${Math.round(top)}px`;
+  }
+
+  function renderMenu(menuModel) {
     const layer = boardPlane.querySelector("[data-menu-layer]");
     layer.innerHTML = "";
-    if (!slotModel || !slotModel.pickable) return;
+    if (!menuModel || !menuModel.pickable) return;
 
     const popover = document.createElement("section");
-    popover.className = "pick-menu-popover";
-    popover.dataset.slotId = slotModel.slotId;
-    const bounds = slotModel.boundsPx;
-    popover.style.left = `${Math.min(bounds.x + bounds.width + 8, 1260)}px`;
-    popover.style.top = `${Math.max(20, Math.min(bounds.y, 820))}px`;
+    popover.className = "pick-menu-popover pick-menu-runtime-v2";
+    popover.dataset.slotId = menuModel.slotId;
+    popover.style.left = "0px";
+    popover.style.top = "0px";
+
+    const topbar = document.createElement("div");
+    topbar.className = "pick-menu-topbar";
+
+    const titleBlock = document.createElement("div");
+    titleBlock.className = "pick-menu-title-block";
 
     const title = document.createElement("h2");
-    title.textContent = `${slotModel.label} choices`;
-    popover.append(title);
+    title.className = "pick-menu-title";
+    title.textContent = menuModel.title;
 
-    const list = document.createElement("div");
-    list.className = "pick-menu-list";
-    for (const team of slotModel.choices) {
-      const item = document.createElement("button");
-      item.type = "button";
-      item.className = "pick-menu-item";
-      item.textContent = fullTeamLabel(team);
-      item.addEventListener("click", () => handlers.onTeamPick?.(slotModel.slotId, team.id));
-      list.append(item);
-    }
-    popover.append(list);
+    const source = document.createElement("div");
+    source.className = "pick-menu-source-label";
+    source.textContent = menuModel.sourceLabel;
 
-    if (slotModel.selectedTeam) {
-      const clear = document.createElement("button");
-      clear.type = "button";
-      clear.className = "pick-menu-clear";
-      clear.textContent = "Clear this pick";
-      clear.addEventListener("click", () => handlers.onClearPick?.(slotModel.slotId));
-      popover.append(clear);
-    }
+    titleBlock.append(title, source);
 
     const close = document.createElement("button");
     close.type = "button";
-    close.className = "pick-menu-close";
-    close.textContent = "Close";
-    close.addEventListener("click", () => {
-      openSlotId = null;
-      renderMenu(null);
-    });
-    popover.append(close);
+    close.className = "pick-menu-close-button";
+    close.textContent = "× Close";
+    close.addEventListener("click", () => handlers.onCloseMenu?.());
+
+    topbar.append(titleBlock, close);
+    popover.append(topbar);
+
+    if (menuModel.currentPick) {
+      const current = document.createElement("div");
+      current.className = "pick-menu-current-pick";
+      current.textContent = `Current pick: ${fullTeamLabel(menuModel.currentPick)}`;
+      popover.append(current);
+    }
+
+    if (menuModel.canClear) {
+      const clear = document.createElement("button");
+      clear.type = "button";
+      clear.className = "pick-menu-clear-top";
+      clear.textContent = "Clear this pick";
+      clear.addEventListener("click", () => handlers.onClearPick?.(menuModel.slotId));
+      popover.append(clear);
+    }
+
+    const sections = document.createElement("div");
+    sections.className = "pick-menu-group-sections";
+
+    for (const group of menuModel.groups || []) {
+      const section = document.createElement("section");
+      section.className = "pick-menu-group-section";
+
+      const groupHeader = document.createElement("div");
+      groupHeader.className = "pick-menu-group-header";
+
+      if (group.panelAvailable && group.groupId) {
+        const groupButton = document.createElement("button");
+        groupButton.type = "button";
+        groupButton.className = "pick-menu-group-label";
+        groupButton.setAttribute("data-group-panel-action", "open");
+        groupButton.dataset.groupId = group.groupId;
+        groupButton.textContent = group.label;
+        groupButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          handlers.onGroupPanelOpen?.(group.groupId);
+        });
+        groupHeader.append(groupButton);
+      } else {
+        const groupLabel = document.createElement("span");
+        groupLabel.className = "pick-menu-group-label-static";
+        groupLabel.textContent = group.label;
+        groupHeader.append(groupLabel);
+      }
+
+      const sourceRole = document.createElement("span");
+      sourceRole.className = "pick-menu-group-role";
+      sourceRole.textContent = group.sourceRole || "source";
+      groupHeader.append(sourceRole);
+      section.append(groupHeader);
+
+      const list = document.createElement("div");
+      list.className = "pick-menu-list";
+      for (const team of group.choices || []) {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = "pick-menu-item";
+        if (menuModel.currentPick?.id === team.id) item.classList.add("is-current");
+        item.textContent = fullTeamLabel(team);
+        item.addEventListener("click", () => handlers.onTeamPick?.(menuModel.slotId, team.id));
+        list.append(item);
+      }
+      section.append(list);
+      sections.append(section);
+    }
+
+    popover.append(sections);
     layer.append(popover);
+    placePickMenu(popover, menuModel.anchorBoundsPx);
+  }
+
+  function renderGroupPanel(groupContext) {
+    const layer = boardPlane.querySelector("[data-group-panel-layer]");
+    layer.innerHTML = "";
+    if (!groupContext) return;
+
+    const panel = document.createElement("aside");
+    panel.className = "group-panel-popover";
+
+    const topbar = document.createElement("div");
+    topbar.className = "group-panel-topbar";
+
+    const title = document.createElement("h2");
+    title.textContent = `Group ${groupContext.groupId}`;
+
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "group-panel-close-button";
+    close.textContent = "× Close";
+    close.addEventListener("click", () => renderGroupPanel(null));
+
+    topbar.append(title, close);
+    panel.append(topbar);
+
+    const table = document.createElement("table");
+    table.className = "group-panel-table";
+    table.innerHTML = `<thead><tr><th>Team</th><th>MP</th><th>GD</th><th>Pts</th></tr></thead>`;
+    const body = document.createElement("tbody");
+    for (const entry of groupEntries(groupContext)) {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${entry.rank}. ${entry.name || entry.abbr}</td><td>${entry.played ?? ""}</td><td>${entry.goalDifference ?? ""}</td><td>${entry.points ?? ""}</td>`;
+      body.append(row);
+    }
+    table.append(body);
+    panel.append(table);
+
+    const source = document.createElement("p");
+    source.className = "group-panel-source";
+    source.textContent = "Local checked-in standings snapshot.";
+    panel.append(source);
+
+    layer.append(panel);
   }
 
   function render(state) {
     renderSlots(state.slotModels);
-    if (openSlotId) {
-      renderMenu(state.slotModels.find((slot) => slot.slotId === openSlotId));
-    } else {
-      renderMenu(null);
-    }
+    renderMenu(state.openPickMenu);
     statusPanel.textContent = `${state.summary.picked} picks made. ${state.summary.pickable} slots are currently pickable.`;
   }
 
-  function openMenu(slotModel) {
-    openSlotId = slotModel?.slotId || null;
-    renderMenu(slotModel);
+  function closeMenu() {
+    renderMenu(null);
   }
 
-  function closeMenu() {
-    openSlotId = null;
-    renderMenu(null);
+  function openGroupPanel(groupContext) {
+    renderGroupPanel(groupContext);
   }
 
   function report(message) {
     statusPanel.textContent = message;
   }
 
-  return { setHandlers, renderBoardShell, render, openMenu, closeMenu, report };
+  return { setHandlers, renderBoardShell, render, closeMenu, openGroupPanel, report };
 }

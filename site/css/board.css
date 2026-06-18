@@ -116,3 +116,149 @@
   display: none;
 }
 .board-r32-pick-menu-layer { pointer-events: none; }
+
+
+/* Card 186: Pick Menu Runtime v2 */
+.board-group-panel-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.pick-menu-runtime-v2 {
+  width: 292px;
+  max-height: min(520px, calc(var(--board-h-px) - 32px));
+  padding: 0;
+  overflow: hidden;
+}
+
+.pick-menu-topbar,
+.group-panel-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px 8px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+.pick-menu-title-block { min-width: 0; }
+.pick-menu-title { margin: 0; font-size: 15px; line-height: 1.15; }
+.pick-menu-source-label { margin-top: 3px; font-size: 12px; opacity: .72; }
+
+.pick-menu-close-button,
+.group-panel-close-button {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 999px;
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  padding: 7px 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pick-menu-current-pick {
+  margin: 10px 12px 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(35, 88, 61, .55);
+  color: #eaffef;
+  font-size: 13px;
+}
+
+.pick-menu-clear-top {
+  display: block;
+  width: calc(100% - 24px);
+  margin: 8px 12px 10px;
+  border: 1px solid rgba(255, 197, 121, .62);
+  border-radius: 12px;
+  background: rgba(117, 54, 30, .72);
+  color: #fff2df;
+  padding: 10px 12px;
+  font-weight: 850;
+  text-align: center;
+  cursor: pointer;
+}
+
+.pick-menu-group-sections {
+  display: grid;
+  gap: 10px;
+  max-height: 374px;
+  overflow: auto;
+  padding: 10px 12px 12px;
+}
+
+.pick-menu-group-section {
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: rgba(255,255,255,.045);
+  overflow: hidden;
+}
+
+.pick-menu-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.pick-menu-group-label,
+.pick-menu-group-label-static {
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 999px;
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  padding: 6px 9px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.pick-menu-group-label-static { cursor: default; opacity: .76; }
+.pick-menu-group-label:hover { background: rgba(255,255,255,.22); }
+.pick-menu-group-role { font-size: 10px; opacity: .58; text-transform: uppercase; letter-spacing: .04em; }
+
+.pick-menu-runtime-v2 .pick-menu-list {
+  padding: 8px;
+}
+
+.pick-menu-item.is-current {
+  border-color: rgba(198, 255, 211, .7);
+  background: rgba(35, 88, 61, .72);
+}
+
+.group-panel-popover {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  width: 340px;
+  max-height: 520px;
+  overflow: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(20, 15, 14, .96);
+  color: #fff;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45);
+  pointer-events: auto;
+}
+
+.group-panel-table {
+  width: calc(100% - 24px);
+  margin: 12px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.group-panel-table th,
+.group-panel-table td {
+  padding: 7px 6px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  text-align: right;
+}
+
+.group-panel-table th:first-child,
+.group-panel-table td:first-child { text-align: left; }
+.group-panel-source { margin: 0 12px 12px; opacity: .66; font-size: 12px; }

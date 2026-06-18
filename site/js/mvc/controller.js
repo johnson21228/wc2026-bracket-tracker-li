@@ -1,7 +1,10 @@
 export function createBracketController({ model, view }) {
+  let activeSlotId = null;
+
   function currentState() {
     return {
       slotModels: model.getSlotViewModels(),
+      openPickMenu: activeSlotId ? model.getPickMenu(activeSlotId) : null,
       summary: model.getSummary(),
     };
   }
@@ -20,7 +23,14 @@ export function createBracketController({ model, view }) {
       view.report(`${slotId} is waiting for its feeder picks.`);
       return;
     }
-    view.openMenu(slot);
+    activeSlotId = slotId;
+    redraw();
+  }
+
+  function onCloseMenu() {
+    activeSlotId = null;
+    view.closeMenu();
+    redraw();
   }
 
   function onTeamPick(slotId, teamId) {
@@ -29,7 +39,7 @@ export function createBracketController({ model, view }) {
       view.report(result.reason || "Pick was not accepted.");
       return;
     }
-    view.closeMenu();
+    activeSlotId = null;
     redraw();
     if (result.cleared?.length) {
       view.report(`Pick saved. Cleared downstream picks: ${result.cleared.join(", ")}.`);
@@ -38,15 +48,24 @@ export function createBracketController({ model, view }) {
 
   function onClearPick(slotId) {
     const result = model.clearPick(slotId);
-    view.closeMenu();
+    activeSlotId = slotId;
     redraw();
     if (result.cleared?.length) {
       view.report(`Pick cleared. Cleared downstream picks: ${result.cleared.join(", ")}.`);
+    } else {
+      view.report("Pick cleared.");
     }
+  }
+
+  function onGroupPanelOpen(groupId) {
+    const groupContext = model.getGroupContext(groupId);
+    view.openGroupPanel(groupContext);
+    view.report(`Opened Group ${groupId} standings.`);
   }
 
   function onClearAll() {
     model.clearAll();
+    activeSlotId = null;
     view.closeMenu();
     redraw();
     view.report("All picks cleared.");
@@ -54,7 +73,7 @@ export function createBracketController({ model, view }) {
 
   function start() {
     view.renderBoardShell(model.nativeSize);
-    view.setHandlers({ onSlotClick, onTeamPick, onClearPick, onClearAll });
+    view.setHandlers({ onSlotClick, onTeamPick, onClearPick, onClearAll, onCloseMenu, onGroupPanelOpen });
     redraw();
   }
 
