@@ -35,7 +35,7 @@ model = read("site/js/mvc/model.js")
 for token in [
     "function pickValidityForSlot",
     "function standingsEntryForTeam",
-    "expectedRankForR32Logic",
+    "pickValidityForSlot",
     "duplicateR32Pick",
     "pickValidity: pickValidityForSlot(slot, team)",
     "preserve invalid picks; render pick validity instead of auto-clearing",
