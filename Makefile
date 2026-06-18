@@ -20,6 +20,7 @@ verify:
 	python3 tools/verify_wc2026_group_button_rail.py
 	python3 tools/verify_wc2026_group_panel_anchor_to_group_button.py
 	python3 tools/verify_wc2026_group_button_rail_subtle_visual_state.py
+	python3 tools/verify_wc2026_group_button_flag_hover_opacity.py
 	python3 tools/verify_wc2026_group_button_rail_visual_anchor.py
 
 clean-hygiene:

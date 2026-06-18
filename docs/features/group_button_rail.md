@@ -45,3 +45,7 @@ The group panel opens over or immediately above the launching group control when
 The group rail is intentionally quiet until the user interacts with it. At rest, each group tile is partially translucent so the bracket board remains visually dominant.
 
 When the user hovers, focuses, touches, or tracks over a tile, that tile becomes fully opaque and gains stronger interactive emphasis. This change is visual only and does not move the tile, alter the flag grid, mutate picks, or change group panel placement.
+
+## Card 195: group button flag hover opacity
+
+Flags inside each group tile are slightly translucent by default so the rail stays visually quiet. When a group tile is hovered, focused, active, or tracking-over, the flags inside that tile become fully opaque.

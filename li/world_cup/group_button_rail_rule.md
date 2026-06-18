@@ -35,3 +35,7 @@ Each group tile should use a partially translucent treatment by default. The gro
 On hover, focus-visible, active touch, or tracking-over state, the tile becomes fully opaque and may increase contrast, border strength, shadow, or saturation.
 
 This active visual emphasis must not change tile size, group order, 2×2 flag grid layout, rail position, pick state, or group panel state.
+
+## Card 195: group button flag hover opacity
+
+Group rail flags must be somewhat translucent at rest and become fully opaque when their containing group tile is hovered, focused, active, or otherwise in tracking-over state. Flags remain decorative evidence inside the tile; they are not separate buttons.

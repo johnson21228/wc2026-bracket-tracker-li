@@ -561,3 +561,16 @@
   pointer-events: auto;
 }
 
+/* Card 195: group button flag hover opacity */
+.group-rail-flag {
+  opacity: 0.74;
+  transition: opacity .16s ease, filter .16s ease;
+}
+
+.group-rail-tile:hover .group-rail-flag,
+.group-rail-tile:focus-visible .group-rail-flag,
+.group-rail-tile:active .group-rail-flag,
+.group-rail-tile.is-active .group-rail-flag {
+  opacity: 1;
+  filter: saturate(1.08);
+}
