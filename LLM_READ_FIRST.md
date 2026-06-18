@@ -26,3 +26,8 @@ Read these first:
 Do not silently overwrite facts, player picks, or scoring rules.
 
 If official data conflicts with poster-derived data, record the discrepancy and update with source authority.
+
+## UPDATE RESULTS trigger
+
+When the user says `UPDATE RESULTS` for this repo, retrieve and follow `prompts/update_results_from_web.md`. Inspect current repo data first, search only candidate stale/missing group-stage matches, and patch only confirmed final results.
+
