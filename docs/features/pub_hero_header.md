@@ -5,7 +5,7 @@ The top app surface is the Game 1 hero header. It frames the site as a pub-frien
 Required copy:
 
 - eyebrow: `Footie FÜHN`
-- title: `Braketeering Pub`
+- title: `Bracketeering Pub`
 - subtitle: `Scroll the game board below and make your picks.`
 
 Required utility actions:
