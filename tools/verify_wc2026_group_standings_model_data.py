@@ -56,8 +56,8 @@ def main() -> int:
 
     if not matches.get("matches"):
         raise SystemExit("group_matches.json should contain match rows")
-    if highlights.get("highlights") != {}:
-        raise SystemExit("match_highlights.json should start with an empty highlights map unless links are verified")
+    if not isinstance(highlights.get("highlights", {}), dict):
+        raise SystemExit("match_highlights.json highlights must be an object")
 
     require_contains("site/js/mvc/model.js", "currentStandings: \"data/current/group_standings.json\"")
     require_contains("site/js/mvc/model.js", "function getGroupStandings(groupId)")

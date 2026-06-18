@@ -24,6 +24,7 @@ export function createBracketView(root) {
   const statusPanel = root.querySelector("[data-status-panel]");
   const clearAllButton = root.querySelector('[data-action="clear-all"]');
   let handlers = {};
+  let pendingGroupPanelAnchorBoundsPx = null;
 
   function setHandlers(nextHandlers) {
     handlers = nextHandlers;
@@ -87,6 +88,52 @@ export function createBracketView(root) {
     };
   }
 
+
+
+  function boardLocalBoundsForElement(element) {
+    const viewport = boardPlane.parentElement || boardPlane;
+    const boardRect = boardPlane.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
+    return {
+      x: rect.left - boardRect.left + (viewport.scrollLeft || 0),
+      y: rect.top - boardRect.top + (viewport.scrollTop || 0),
+      width: rect.width,
+      height: rect.height,
+    };
+  }
+
+  function placeGroupPanelOverAnchor(panel, anchorBoundsPx) {
+    const viewport = visibleBoardViewport();
+    const margin = 14;
+    const visibleRight = viewport.left + viewport.width;
+    const visibleBottom = viewport.top + viewport.height;
+    const maxPanelWidth = Math.max(280, Math.min(520, viewport.width - margin * 2));
+    const maxPanelHeight = Math.max(240, viewport.height - margin * 2);
+
+    panel.style.width = `${Math.round(maxPanelWidth)}px`;
+    panel.style.maxHeight = `${Math.round(maxPanelHeight)}px`;
+
+    const panelWidth = panel.offsetWidth || maxPanelWidth;
+    const panelHeight = Math.min(panel.scrollHeight || 420, maxPanelHeight);
+
+    let left = viewport.left + margin;
+    let top = viewport.top + margin;
+
+    if (anchorBoundsPx) {
+      left = anchorBoundsPx.x + anchorBoundsPx.width / 2 - panelWidth / 2;
+      top = anchorBoundsPx.y - panelHeight - margin;
+      if (top < viewport.top + margin) {
+        top = anchorBoundsPx.y + anchorBoundsPx.height + margin;
+      }
+    }
+
+    left = Math.max(viewport.left + margin, Math.min(left, visibleRight - panelWidth - margin));
+    top = Math.max(viewport.top + margin, Math.min(top, visibleBottom - panelHeight - margin));
+
+    panel.style.left = `${Math.round(left)}px`;
+    panel.style.top = `${Math.round(top)}px`;
+  }
+
   function placePickMenu(popover, anchorBoundsPx) {
     // Placement is board-attached; the menu scrolls with the game board.
     const viewport = visibleBoardViewport();
@@ -126,7 +173,10 @@ export function createBracketView(root) {
       button.setAttribute("data-group-rail-button", "true");
       button.dataset.groupId = group.groupId;
       button.setAttribute("aria-label", group.accessibleLabel || `Open ${group.label} panel`);
-      button.addEventListener("click", () => handlers.onGroupPanelOpen?.(group.groupId));
+      button.addEventListener("click", () => {
+        pendingGroupPanelAnchorBoundsPx = boardLocalBoundsForElement(button);
+        handlers.onGroupPanelOpen?.(group.groupId);
+      });
 
       const label = document.createElement("span");
       label.className = "group-rail-label";
@@ -406,6 +456,10 @@ export function createBracketView(root) {
     panel.append(source);
 
     layer.append(panel);
+
+    const anchorBoundsPx = pendingGroupPanelAnchorBoundsPx;
+    pendingGroupPanelAnchorBoundsPx = null;
+    placeGroupPanelOverAnchor(panel, anchorBoundsPx);
   }
 
   function render(state) {

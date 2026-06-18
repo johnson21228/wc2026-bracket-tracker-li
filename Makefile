@@ -18,6 +18,8 @@ verify:
 	python3 tools/verify_wc2026_complete_group_matches_from_poster.py
 	python3 tools/verify_wc2026_completed_match_highlight_links.py
 	python3 tools/verify_wc2026_group_button_rail.py
+	python3 tools/verify_wc2026_group_panel_anchor_to_group_button.py
+	python3 tools/verify_wc2026_group_button_rail_subtle_visual_state.py
 	python3 tools/verify_wc2026_group_button_rail_visual_anchor.py
 
 clean-hygiene:

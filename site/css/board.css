@@ -545,3 +545,18 @@
   box-shadow: 0 16px 42px rgba(0,0,0,.46);
   filter: saturate(1.08);
 }
+
+/* Card 194: group panel anchors to launching group button without leaving board plane */
+.board-group-panel-layer {
+  z-index: 88;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.group-panel-popover {
+  box-sizing: border-box;
+  max-width: calc(100% - 28px);
+  overflow: auto;
+  pointer-events: auto;
+}
+
