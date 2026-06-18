@@ -4,6 +4,7 @@ export function createBracketController({ model, view }) {
   function currentState() {
     return {
       slotModels: model.getSlotViewModels(),
+      groupRail: model.getGroupRail(),
       openPickMenu: activeSlotId ? model.getPickMenu(activeSlotId) : null,
       summary: model.getSummary(),
     };

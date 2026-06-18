@@ -43,6 +43,7 @@ export function createBracketView(root) {
       <img class="board-linework-layer" src="assets/board/gameboard.svg" alt="" aria-hidden="true">
       <div class="board-pick-layer" data-pick-layer></div>
       <div class="board-menu-layer" data-menu-layer></div>
+      <div class="board-group-rail-layer" data-group-rail-layer></div>
       <div class="board-group-panel-layer" data-group-panel-layer></div>
     `;
   }
@@ -106,6 +107,48 @@ export function createBracketView(root) {
 
     popover.style.left = `${Math.round(left)}px`;
     popover.style.top = `${Math.round(top)}px`;
+  }
+
+
+  function renderGroupRail(groupRail) {
+    const layer = boardPlane.querySelector("[data-group-rail-layer]");
+    if (!layer) return;
+    layer.innerHTML = "";
+
+    const rail = document.createElement("nav");
+    rail.className = "group-rail";
+    rail.setAttribute("aria-label", "World Cup group panels");
+
+    for (const group of groupRail || []) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "group-rail-tile";
+      button.setAttribute("data-group-rail-button", "true");
+      button.dataset.groupId = group.groupId;
+      button.setAttribute("aria-label", group.accessibleLabel || `Open ${group.label} panel`);
+      button.addEventListener("click", () => handlers.onGroupPanelOpen?.(group.groupId));
+
+      const label = document.createElement("span");
+      label.className = "group-rail-label";
+      label.textContent = group.label;
+
+      const flagGrid = document.createElement("span");
+      flagGrid.className = "group-rail-flag-grid";
+      flagGrid.setAttribute("aria-hidden", "true");
+
+      for (const team of (group.teams || []).slice(0, 4)) {
+        const flag = document.createElement("span");
+        flag.className = "group-rail-flag";
+        flag.title = team.name || team.abbr || team.id;
+        flag.textContent = team.flag || team.abbr || team.id;
+        flagGrid.append(flag);
+      }
+
+      button.append(label, flagGrid);
+      rail.append(button);
+    }
+
+    layer.append(rail);
   }
 
   function renderMenu(menuModel) {
@@ -367,6 +410,7 @@ export function createBracketView(root) {
 
   function render(state) {
     renderSlots(state.slotModels);
+    renderGroupRail(state.groupRail);
     renderMenu(state.openPickMenu);
     statusPanel.textContent = `${state.summary.picked} picks made. ${state.summary.pickable} slots are currently pickable.`;
   }

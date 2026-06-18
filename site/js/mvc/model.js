@@ -1,6 +1,8 @@
 const STORAGE_KEY = "wc2026.game1.cleanMvcPicks.v1";
 const ROUND_ORDER = ["R32", "R16", "QF", "SF", "FINAL_FOUR"];
 const BOARD_NATIVE_SIZE = Object.freeze({ width: 1536, height: 1024 });
+const GROUP_IDS = Object.freeze(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]);
+const GROUP_RAIL_LABEL_RANGE = "Group A through Group L";
 
 const DATA_URLS = Object.freeze({
   geometry: "data/geometry/gameboard_manifest.json",
@@ -413,6 +415,25 @@ export async function createBracketModel() {
     };
   }
 
+
+  function getGroupRail() {
+    return GROUP_IDS.map((groupId) => {
+      const teams = (groupsById.get(groupId) || []).slice(0, 4).map((team) => ({
+        id: team.id,
+        abbr: team.abbr || team.id,
+        name: team.name || team.abbr || team.id,
+        flag: team.flag || "",
+      }));
+      const teamNames = teams.map((team) => team.name || team.abbr || team.id).join(", ");
+      return {
+        groupId,
+        label: `Group ${groupId}`,
+        teams,
+        accessibleLabel: `Open Group ${groupId} panel: ${teamNames}`,
+      };
+    });
+  }
+
   function getSlotViewModels() {
     return slots.map((slot) => {
       const team = selectedTeam(slot.slotId);
@@ -443,6 +464,7 @@ export async function createBracketModel() {
 
   return {
     nativeSize,
+    getGroupRail,
     getSlotViewModels,
     getGroupStandings,
     getGroupMatches,
