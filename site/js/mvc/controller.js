@@ -58,9 +58,9 @@ export function createBracketController({ model, view }) {
     }
   }
 
-  function onGroupPanelOpen(groupId) {
+  function onGroupPanelOpen(groupId, anchorBoundsPx = null) {
     const groupContext = model.getGroupContext(groupId);
-    view.openGroupPanel(groupContext);
+    view.openGroupPanel(groupContext, anchorBoundsPx);
     view.report(`Opened Group ${groupId} standings.`);
   }
 

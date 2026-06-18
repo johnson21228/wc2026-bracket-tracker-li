@@ -33,3 +33,9 @@ Controller:
 ## Data boundary
 
 The rail uses local checked-in group/team data already loaded by the site. It does not scrape ESPN or any external site at runtime.
+
+## Visual emphasis and anchored panel refinement
+
+The bottom group rail should be subtle at rest. Each group tile uses a partially translucent treatment so it stays present without competing with the bracket board. On hover, focus, touch, or tracking-over interaction, the tile becomes fully opaque.
+
+The group panel opens over or immediately above the launching group control when space permits. This applies to both bottom rail group tiles and pick-menu group labels. The panel is board-attached and is clamped inside the visible gameboard viewport when possible. If there is not enough height, the panel can scroll internally while remaining part of the scrollable board plane.
