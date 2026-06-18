@@ -24,6 +24,7 @@ verify:
 	python3 tools/verify_wc2026_group_button_rail_visual_anchor.py
 
 	python3 tools/verify_wc2026_pages_publish_snapshot.py
+	python3 tools/verify_wc2026_pub_hero_header.py
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py
 

@@ -23,12 +23,29 @@ export function createBracketView(root) {
   const boardPlane = root.querySelector("[data-board-plane]");
   const statusPanel = root.querySelector("[data-status-panel]");
   const clearAllButton = root.querySelector('[data-action="clear-all"]');
+  const exportPicksButton = root.querySelector('[data-action="export-picks"]');
+  const importPicksButton = root.querySelector('[data-action="import-picks"]');
+  const importPicksFile = root.querySelector('[data-import-picks-file]');
   let handlers = {};
   let pendingGroupPanelAnchorBoundsPx = null;
 
   function setHandlers(nextHandlers) {
     handlers = nextHandlers;
     clearAllButton?.addEventListener("click", () => handlers.onClearAll?.());
+    exportPicksButton?.addEventListener("click", () => handlers.onExportPicks?.());
+    importPicksButton?.addEventListener("click", () => {
+      if (!importPicksFile) return;
+      importPicksFile.value = "";
+      importPicksFile.click();
+    });
+    importPicksFile?.addEventListener("change", () => {
+      const file = importPicksFile.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.addEventListener("load", () => handlers.onImportPicks?.(String(reader.result || ""), file.name));
+      reader.addEventListener("error", () => report("Could not read import file."));
+      reader.readAsText(file);
+    });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         handlers.onCloseMenu?.();

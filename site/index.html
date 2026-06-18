@@ -14,14 +14,14 @@
   <main id="wc2026-app" class="wc2026-app" data-wc2026-app>
     <section class="app-shell" aria-labelledby="app-title">
       <header class="app-header">
-        <p class="eyebrow">Game 1</p>
-        <h1 id="app-title">World Cup 2026 Bracket Tracker</h1>
-        <p class="app-summary">
-          Clean MVC runtime: one site, one native 1536×1024 board plane, explicit pick buttons,
-          and downstream pick clearing when upstream picks change.
-        </p>
+        <p class="eyebrow">Footie FÜHN</p>
+        <h1 id="app-title">Braketeering Pub</h1>
+        <p class="app-summary">Scroll the game board below and make your picks.</p>
         <div class="app-actions">
           <button type="button" class="ghost-button" data-action="clear-all">Clear picks</button>
+          <button type="button" class="ghost-button" data-action="export-picks">Export picks</button>
+          <button type="button" class="ghost-button" data-action="import-picks">Import picks</button>
+          <input type="file" class="visually-hidden" data-import-picks-file accept="application/json,.json" aria-label="Import picks JSON file">
         </div>
       </header>
       <div class="board-scroll" data-board-scroll>

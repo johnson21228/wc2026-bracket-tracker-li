@@ -1,4 +1,5 @@
 const STORAGE_KEY = "wc2026.game1.cleanMvcPicks.v1";
+const PICK_SNAPSHOT_APP_ID = "wc2026.braketeeringPub.picks";
 const ROUND_ORDER = ["R32", "R16", "QF", "SF", "FINAL_FOUR"];
 const BOARD_NATIVE_SIZE = Object.freeze({ width: 1536, height: 1024 });
 const GROUP_IDS = Object.freeze(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]);
@@ -281,6 +282,49 @@ export async function createBracketModel() {
     return { ok: true, cleared: slots.map((slot) => slot.slotId) };
   }
 
+  function exportPicksSnapshot() {
+    return {
+      app: PICK_SNAPSHOT_APP_ID,
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      picks: { ...picks },
+    };
+  }
+
+  function importPicksSnapshot(snapshot) {
+    const incoming = snapshot?.picks && typeof snapshot.picks === "object" ? snapshot.picks : snapshot;
+    if (!incoming || typeof incoming !== "object" || Array.isArray(incoming)) {
+      return { ok: false, reason: "Import file did not contain a picks object.", imported: 0, skipped: [] };
+    }
+
+    const previousPicks = { ...picks };
+    const skipped = [];
+    picks = {};
+
+    for (const slot of slots) {
+      if (!Object.prototype.hasOwnProperty.call(incoming, slot.slotId)) continue;
+      const teamId = String(incoming[slot.slotId] || "").trim();
+      if (!teamId) continue;
+      const validation = validatePick(slot.slotId, teamId);
+      if (!validation.valid) {
+        skipped.push({ slotId: slot.slotId, teamId, reason: validation.reason });
+        continue;
+      }
+      picks[slot.slotId] = teamId;
+      cascadeClearInvalidDescendants();
+    }
+
+    const cleared = cascadeClearInvalidDescendants();
+    saveToStorage(picks);
+    return {
+      ok: true,
+      imported: Object.keys(picks).length,
+      skipped,
+      cleared,
+      previousPickCount: Object.keys(previousPicks).length,
+    };
+  }
+
   function normalizeGroupId(groupId) {
     return String(groupId || "").trim().toUpperCase().replace(/^GROUP\s+/, "");
   }
@@ -476,6 +520,8 @@ export async function createBracketModel() {
     setPick,
     clearPick,
     clearAll,
+    exportPicksSnapshot,
+    importPicksSnapshot,
     getSummary,
   };
 }
