@@ -57,7 +57,7 @@ export function createBracketView(root) {
     boardPlane.style.setProperty("--board-w-px", `${nativeSize.width}px`);
     boardPlane.style.setProperty("--board-h-px", `${nativeSize.height}px`);
     boardPlane.innerHTML = `
-      <img class="board-background-layer" src="assets/board/knockout_pub_background.jpeg" alt="" aria-hidden="true">
+      <img class="board-background-layer" src="assets/board/pub_background.jpeg" alt="" aria-hidden="true">
       <img class="board-linework-layer" src="assets/board/gameboard.svg" alt="" aria-hidden="true">
       <div class="board-pick-layer" data-pick-layer></div>
       <div class="board-menu-layer" data-menu-layer></div>
