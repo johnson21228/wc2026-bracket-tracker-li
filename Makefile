@@ -36,6 +36,7 @@ verify:
 	python3 tools/verify_wc2026_pick_validity_rendering.py
 	python3 tools/verify_wc2026_pick_validity_no_current_rank_block.py
 	python3 tools/verify_wc2026_group_stage_background_runtime.py
+	python3 tools/verify_wc2026_interaction_overlay_stack.py
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py
 
