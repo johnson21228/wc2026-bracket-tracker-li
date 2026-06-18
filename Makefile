@@ -2,6 +2,7 @@
 
 verify:
 	python3 tools/verify_wc2026_bracket_tracker.py
+	python3 tools/verify_wc2026_fifa_r32_bridge.py
 
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py

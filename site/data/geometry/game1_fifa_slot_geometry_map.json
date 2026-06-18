@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "tournamentId": "wc2026",
+  "gameId": "game1",
+  "role": "fifa-slot-to-board-geometry-bridge",
+  "logicSource": "site/data/model/fifa_r32_logical_slot_order.json",
+  "geometrySource": "site/data/geometry/gameboard_manifest.json",
+  "boundary": {
+    "owns": "bridge from FIFA logical slot identity to board geometry slot id",
+    "doesNotOwn": [
+      "FIFA qualifier logic definitions",
+      "pixel slot bounds",
+      "visual styling",
+      "player pick storage"
+    ]
+  },
+  "slots": [
+    {
+      "fifaSlotId": "FIFA_R32_L01",
+      "fifaLabel": "1E",
+      "geometrySlotId": "L-R32-01",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 1,
+      "matchupId": "R32-L01",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L02",
+      "fifaLabel": "3 ABCDF",
+      "geometrySlotId": "L-R32-02",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 2,
+      "matchupId": "R32-L01",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L03",
+      "fifaLabel": "1I",
+      "geometrySlotId": "L-R32-03",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 3,
+      "matchupId": "R32-L02",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L04",
+      "fifaLabel": "3 CDFGH",
+      "geometrySlotId": "L-R32-04",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 4,
+      "matchupId": "R32-L02",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L05",
+      "fifaLabel": "2A",
+      "geometrySlotId": "L-R32-05",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 5,
+      "matchupId": "R32-L03",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L06",
+      "fifaLabel": "2B",
+      "geometrySlotId": "L-R32-06",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 6,
+      "matchupId": "R32-L03",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L07",
+      "fifaLabel": "1F",
+      "geometrySlotId": "L-R32-07",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 7,
+      "matchupId": "R32-L04",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L08",
+      "fifaLabel": "2C",
+      "geometrySlotId": "L-R32-08",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 8,
+      "matchupId": "R32-L04",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L09",
+      "fifaLabel": "2K",
+      "geometrySlotId": "L-R32-09",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 9,
+      "matchupId": "R32-L05",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L10",
+      "fifaLabel": "2L",
+      "geometrySlotId": "L-R32-10",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 10,
+      "matchupId": "R32-L05",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L11",
+      "fifaLabel": "1H",
+      "geometrySlotId": "L-R32-11",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 11,
+      "matchupId": "R32-L06",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L12",
+      "fifaLabel": "2J",
+      "geometrySlotId": "L-R32-12",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 12,
+      "matchupId": "R32-L06",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L13",
+      "fifaLabel": "1D",
+      "geometrySlotId": "L-R32-13",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 13,
+      "matchupId": "R32-L07",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L14",
+      "fifaLabel": "3 BEFIJ",
+      "geometrySlotId": "L-R32-14",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 14,
+      "matchupId": "R32-L07",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L15",
+      "fifaLabel": "1G",
+      "geometrySlotId": "L-R32-15",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 15,
+      "matchupId": "R32-L08",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L16",
+      "fifaLabel": "3 AEHJ",
+      "geometrySlotId": "L-R32-16",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 16,
+      "matchupId": "R32-L08",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R01",
+      "fifaLabel": "1C",
+      "geometrySlotId": "R-R32-01",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 1,
+      "matchupId": "R32-R01",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R02",
+      "fifaLabel": "2F",
+      "geometrySlotId": "R-R32-02",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 2,
+      "matchupId": "R32-R01",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R03",
+      "fifaLabel": "2E",
+      "geometrySlotId": "R-R32-03",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 3,
+      "matchupId": "R32-R02",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R04",
+      "fifaLabel": "2I",
+      "geometrySlotId": "R-R32-04",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 4,
+      "matchupId": "R32-R02",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R05",
+      "fifaLabel": "1A",
+      "geometrySlotId": "R-R32-05",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 5,
+      "matchupId": "R32-R03",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R06",
+      "fifaLabel": "3 CEFHI",
+      "geometrySlotId": "R-R32-06",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 6,
+      "matchupId": "R32-R03",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R07",
+      "fifaLabel": "1L",
+      "geometrySlotId": "R-R32-07",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 7,
+      "matchupId": "R32-R04",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R08",
+      "fifaLabel": "3 EHIJK",
+      "geometrySlotId": "R-R32-08",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 8,
+      "matchupId": "R32-R04",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R09",
+      "fifaLabel": "1J",
+      "geometrySlotId": "R-R32-09",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 9,
+      "matchupId": "R32-R05",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R10",
+      "fifaLabel": "2H",
+      "geometrySlotId": "R-R32-10",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 10,
+      "matchupId": "R32-R05",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R11",
+      "fifaLabel": "2D",
+      "geometrySlotId": "R-R32-11",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 11,
+      "matchupId": "R32-R06",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R12",
+      "fifaLabel": "2G",
+      "geometrySlotId": "R-R32-12",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 12,
+      "matchupId": "R32-R06",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R13",
+      "fifaLabel": "1B",
+      "geometrySlotId": "R-R32-13",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 13,
+      "matchupId": "R32-R07",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R14",
+      "fifaLabel": "3 EFGIJ",
+      "geometrySlotId": "R-R32-14",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 14,
+      "matchupId": "R32-R07",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R15",
+      "fifaLabel": "1K",
+      "geometrySlotId": "R-R32-15",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 15,
+      "matchupId": "R32-R08",
+      "matchupPosition": "top",
+      "renderRole": "r32-fifa-slot-label"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R16",
+      "fifaLabel": "3 DEIJL",
+      "geometrySlotId": "R-R32-16",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 16,
+      "matchupId": "R32-R08",
+      "matchupPosition": "bottom",
+      "renderRole": "r32-fifa-slot-label"
+    }
+  ]
+}

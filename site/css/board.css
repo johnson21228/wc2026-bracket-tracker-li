@@ -138,3 +138,35 @@
   font-size: 10px;
   line-height: 1.25;
 }
+
+.board-fifa-slot-map-layer {
+  z-index: 8;
+  pointer-events: none;
+}
+
+.fifa-slot-map-marker {
+  position: absolute;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  outline: 1px solid rgba(255, 232, 130, 0.78);
+  outline-offset: -1px;
+}
+
+.fifa-slot-map-label {
+  min-width: 34px;
+  padding: 2px 5px;
+  border-radius: 7px;
+  background: rgba(8, 10, 14, 0.84);
+  color: rgba(255, 244, 166, 0.98);
+  font-size: 10px;
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.38);
+}
+
+[data-show-fifa-slot-map="false"] .board-fifa-slot-map-layer {
+  display: none;
+}

@@ -281,7 +281,25 @@ function createDeveloperFrame({ boardPlane }) {
     })
   );
 
-  frame.append(title, controls, status, propertiesPanel);
+  const fifaSlotMapRow = document.createElement("label");
+  fifaSlotMapRow.className = "developer-control-row";
+
+  const fifaSlotMapToggle = document.createElement("input");
+  fifaSlotMapToggle.type = "checkbox";
+  fifaSlotMapToggle.checked = boardPlane?.dataset.showFifaSlotMap === "true";
+  fifaSlotMapToggle.dataset.control = "toggle-fifa-slot-map";
+
+  const fifaSlotMapLabel = document.createElement("span");
+  fifaSlotMapLabel.textContent = "Show FIFA slot map";
+
+  fifaSlotMapToggle.addEventListener("change", () => {
+    if (!boardPlane) return;
+    boardPlane.dataset.showFifaSlotMap = fifaSlotMapToggle.checked ? "true" : "false";
+  });
+
+  fifaSlotMapRow.append(fifaSlotMapToggle, fifaSlotMapLabel);
+
+  frame.append(title, controls, fifaSlotMapRow, status, propertiesPanel);
   return frame;
 }
 

@@ -1,5 +1,6 @@
 import { createBackgroundLayer } from "./BackgroundLayer.js";
 import { createSvgGameboardLayer } from "./SvgGameboardLayer.js";
+import { createFifaSlotMapLayer } from "./FifaSlotMapLayer.js";
 import { createGame1LifecycleStatusSurface } from "./Game1LifecycleStatusSurface.js";
 import { createPickIdentifierLayer } from "./PickIdentifierLayer.js";
 
@@ -33,6 +34,7 @@ async function createBoardShell({ truthResources }) {
   plane.dataset.showGeometryFrames = "false";
   plane.dataset.showPickIndex = "false";
   plane.dataset.showPickIdentifiers = "true";
+  plane.dataset.showFifaSlotMap = "false";
   plane.style.setProperty("--gameboard-opacity", "0.52");
   plane.style.setProperty("--gameboard-line-color", "rgba(255, 255, 255, 0.98)");
   plane.style.setProperty("--gameboard-line-width", "1.5");
@@ -46,7 +48,10 @@ async function createBoardShell({ truthResources }) {
     createGame1LifecycleStatusSurface(),
     await createSvgGameboardLayer({
       svgGameboardDefinition: truthResources.svgGameboardDefinition,
-    }),
+    })
+    await createFifaSlotMapLayer({
+      geometryManifest: truthResources.geometryManifest,
+    }),,
     await createPickIdentifierLayer({
       geometryManifest: truthResources.geometryManifest,
     })
