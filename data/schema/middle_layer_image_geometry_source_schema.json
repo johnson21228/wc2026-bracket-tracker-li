@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WC2026 Middle Layer Image Geometry Source Schema",
+  "type": "object",
+  "required": ["geometrySource", "boardAsset", "coordinateSystem", "slots"],
+  "properties": {
+    "geometrySource": {
+      "type": "string",
+      "enum": ["image-defined", "data-defined-generated"]
+    },
+    "boardAsset": {
+      "type": "string",
+      "description": "Path to the shared middle-layer image that currently defines visible geometry."
+    },
+    "coordinateSystem": {
+      "type": "string",
+      "enum": ["percent"]
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slotId", "round", "x", "y", "w", "h"],
+        "properties": {
+          "slotId": {"type": "string"},
+          "round": {"type": "string"},
+          "x": {"type": "number"},
+          "y": {"type": "number"},
+          "w": {"type": "number"},
+          "h": {"type": "number"},
+          "feedsTo": {"type": "string"},
+          "source": {"type": "string", "enum": ["captured-from-image", "generated-from-data"]}
+        }
+      }
+    }
+  }
+}

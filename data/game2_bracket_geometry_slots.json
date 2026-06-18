@@ -1,0 +1,617 @@
+{
+  "version": "game2-bracket-geometry-slots-v1",
+  "boardAsset": "site/assets/playfield/r32_bracket_geometry_overlay.png",
+  "coordinateSystem": "percent-of-bracketPlane",
+  "currentGeometryAuthority": "shared middle-layer PNG defines visible geometry; this JSON is a captured representation to be tuned against it",
+  "futureGeometryAuthority": "same slot data should later generate the SVG/PNG geometry",
+  "slots": [
+    {
+      "slotId": "r32-01",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 2.4,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 1,
+      "feedsTo": "r16-01",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-02",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 8.25,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 2,
+      "feedsTo": "r16-01",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-03",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 14.1,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 3,
+      "feedsTo": "r16-02",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-04",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 19.949999999999996,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 4,
+      "feedsTo": "r16-02",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-05",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 25.799999999999997,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 5,
+      "feedsTo": "r16-03",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-06",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 31.65,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 6,
+      "feedsTo": "r16-03",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-07",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 37.49999999999999,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 7,
+      "feedsTo": "r16-04",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-08",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 43.349999999999994,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 8,
+      "feedsTo": "r16-04",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-09",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 49.199999999999996,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 9,
+      "feedsTo": "r16-05",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-10",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 55.05,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 10,
+      "feedsTo": "r16-05",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-11",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 60.9,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 11,
+      "feedsTo": "r16-06",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-12",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 66.75,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 12,
+      "feedsTo": "r16-06",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-13",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 72.6,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 13,
+      "feedsTo": "r16-07",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-14",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 78.45,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 14,
+      "feedsTo": "r16-07",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-15",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 84.3,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 15,
+      "feedsTo": "r16-08",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-16",
+      "round": "R32",
+      "side": "left",
+      "x": 2.0,
+      "y": 90.15,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 16,
+      "feedsTo": "r16-08",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-17",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 2.4,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 17,
+      "feedsTo": "r16-09",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-18",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 8.25,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 18,
+      "feedsTo": "r16-09",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-19",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 14.1,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 19,
+      "feedsTo": "r16-10",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-20",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 19.949999999999996,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 20,
+      "feedsTo": "r16-10",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-21",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 25.799999999999997,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 21,
+      "feedsTo": "r16-11",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-22",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 31.65,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 22,
+      "feedsTo": "r16-11",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-23",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 37.49999999999999,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 23,
+      "feedsTo": "r16-12",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-24",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 43.349999999999994,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 24,
+      "feedsTo": "r16-12",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-25",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 49.199999999999996,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 25,
+      "feedsTo": "r16-13",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-26",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 55.05,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 26,
+      "feedsTo": "r16-13",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-27",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 60.9,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 27,
+      "feedsTo": "r16-14",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-28",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 66.75,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 28,
+      "feedsTo": "r16-14",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-29",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 72.6,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 29,
+      "feedsTo": "r16-15",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-30",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 78.45,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 30,
+      "feedsTo": "r16-15",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-31",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 84.3,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 31,
+      "feedsTo": "r16-16",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r32-32",
+      "round": "R32",
+      "side": "right",
+      "x": 84.2,
+      "y": 90.15,
+      "w": 13.8,
+      "h": 4.9,
+      "seedIndex": 32,
+      "feedsTo": "r16-16",
+      "geometrySource": "captured-from-middle-layer-png"
+    },
+    {
+      "slotId": "r16-01",
+      "round": "R16",
+      "side": "left",
+      "x": 19.0,
+      "y": 5.4,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-01",
+        "r32-02"
+      ],
+      "feedsTo": "qf-01"
+    },
+    {
+      "slotId": "r16-02",
+      "round": "R16",
+      "side": "left",
+      "x": 19.0,
+      "y": 17.1,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-03",
+        "r32-04"
+      ],
+      "feedsTo": "qf-01"
+    },
+    {
+      "slotId": "r16-03",
+      "round": "R16",
+      "side": "left",
+      "x": 19.0,
+      "y": 28.799999999999997,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-05",
+        "r32-06"
+      ],
+      "feedsTo": "qf-02"
+    },
+    {
+      "slotId": "r16-04",
+      "round": "R16",
+      "side": "left",
+      "x": 19.0,
+      "y": 40.49999999999999,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-07",
+        "r32-08"
+      ],
+      "feedsTo": "qf-02"
+    },
+    {
+      "slotId": "r16-05",
+      "round": "R16",
+      "side": "left",
+      "x": 19.0,
+      "y": 52.199999999999996,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-09",
+        "r32-10"
+      ],
+      "feedsTo": "qf-03"
+    },
+    {
+      "slotId": "r16-06",
+      "round": "R16",
+      "side": "left",
+      "x": 19.0,
+      "y": 63.9,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-11",
+        "r32-12"
+      ],
+      "feedsTo": "qf-03"
+    },
+    {
+      "slotId": "r16-07",
+      "round": "R16",
+      "side": "left",
+      "x": 19.0,
+      "y": 75.6,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-13",
+        "r32-14"
+      ],
+      "feedsTo": "qf-04"
+    },
+    {
+      "slotId": "r16-08",
+      "round": "R16",
+      "side": "left",
+      "x": 19.0,
+      "y": 87.3,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-15",
+        "r32-16"
+      ],
+      "feedsTo": "qf-04"
+    },
+    {
+      "slotId": "r16-09",
+      "round": "R16",
+      "side": "right",
+      "x": 70.0,
+      "y": 5.4,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-17",
+        "r32-18"
+      ],
+      "feedsTo": "qf-05"
+    },
+    {
+      "slotId": "r16-10",
+      "round": "R16",
+      "side": "right",
+      "x": 70.0,
+      "y": 17.1,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-19",
+        "r32-20"
+      ],
+      "feedsTo": "qf-05"
+    },
+    {
+      "slotId": "r16-11",
+      "round": "R16",
+      "side": "right",
+      "x": 70.0,
+      "y": 28.799999999999997,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-21",
+        "r32-22"
+      ],
+      "feedsTo": "qf-06"
+    },
+    {
+      "slotId": "r16-12",
+      "round": "R16",
+      "side": "right",
+      "x": 70.0,
+      "y": 40.49999999999999,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-23",
+        "r32-24"
+      ],
+      "feedsTo": "qf-06"
+    },
+    {
+      "slotId": "r16-13",
+      "round": "R16",
+      "side": "right",
+      "x": 70.0,
+      "y": 52.199999999999996,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-25",
+        "r32-26"
+      ],
+      "feedsTo": "qf-07"
+    },
+    {
+      "slotId": "r16-14",
+      "round": "R16",
+      "side": "right",
+      "x": 70.0,
+      "y": 63.9,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-27",
+        "r32-28"
+      ],
+      "feedsTo": "qf-07"
+    },
+    {
+      "slotId": "r16-15",
+      "round": "R16",
+      "side": "right",
+      "x": 70.0,
+      "y": 75.6,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-29",
+        "r32-30"
+      ],
+      "feedsTo": "qf-08"
+    },
+    {
+      "slotId": "r16-16",
+      "round": "R16",
+      "side": "right",
+      "x": 70.0,
+      "y": 87.3,
+      "w": 11.0,
+      "h": 4.5,
+      "sourceSlots": [
+        "r32-31",
+        "r32-32"
+      ],
+      "feedsTo": "qf-08"
+    }
+  ]
+}

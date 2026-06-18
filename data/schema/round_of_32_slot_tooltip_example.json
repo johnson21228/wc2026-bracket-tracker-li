@@ -1,0 +1,10 @@
+{
+  "slotId": "R32-M1-A",
+  "matchId": "R32-M1",
+  "side": "A",
+  "label": "Winner Group A",
+  "tooltip": "This slot is assigned to the winner of Group A after group-stage results are official.",
+  "team": null,
+  "status": "pending",
+  "source": "official_bracket_rule_pending_verification"
+}

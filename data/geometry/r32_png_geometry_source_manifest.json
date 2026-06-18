@@ -1,0 +1,26 @@
+{
+  "version": "wc2026-r32-png-geometry-source-v1",
+  "status": "current_geometry_authority",
+  "geometryAuthority": "image",
+  "sourceAssets": {
+    "transparentGeometryPng": "site/assets/playfield/r32_bracket_geometry_overlay.png",
+    "visibleReferenceTemplate": "site/assets/playfield/r32_bracket_game_board_template.jpeg"
+  },
+  "coordinateCaptureNext": "site/data/game2_bracket_geometry_slots.json",
+  "rule": "The current middle-layer PNG is the geometry authority. Slot JSON must be captured from this PNG. Generated SVG/PNG from numeric truth is future-state only and must not replace this authority until explicitly promoted.",
+  "imageDimensions": {
+    "transparentGeometryPng": {
+      "width": 1536,
+      "height": 1024
+    },
+    "visibleReferenceTemplate": {
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  "notes": [
+    "Use the transparent PNG as the shared middle layer for Game 1 and Game 2.",
+    "Use the high-contrast JPEG as the visual measuring reference.",
+    "Do not tune Game 2 bracket items against guessed layout values; tune against slots captured from this image authority."
+  ]
+}

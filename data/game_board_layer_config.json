@@ -1,0 +1,16 @@
+{
+  "version": "game-board-layer-config-v1",
+  "boardTemplateAsset": "assets/playfield/r32_game_board_hd.jpeg",
+  "defaultBackgroundTeamAbbr": "USA",
+  "intendedUses": [
+    "Game 1: player predicts the Round of 32 by official slot",
+    "Game 2: player receives the official Round of 32 and picks winners through champion"
+  ],
+  "layerModel": [
+    "bottom team flag/background layer",
+    "gradient/readability wash",
+    "bracket game board template layer",
+    "runtime text/title/banner layer",
+    "runtime hotspots and pick display layer"
+  ]
+}

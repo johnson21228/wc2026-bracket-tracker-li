@@ -1,0 +1,488 @@
+{
+  "version": "game2-r32-random-seed-v001",
+  "game": "game2_bracket_from_round_of_32_seed",
+  "authority": "random placeholder generated for UI development; not official and not user picks",
+  "replaceWith": "site/data/game_1_round_of_32_picks.json or exported user picks when available",
+  "slots": [
+    {
+      "slotId": "R32-L-M1A",
+      "match": 73,
+      "slotRule": "2A",
+      "slotRuleLong": "Runner-up Group A",
+      "team": {
+        "name": "South Africa",
+        "display": "South Africa",
+        "abbr": "RSA",
+        "flag": "🇿🇦",
+        "group": "A"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M1B",
+      "match": 73,
+      "slotRule": "2B",
+      "slotRuleLong": "Runner-up Group B",
+      "team": {
+        "name": "Bosnia-Herzegovina",
+        "display": "Bosnia-Herzegovina",
+        "abbr": "BIH",
+        "flag": "🇧🇦",
+        "group": "B"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M2A",
+      "match": 75,
+      "slotRule": "1F",
+      "slotRuleLong": "Winner Group F",
+      "team": {
+        "name": "Netherlands",
+        "display": "Netherlands",
+        "abbr": "NED",
+        "flag": "🇳🇱",
+        "group": "F"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M2B",
+      "match": 75,
+      "slotRule": "2C",
+      "slotRuleLong": "Runner-up Group C",
+      "team": {
+        "name": "Morocco",
+        "display": "Morocco",
+        "abbr": "MAR",
+        "flag": "🇲🇦",
+        "group": "C"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M3A",
+      "match": 74,
+      "slotRule": "1E",
+      "slotRuleLong": "Winner Group E",
+      "team": {
+        "name": "Germany",
+        "display": "Germany",
+        "abbr": "GER",
+        "flag": "🇩🇪",
+        "group": "E"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M3B",
+      "match": 74,
+      "slotRule": "3 A/B/C/D/F",
+      "slotRuleLong": "Best third-place team from Groups A/B/C/D/F",
+      "team": {
+        "name": "Korea Republic",
+        "display": "South Korea",
+        "abbr": "KOR",
+        "flag": "🇰🇷",
+        "group": "A"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M4A",
+      "match": 77,
+      "slotRule": "1I",
+      "slotRuleLong": "Winner Group I",
+      "team": {
+        "name": "France",
+        "display": "France",
+        "abbr": "FRA",
+        "flag": "🇫🇷",
+        "group": "I"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M4B",
+      "match": 77,
+      "slotRule": "3 C/D/F/G/H",
+      "slotRuleLong": "Best third-place team from Groups C/D/F/G/H",
+      "team": {
+        "name": "Haiti",
+        "display": "Haiti",
+        "abbr": "HAI",
+        "flag": "🇭🇹",
+        "group": "C"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M5A",
+      "match": 76,
+      "slotRule": "1C",
+      "slotRuleLong": "Winner Group C",
+      "team": {
+        "name": "Brazil",
+        "display": "Brazil",
+        "abbr": "BRA",
+        "flag": "🇧🇷",
+        "group": "C"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M5B",
+      "match": 76,
+      "slotRule": "2F",
+      "slotRuleLong": "Runner-up Group F",
+      "team": {
+        "name": "Japan",
+        "display": "Japan",
+        "abbr": "JPN",
+        "flag": "🇯🇵",
+        "group": "F"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M6A",
+      "match": 78,
+      "slotRule": "2E",
+      "slotRuleLong": "Runner-up Group E",
+      "team": {
+        "name": "Curaçao",
+        "display": "Curacao",
+        "abbr": "CUW",
+        "flag": "🇨🇼",
+        "group": "E"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M6B",
+      "match": 78,
+      "slotRule": "2I",
+      "slotRuleLong": "Runner-up Group I",
+      "team": {
+        "name": "Senegal",
+        "display": "Senegal",
+        "abbr": "SEN",
+        "flag": "🇸🇳",
+        "group": "I"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M7A",
+      "match": 79,
+      "slotRule": "1A",
+      "slotRuleLong": "Winner Group A",
+      "team": {
+        "name": "Mexico",
+        "display": "Mexico",
+        "abbr": "MEX",
+        "flag": "🇲🇽",
+        "group": "A"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M7B",
+      "match": 79,
+      "slotRule": "3 C/E/F/H/I",
+      "slotRuleLong": "Best third-place team from Groups C/E/F/H/I",
+      "team": {
+        "name": "Scotland",
+        "display": "Scotland",
+        "abbr": "SCO",
+        "flag": "🏴",
+        "group": "C"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M8A",
+      "match": 80,
+      "slotRule": "1L",
+      "slotRuleLong": "Winner Group L",
+      "team": {
+        "name": "England",
+        "display": "England",
+        "abbr": "ENG",
+        "flag": "🏴",
+        "group": "L"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-L-M8B",
+      "match": 80,
+      "slotRule": "3 E/H/I/J/K",
+      "slotRuleLong": "Best third-place team from Groups E/H/I/J/K",
+      "team": {
+        "name": "Côte d’Ivoire",
+        "display": "Ivory Coast",
+        "abbr": "CIV",
+        "flag": "🇨🇮",
+        "group": "E"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M1A",
+      "match": 83,
+      "slotRule": "2K",
+      "slotRuleLong": "Runner-up Group K",
+      "team": {
+        "name": "Congo DR",
+        "display": "DR Congo",
+        "abbr": "COD",
+        "flag": "🇨🇩",
+        "group": "K"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M1B",
+      "match": 83,
+      "slotRule": "2L",
+      "slotRuleLong": "Runner-up Group L",
+      "team": {
+        "name": "Croatia",
+        "display": "Croatia",
+        "abbr": "CRO",
+        "flag": "🇭🇷",
+        "group": "L"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M2A",
+      "match": 84,
+      "slotRule": "1H",
+      "slotRuleLong": "Winner Group H",
+      "team": {
+        "name": "Spain",
+        "display": "Spain",
+        "abbr": "ESP",
+        "flag": "🇪🇸",
+        "group": "H"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M2B",
+      "match": 84,
+      "slotRule": "2J",
+      "slotRuleLong": "Runner-up Group J",
+      "team": {
+        "name": "Algeria",
+        "display": "Algeria",
+        "abbr": "ALG",
+        "flag": "🇩🇿",
+        "group": "J"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M3A",
+      "match": 81,
+      "slotRule": "1D",
+      "slotRuleLong": "Winner Group D",
+      "team": {
+        "name": "USA",
+        "display": "USA",
+        "abbr": "USA",
+        "flag": "🇺🇸",
+        "group": "D"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M3B",
+      "match": 81,
+      "slotRule": "3 B/E/F/I/J",
+      "slotRuleLong": "Best third-place team from Groups B/E/F/I/J",
+      "team": {
+        "name": "Qatar",
+        "display": "Qatar",
+        "abbr": "QAT",
+        "flag": "🇶🇦",
+        "group": "B"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M4A",
+      "match": 82,
+      "slotRule": "1G",
+      "slotRuleLong": "Winner Group G",
+      "team": {
+        "name": "Belgium",
+        "display": "Belgium",
+        "abbr": "BEL",
+        "flag": "🇧🇪",
+        "group": "G"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M4B",
+      "match": 82,
+      "slotRule": "3 A/E/H/I/J",
+      "slotRuleLong": "Best third-place team from Groups A/E/H/I/J",
+      "team": {
+        "name": "Czechia",
+        "display": "Czechia",
+        "abbr": "CZE",
+        "flag": "🇨🇿",
+        "group": "A"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M5A",
+      "match": 86,
+      "slotRule": "1J",
+      "slotRuleLong": "Winner Group J",
+      "team": {
+        "name": "Argentina",
+        "display": "Argentina",
+        "abbr": "ARG",
+        "flag": "🇦🇷",
+        "group": "J"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M5B",
+      "match": 86,
+      "slotRule": "2H",
+      "slotRuleLong": "Runner-up Group H",
+      "team": {
+        "name": "Cabo Verde",
+        "display": "Cape Verde",
+        "abbr": "CPV",
+        "flag": "🇨🇻",
+        "group": "H"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M6A",
+      "match": 88,
+      "slotRule": "2D",
+      "slotRuleLong": "Runner-up Group D",
+      "team": {
+        "name": "Paraguay",
+        "display": "Paraguay",
+        "abbr": "PAR",
+        "flag": "🇵🇾",
+        "group": "D"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M6B",
+      "match": 88,
+      "slotRule": "2G",
+      "slotRuleLong": "Runner-up Group G",
+      "team": {
+        "name": "Egypt",
+        "display": "Egypt",
+        "abbr": "EGY",
+        "flag": "🇪🇬",
+        "group": "G"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M7A",
+      "match": 85,
+      "slotRule": "1B",
+      "slotRuleLong": "Winner Group B",
+      "team": {
+        "name": "Canada",
+        "display": "Canada",
+        "abbr": "CAN",
+        "flag": "🇨🇦",
+        "group": "B"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M7B",
+      "match": 85,
+      "slotRule": "3 E/F/G/I/J",
+      "slotRuleLong": "Best third-place team from Groups E/F/G/I/J",
+      "team": {
+        "name": "Ecuador",
+        "display": "Ecuador",
+        "abbr": "ECU",
+        "flag": "🇪🇨",
+        "group": "E"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M8A",
+      "match": 87,
+      "slotRule": "1K",
+      "slotRuleLong": "Winner Group K",
+      "team": {
+        "name": "Portugal",
+        "display": "Portugal",
+        "abbr": "POR",
+        "flag": "🇵🇹",
+        "group": "K"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    },
+    {
+      "slotId": "R32-R-M8B",
+      "match": 87,
+      "slotRule": "3 D/E/I/J/L",
+      "slotRuleLong": "Best third-place team from Groups D/E/I/J/L",
+      "team": {
+        "name": "Australia",
+        "display": "Australia",
+        "abbr": "AUS",
+        "flag": "🇦🇺",
+        "group": "D"
+      },
+      "source": "random_seed_placeholder",
+      "notes": "Placeholder data for Game 2 site build; replace with user Game 1 picks later."
+    }
+  ]
+}

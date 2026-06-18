@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "authority": "current-runtime-board-truth",
+  "canonicalBoardImage": "site/assets/playfield/r32_bracket_geometry_overlay.png",
+  "imageKind": "32-bit anti-aliased RGBA PNG",
+  "widthPx": 1536,
+  "heightPx": 1024,
+  "logicalUnit": "one native PNG pixel",
+  "sharedBy": ["game1", "game2"],
+  "rules": [
+    "Game 1 and Game 2 share this board image.",
+    "All logical items must resolve to pixel-defined regions on this board.",
+    "The browser may scale the complete board plane only as one unit.",
+    "JPEG references are not geometry truth.",
+    "Generated geometry images are not truth until pixel-native geometry has been captured and accepted."
+  ]
+}

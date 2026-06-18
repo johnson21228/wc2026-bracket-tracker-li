@@ -1,0 +1,454 @@
+{
+  "version": "game2-r32-seed-v1",
+  "source": "demo seed generated from current site team/group data shape; replace with official R32 when known",
+  "slots": [
+    {
+      "slot": "1A",
+      "seedIndex": 1,
+      "team": {
+        "abbr": "MEX",
+        "name": "Mexico",
+        "flag": "🇲🇽",
+        "group": "A"
+      },
+      "bracketItemId": "r32-01",
+      "round": "R32",
+      "boardIndex": 1,
+      "slotId": "r32-01"
+    },
+    {
+      "slot": "2A",
+      "seedIndex": 2,
+      "team": {
+        "abbr": "KOR",
+        "name": "South Korea",
+        "flag": "🇰🇷",
+        "group": "A"
+      },
+      "bracketItemId": "r32-02",
+      "round": "R32",
+      "boardIndex": 2,
+      "slotId": "r32-02"
+    },
+    {
+      "slot": "1B",
+      "seedIndex": 3,
+      "team": {
+        "abbr": "CAN",
+        "name": "Canada",
+        "flag": "🇨🇦",
+        "group": "B"
+      },
+      "bracketItemId": "r32-03",
+      "round": "R32",
+      "boardIndex": 3,
+      "slotId": "r32-03"
+    },
+    {
+      "slot": "2B",
+      "seedIndex": 4,
+      "team": {
+        "abbr": "SUI",
+        "name": "Switzerland",
+        "flag": "🇨🇭",
+        "group": "B"
+      },
+      "bracketItemId": "r32-04",
+      "round": "R32",
+      "boardIndex": 4,
+      "slotId": "r32-04"
+    },
+    {
+      "slot": "1C",
+      "seedIndex": 5,
+      "team": {
+        "abbr": "BRA",
+        "name": "Brazil",
+        "flag": "🇧🇷",
+        "group": "C"
+      },
+      "bracketItemId": "r32-05",
+      "round": "R32",
+      "boardIndex": 5,
+      "slotId": "r32-05"
+    },
+    {
+      "slot": "2C",
+      "seedIndex": 6,
+      "team": {
+        "abbr": "SCO",
+        "name": "Scotland",
+        "flag": "🏴",
+        "group": "C"
+      },
+      "bracketItemId": "r32-06",
+      "round": "R32",
+      "boardIndex": 6,
+      "slotId": "r32-06"
+    },
+    {
+      "slot": "1D",
+      "seedIndex": 7,
+      "team": {
+        "abbr": "USA",
+        "name": "United States",
+        "flag": "🇺🇸",
+        "group": "D"
+      },
+      "bracketItemId": "r32-07",
+      "round": "R32",
+      "boardIndex": 7,
+      "slotId": "r32-07"
+    },
+    {
+      "slot": "2D",
+      "seedIndex": 8,
+      "team": {
+        "abbr": "AUS",
+        "name": "Australia",
+        "flag": "🇦🇺",
+        "group": "D"
+      },
+      "bracketItemId": "r32-08",
+      "round": "R32",
+      "boardIndex": 8,
+      "slotId": "r32-08"
+    },
+    {
+      "slot": "1E",
+      "seedIndex": 9,
+      "team": {
+        "abbr": "GER",
+        "name": "Germany",
+        "flag": "🇩🇪",
+        "group": "E"
+      },
+      "bracketItemId": "r32-09",
+      "round": "R32",
+      "boardIndex": 9,
+      "slotId": "r32-09"
+    },
+    {
+      "slot": "2E",
+      "seedIndex": 10,
+      "team": {
+        "abbr": "CIV",
+        "name": "Ivory Coast",
+        "flag": "🇨🇮",
+        "group": "E"
+      },
+      "bracketItemId": "r32-10",
+      "round": "R32",
+      "boardIndex": 10,
+      "slotId": "r32-10"
+    },
+    {
+      "slot": "1F",
+      "seedIndex": 11,
+      "team": {
+        "abbr": "SWE",
+        "name": "Sweden",
+        "flag": "🇸🇪",
+        "group": "F"
+      },
+      "bracketItemId": "r32-11",
+      "round": "R32",
+      "boardIndex": 11,
+      "slotId": "r32-11"
+    },
+    {
+      "slot": "2F",
+      "seedIndex": 12,
+      "team": {
+        "abbr": "NED",
+        "name": "Netherlands",
+        "flag": "🇳🇱",
+        "group": "F"
+      },
+      "bracketItemId": "r32-12",
+      "round": "R32",
+      "boardIndex": 12,
+      "slotId": "r32-12"
+    },
+    {
+      "slot": "1G",
+      "seedIndex": 13,
+      "team": {
+        "abbr": "BEL",
+        "name": "Belgium",
+        "flag": "🇧🇪",
+        "group": "G"
+      },
+      "bracketItemId": "r32-13",
+      "round": "R32",
+      "boardIndex": 13,
+      "slotId": "r32-13"
+    },
+    {
+      "slot": "2G",
+      "seedIndex": 14,
+      "team": {
+        "abbr": "EGY",
+        "name": "Egypt",
+        "flag": "🇪🇬",
+        "group": "G"
+      },
+      "bracketItemId": "r32-14",
+      "round": "R32",
+      "boardIndex": 14,
+      "slotId": "r32-14"
+    },
+    {
+      "slot": "1H",
+      "seedIndex": 15,
+      "team": {
+        "abbr": "KSA",
+        "name": "Saudi Arabia",
+        "flag": "🇸🇦",
+        "group": "H"
+      },
+      "bracketItemId": "r32-15",
+      "round": "R32",
+      "boardIndex": 15,
+      "slotId": "r32-15"
+    },
+    {
+      "slot": "2H",
+      "seedIndex": 16,
+      "team": {
+        "abbr": "ESP",
+        "name": "Spain",
+        "flag": "🇪🇸",
+        "group": "H"
+      },
+      "bracketItemId": "r32-16",
+      "round": "R32",
+      "boardIndex": 16,
+      "slotId": "r32-16"
+    },
+    {
+      "slot": "1I",
+      "seedIndex": 17,
+      "team": {
+        "abbr": "FRA",
+        "name": "France",
+        "flag": "🇫🇷",
+        "group": "I"
+      },
+      "bracketItemId": "r32-17",
+      "round": "R32",
+      "boardIndex": 17,
+      "slotId": "r32-17"
+    },
+    {
+      "slot": "2I",
+      "seedIndex": 18,
+      "team": {
+        "abbr": "SEN",
+        "name": "Senegal",
+        "flag": "🇸🇳",
+        "group": "I"
+      },
+      "bracketItemId": "r32-18",
+      "round": "R32",
+      "boardIndex": 18,
+      "slotId": "r32-18"
+    },
+    {
+      "slot": "1J",
+      "seedIndex": 19,
+      "team": {
+        "abbr": "ARG",
+        "name": "Argentina",
+        "flag": "🇦🇷",
+        "group": "J"
+      },
+      "bracketItemId": "r32-19",
+      "round": "R32",
+      "boardIndex": 19,
+      "slotId": "r32-19"
+    },
+    {
+      "slot": "2J",
+      "seedIndex": 20,
+      "team": {
+        "abbr": "AUT",
+        "name": "Austria",
+        "flag": "🇦🇹",
+        "group": "J"
+      },
+      "bracketItemId": "r32-20",
+      "round": "R32",
+      "boardIndex": 20,
+      "slotId": "r32-20"
+    },
+    {
+      "slot": "1K",
+      "seedIndex": 21,
+      "team": {
+        "abbr": "POR",
+        "name": "Portugal",
+        "flag": "🇵🇹",
+        "group": "K"
+      },
+      "bracketItemId": "r32-21",
+      "round": "R32",
+      "boardIndex": 21,
+      "slotId": "r32-21"
+    },
+    {
+      "slot": "2K",
+      "seedIndex": 22,
+      "team": {
+        "abbr": "COL",
+        "name": "Colombia",
+        "flag": "🇨🇴",
+        "group": "K"
+      },
+      "bracketItemId": "r32-22",
+      "round": "R32",
+      "boardIndex": 22,
+      "slotId": "r32-22"
+    },
+    {
+      "slot": "1L",
+      "seedIndex": 23,
+      "team": {
+        "abbr": "ENG",
+        "name": "England",
+        "flag": "🏴",
+        "group": "L"
+      },
+      "bracketItemId": "r32-23",
+      "round": "R32",
+      "boardIndex": 23,
+      "slotId": "r32-23"
+    },
+    {
+      "slot": "2L",
+      "seedIndex": 24,
+      "team": {
+        "abbr": "CRO",
+        "name": "Croatia",
+        "flag": "🇭🇷",
+        "group": "L"
+      },
+      "bracketItemId": "r32-24",
+      "round": "R32",
+      "boardIndex": 24,
+      "slotId": "r32-24"
+    },
+    {
+      "slot": "3A",
+      "seedIndex": 25,
+      "team": {
+        "abbr": "CZE",
+        "name": "Czechia",
+        "flag": "🇨🇿",
+        "group": "A"
+      },
+      "bracketItemId": "r32-25",
+      "round": "R32",
+      "boardIndex": 25,
+      "slotId": "r32-25"
+    },
+    {
+      "slot": "3B",
+      "seedIndex": 26,
+      "team": {
+        "abbr": "BIH",
+        "name": "Bosnia and Herzegovina",
+        "flag": "🇧🇦",
+        "group": "B"
+      },
+      "bracketItemId": "r32-26",
+      "round": "R32",
+      "boardIndex": 26,
+      "slotId": "r32-26"
+    },
+    {
+      "slot": "3C",
+      "seedIndex": 27,
+      "team": {
+        "abbr": "MAR",
+        "name": "Morocco",
+        "flag": "🇲🇦",
+        "group": "C"
+      },
+      "bracketItemId": "r32-27",
+      "round": "R32",
+      "boardIndex": 27,
+      "slotId": "r32-27"
+    },
+    {
+      "slot": "3D",
+      "seedIndex": 28,
+      "team": {
+        "abbr": "TUR",
+        "name": "Turkey",
+        "flag": "🇹🇷",
+        "group": "D"
+      },
+      "bracketItemId": "r32-28",
+      "round": "R32",
+      "boardIndex": 28,
+      "slotId": "r32-28"
+    },
+    {
+      "slot": "3E",
+      "seedIndex": 29,
+      "team": {
+        "abbr": "ECU",
+        "name": "Ecuador",
+        "flag": "🇪🇨",
+        "group": "E"
+      },
+      "bracketItemId": "r32-29",
+      "round": "R32",
+      "boardIndex": 29,
+      "slotId": "r32-29"
+    },
+    {
+      "slot": "3F",
+      "seedIndex": 30,
+      "team": {
+        "abbr": "JPN",
+        "name": "Japan",
+        "flag": "🇯🇵",
+        "group": "F"
+      },
+      "bracketItemId": "r32-30",
+      "round": "R32",
+      "boardIndex": 30,
+      "slotId": "r32-30"
+    },
+    {
+      "slot": "3G",
+      "seedIndex": 31,
+      "team": {
+        "abbr": "IRI",
+        "name": "Iran",
+        "flag": "🇮🇷",
+        "group": "G"
+      },
+      "bracketItemId": "r32-31",
+      "round": "R32",
+      "boardIndex": 31,
+      "slotId": "r32-31"
+    },
+    {
+      "slot": "3H",
+      "seedIndex": 32,
+      "team": {
+        "abbr": "URU",
+        "name": "Uruguay",
+        "flag": "🇺🇾",
+        "group": "H"
+      },
+      "bracketItemId": "r32-32",
+      "round": "R32",
+      "boardIndex": 32,
+      "slotId": "r32-32"
+    }
+  ]
+}

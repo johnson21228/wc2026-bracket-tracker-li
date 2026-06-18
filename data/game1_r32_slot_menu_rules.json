@@ -1,0 +1,1003 @@
+{
+  "version": "game1-r32-slot-menu-mapping-v001",
+  "board": {
+    "widthPx": 1536,
+    "heightPx": 1024,
+    "sourceImage": "site/assets/playfield/r32_bracket_geometry_overlay.png"
+  },
+  "authority": "existing R32 slot rules restored for Game 1 menu filtering; pending official verification",
+  "slots": [
+    {
+      "position": 1,
+      "logicalId": "game1.r32.slot01",
+      "slotId": "R32-L-M1A",
+      "round": "R32",
+      "side": "left",
+      "row": 1,
+      "slotRule": "2A",
+      "slotRuleLong": "Runner-up Group A",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "A"
+      ],
+      "menuTitle": "Runner-up Group A",
+      "boundsPx": {
+        "x": 38,
+        "y": 142,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 142,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 2,
+      "logicalId": "game1.r32.slot02",
+      "slotId": "R32-L-M1B",
+      "round": "R32",
+      "side": "left",
+      "row": 2,
+      "slotRule": "2B",
+      "slotRuleLong": "Runner-up Group B",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "B"
+      ],
+      "menuTitle": "Runner-up Group B",
+      "boundsPx": {
+        "x": 38,
+        "y": 189,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 189,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 3,
+      "logicalId": "game1.r32.slot03",
+      "slotId": "R32-L-M2A",
+      "round": "R32",
+      "side": "left",
+      "row": 3,
+      "slotRule": "1F",
+      "slotRuleLong": "Winner Group F",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "F"
+      ],
+      "menuTitle": "Winner Group F",
+      "boundsPx": {
+        "x": 38,
+        "y": 236,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 236,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 4,
+      "logicalId": "game1.r32.slot04",
+      "slotId": "R32-L-M2B",
+      "round": "R32",
+      "side": "left",
+      "row": 4,
+      "slotRule": "2C",
+      "slotRuleLong": "Runner-up Group C",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "C"
+      ],
+      "menuTitle": "Runner-up Group C",
+      "boundsPx": {
+        "x": 38,
+        "y": 283,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 283,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 5,
+      "logicalId": "game1.r32.slot05",
+      "slotId": "R32-L-M3A",
+      "round": "R32",
+      "side": "left",
+      "row": 5,
+      "slotRule": "1E",
+      "slotRuleLong": "Winner Group E",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "E"
+      ],
+      "menuTitle": "Winner Group E",
+      "boundsPx": {
+        "x": 38,
+        "y": 330,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 330,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 6,
+      "logicalId": "game1.r32.slot06",
+      "slotId": "R32-L-M3B",
+      "round": "R32",
+      "side": "left",
+      "row": 6,
+      "slotRule": "3 A/B/C/D/F",
+      "slotRuleLong": "Best third-place team from Groups A/B/C/D/F",
+      "qualifierKind": "third_place_pool",
+      "qualifiedPlace": 3,
+      "eligibleGroups": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ],
+      "menuTitle": "Third-place pool: A/B/C/D/F",
+      "boundsPx": {
+        "x": 38,
+        "y": 377,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 377,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 7,
+      "logicalId": "game1.r32.slot07",
+      "slotId": "R32-L-M4A",
+      "round": "R32",
+      "side": "left",
+      "row": 7,
+      "slotRule": "1I",
+      "slotRuleLong": "Winner Group I",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "I"
+      ],
+      "menuTitle": "Winner Group I",
+      "boundsPx": {
+        "x": 38,
+        "y": 424,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 424,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 8,
+      "logicalId": "game1.r32.slot08",
+      "slotId": "R32-L-M4B",
+      "round": "R32",
+      "side": "left",
+      "row": 8,
+      "slotRule": "3 C/D/F/G/H",
+      "slotRuleLong": "Best third-place team from Groups C/D/F/G/H",
+      "qualifierKind": "third_place_pool",
+      "qualifiedPlace": 3,
+      "eligibleGroups": [
+        "C",
+        "D",
+        "F",
+        "G",
+        "H"
+      ],
+      "menuTitle": "Third-place pool: C/D/F/G/H",
+      "boundsPx": {
+        "x": 38,
+        "y": 471,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 471,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 9,
+      "logicalId": "game1.r32.slot09",
+      "slotId": "R32-L-M5A",
+      "round": "R32",
+      "side": "left",
+      "row": 9,
+      "slotRule": "1C",
+      "slotRuleLong": "Winner Group C",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "C"
+      ],
+      "menuTitle": "Winner Group C",
+      "boundsPx": {
+        "x": 38,
+        "y": 518,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 518,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 10,
+      "logicalId": "game1.r32.slot10",
+      "slotId": "R32-L-M5B",
+      "round": "R32",
+      "side": "left",
+      "row": 10,
+      "slotRule": "2F",
+      "slotRuleLong": "Runner-up Group F",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "F"
+      ],
+      "menuTitle": "Runner-up Group F",
+      "boundsPx": {
+        "x": 38,
+        "y": 565,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 565,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 11,
+      "logicalId": "game1.r32.slot11",
+      "slotId": "R32-L-M6A",
+      "round": "R32",
+      "side": "left",
+      "row": 11,
+      "slotRule": "2E",
+      "slotRuleLong": "Runner-up Group E",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "E"
+      ],
+      "menuTitle": "Runner-up Group E",
+      "boundsPx": {
+        "x": 38,
+        "y": 612,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 612,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 12,
+      "logicalId": "game1.r32.slot12",
+      "slotId": "R32-L-M6B",
+      "round": "R32",
+      "side": "left",
+      "row": 12,
+      "slotRule": "2I",
+      "slotRuleLong": "Runner-up Group I",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "I"
+      ],
+      "menuTitle": "Runner-up Group I",
+      "boundsPx": {
+        "x": 38,
+        "y": 659,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 659,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 13,
+      "logicalId": "game1.r32.slot13",
+      "slotId": "R32-L-M7A",
+      "round": "R32",
+      "side": "left",
+      "row": 13,
+      "slotRule": "1A",
+      "slotRuleLong": "Winner Group A",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "A"
+      ],
+      "menuTitle": "Winner Group A",
+      "boundsPx": {
+        "x": 38,
+        "y": 706,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 706,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 14,
+      "logicalId": "game1.r32.slot14",
+      "slotId": "R32-L-M7B",
+      "round": "R32",
+      "side": "left",
+      "row": 14,
+      "slotRule": "3 C/E/F/H/I",
+      "slotRuleLong": "Best third-place team from Groups C/E/F/H/I",
+      "qualifierKind": "third_place_pool",
+      "qualifiedPlace": 3,
+      "eligibleGroups": [
+        "C",
+        "E",
+        "F",
+        "H",
+        "I"
+      ],
+      "menuTitle": "Third-place pool: C/E/F/H/I",
+      "boundsPx": {
+        "x": 38,
+        "y": 753,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 753,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 15,
+      "logicalId": "game1.r32.slot15",
+      "slotId": "R32-L-M8A",
+      "round": "R32",
+      "side": "left",
+      "row": 15,
+      "slotRule": "1L",
+      "slotRuleLong": "Winner Group L",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "L"
+      ],
+      "menuTitle": "Winner Group L",
+      "boundsPx": {
+        "x": 38,
+        "y": 800,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 800,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 16,
+      "logicalId": "game1.r32.slot16",
+      "slotId": "R32-L-M8B",
+      "round": "R32",
+      "side": "left",
+      "row": 16,
+      "slotRule": "3 E/H/I/J/K",
+      "slotRuleLong": "Best third-place team from Groups E/H/I/J/K",
+      "qualifierKind": "third_place_pool",
+      "qualifiedPlace": 3,
+      "eligibleGroups": [
+        "E",
+        "H",
+        "I",
+        "J",
+        "K"
+      ],
+      "menuTitle": "Third-place pool: E/H/I/J/K",
+      "boundsPx": {
+        "x": 38,
+        "y": 847,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 38,
+        "y": 847,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 17,
+      "logicalId": "game1.r32.slot17",
+      "slotId": "R32-R-M1A",
+      "round": "R32",
+      "side": "right",
+      "row": 1,
+      "slotRule": "2K",
+      "slotRuleLong": "Runner-up Group K",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "K"
+      ],
+      "menuTitle": "Runner-up Group K",
+      "boundsPx": {
+        "x": 1350,
+        "y": 142,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 142,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 18,
+      "logicalId": "game1.r32.slot18",
+      "slotId": "R32-R-M1B",
+      "round": "R32",
+      "side": "right",
+      "row": 2,
+      "slotRule": "2L",
+      "slotRuleLong": "Runner-up Group L",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "L"
+      ],
+      "menuTitle": "Runner-up Group L",
+      "boundsPx": {
+        "x": 1350,
+        "y": 189,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 189,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 19,
+      "logicalId": "game1.r32.slot19",
+      "slotId": "R32-R-M2A",
+      "round": "R32",
+      "side": "right",
+      "row": 3,
+      "slotRule": "1H",
+      "slotRuleLong": "Winner Group H",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "H"
+      ],
+      "menuTitle": "Winner Group H",
+      "boundsPx": {
+        "x": 1350,
+        "y": 236,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 236,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 20,
+      "logicalId": "game1.r32.slot20",
+      "slotId": "R32-R-M2B",
+      "round": "R32",
+      "side": "right",
+      "row": 4,
+      "slotRule": "2J",
+      "slotRuleLong": "Runner-up Group J",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "J"
+      ],
+      "menuTitle": "Runner-up Group J",
+      "boundsPx": {
+        "x": 1350,
+        "y": 283,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 283,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 21,
+      "logicalId": "game1.r32.slot21",
+      "slotId": "R32-R-M3A",
+      "round": "R32",
+      "side": "right",
+      "row": 5,
+      "slotRule": "1D",
+      "slotRuleLong": "Winner Group D",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "D"
+      ],
+      "menuTitle": "Winner Group D",
+      "boundsPx": {
+        "x": 1350,
+        "y": 330,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 330,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 22,
+      "logicalId": "game1.r32.slot22",
+      "slotId": "R32-R-M3B",
+      "round": "R32",
+      "side": "right",
+      "row": 6,
+      "slotRule": "3 B/E/F/I/J",
+      "slotRuleLong": "Best third-place team from Groups B/E/F/I/J",
+      "qualifierKind": "third_place_pool",
+      "qualifiedPlace": 3,
+      "eligibleGroups": [
+        "B",
+        "E",
+        "F",
+        "I",
+        "J"
+      ],
+      "menuTitle": "Third-place pool: B/E/F/I/J",
+      "boundsPx": {
+        "x": 1350,
+        "y": 377,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 377,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 23,
+      "logicalId": "game1.r32.slot23",
+      "slotId": "R32-R-M4A",
+      "round": "R32",
+      "side": "right",
+      "row": 7,
+      "slotRule": "1G",
+      "slotRuleLong": "Winner Group G",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "G"
+      ],
+      "menuTitle": "Winner Group G",
+      "boundsPx": {
+        "x": 1350,
+        "y": 424,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 424,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 24,
+      "logicalId": "game1.r32.slot24",
+      "slotId": "R32-R-M4B",
+      "round": "R32",
+      "side": "right",
+      "row": 8,
+      "slotRule": "3 A/E/H/I/J",
+      "slotRuleLong": "Best third-place team from Groups A/E/H/I/J",
+      "qualifierKind": "third_place_pool",
+      "qualifiedPlace": 3,
+      "eligibleGroups": [
+        "A",
+        "E",
+        "H",
+        "I",
+        "J"
+      ],
+      "menuTitle": "Third-place pool: A/E/H/I/J",
+      "boundsPx": {
+        "x": 1350,
+        "y": 471,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 471,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 25,
+      "logicalId": "game1.r32.slot25",
+      "slotId": "R32-R-M5A",
+      "round": "R32",
+      "side": "right",
+      "row": 9,
+      "slotRule": "1J",
+      "slotRuleLong": "Winner Group J",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "J"
+      ],
+      "menuTitle": "Winner Group J",
+      "boundsPx": {
+        "x": 1350,
+        "y": 518,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 518,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 26,
+      "logicalId": "game1.r32.slot26",
+      "slotId": "R32-R-M5B",
+      "round": "R32",
+      "side": "right",
+      "row": 10,
+      "slotRule": "2H",
+      "slotRuleLong": "Runner-up Group H",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "H"
+      ],
+      "menuTitle": "Runner-up Group H",
+      "boundsPx": {
+        "x": 1350,
+        "y": 565,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 565,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 27,
+      "logicalId": "game1.r32.slot27",
+      "slotId": "R32-R-M6A",
+      "round": "R32",
+      "side": "right",
+      "row": 11,
+      "slotRule": "2D",
+      "slotRuleLong": "Runner-up Group D",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "D"
+      ],
+      "menuTitle": "Runner-up Group D",
+      "boundsPx": {
+        "x": 1350,
+        "y": 612,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 612,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 28,
+      "logicalId": "game1.r32.slot28",
+      "slotId": "R32-R-M6B",
+      "round": "R32",
+      "side": "right",
+      "row": 12,
+      "slotRule": "2G",
+      "slotRuleLong": "Runner-up Group G",
+      "qualifierKind": "group_runner_up",
+      "qualifiedPlace": 2,
+      "eligibleGroups": [
+        "G"
+      ],
+      "menuTitle": "Runner-up Group G",
+      "boundsPx": {
+        "x": 1350,
+        "y": 659,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 659,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 29,
+      "logicalId": "game1.r32.slot29",
+      "slotId": "R32-R-M7A",
+      "round": "R32",
+      "side": "right",
+      "row": 13,
+      "slotRule": "1B",
+      "slotRuleLong": "Winner Group B",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "B"
+      ],
+      "menuTitle": "Winner Group B",
+      "boundsPx": {
+        "x": 1350,
+        "y": 706,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 706,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 30,
+      "logicalId": "game1.r32.slot30",
+      "slotId": "R32-R-M7B",
+      "round": "R32",
+      "side": "right",
+      "row": 14,
+      "slotRule": "3 E/F/G/I/J",
+      "slotRuleLong": "Best third-place team from Groups E/F/G/I/J",
+      "qualifierKind": "third_place_pool",
+      "qualifiedPlace": 3,
+      "eligibleGroups": [
+        "E",
+        "F",
+        "G",
+        "I",
+        "J"
+      ],
+      "menuTitle": "Third-place pool: E/F/G/I/J",
+      "boundsPx": {
+        "x": 1350,
+        "y": 753,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 753,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 31,
+      "logicalId": "game1.r32.slot31",
+      "slotId": "R32-R-M8A",
+      "round": "R32",
+      "side": "right",
+      "row": 15,
+      "slotRule": "1K",
+      "slotRuleLong": "Winner Group K",
+      "qualifierKind": "group_winner",
+      "qualifiedPlace": 1,
+      "eligibleGroups": [
+        "K"
+      ],
+      "menuTitle": "Winner Group K",
+      "boundsPx": {
+        "x": 1350,
+        "y": 800,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 800,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    },
+    {
+      "position": 32,
+      "logicalId": "game1.r32.slot32",
+      "slotId": "R32-R-M8B",
+      "round": "R32",
+      "side": "right",
+      "row": 16,
+      "slotRule": "3 D/E/I/J/L",
+      "slotRuleLong": "Best third-place team from Groups D/E/I/J/L",
+      "qualifierKind": "third_place_pool",
+      "qualifiedPlace": 3,
+      "eligibleGroups": [
+        "D",
+        "E",
+        "I",
+        "J",
+        "L"
+      ],
+      "menuTitle": "Third-place pool: D/E/I/J/L",
+      "boundsPx": {
+        "x": 1350,
+        "y": 847,
+        "w": 148,
+        "h": 40
+      },
+      "hitRegionPx": {
+        "type": "rect",
+        "x": 1350,
+        "y": 847,
+        "w": 148,
+        "h": 40
+      },
+      "source": "derived_from_existing_game2_r32_seed_slot_rules"
+    }
+  ]
+}

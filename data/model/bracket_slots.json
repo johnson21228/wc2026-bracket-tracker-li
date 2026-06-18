@@ -1,0 +1,739 @@
+{
+  "schemaVersion": 1,
+  "tournamentId": "wc2026",
+  "source": "site/data/geometry/gameboard_manifest.json",
+  "slots": [
+    {
+      "sitePickId": "L-R32-01",
+      "displayLabel": "L-R32-01",
+      "sourceIndex": 1,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 118,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-02",
+      "displayLabel": "L-R32-02",
+      "sourceIndex": 2,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 166,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-03",
+      "displayLabel": "L-R32-03",
+      "sourceIndex": 3,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 214,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-04",
+      "displayLabel": "L-R32-04",
+      "sourceIndex": 4,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 262,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-05",
+      "displayLabel": "L-R32-05",
+      "sourceIndex": 5,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 310,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-06",
+      "displayLabel": "L-R32-06",
+      "sourceIndex": 6,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 358,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-07",
+      "displayLabel": "L-R32-07",
+      "sourceIndex": 7,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 406,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-08",
+      "displayLabel": "L-R32-08",
+      "sourceIndex": 8,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 454,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-09",
+      "displayLabel": "L-R32-09",
+      "sourceIndex": 9,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 502,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-10",
+      "displayLabel": "L-R32-10",
+      "sourceIndex": 10,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 550,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-11",
+      "displayLabel": "L-R32-11",
+      "sourceIndex": 11,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 598,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-12",
+      "displayLabel": "L-R32-12",
+      "sourceIndex": 12,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 646,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-13",
+      "displayLabel": "L-R32-13",
+      "sourceIndex": 13,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 694,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-14",
+      "displayLabel": "L-R32-14",
+      "sourceIndex": 14,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 742,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-15",
+      "displayLabel": "L-R32-15",
+      "sourceIndex": 15,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 790,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R32-16",
+      "displayLabel": "L-R32-16",
+      "sourceIndex": 16,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 38,
+        "y": 838,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-01",
+      "displayLabel": "R-R32-01",
+      "sourceIndex": 17,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 118,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-02",
+      "displayLabel": "R-R32-02",
+      "sourceIndex": 18,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 166,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-03",
+      "displayLabel": "R-R32-03",
+      "sourceIndex": 19,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 214,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-04",
+      "displayLabel": "R-R32-04",
+      "sourceIndex": 20,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 262,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-05",
+      "displayLabel": "R-R32-05",
+      "sourceIndex": 21,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 310,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-06",
+      "displayLabel": "R-R32-06",
+      "sourceIndex": 22,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 358,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-07",
+      "displayLabel": "R-R32-07",
+      "sourceIndex": 23,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 406,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-08",
+      "displayLabel": "R-R32-08",
+      "sourceIndex": 24,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 454,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-09",
+      "displayLabel": "R-R32-09",
+      "sourceIndex": 25,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 502,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-10",
+      "displayLabel": "R-R32-10",
+      "sourceIndex": 26,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 550,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-11",
+      "displayLabel": "R-R32-11",
+      "sourceIndex": 27,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 598,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-12",
+      "displayLabel": "R-R32-12",
+      "sourceIndex": 28,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 646,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-13",
+      "displayLabel": "R-R32-13",
+      "sourceIndex": 29,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 694,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-14",
+      "displayLabel": "R-R32-14",
+      "sourceIndex": 30,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 742,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-15",
+      "displayLabel": "R-R32-15",
+      "sourceIndex": 31,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 790,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R32-16",
+      "displayLabel": "R-R32-16",
+      "sourceIndex": 32,
+      "kind": "R32",
+      "boundsPx": {
+        "x": 1358,
+        "y": 838,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R16-01",
+      "displayLabel": "L-R16-01",
+      "sourceIndex": 33,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 225,
+        "y": 142,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R16-02",
+      "displayLabel": "L-R16-02",
+      "sourceIndex": 34,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 225,
+        "y": 238,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R16-03",
+      "displayLabel": "L-R16-03",
+      "sourceIndex": 35,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 225,
+        "y": 334,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R16-04",
+      "displayLabel": "L-R16-04",
+      "sourceIndex": 36,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 225,
+        "y": 430,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R16-05",
+      "displayLabel": "L-R16-05",
+      "sourceIndex": 37,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 225,
+        "y": 526,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R16-06",
+      "displayLabel": "L-R16-06",
+      "sourceIndex": 38,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 225,
+        "y": 622,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R16-07",
+      "displayLabel": "L-R16-07",
+      "sourceIndex": 39,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 225,
+        "y": 718,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-R16-08",
+      "displayLabel": "L-R16-08",
+      "sourceIndex": 40,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 225,
+        "y": 814,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R16-01",
+      "displayLabel": "R-R16-01",
+      "sourceIndex": 41,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 1165,
+        "y": 142,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R16-02",
+      "displayLabel": "R-R16-02",
+      "sourceIndex": 42,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 1165,
+        "y": 238,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R16-03",
+      "displayLabel": "R-R16-03",
+      "sourceIndex": 43,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 1165,
+        "y": 334,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R16-04",
+      "displayLabel": "R-R16-04",
+      "sourceIndex": 44,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 1165,
+        "y": 430,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R16-05",
+      "displayLabel": "R-R16-05",
+      "sourceIndex": 45,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 1165,
+        "y": 526,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R16-06",
+      "displayLabel": "R-R16-06",
+      "sourceIndex": 46,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 1165,
+        "y": 622,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R16-07",
+      "displayLabel": "R-R16-07",
+      "sourceIndex": 47,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 1165,
+        "y": 718,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-R16-08",
+      "displayLabel": "R-R16-08",
+      "sourceIndex": 48,
+      "kind": "R16",
+      "boundsPx": {
+        "x": 1165,
+        "y": 814,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-QF-01",
+      "displayLabel": "L-QF-01",
+      "sourceIndex": 49,
+      "kind": "QF",
+      "boundsPx": {
+        "x": 418,
+        "y": 190,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-QF-02",
+      "displayLabel": "L-QF-02",
+      "sourceIndex": 50,
+      "kind": "QF",
+      "boundsPx": {
+        "x": 418,
+        "y": 382,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-QF-03",
+      "displayLabel": "L-QF-03",
+      "sourceIndex": 51,
+      "kind": "QF",
+      "boundsPx": {
+        "x": 418,
+        "y": 574,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-QF-04",
+      "displayLabel": "L-QF-04",
+      "sourceIndex": 52,
+      "kind": "QF",
+      "boundsPx": {
+        "x": 418,
+        "y": 766,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-QF-01",
+      "displayLabel": "R-QF-01",
+      "sourceIndex": 53,
+      "kind": "QF",
+      "boundsPx": {
+        "x": 978,
+        "y": 190,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-QF-02",
+      "displayLabel": "R-QF-02",
+      "sourceIndex": 54,
+      "kind": "QF",
+      "boundsPx": {
+        "x": 978,
+        "y": 382,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-QF-03",
+      "displayLabel": "R-QF-03",
+      "sourceIndex": 55,
+      "kind": "QF",
+      "boundsPx": {
+        "x": 978,
+        "y": 574,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-QF-04",
+      "displayLabel": "R-QF-04",
+      "sourceIndex": 56,
+      "kind": "QF",
+      "boundsPx": {
+        "x": 978,
+        "y": 766,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-SF-01",
+      "displayLabel": "L-SF-01",
+      "sourceIndex": 57,
+      "kind": "SF",
+      "boundsPx": {
+        "x": 590,
+        "y": 286,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "L-SF-02",
+      "displayLabel": "L-SF-02",
+      "sourceIndex": 58,
+      "kind": "SF",
+      "boundsPx": {
+        "x": 590,
+        "y": 670,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-SF-01",
+      "displayLabel": "R-SF-01",
+      "sourceIndex": 59,
+      "kind": "SF",
+      "boundsPx": {
+        "x": 806,
+        "y": 286,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "R-SF-02",
+      "displayLabel": "R-SF-02",
+      "sourceIndex": 60,
+      "kind": "SF",
+      "boundsPx": {
+        "x": 806,
+        "y": 670,
+        "width": 140,
+        "height": 44
+      }
+    },
+    {
+      "sitePickId": "CENTER-FINAL-FOUR",
+      "displayLabel": "CENTER-FINAL-FOUR",
+      "sourceIndex": 61,
+      "kind": "FINAL_FOUR",
+      "boundsPx": {
+        "x": 663,
+        "y": 428,
+        "width": 210,
+        "height": 168
+      }
+    }
+  ]
+}

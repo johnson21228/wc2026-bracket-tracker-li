@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WC2026 Game 2 Bracket Geometry Slots",
+  "type": "object",
+  "required": ["version", "boardAsset", "coordinateSystem", "geometryStatus", "slots"],
+  "properties": {
+    "version": { "type": "string" },
+    "boardAsset": { "type": "string" },
+    "coordinateSystem": { "enum": ["percent"] },
+    "geometryStatus": { "enum": ["captured-from-image", "generated-from-data"] },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slotId", "round", "x", "y", "w", "h"],
+        "properties": {
+          "slotId": { "type": "string" },
+          "round": { "enum": ["R32", "R16", "QF", "SF", "Final", "Champion"] },
+          "x": { "type": "number" },
+          "y": { "type": "number" },
+          "w": { "type": "number" },
+          "h": { "type": "number" },
+          "feedsTo": { "type": "string" },
+          "sourceSeedId": { "type": "string" },
+          "side": { "enum": ["left", "right", "center"] }
+        }
+      }
+    }
+  }
+}

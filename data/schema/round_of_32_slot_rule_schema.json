@@ -1,0 +1,71 @@
+{
+  "description": "Schema for a Round-of-32 bracket slot whose qualification meaning may be known before the team is resolved.",
+  "type": "object",
+  "required": [
+    "slotId",
+    "matchId",
+    "side",
+    "label",
+    "status"
+  ],
+  "properties": {
+    "slotId": {
+      "type": "string"
+    },
+    "matchId": {
+      "type": "string"
+    },
+    "side": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B"
+      ]
+    },
+    "label": {
+      "type": "string"
+    },
+    "qualificationRule": {
+      "type": "string",
+      "examples": [
+        "group_winner",
+        "group_runner_up",
+        "best_third_place",
+        "manual"
+      ]
+    },
+    "sourceGroup": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "thirdPlacePool": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "team": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "resolved",
+        "manual_override",
+        "needs_verification"
+      ]
+    },
+    "source": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

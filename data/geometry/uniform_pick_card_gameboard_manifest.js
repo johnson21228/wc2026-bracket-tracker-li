@@ -1,0 +1,1185 @@
+window.WC2026_UNIFORM_PICK_CARD_GAMEBOARD_MANIFEST = {
+  "schemaVersion": 4,
+  "assetFamily": "uniform_pick_card_gameboard",
+  "authority": "svg_geometry_source",
+  "presentationRole": "transparent_middle_gameboard_layer",
+  "presentationStyle": "material_brown_selectable_r32",
+  "geometrySource": "site/assets/playfield/uniform_pick_card_gameboard.svg",
+  "svgAsset": "assets/playfield/uniform_pick_card_gameboard.svg",
+  "pngAsset": "assets/playfield/uniform_pick_card_gameboard.png",
+  "nativeSizePx": {
+    "width": 1536,
+    "height": 1024
+  },
+  "boardModel": {
+    "id": "uniform_pick_card_gameboard_v1_final_four_center_card",
+    "description": "Transparent middle-layer material-colored bracket with sampled tan pick-card fills, lightened brown linework, stronger R32 selectable-target fill, uniform pick-card geometry through semifinal, and one special twice-tall Final Four center card.",
+    "standardPickCardPx": {
+      "width": 140,
+      "height": 44
+    },
+    "finalFourPickCardPx": {
+      "width": 210,
+      "height": 168
+    },
+    "expectedPickCardRecords": 61,
+    "roundCounts": {
+      "R32": 32,
+      "R16": 16,
+      "QF": 8,
+      "SF": 4,
+      "FINAL_FOUR": 1
+    }
+  },
+  "presentationPolicy": {
+    "background": "transparent",
+    "connectorStroke": "#AA9691",
+    "slotStroke": "#AA9691",
+    "r32SelectableFill": "#816A51",
+    "r32SelectableFillOpacity": 0.52,
+    "standardSlotFillOpacity": 0.26,
+    "finalFourFillOpacity": 0.34
+  },
+  "layerContract": [
+    "bottomBackgroundLayer",
+    "transparentSvgGameboardLineworkLayer",
+    "interactionHitTargetLayer",
+    "pickCardLayer",
+    "overlayUiLayer"
+  ],
+  "slotPolicy": "SVG pick-card rectangles are geometry truth; R32 slots carry material-colored selectable-target fill for Game 1 presentation.",
+  "migrationStatus": "game1_visible_board_and_r32_placement_use_uniform_svg_manifest_game2_not_migrated",
+  "slots": [
+    {
+      "slotId": "L-R32-01",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 118,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 1,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-02",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 166,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 2,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-03",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 214,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 3,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-04",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 262,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 4,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-05",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 310,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 5,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-06",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 358,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 6,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-07",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 406,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 7,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-08",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 454,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 8,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-09",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 502,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 9,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-10",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 550,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 10,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-11",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 598,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 11,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-12",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 646,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 12,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-13",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 694,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 13,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-14",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 742,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 14,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-15",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 790,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 15,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R32-16",
+      "round": "R32",
+      "side": "left",
+      "boundsPx": {
+        "x": 38,
+        "y": 838,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 16,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-01",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 118,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 1,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-02",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 166,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 2,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-03",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 214,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 3,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-04",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 262,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 4,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-05",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 310,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 5,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-06",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 358,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 6,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-07",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 406,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 7,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-08",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 454,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 8,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-09",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 502,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 9,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-10",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 550,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 10,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-11",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 598,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 11,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-12",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 646,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 12,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-13",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 694,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 13,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-14",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 742,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 14,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-15",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 790,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 15,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "R-R32-16",
+      "round": "R32",
+      "side": "right",
+      "boundsPx": {
+        "x": 1358,
+        "y": 838,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-r32-selectable",
+      "fillOpacity": 0.52,
+      "stroke": "#AA9691",
+      "roundIndex": 16,
+      "game1SelectableTarget": true
+    },
+    {
+      "slotId": "L-R16-01",
+      "round": "R16",
+      "side": "left",
+      "boundsPx": {
+        "x": 225,
+        "y": 142,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 1
+    },
+    {
+      "slotId": "L-R16-02",
+      "round": "R16",
+      "side": "left",
+      "boundsPx": {
+        "x": 225,
+        "y": 238,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 2
+    },
+    {
+      "slotId": "L-R16-03",
+      "round": "R16",
+      "side": "left",
+      "boundsPx": {
+        "x": 225,
+        "y": 334,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 3
+    },
+    {
+      "slotId": "L-R16-04",
+      "round": "R16",
+      "side": "left",
+      "boundsPx": {
+        "x": 225,
+        "y": 430,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 4
+    },
+    {
+      "slotId": "L-R16-05",
+      "round": "R16",
+      "side": "left",
+      "boundsPx": {
+        "x": 225,
+        "y": 526,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 5
+    },
+    {
+      "slotId": "L-R16-06",
+      "round": "R16",
+      "side": "left",
+      "boundsPx": {
+        "x": 225,
+        "y": 622,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 6
+    },
+    {
+      "slotId": "L-R16-07",
+      "round": "R16",
+      "side": "left",
+      "boundsPx": {
+        "x": 225,
+        "y": 718,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 7
+    },
+    {
+      "slotId": "L-R16-08",
+      "round": "R16",
+      "side": "left",
+      "boundsPx": {
+        "x": 225,
+        "y": 814,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 8
+    },
+    {
+      "slotId": "R-R16-01",
+      "round": "R16",
+      "side": "right",
+      "boundsPx": {
+        "x": 1165,
+        "y": 142,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 1
+    },
+    {
+      "slotId": "R-R16-02",
+      "round": "R16",
+      "side": "right",
+      "boundsPx": {
+        "x": 1165,
+        "y": 238,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 2
+    },
+    {
+      "slotId": "R-R16-03",
+      "round": "R16",
+      "side": "right",
+      "boundsPx": {
+        "x": 1165,
+        "y": 334,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 3
+    },
+    {
+      "slotId": "R-R16-04",
+      "round": "R16",
+      "side": "right",
+      "boundsPx": {
+        "x": 1165,
+        "y": 430,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 4
+    },
+    {
+      "slotId": "R-R16-05",
+      "round": "R16",
+      "side": "right",
+      "boundsPx": {
+        "x": 1165,
+        "y": 526,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 5
+    },
+    {
+      "slotId": "R-R16-06",
+      "round": "R16",
+      "side": "right",
+      "boundsPx": {
+        "x": 1165,
+        "y": 622,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 6
+    },
+    {
+      "slotId": "R-R16-07",
+      "round": "R16",
+      "side": "right",
+      "boundsPx": {
+        "x": 1165,
+        "y": 718,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 7
+    },
+    {
+      "slotId": "R-R16-08",
+      "round": "R16",
+      "side": "right",
+      "boundsPx": {
+        "x": 1165,
+        "y": 814,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 8
+    },
+    {
+      "slotId": "L-QF-01",
+      "round": "QF",
+      "side": "left",
+      "boundsPx": {
+        "x": 418,
+        "y": 190,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 1
+    },
+    {
+      "slotId": "L-QF-02",
+      "round": "QF",
+      "side": "left",
+      "boundsPx": {
+        "x": 418,
+        "y": 382,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 2
+    },
+    {
+      "slotId": "L-QF-03",
+      "round": "QF",
+      "side": "left",
+      "boundsPx": {
+        "x": 418,
+        "y": 574,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 3
+    },
+    {
+      "slotId": "L-QF-04",
+      "round": "QF",
+      "side": "left",
+      "boundsPx": {
+        "x": 418,
+        "y": 766,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 4
+    },
+    {
+      "slotId": "R-QF-01",
+      "round": "QF",
+      "side": "right",
+      "boundsPx": {
+        "x": 978,
+        "y": 190,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 1
+    },
+    {
+      "slotId": "R-QF-02",
+      "round": "QF",
+      "side": "right",
+      "boundsPx": {
+        "x": 978,
+        "y": 382,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 2
+    },
+    {
+      "slotId": "R-QF-03",
+      "round": "QF",
+      "side": "right",
+      "boundsPx": {
+        "x": 978,
+        "y": 574,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 3
+    },
+    {
+      "slotId": "R-QF-04",
+      "round": "QF",
+      "side": "right",
+      "boundsPx": {
+        "x": 978,
+        "y": 766,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 4
+    },
+    {
+      "slotId": "L-SF-01",
+      "round": "SF",
+      "side": "left",
+      "boundsPx": {
+        "x": 590,
+        "y": 286,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 1
+    },
+    {
+      "slotId": "L-SF-02",
+      "round": "SF",
+      "side": "left",
+      "boundsPx": {
+        "x": 590,
+        "y": 670,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 2
+    },
+    {
+      "slotId": "R-SF-01",
+      "round": "SF",
+      "side": "right",
+      "boundsPx": {
+        "x": 806,
+        "y": 286,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 1
+    },
+    {
+      "slotId": "R-SF-02",
+      "round": "SF",
+      "side": "right",
+      "boundsPx": {
+        "x": 806,
+        "y": 670,
+        "width": 140,
+        "height": 44
+      },
+      "rx": 6,
+      "ry": 6,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-board-structure",
+      "fillOpacity": 0.26,
+      "stroke": "#AA9691",
+      "roundIndex": 2
+    },
+    {
+      "slotId": "CENTER-FINAL-FOUR",
+      "round": "FINAL_FOUR",
+      "side": "center",
+      "boundsPx": {
+        "x": 663,
+        "y": 428,
+        "width": 210,
+        "height": 168
+      },
+      "rx": 10,
+      "ry": 10,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-final-four",
+      "fillOpacity": 0.34,
+      "stroke": "#AA9691",
+      "specialRole": "finalFourPickCard",
+      "note": "Special center Final Four pick card; taller than standard pick cards."
+    }
+  ]
+};
