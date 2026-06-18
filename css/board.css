@@ -575,3 +575,61 @@
   opacity: 1;
   filter: saturate(1.08);
 }
+
+/* Card 201: picked bracket cell compact identity rendering. */
+.pick-slot-button.has-pick {
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  justify-items: stretch;
+  padding: 1px 5px;
+}
+
+.pick-slot-button.has-pick .pick-slot-label {
+  display: none;
+}
+
+.pick-slot-button.has-pick .pick-slot-value {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+.picked-cell-identity {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 4px;
+  min-width: 0;
+}
+
+.picked-cell-flag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  line-height: 1;
+  filter: saturate(1.08) contrast(1.04);
+}
+
+.picked-cell-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.8em;
+  padding: 1px 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .36);
+  color: rgba(255,255,255,.96);
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: .055em;
+  line-height: 1;
+  text-shadow: 0 1px 1px rgba(0,0,0,.82);
+}
+
