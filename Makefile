@@ -1,6 +1,7 @@
 .PHONY: verify pack clean-hygiene open-site publish-pages
 
 verify:
+	python3 tools/verify_wc2026_pick_conflicts_warn_not_block.py
 	python3 tools/verify_wc2026_bracket_tracker.py
 	python3 tools/verify_wc2026_fifa_r32_bridge.py
 	python3 tools/verify_wc2026_r32_pick_menus_from_fifa_bridge.py

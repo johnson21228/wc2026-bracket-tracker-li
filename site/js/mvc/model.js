@@ -304,36 +304,23 @@ export async function createBracketModel() {
 
   function validatePick(slotId, teamId) {
     if (!teamId) return { valid: true };
+    if (!slotsById.has(slotId)) {
+      return { valid: false, reason: "Unknown bracket slot." };
+    }
+    if (!teamById.has(teamId)) {
+      return { valid: false, reason: "Unknown team." };
+    }
     const choices = getChoices(slotId);
     if (!choices.some((team) => team.id === teamId)) {
-      return { valid: false, reason: "Team is not available from this slot's current feeder path." };
-    }
-    const slot = slotsById.get(slotId);
-    if (slot?.round === "R32") {
-      const duplicate = Object.entries(picks).find(([otherSlotId, otherTeamId]) => {
-        return otherSlotId !== slotId && otherTeamId === teamId && slotsById.get(otherSlotId)?.round === "R32";
-      });
-      if (duplicate) {
-        return { valid: false, reason: "That team is already assigned to another Round of 32 slot." };
-      }
+      return { valid: false, reason: "Team is outside this slot's source scope." };
     }
     return { valid: true };
   }
 
   function cascadeClearInvalidDescendants() {
-    const cleared = [];
-    for (const round of ["R16", "QF", "SF", "FINAL_FOUR"]) {
-      for (const slot of slots.filter((candidate) => candidate.round === round)) {
-        const currentTeamId = picks[slot.slotId];
-        if (!currentTeamId) continue;
-        const choices = getChoices(slot.slotId);
-        if (!choices.some((team) => team.id === currentTeamId)) {
-          delete picks[slot.slotId];
-          cleared.push(slot.slotId);
-        }
-      }
-    }
-    return cleared;
+    // Card 207: conflicts are rendered as warnings, not cleared as side effects.
+    // Preserve downstream picks during import/refresh so user intent remains visible.
+    return [];
   }
 
   function setPick(slotId, teamId) {
