@@ -518,6 +518,7 @@
 }
 
 .group-rail-flag {
+  opacity: 0.72;
   display: grid;
   place-items: center;
   border-radius: 5px;
