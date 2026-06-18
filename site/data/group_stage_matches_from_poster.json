@@ -11,7 +11,15 @@
       "away": "South Africa",
       "homeAbbr": "MEX",
       "awayAbbr": "RSA",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-11T15:00:00-04:00",
+      "kickoffET": "2026-06-11T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456904",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-11-A2",
@@ -21,7 +29,15 @@
       "away": "Czechia",
       "homeAbbr": "KOR",
       "awayAbbr": "CZE",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-11T22:00:00-04:00",
+      "kickoffET": "2026-06-11T22:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456906",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-12-B1",
@@ -31,7 +47,15 @@
       "away": "Bosnia and Herzegovina",
       "homeAbbr": "CAN",
       "awayAbbr": "BIH",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-12T15:00:00-04:00",
+      "kickoffET": "2026-06-12T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456916",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-12-D1",
@@ -41,7 +65,15 @@
       "away": "Paraguay",
       "homeAbbr": "USA",
       "awayAbbr": "PAR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-12T21:00:00-04:00",
+      "kickoffET": "2026-06-12T21:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456940",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-13-C1",
@@ -51,7 +83,15 @@
       "away": "Scotland",
       "homeAbbr": "HAI",
       "awayAbbr": "SCO",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-13T21:00:00-04:00",
+      "kickoffET": "2026-06-13T21:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456930",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-13-D2",
@@ -61,7 +101,15 @@
       "away": "Türkiye",
       "homeAbbr": "AUS",
       "awayAbbr": "TUR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-14T00:00:00-04:00",
+      "kickoffET": "2026-06-14T00:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456942",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-13-C2",
@@ -71,7 +119,15 @@
       "away": "Morocco",
       "homeAbbr": "BRA",
       "awayAbbr": "MAR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-13T18:00:00-04:00",
+      "kickoffET": "2026-06-13T18:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456928",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-13-B2",
@@ -81,7 +137,15 @@
       "away": "Switzerland",
       "homeAbbr": "QAT",
       "awayAbbr": "SUI",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-13T15:00:00-04:00",
+      "kickoffET": "2026-06-13T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456918",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-14-E1",
@@ -91,7 +155,15 @@
       "away": "Ecuador",
       "homeAbbr": "CIV",
       "awayAbbr": "ECU",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-14T19:00:00-04:00",
+      "kickoffET": "2026-06-14T19:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457072",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-14-E2",
@@ -101,7 +173,15 @@
       "away": "Curaçao",
       "homeAbbr": "GER",
       "awayAbbr": "CUW",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-14T13:00:00-04:00",
+      "kickoffET": "2026-06-14T13:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457070",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-14-F1",
@@ -111,7 +191,15 @@
       "away": "Japan",
       "homeAbbr": "NED",
       "awayAbbr": "JPN",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-14T16:00:00-04:00",
+      "kickoffET": "2026-06-14T16:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456968",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-14-F2",
@@ -121,7 +209,15 @@
       "away": "Tunisia",
       "homeAbbr": "SWE",
       "awayAbbr": "TUN",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-14T22:00:00-04:00",
+      "kickoffET": "2026-06-14T22:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456970",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-15-H1",
@@ -131,7 +227,15 @@
       "away": "Uruguay",
       "homeAbbr": "KSA",
       "awayAbbr": "URU",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-15T18:00:00-04:00",
+      "kickoffET": "2026-06-15T18:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456996",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-15-H2",
@@ -141,7 +245,15 @@
       "away": "Cabo Verde",
       "homeAbbr": "ESP",
       "awayAbbr": "CPV",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-15T12:00:00-04:00",
+      "kickoffET": "2026-06-15T12:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456994",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-15-G1",
@@ -151,7 +263,13 @@
       "away": "New Zealand",
       "homeAbbr": "IRN",
       "awayAbbr": "NZL",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-15T21:00:00-04:00",
+      "kickoffET": "9:00 PM ET",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-15-G2",
@@ -161,7 +279,15 @@
       "away": "Egypt",
       "homeAbbr": "BEL",
       "awayAbbr": "EGY",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-15T15:00:00-04:00",
+      "kickoffET": "2026-06-15T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456982",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-16-I1",
@@ -171,7 +297,15 @@
       "away": "Senegal",
       "homeAbbr": "FRA",
       "awayAbbr": "SEN",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-16T15:00:00-04:00",
+      "kickoffET": "2026-06-16T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457006",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-16-I2",
@@ -181,7 +315,15 @@
       "away": "Norway",
       "homeAbbr": "IRQ",
       "awayAbbr": "NOR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-16T18:00:00-04:00",
+      "kickoffET": "2026-06-16T18:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457008",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-16-J1",
@@ -191,7 +333,13 @@
       "away": "Algeria",
       "homeAbbr": "ARG",
       "awayAbbr": "ALG",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-16T21:00:00-04:00",
+      "kickoffET": "9:00 PM ET",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-16-J2",
@@ -201,7 +349,15 @@
       "away": "Jordan",
       "homeAbbr": "AUT",
       "awayAbbr": "JOR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-17T00:00:00-04:00",
+      "kickoffET": "2026-06-17T00:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457020",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-17-L1",
@@ -211,7 +367,15 @@
       "away": "Panama",
       "homeAbbr": "GHA",
       "awayAbbr": "PAN",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-17T19:00:00-04:00",
+      "kickoffET": "2026-06-17T19:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457044",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-17-L2",
@@ -221,7 +385,15 @@
       "away": "Croatia",
       "homeAbbr": "ENG",
       "awayAbbr": "CRO",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-17T16:00:00-04:00",
+      "kickoffET": "2026-06-17T16:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457042",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-17-K1",
@@ -231,7 +403,15 @@
       "away": "Congo DR",
       "homeAbbr": "POR",
       "awayAbbr": "COD",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-17T13:00:00-04:00",
+      "kickoffET": "2026-06-17T13:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457030",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-17-K2",
@@ -241,7 +421,15 @@
       "away": "Colombia",
       "homeAbbr": "UZB",
       "awayAbbr": "COL",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-17T22:00:00-04:00",
+      "kickoffET": "2026-06-17T22:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457032",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-18-A3",
@@ -251,7 +439,15 @@
       "away": "South Africa",
       "homeAbbr": "CZE",
       "awayAbbr": "RSA",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-18T12:00:00-04:00",
+      "kickoffET": "2026-06-18T12:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456910",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-18-B3",
@@ -261,7 +457,15 @@
       "away": "Bosnia and Herzegovina",
       "homeAbbr": "SUI",
       "awayAbbr": "BIH",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-18T15:00:00-04:00",
+      "kickoffET": "2026-06-18T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456922",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-18-B4",
@@ -271,7 +475,15 @@
       "away": "Qatar",
       "homeAbbr": "CAN",
       "awayAbbr": "QAT",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-18T18:00:00-04:00",
+      "kickoffET": "2026-06-18T18:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456920",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-18-A4",
@@ -281,7 +493,15 @@
       "away": "Korea Republic",
       "homeAbbr": "MEX",
       "awayAbbr": "KOR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-18T21:00:00-04:00",
+      "kickoffET": "2026-06-18T21:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456908",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-19-C3",
@@ -291,7 +511,15 @@
       "away": "Haiti",
       "homeAbbr": "BRA",
       "awayAbbr": "HAI",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-19T20:30:00-04:00",
+      "kickoffET": "2026-06-19T20:30:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456932",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-19-C4",
@@ -301,7 +529,15 @@
       "away": "Morocco",
       "homeAbbr": "SCO",
       "awayAbbr": "MAR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-19T18:00:00-04:00",
+      "kickoffET": "2026-06-19T18:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456934",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-19-D3",
@@ -311,7 +547,15 @@
       "away": "Paraguay",
       "homeAbbr": "TUR",
       "awayAbbr": "PAR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-19T23:00:00-04:00",
+      "kickoffET": "2026-06-19T23:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456946",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-19-D4",
@@ -321,7 +565,15 @@
       "away": "Australia",
       "homeAbbr": "USA",
       "awayAbbr": "AUS",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-19T15:00:00-04:00",
+      "kickoffET": "2026-06-19T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456944",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-20-E3",
@@ -331,7 +583,15 @@
       "away": "Côte d’Ivoire",
       "homeAbbr": "GER",
       "awayAbbr": "CIV",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-20T16:00:00-04:00",
+      "kickoffET": "2026-06-20T16:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457074",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-20-E4",
@@ -341,7 +601,15 @@
       "away": "Curaçao",
       "homeAbbr": "ECU",
       "awayAbbr": "CUW",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-20T20:00:00-04:00",
+      "kickoffET": "2026-06-20T20:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457076",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-20-F3",
@@ -351,7 +619,15 @@
       "away": "Sweden",
       "homeAbbr": "NED",
       "awayAbbr": "SWE",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-20T13:00:00-04:00",
+      "kickoffET": "2026-06-20T13:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456972",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-20-F4",
@@ -361,7 +637,15 @@
       "away": "Japan",
       "homeAbbr": "TUN",
       "awayAbbr": "JPN",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-21T00:00:00-04:00",
+      "kickoffET": "2026-06-21T00:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456974",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-21-H3",
@@ -371,7 +655,15 @@
       "away": "Cabo Verde",
       "homeAbbr": "URU",
       "awayAbbr": "CPV",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-21T18:00:00-04:00",
+      "kickoffET": "2026-06-21T18:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457000",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-21-H4",
@@ -381,7 +673,15 @@
       "away": "Saudi Arabia",
       "homeAbbr": "ESP",
       "awayAbbr": "KSA",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-21T12:00:00-04:00",
+      "kickoffET": "2026-06-21T12:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456998",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-21-G3",
@@ -391,7 +691,13 @@
       "away": "IR Iran",
       "homeAbbr": "BEL",
       "awayAbbr": "IRN",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-21T15:00:00-04:00",
+      "kickoffET": "3:00 PM ET",
+      "timezone": "America/New_York",
+      "sourceProvider": "espn-cross-check",
+      "timeSource": "ESPN FIFA World Cup schedule",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world"
     },
     {
       "matchId": "GS-2026-06-21-G4",
@@ -401,7 +707,15 @@
       "away": "Egypt",
       "homeAbbr": "NZL",
       "awayAbbr": "EGY",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-21T21:00:00-04:00",
+      "kickoffET": "2026-06-21T21:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456988",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-22-I3",
@@ -411,7 +725,15 @@
       "away": "Senegal",
       "homeAbbr": "NOR",
       "awayAbbr": "SEN",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-22T20:00:00-04:00",
+      "kickoffET": "2026-06-22T20:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457012",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-22-I4",
@@ -421,17 +743,38 @@
       "away": "Iraq",
       "homeAbbr": "FRA",
       "awayAbbr": "IRQ",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-22T17:00:00-04:00",
+      "kickoffET": "2026-06-22T17:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457010",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-22-J3",
       "date": "2026-06-22",
       "group": "J",
-      "home": "Haiti",
+      "home": "Argentina",
       "away": "Austria",
       "homeAbbr": "HAI",
       "awayAbbr": "AUT",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-22T13:00:00-04:00",
+      "kickoffET": "1:00 PM ET",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "sourceProvider": "espn-cross-check",
+      "homeTeamId": "ARG",
+      "homeTeamName": "Argentina",
+      "awayTeamId": "AUT",
+      "awayTeamName": "Austria",
+      "summary": "Argentina vs Austria",
+      "fixtureAuthority": "corrected-from-schedule-evidence",
+      "correctionNote": "Corrected poster-derived row from Haiti vs Austria to Argentina vs Austria; Haiti is Group C, not Group J."
     },
     {
       "matchId": "GS-2026-06-22-J4",
@@ -441,7 +784,13 @@
       "away": "Algeria",
       "homeAbbr": "JOR",
       "awayAbbr": "ALG",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-22T23:00:00-04:00",
+      "kickoffET": "11:00 PM ET",
+      "timezone": "America/New_York",
+      "sourceProvider": "espn-cross-check",
+      "timeSource": "ESPN FIFA World Cup schedule",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world"
     },
     {
       "matchId": "GS-2026-06-23-L3",
@@ -451,7 +800,15 @@
       "away": "Ghana",
       "homeAbbr": "ENG",
       "awayAbbr": "GHA",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-23T16:00:00-04:00",
+      "kickoffET": "2026-06-23T16:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457046",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-23-L4",
@@ -461,7 +818,15 @@
       "away": "Croatia",
       "homeAbbr": "PAN",
       "awayAbbr": "CRO",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-23T19:00:00-04:00",
+      "kickoffET": "2026-06-23T19:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457048",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-23-K3",
@@ -471,7 +836,15 @@
       "away": "Uzbekistan",
       "homeAbbr": "POR",
       "awayAbbr": "UZB",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-23T13:00:00-04:00",
+      "kickoffET": "2026-06-23T13:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457034",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-23-K4",
@@ -481,7 +854,15 @@
       "away": "Congo DR",
       "homeAbbr": "COL",
       "awayAbbr": "COD",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-23T22:00:00-04:00",
+      "kickoffET": "2026-06-23T22:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457036",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-24-C5",
@@ -491,7 +872,15 @@
       "away": "Brazil",
       "homeAbbr": "SCO",
       "awayAbbr": "BRA",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-24T18:00:00-04:00",
+      "kickoffET": "2026-06-24T18:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456936",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-24-C6",
@@ -501,7 +890,15 @@
       "away": "Haiti",
       "homeAbbr": "MAR",
       "awayAbbr": "HAI",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-24T18:00:00-04:00",
+      "kickoffET": "2026-06-24T18:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456938",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-24-B5",
@@ -511,7 +908,15 @@
       "away": "Canada",
       "homeAbbr": "SUI",
       "awayAbbr": "CAN",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-24T15:00:00-04:00",
+      "kickoffET": "2026-06-24T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456924",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-24-B6",
@@ -521,7 +926,15 @@
       "away": "Qatar",
       "homeAbbr": "BIH",
       "awayAbbr": "QAT",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-24T15:00:00-04:00",
+      "kickoffET": "2026-06-24T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456926",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-24-A5",
@@ -531,7 +944,15 @@
       "away": "Mexico",
       "homeAbbr": "CZE",
       "awayAbbr": "MEX",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-24T21:00:00-04:00",
+      "kickoffET": "2026-06-24T21:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456912",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-24-A6",
@@ -541,7 +962,15 @@
       "away": "Korea Republic",
       "homeAbbr": "RSA",
       "awayAbbr": "KOR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-24T21:00:00-04:00",
+      "kickoffET": "2026-06-24T21:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456914",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-25-E5",
@@ -551,7 +980,15 @@
       "away": "Côte d’Ivoire",
       "homeAbbr": "CUW",
       "awayAbbr": "CIV",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-25T16:00:00-04:00",
+      "kickoffET": "2026-06-25T16:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457080",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-25-E6",
@@ -561,7 +998,15 @@
       "away": "Germany",
       "homeAbbr": "ECU",
       "awayAbbr": "GER",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-25T16:00:00-04:00",
+      "kickoffET": "2026-06-25T16:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457078",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-25-F5",
@@ -571,7 +1016,15 @@
       "away": "Sweden",
       "homeAbbr": "JPN",
       "awayAbbr": "SWE",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-25T19:00:00-04:00",
+      "kickoffET": "2026-06-25T19:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456978",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-25-F6",
@@ -581,7 +1034,15 @@
       "away": "Netherlands",
       "homeAbbr": "TUN",
       "awayAbbr": "NED",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-25T19:00:00-04:00",
+      "kickoffET": "2026-06-25T19:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456976",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-25-D5",
@@ -591,7 +1052,15 @@
       "away": "USA",
       "homeAbbr": "TUR",
       "awayAbbr": "USA",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-25T22:00:00-04:00",
+      "kickoffET": "2026-06-25T22:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456948",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-25-D6",
@@ -601,7 +1070,15 @@
       "away": "Australia",
       "homeAbbr": "PAR",
       "awayAbbr": "AUS",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-25T22:00:00-04:00",
+      "kickoffET": "2026-06-25T22:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456950",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-26-I5",
@@ -611,7 +1088,15 @@
       "away": "France",
       "homeAbbr": "NOR",
       "awayAbbr": "FRA",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-26T15:00:00-04:00",
+      "kickoffET": "2026-06-26T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457014",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-26-I6",
@@ -621,7 +1106,15 @@
       "away": "Iraq",
       "homeAbbr": "SEN",
       "awayAbbr": "IRQ",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-26T15:00:00-04:00",
+      "kickoffET": "2026-06-26T15:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457016",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-26-G5",
@@ -631,7 +1124,13 @@
       "away": "IR Iran",
       "homeAbbr": "EGY",
       "awayAbbr": "IRN",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-26T23:00:00-04:00",
+      "kickoffET": "11:00 PM ET",
+      "timezone": "America/New_York",
+      "sourceProvider": "espn-cross-check",
+      "timeSource": "ESPN FIFA World Cup schedule",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world"
     },
     {
       "matchId": "GS-2026-06-26-G6",
@@ -641,7 +1140,15 @@
       "away": "Belgium",
       "homeAbbr": "NZL",
       "awayAbbr": "BEL",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-26T23:00:00-04:00",
+      "kickoffET": "2026-06-26T23:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66456990",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-26-H5",
@@ -651,7 +1158,15 @@
       "away": "Saudi Arabia",
       "homeAbbr": "CPV",
       "awayAbbr": "KSA",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-26T20:00:00-04:00",
+      "kickoffET": "2026-06-26T20:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457004",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-26-H6",
@@ -661,7 +1176,15 @@
       "away": "Spain",
       "homeAbbr": "URU",
       "awayAbbr": "ESP",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-26T20:00:00-04:00",
+      "kickoffET": "2026-06-26T20:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457002",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-27-L5",
@@ -671,7 +1194,15 @@
       "away": "England",
       "homeAbbr": "PAN",
       "awayAbbr": "ENG",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-27T17:00:00-04:00",
+      "kickoffET": "2026-06-27T17:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457050",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-27-L6",
@@ -681,7 +1212,15 @@
       "away": "Ghana",
       "homeAbbr": "CRO",
       "awayAbbr": "GHA",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-27T17:00:00-04:00",
+      "kickoffET": "2026-06-27T17:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457052",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-27-J5",
@@ -691,7 +1230,13 @@
       "away": "Austria",
       "homeAbbr": "ALG",
       "awayAbbr": "AUT",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-27T22:00:00-04:00",
+      "kickoffET": "10:00 PM ET",
+      "timezone": "America/New_York",
+      "sourceProvider": "espn-cross-check",
+      "timeSource": "ESPN FIFA World Cup schedule",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world"
     },
     {
       "matchId": "GS-2026-06-27-J6",
@@ -701,7 +1246,15 @@
       "away": "Argentina",
       "homeAbbr": "JOR",
       "awayAbbr": "ARG",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-27T22:00:00-04:00",
+      "kickoffET": "2026-06-27T22:00:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457026",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-27-K5",
@@ -711,7 +1264,15 @@
       "away": "Portugal",
       "homeAbbr": "COL",
       "awayAbbr": "POR",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-27T19:30:00-04:00",
+      "kickoffET": "2026-06-27T19:30:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457038",
+      "sourceProvider": "espn-cross-check"
     },
     {
       "matchId": "GS-2026-06-27-K6",
@@ -721,7 +1282,15 @@
       "away": "Uzbekistan",
       "homeAbbr": "COD",
       "awayAbbr": "UZB",
-      "source": "poster_image"
+      "source": "poster_image",
+      "kickoffLocal": "2026-06-27T19:30:00-04:00",
+      "kickoffET": "2026-06-27T19:30:00-04:00",
+      "timezone": "America/New_York",
+      "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "timeConfidence": "high",
+      "espnMatchId": "66457040",
+      "sourceProvider": "espn-cross-check"
     }
   ],
   "uncertainties": [
