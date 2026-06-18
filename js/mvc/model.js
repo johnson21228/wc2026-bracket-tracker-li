@@ -244,11 +244,6 @@ export async function createBracketModel() {
     return `${numeric}${suffix}`;
   }
 
-  function expectedRankForR32Logic(logic) {
-    if (logic?.qualifierKind === "group-winner") return { rank: 1, role: "winner" };
-    if (logic?.qualifierKind === "group-runner-up") return { rank: 2, role: "runner-up" };
-    return null;
-  }
 
   function duplicateR32Pick(slotId, teamId) {
     return Object.entries(picks).find(([otherSlotId, otherTeamId]) => {
@@ -274,26 +269,6 @@ export async function createBracketModel() {
       };
     }
 
-    if (slot.round === "R32") {
-      const logic = r32LogicByGeometryId.get(slot.slotId);
-      const expectation = expectedRankForR32Logic(logic);
-      const groupId = logic?.groups?.length === 1 ? logic.groups[0] : null;
-      if (expectation && groupId) {
-        const entry = standingsEntryForTeam(groupId, team.id);
-        if (!entry) {
-          return {
-            state: "unknown",
-            reason: `${team.abbr || team.id} is not present in the local Group ${groupId} standings snapshot.`,
-          };
-        }
-        if (Number(entry.rank) !== expectation.rank) {
-          return {
-            state: "invalid",
-            reason: `${team.abbr || team.id} is currently ${ordinalRank(entry.rank)} in Group ${groupId}; this slot expects the Group ${groupId} ${expectation.role}.`,
-          };
-        }
-      }
-    }
 
     return { state: "valid", reason: "Pick currently satisfies the slot rule." };
   }
