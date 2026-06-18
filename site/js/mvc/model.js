@@ -212,7 +212,7 @@ export async function createBracketModel() {
     const logic = r32LogicByGeometryId.get(slotId);
     if (!logic) return [];
     const groups = logic.groups || [];
-    return uniqueTeams(groups.flatMap((groupId) => groupsById.get(groupId) || []));
+    return uniqueTeams(groups.flatMap((groupId) => groupTeamsInCurrentOrder(groupId)));
   }
 
   function getKnockoutChoices(slotId) {
@@ -338,6 +338,35 @@ export async function createBracketModel() {
     return currentStandingsById.get(normalizeGroupId(groupId)) || null;
   }
 
+
+  function groupTeamsInCurrentOrder(groupId) {
+    const normalizedGroupId = normalizeGroupId(groupId);
+    const fallbackTeams = [...(groupsById.get(normalizedGroupId) || [])];
+    const standings = getGroupStandings(normalizedGroupId);
+    const entries = standings?.entries || [];
+    if (!entries.length) return fallbackTeams;
+
+    const fallbackById = new Map(fallbackTeams.map((team) => [team.id, team]));
+    const ordered = [];
+    const seen = new Set();
+
+    for (const entry of entries) {
+      const teamId = entry.teamId || entry.id || entry.abbr;
+      const team = fallbackById.get(teamId) || getTeam(teamId);
+      if (!team || seen.has(team.id)) continue;
+      ordered.push(team);
+      seen.add(team.id);
+    }
+
+    for (const team of fallbackTeams) {
+      if (!team || seen.has(team.id)) continue;
+      ordered.push(team);
+      seen.add(team.id);
+    }
+
+    return ordered;
+  }
+
   function getGroupMatches(groupId) {
     return [...(currentMatchesByGroupId.get(normalizeGroupId(groupId)) || [])];
   }
@@ -431,7 +460,7 @@ export async function createBracketModel() {
 
     if (slot.round === "R32" && logic?.groups?.length) {
       return logic.groups.map((groupId) => {
-        const groupChoices = (groupsById.get(groupId) || [])
+        const groupChoices = groupTeamsInCurrentOrder(groupId)
           .filter((team) => choiceIds.has(team.id))
           .map((team) => choiceWithState(team, "projected"));
         return {
@@ -475,7 +504,7 @@ export async function createBracketModel() {
 
   function getGroupRail() {
     return GROUP_IDS.map((groupId) => {
-      const teams = (groupsById.get(groupId) || []).slice(0, 4).map((team) => ({
+      const teams = groupTeamsInCurrentOrder(groupId).slice(0, 4).map((team) => ({
         id: team.id,
         abbr: team.abbr || team.id,
         name: team.name || team.abbr || team.id,
