@@ -143,7 +143,7 @@ def main() -> int:
     shell_required = [
         '<main id="wc2026-app"',
         '<script type="module" src="js/app.js"></script>',
-        'href="assets/board/knockout_pub_background.jpeg"',
+        'href="assets/board/pub_background.jpeg"',
         'href="assets/board/gameboard.svg"',
         'href="css/app.css"',
         'href="css/board.css"',
