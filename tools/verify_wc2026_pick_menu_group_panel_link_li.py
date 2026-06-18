@@ -24,8 +24,8 @@ REQUIRED = {
         "local group panel",
         "browser runtime consumes local checked-in JSON",
     ],
-    "cards/184_define_pick_menu_group_panel_link_li_card.md": [
-        "Card 184",
+    "cards/185_define_pick_menu_group_panel_link_li_card.md": [
+        "Card 185",
         "pick-menu group panel link LI",
     ],
 }

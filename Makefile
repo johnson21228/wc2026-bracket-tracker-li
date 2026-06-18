@@ -9,6 +9,7 @@ verify:
 	python3 tools/verify_wc2026_clean_mvc_single_site.py
 	python3 tools/verify_wc2026_group_standings_panel_li.py
 	python3 tools/verify_wc2026_pick_menu_group_panel_link_li.py
+	python3 tools/verify_wc2026_pick_menu_interaction_placement_li.py
 	python3 tools/verify_wc2026_group_standings_model_data.py
 
 clean-hygiene:
