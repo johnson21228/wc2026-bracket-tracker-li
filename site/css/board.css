@@ -1,0 +1,577 @@
+.pixel-native-board-plane {
+  --board-w-px: 1536px;
+  --board-h-px: 1024px;
+  position: relative;
+  width: var(--board-w-px);
+  height: var(--board-h-px);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.board-background-layer,
+.board-linework-layer,
+.board-pick-layer,
+.board-menu-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.board-background-layer,
+.board-linework-layer {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.board-background-layer { z-index: 0; opacity: .72; }
+.board-linework-layer { z-index: 1; opacity: .92; }
+.board-pick-layer { z-index: 2; pointer-events: none; }
+.board-menu-layer { z-index: 3; pointer-events: none; }
+
+.pick-slot-button {
+  position: absolute;
+  display: grid;
+  grid-template-rows: 14px 1fr;
+  align-items: center;
+  justify-items: center;
+  border: 1px solid rgba(255, 236, 205, .42);
+  border-radius: 7px;
+  background: rgba(23, 16, 14, .18);
+  color: rgba(255,255,255,.88);
+  font: inherit;
+  padding: 3px 5px;
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.pick-slot-button:disabled {
+  pointer-events: none;
+  opacity: .38;
+}
+
+.pick-slot-button.is-pickable {
+  cursor: pointer;
+  background: rgba(126, 84, 52, .34);
+}
+
+.pick-slot-button.is-pickable:hover,
+.pick-slot-button.is-pickable:focus-visible {
+  outline: 2px solid rgba(255, 229, 159, .86);
+  outline-offset: 2px;
+  background: rgba(164, 100, 45, .56);
+}
+
+.pick-slot-button.has-pick {
+  background: rgba(35, 88, 61, .72);
+  border-color: rgba(198, 255, 211, .7);
+}
+
+.pick-slot-label { font-size: 10px; line-height: 1; opacity: .7; white-space: nowrap; }
+.pick-slot-value { font-weight: 800; font-size: 15px; line-height: 1; white-space: nowrap; text-shadow: 0 1px 1px rgba(0,0,0,.75); }
+
+.pick-menu-popover {
+  position: absolute;
+  width: 260px;
+  max-height: 360px;
+  overflow: auto;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(20, 15, 14, .94);
+  box-shadow: 0 18px 50px rgba(0,0,0,.45);
+  pointer-events: auto;
+}
+
+.pick-menu-popover h2 { margin: 0 0 8px; font-size: 16px; }
+.pick-menu-list { display: grid; gap: 6px; }
+.pick-menu-item,
+.pick-menu-clear,
+.pick-menu-close {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 10px;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  padding: 9px 10px;
+  text-align: left;
+  cursor: pointer;
+}
+.pick-menu-item:hover,
+.pick-menu-clear:hover,
+.pick-menu-close:hover { background: rgba(255,255,255,.18); }
+.pick-menu-clear { margin-top: 8px; color: #ffe1c0; }
+.pick-menu-close { margin-top: 8px; text-align: center; }
+
+/* Legacy verifier compatibility tokens; inactive in clean MVC runtime unless old modules are imported. */
+.board-fifa-slot-map-layer,
+.fifa-slot-map-label,
+.r32-pick-slot-button.is-preselectable,
+.r32-pick-slot-button.is-preselect-highlight,
+.r32-pick-button-tracker-chip {
+  pointer-events: none;
+}
+[data-show-fifa-slot-map="false"] .board-fifa-slot-map-layer {
+  display: none;
+}
+.board-r32-pick-menu-layer { pointer-events: none; }
+
+
+/* Card 186: Pick Menu Runtime v2 */
+.board-group-panel-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.pick-menu-runtime-v2 {
+  width: 292px;
+  max-height: min(520px, calc(var(--board-h-px) - 32px));
+  padding: 0;
+  overflow: hidden;
+}
+
+.pick-menu-topbar,
+.group-panel-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px 8px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+.pick-menu-title-block { min-width: 0; }
+.pick-menu-title { margin: 0; font-size: 15px; line-height: 1.15; }
+.pick-menu-source-label { margin-top: 3px; font-size: 12px; opacity: .72; }
+
+.pick-menu-close-button,
+.group-panel-close-button {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 999px;
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  padding: 7px 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pick-menu-current-pick {
+  margin: 10px 12px 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(35, 88, 61, .55);
+  color: #eaffef;
+  font-size: 13px;
+}
+
+.pick-menu-clear-top {
+  display: block;
+  width: calc(100% - 24px);
+  margin: 8px 12px 10px;
+  border: 1px solid rgba(255, 197, 121, .62);
+  border-radius: 12px;
+  background: rgba(117, 54, 30, .72);
+  color: #fff2df;
+  padding: 10px 12px;
+  font-weight: 850;
+  text-align: center;
+  cursor: pointer;
+}
+
+.pick-menu-group-sections {
+  display: grid;
+  gap: 10px;
+  max-height: 374px;
+  overflow: auto;
+  padding: 10px 12px 12px;
+}
+
+.pick-menu-group-section {
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: rgba(255,255,255,.045);
+  overflow: hidden;
+}
+
+.pick-menu-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.pick-menu-group-label,
+.pick-menu-group-label-static {
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 999px;
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  padding: 6px 9px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.pick-menu-group-label-static { cursor: default; opacity: .76; }
+.pick-menu-group-label:hover { background: rgba(255,255,255,.22); }
+.pick-menu-group-role { font-size: 10px; opacity: .58; text-transform: uppercase; letter-spacing: .04em; }
+
+.pick-menu-runtime-v2 .pick-menu-list {
+  padding: 8px;
+}
+
+.pick-menu-item.is-current {
+  border-color: rgba(198, 255, 211, .7);
+  background: rgba(35, 88, 61, .72);
+}
+
+.group-panel-popover {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  width: 340px;
+  max-height: 520px;
+  overflow: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(20, 15, 14, .96);
+  color: #fff;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45);
+  pointer-events: auto;
+}
+
+.group-panel-table {
+  width: calc(100% - 24px);
+  margin: 12px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.group-panel-table th,
+.group-panel-table td {
+  padding: 7px 6px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  text-align: right;
+}
+
+.group-panel-table th:first-child,
+.group-panel-table td:first-child { text-align: left; }
+.group-panel-source { margin: 0 12px 12px; opacity: .66; font-size: 12px; }
+
+/* Runtime repair: group panel is rendered but must sit above the board plane. */
+.board-group-panel-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.group-panel-popover {
+  position: absolute;
+  left: 56px;
+  top: 56px;
+  width: min(520px, calc(100% - 112px));
+  max-height: 80vh;
+  overflow: auto;
+  pointer-events: auto;
+  z-index: 81;
+  background: rgba(8, 17, 31, 0.96);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.24);
+  border-radius: 16px;
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.45);
+  padding: 16px;
+}
+
+.group-panel-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.group-panel-topbar h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.group-panel-close-button {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  font-weight: 800;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.group-panel-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.group-panel-table th,
+.group-panel-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.group-panel-source {
+  margin: 12px 0 0;
+  opacity: 0.78;
+  font-size: 13px;
+}
+
+/* Card 188: Group Panel Runtime v1 */
+.board-group-panel-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.group-panel-popover.group-panel-runtime-v1,
+.group-panel-runtime-v1 {
+  position: absolute;
+  left: 56px;
+  top: 56px;
+  width: min(720px, calc(100% - 112px));
+  max-height: 80vh;
+  overflow: auto;
+  pointer-events: auto;
+  z-index: 81;
+  background: rgba(8, 17, 31, 0.96);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.24);
+  border-radius: 16px;
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.45);
+  padding: 16px;
+}
+
+.group-panel-title-block h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.group-panel-source-status {
+  margin: 4px 0 0;
+  opacity: .72;
+  font-size: 12px;
+}
+
+.group-panel-standings {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.group-panel-standings th,
+.group-panel-standings td {
+  white-space: nowrap;
+  text-align: left;
+  padding: 7px 8px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+.group-panel-qualification {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 3px 7px;
+  background: rgba(255,255,255,.10);
+  text-transform: capitalize;
+}
+
+.group-panel-matches {
+  margin: 12px 0 0;
+  display: grid;
+  gap: 8px;
+}
+
+.group-panel-matches h3 {
+  margin: 8px 0 2px;
+  font-size: 14px;
+}
+
+.group-panel-match-card {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.055);
+  color: inherit;
+  text-decoration: none;
+}
+
+.group-panel-highlight-action {
+  cursor: pointer;
+  border-color: rgba(255,255,255,.30);
+}
+
+.group-panel-highlight-action:hover,
+.group-panel-highlight-action:focus-visible {
+  background: rgba(255,255,255,.11);
+  outline: 2px solid rgba(255,255,255,.28);
+  outline-offset: 2px;
+}
+
+.group-panel-status-pill {
+  justify-self: start;
+  border-radius: 999px;
+  padding: 3px 8px;
+  background: rgba(255,255,255,.12);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.group-panel-match-line {
+  font-weight: 800;
+}
+
+.group-panel-match-time,
+.group-panel-empty {
+  opacity: .72;
+  font-size: 12px;
+}
+
+.group-panel-highlight-link {
+  color: #fff;
+  font-weight: 800;
+}
+
+/* Card 191: Gameboard group button rail */
+.board-group-rail-layer {
+  position: absolute;
+  left: 34px;
+  right: 34px;
+  bottom: 18px;
+  z-index: 5;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
+.group-rail {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(72px, 1fr));
+  gap: 8px;
+  width: min(1410px, 100%);
+  justify-content: center;
+  align-items: end;
+  pointer-events: none;
+}
+
+.group-rail-tile {
+  opacity: 0.66;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 5px;
+  min-height: 76px;
+  border: 1px solid rgba(255, 236, 205, .36);
+  border-radius: 12px;
+  background: rgba(20, 15, 14, .72);
+  color: #fff;
+  padding: 7px 6px 8px;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 10px 28px rgba(0,0,0,.28);
+}
+
+.group-rail-tile:hover,
+.group-rail-tile:focus-visible {
+  outline: 2px solid rgba(255, 229, 159, .9);
+  outline-offset: 2px;
+  background: rgba(64, 43, 34, .86);
+}
+
+.group-rail-label {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .035em;
+}
+
+.group-rail-flag-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+  aspect-ratio: 1 / 1;
+  inline-size: 44px;
+  justify-self: center;
+  align-self: center;
+}
+
+.group-rail-flag {
+  opacity: 0.72;
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
+  background: rgba(255,255,255,.12);
+  font-size: 17px;
+  line-height: 1;
+  overflow: hidden;
+}
+
+
+/* Card 193: group button rail subtle visual state */
+.group-rail-tile {
+  opacity: .66;
+  background: rgba(20, 15, 14, .42);
+  border-color: rgba(255, 236, 205, .24);
+  transition: opacity .16s ease, background-color .16s ease, border-color .16s ease, box-shadow .16s ease, filter .16s ease;
+}
+
+.group-rail-tile:hover,
+.group-rail-tile:focus-visible,
+.group-rail-tile:active,
+.group-rail-tile.is-active {
+  opacity: 1;
+  background: rgba(64, 43, 34, .92);
+  border-color: rgba(255, 229, 159, .88);
+  box-shadow: 0 16px 42px rgba(0,0,0,.46);
+  filter: saturate(1.08);
+}
+
+/* Card 194: group panel anchors to launching group button without leaving board plane */
+.board-group-panel-layer {
+  z-index: 88;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.group-panel-popover {
+  box-sizing: border-box;
+  max-width: calc(100% - 28px);
+  overflow: auto;
+  pointer-events: auto;
+}
+
+/* Card 195: group button flag hover opacity */
+.group-rail-flag {
+  opacity: 0.74;
+  transition: opacity .16s ease, filter .16s ease;
+}
+
+.group-rail-tile:hover .group-rail-flag,
+.group-rail-tile:focus-visible .group-rail-flag,
+.group-rail-tile:active .group-rail-flag,
+.group-rail-tile.is-active .group-rail-flag {
+  opacity: 1;
+  filter: saturate(1.08);
+}

@@ -1,0 +1,550 @@
+{
+  "schemaVersion": 1,
+  "sourceImage": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+  "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+  "slots": [
+    {
+      "fifaSlotId": "FIFA_R32_L01",
+      "fifaLabel": "1E",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 1,
+      "matchupId": "R32-L01",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "E"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L02",
+      "fifaLabel": "3 ABCDF",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 2,
+      "matchupId": "R32-L01",
+      "matchupPosition": "bottom",
+      "qualifierKind": "third-place-candidate-set",
+      "groups": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L03",
+      "fifaLabel": "1I",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 3,
+      "matchupId": "R32-L02",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "I"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L04",
+      "fifaLabel": "3 CDFGH",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 4,
+      "matchupId": "R32-L02",
+      "matchupPosition": "bottom",
+      "qualifierKind": "third-place-candidate-set",
+      "groups": [
+        "C",
+        "D",
+        "F",
+        "G",
+        "H"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L05",
+      "fifaLabel": "2A",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 5,
+      "matchupId": "R32-L03",
+      "matchupPosition": "top",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "A"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L06",
+      "fifaLabel": "2B",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 6,
+      "matchupId": "R32-L03",
+      "matchupPosition": "bottom",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "B"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L07",
+      "fifaLabel": "1F",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 7,
+      "matchupId": "R32-L04",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "F"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L08",
+      "fifaLabel": "2C",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 8,
+      "matchupId": "R32-L04",
+      "matchupPosition": "bottom",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "C"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L09",
+      "fifaLabel": "2K",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 9,
+      "matchupId": "R32-L05",
+      "matchupPosition": "top",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "K"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L10",
+      "fifaLabel": "2L",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 10,
+      "matchupId": "R32-L05",
+      "matchupPosition": "bottom",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "L"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L11",
+      "fifaLabel": "1H",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 11,
+      "matchupId": "R32-L06",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "H"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L12",
+      "fifaLabel": "2J",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 12,
+      "matchupId": "R32-L06",
+      "matchupPosition": "bottom",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "J"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L13",
+      "fifaLabel": "1D",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 13,
+      "matchupId": "R32-L07",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "D"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L14",
+      "fifaLabel": "3 BEFIJ",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 14,
+      "matchupId": "R32-L07",
+      "matchupPosition": "bottom",
+      "qualifierKind": "third-place-candidate-set",
+      "groups": [
+        "B",
+        "E",
+        "F",
+        "I",
+        "J"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L15",
+      "fifaLabel": "1G",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 15,
+      "matchupId": "R32-L08",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "G"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_L16",
+      "fifaLabel": "3 AEHJ",
+      "round": "R32",
+      "side": "left",
+      "sideOrder": 16,
+      "matchupId": "R32-L08",
+      "matchupPosition": "bottom",
+      "qualifierKind": "third-place-candidate-set",
+      "groups": [
+        "A",
+        "E",
+        "H",
+        "J"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R01",
+      "fifaLabel": "1C",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 1,
+      "matchupId": "R32-R01",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "C"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R02",
+      "fifaLabel": "2F",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 2,
+      "matchupId": "R32-R01",
+      "matchupPosition": "bottom",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "F"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R03",
+      "fifaLabel": "2E",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 3,
+      "matchupId": "R32-R02",
+      "matchupPosition": "top",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "E"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R04",
+      "fifaLabel": "2I",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 4,
+      "matchupId": "R32-R02",
+      "matchupPosition": "bottom",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "I"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R05",
+      "fifaLabel": "1A",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 5,
+      "matchupId": "R32-R03",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "A"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R06",
+      "fifaLabel": "3 CEFHI",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 6,
+      "matchupId": "R32-R03",
+      "matchupPosition": "bottom",
+      "qualifierKind": "third-place-candidate-set",
+      "groups": [
+        "C",
+        "E",
+        "F",
+        "H",
+        "I"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R07",
+      "fifaLabel": "1L",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 7,
+      "matchupId": "R32-R04",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "L"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R08",
+      "fifaLabel": "3 EHIJK",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 8,
+      "matchupId": "R32-R04",
+      "matchupPosition": "bottom",
+      "qualifierKind": "third-place-candidate-set",
+      "groups": [
+        "E",
+        "H",
+        "I",
+        "J",
+        "K"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R09",
+      "fifaLabel": "1J",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 9,
+      "matchupId": "R32-R05",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "J"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R10",
+      "fifaLabel": "2H",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 10,
+      "matchupId": "R32-R05",
+      "matchupPosition": "bottom",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "H"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R11",
+      "fifaLabel": "2D",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 11,
+      "matchupId": "R32-R06",
+      "matchupPosition": "top",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "D"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R12",
+      "fifaLabel": "2G",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 12,
+      "matchupId": "R32-R06",
+      "matchupPosition": "bottom",
+      "qualifierKind": "group-runner-up",
+      "groups": [
+        "G"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R13",
+      "fifaLabel": "1B",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 13,
+      "matchupId": "R32-R07",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "B"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R14",
+      "fifaLabel": "3 EFGIJ",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 14,
+      "matchupId": "R32-R07",
+      "matchupPosition": "bottom",
+      "qualifierKind": "third-place-candidate-set",
+      "groups": [
+        "E",
+        "F",
+        "G",
+        "I",
+        "J"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R15",
+      "fifaLabel": "1K",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 15,
+      "matchupId": "R32-R08",
+      "matchupPosition": "top",
+      "qualifierKind": "group-winner",
+      "groups": [
+        "K"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    },
+    {
+      "fifaSlotId": "FIFA_R32_R16",
+      "fifaLabel": "3 DEIJL",
+      "round": "R32",
+      "side": "right",
+      "sideOrder": 16,
+      "matchupId": "R32-R08",
+      "matchupPosition": "bottom",
+      "qualifierKind": "third-place-candidate-set",
+      "groups": [
+        "D",
+        "E",
+        "I",
+        "J",
+        "L"
+      ],
+      "extractionSource": "source/images/game1_fifa_to_board_mapping_reference_20260617.png",
+      "extractionMethod": "human-reviewed visual extraction from uploaded FIFA-to-board mapping image",
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "competition": "fifa.world",
+  "season": 2026,
+  "source": {
+    "provider": "Workbench CB verified external highlight storage",
+    "capturedAt": "2026-06-18T15:15:00Z",
+    "notes": [
+      "Highlight URLs are checked-in data used by the group panel runtime.",
+      "Runtime must not scrape ESPN, FOX, FIFA, YouTube, or any external source.",
+      "Completed matches without a stored URL remain static evidence in the group panel.",
+      "Stored links were verified from search metadata against teams, World Cup 2026 context, and local final-score matchEvidence."
+    ]
+  },
+  "highlights": {
+    "66457018": {
+      "provider": "YouTube",
+      "title": "Highlights | Argentina 3-0 Algeria | FIFA World Cup 2026™",
+      "url": "https://youtu.be/JH_WRKTCPK4",
+      "verifiedAt": "2026-06-18",
+      "matchEvidence": "Argentina 3-0 Algeria",
+      "verificationMode": "user-provided-url"
+    },
+    "66456928": {
+      "provider": "YouTube",
+      "title": "Highlights | Brazil 1-1 Morocco | FIFA World Cup 2026™",
+      "url": "https://www.youtube.com/watch?v=ECnK7UzAjIs",
+      "verifiedAt": "2026-06-18",
+      "matchEvidence": "Brazil 1-1 Morocco",
+      "verificationMode": "title-result-match"
+    },
+    "66456930": {
+      "provider": "YouTube",
+      "title": "Highlights | Haiti 0-1 Scotland | FIFA World Cup 2026™",
+      "url": "https://www.youtube.com/watch?v=TcCufmPCsu4",
+      "verifiedAt": "2026-06-18",
+      "matchEvidence": "Haiti 0-1 Scotland",
+      "verificationMode": "title-result-match"
+    },
+    "66456904": {
+      "provider": "FOX Sports",
+      "title": "Mexico vs South Africa Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-ppjfmeic702rursw",
+      "matchEvidence": "Mexico 2-0 South Africa",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Mexico and South Africa in the 2026 FIFA World Cup; the checked-in match snapshot carries the 2-0 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456906": {
+      "provider": "FOX Sports",
+      "title": "South Korea vs Czechia Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-qlh44pc6ak2igmjt",
+      "matchEvidence": "South Korea 2-1 Czechia",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between South Korea and Czechia in the 2026 FIFA World Cup; the checked-in match snapshot carries the 2-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456916": {
+      "provider": "FOX Sports",
+      "title": "Canada vs Bosnia and Herzegovina Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-sdkcdsh130dfb40l",
+      "matchEvidence": "Canada 1-1 Bosnia and Herzegovina",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Canada and Bosnia and Herzegovina in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456918": {
+      "provider": "FOX Sports",
+      "title": "Qatar vs Switzerland Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-gyntntrk0s0hsn4z",
+      "matchEvidence": "Qatar 1-1 Switzerland",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Qatar and Switzerland in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456940": {
+      "provider": "FOX Sports",
+      "title": "United States vs Paraguay Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-eby9xh1zeiq0epmn",
+      "matchEvidence": "United States 4-1 Paraguay",
+      "verificationNote": "Stored after explicit search because FOX Sports metadata identifies the full game highlights between United States and Paraguay in the 2026 FIFA World Cup; the checked-in match snapshot carries the 4-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456942": {
+      "provider": "FOX Sports",
+      "title": "Australia vs Türkiye Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-a7v7b1fca7i9unew",
+      "matchEvidence": "Australia 2-0 Turkey",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Australia and Türkiye in the 2026 FIFA World Cup; the checked-in match snapshot carries the 2-0 final score and uses Turkey as the local team name.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456968": {
+      "provider": "FOX Sports",
+      "title": "Netherlands vs Japan Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-wdprlkmvn588nmns",
+      "matchEvidence": "Netherlands 2-2 Japan",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Netherlands and Japan in the 2026 FIFA World Cup; the checked-in match snapshot carries the 2-2 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456970": {
+      "provider": "FOX Sports",
+      "title": "Sweden vs Tunisia Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-gdff3qjfpybqcygc",
+      "matchEvidence": "Sweden 5-1 Tunisia",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Sweden and Tunisia in the 2026 FIFA World Cup; the checked-in match snapshot carries the 5-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456982": {
+      "provider": "FOX Sports",
+      "title": "Belgium vs Egypt Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-varags9ocqovluho",
+      "matchEvidence": "Belgium 1-1 Egypt",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Belgium and Egypt in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456984": {
+      "provider": "FOX Sports",
+      "title": "Iran vs New Zealand Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-37zvynclbpdfd87b",
+      "matchEvidence": "Iran 2-2 New Zealand",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Iran and New Zealand in the 2026 FIFA World Cup; the checked-in match snapshot carries the 2-2 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456994": {
+      "provider": "FOX Sports",
+      "title": "Spain vs Cape Verde Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/clip/fmc-medb9ddj8ujnbjsc/spain-vs-cape-verde-extended-highlights-2026-fifa-world-cup",
+      "matchEvidence": "Spain 0-0 Cape Verde",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Spain and Cape Verde in the 2026 FIFA World Cup; the checked-in match snapshot carries the 0-0 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66456996": {
+      "provider": "FOX Sports",
+      "title": "Saudi Arabia vs Uruguay Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-wk0kul396k37au4s",
+      "matchEvidence": "Saudi Arabia 1-1 Uruguay",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Saudi Arabia and Uruguay in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66457006": {
+      "provider": "FOX Sports",
+      "title": "France vs Senegal Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-cg6f8wr33ykuyk5y",
+      "matchEvidence": "France 3-1 Senegal",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between France and Senegal in the 2026 FIFA World Cup; the checked-in match snapshot carries the 3-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66457008": {
+      "provider": "FOX Sports",
+      "title": "Iraq vs Norway Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-7x8m71svs7jd5wig",
+      "matchEvidence": "Iraq 1-4 Norway",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Iraq and Norway in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-4 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66457020": {
+      "provider": "FOX Sports",
+      "title": "Austria vs Jordan Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-4phwa9yaxzwz7cnm",
+      "matchEvidence": "Austria 3-1 Jordan",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Austria and Jordan in the 2026 FIFA World Cup; the checked-in match snapshot carries the 3-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66457030": {
+      "provider": "FOX Sports",
+      "title": "Portugal vs DR Congo Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-jpnus6u6oyh33mr9",
+      "matchEvidence": "Portugal 1-1 DR Congo",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Portugal and DR Congo in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-1 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66457032": {
+      "provider": "FOX Sports",
+      "title": "Uzbekistan vs Colombia Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-o8nuenfio9lk6nzm",
+      "matchEvidence": "Uzbekistan 1-3 Colombia",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Uzbekistan and Colombia in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-3 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66457042": {
+      "provider": "FOX Sports",
+      "title": "England vs Croatia Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-f0x4dt0o8n3egzjy",
+      "matchEvidence": "England 4-2 Croatia",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between England and Croatia in the 2026 FIFA World Cup; the checked-in match snapshot carries the 4-2 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66457044": {
+      "provider": "FOX Sports",
+      "title": "Ghana vs Panama Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-ix7amd4wqvfr7uy5",
+      "matchEvidence": "Ghana 1-0 Panama",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Ghana and Panama in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-0 final score.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66457070": {
+      "provider": "FOX Sports",
+      "title": "Germany vs Curaçao Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-uje88e1sx81bbgtl",
+      "matchEvidence": "Germany 7-1 Curacao",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Germany and Curaçao in the 2026 FIFA World Cup; the checked-in match snapshot carries the 7-1 final score and uses Curacao without accent.",
+      "verifiedAt": "2026-06-18"
+    },
+    "66457072": {
+      "provider": "FOX Sports YouTube",
+      "title": "Ivory Coast vs Ecuador Extended Highlights 2026 FIFA World Cup™",
+      "url": "https://www.youtube.com/watch?v=j6uB9LcLMms",
+      "matchEvidence": "Ivory Coast 1-0 Ecuador",
+      "verificationNote": "Stored because FOX Sports YouTube metadata identifies extended highlights between Ivory Coast and Ecuador in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-0 final score.",
+      "verifiedAt": "2026-06-18"
+    }
+  }
+}

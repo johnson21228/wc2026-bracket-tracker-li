@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "tournamentId": "wc2026",
+  "round": "R32",
+  "mappingPurpose": "FIFA bracket display order to site pick identifiers",
+  "mappings": [
+    {
+      "fifaSlotId": "R32-01-HOME",
+      "sitePickId": "L-R32-01",
+      "displayOrder": 1,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-01-AWAY",
+      "sitePickId": "L-R32-02",
+      "displayOrder": 2,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-02-HOME",
+      "sitePickId": "L-R32-03",
+      "displayOrder": 3,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-02-AWAY",
+      "sitePickId": "L-R32-04",
+      "displayOrder": 4,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-03-HOME",
+      "sitePickId": "L-R32-05",
+      "displayOrder": 5,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-03-AWAY",
+      "sitePickId": "L-R32-06",
+      "displayOrder": 6,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-04-HOME",
+      "sitePickId": "L-R32-07",
+      "displayOrder": 7,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-04-AWAY",
+      "sitePickId": "L-R32-08",
+      "displayOrder": 8,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-05-HOME",
+      "sitePickId": "L-R32-09",
+      "displayOrder": 9,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-05-AWAY",
+      "sitePickId": "L-R32-10",
+      "displayOrder": 10,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-06-HOME",
+      "sitePickId": "L-R32-11",
+      "displayOrder": 11,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-06-AWAY",
+      "sitePickId": "L-R32-12",
+      "displayOrder": 12,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-07-HOME",
+      "sitePickId": "L-R32-13",
+      "displayOrder": 13,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-07-AWAY",
+      "sitePickId": "L-R32-14",
+      "displayOrder": 14,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-08-HOME",
+      "sitePickId": "L-R32-15",
+      "displayOrder": 15,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-08-AWAY",
+      "sitePickId": "L-R32-16",
+      "displayOrder": 16,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-09-HOME",
+      "sitePickId": "R-R32-01",
+      "displayOrder": 17,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-09-AWAY",
+      "sitePickId": "R-R32-02",
+      "displayOrder": 18,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-10-HOME",
+      "sitePickId": "R-R32-03",
+      "displayOrder": 19,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-10-AWAY",
+      "sitePickId": "R-R32-04",
+      "displayOrder": 20,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-11-HOME",
+      "sitePickId": "R-R32-05",
+      "displayOrder": 21,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-11-AWAY",
+      "sitePickId": "R-R32-06",
+      "displayOrder": 22,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-12-HOME",
+      "sitePickId": "R-R32-07",
+      "displayOrder": 23,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-12-AWAY",
+      "sitePickId": "R-R32-08",
+      "displayOrder": 24,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-13-HOME",
+      "sitePickId": "R-R32-09",
+      "displayOrder": 25,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-13-AWAY",
+      "sitePickId": "R-R32-10",
+      "displayOrder": 26,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-14-HOME",
+      "sitePickId": "R-R32-11",
+      "displayOrder": 27,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-14-AWAY",
+      "sitePickId": "R-R32-12",
+      "displayOrder": 28,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-15-HOME",
+      "sitePickId": "R-R32-13",
+      "displayOrder": 29,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-15-AWAY",
+      "sitePickId": "R-R32-14",
+      "displayOrder": 30,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-16-HOME",
+      "sitePickId": "R-R32-15",
+      "displayOrder": 31,
+      "status": "draft-needs-official-fifa-confirmation"
+    },
+    {
+      "fifaSlotId": "R32-16-AWAY",
+      "sitePickId": "R-R32-16",
+      "displayOrder": 32,
+      "status": "draft-needs-official-fifa-confirmation"
+    }
+  ]
+}
