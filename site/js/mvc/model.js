@@ -302,14 +302,38 @@ export async function createBracketModel() {
   function getGroupContext(groupId) {
     const normalizedGroupId = normalizeGroupId(groupId);
     const standings = getGroupStandings(normalizedGroupId);
+    const source = currentStandingsPayload.source || null;
+    const matches = getGroupMatches(normalizedGroupId).map((match) => {
+      const homeTeam = teamById.get(match.homeTeamId) || null;
+      const awayTeam = teamById.get(match.awayTeamId) || null;
+      const highlight = getMatchHighlights(match.matchId);
+      const completed = match.status === "final" || match.status === "complete" || match.status === "completed";
+      return {
+        ...match,
+        homeTeam,
+        awayTeam,
+        highlight,
+        evidenceStatus: completed ? "completed" : "scheduled",
+      };
+    });
+    const completedMatches = matches.filter((match) => match.evidenceStatus === "completed");
+    const upcomingMatches = matches.filter((match) => match.evidenceStatus !== "completed");
+    const sourceSummary = source
+      ? `${source.provider || "Local snapshot"}${source.capturedAt ? ` captured ${source.capturedAt}` : ""}`
+      : "Local checked-in standings snapshot.";
     return {
       groupId: normalizedGroupId,
+      label: standings?.label || `Group ${normalizedGroupId}`,
       standings,
-      matches: getGroupMatches(normalizedGroupId),
-      source: currentStandingsPayload.source || null,
+      entries: standings?.entries || [],
+      matches,
+      completedMatches,
+      upcomingMatches,
+      source,
+      sourceSummary,
+      thirdPlaceTable: getThirdPlaceTable(),
     };
   }
-
 
   function sourceTitleForSlot(slotId) {
     const slot = slotsById.get(slotId);

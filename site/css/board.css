@@ -262,3 +262,192 @@
 .group-panel-table th:first-child,
 .group-panel-table td:first-child { text-align: left; }
 .group-panel-source { margin: 0 12px 12px; opacity: .66; font-size: 12px; }
+
+/* Runtime repair: group panel is rendered but must sit above the board plane. */
+.board-group-panel-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.group-panel-popover {
+  position: absolute;
+  left: 56px;
+  top: 56px;
+  width: min(520px, calc(100% - 112px));
+  max-height: 80vh;
+  overflow: auto;
+  pointer-events: auto;
+  z-index: 81;
+  background: rgba(8, 17, 31, 0.96);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.24);
+  border-radius: 16px;
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.45);
+  padding: 16px;
+}
+
+.group-panel-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.group-panel-topbar h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.group-panel-close-button {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  font-weight: 800;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.group-panel-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.group-panel-table th,
+.group-panel-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.group-panel-source {
+  margin: 12px 0 0;
+  opacity: 0.78;
+  font-size: 13px;
+}
+
+/* Card 188: Group Panel Runtime v1 */
+.board-group-panel-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.group-panel-popover.group-panel-runtime-v1,
+.group-panel-runtime-v1 {
+  position: absolute;
+  left: 56px;
+  top: 56px;
+  width: min(720px, calc(100% - 112px));
+  max-height: 80vh;
+  overflow: auto;
+  pointer-events: auto;
+  z-index: 81;
+  background: rgba(8, 17, 31, 0.96);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.24);
+  border-radius: 16px;
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.45);
+  padding: 16px;
+}
+
+.group-panel-title-block h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.group-panel-source-status {
+  margin: 4px 0 0;
+  opacity: .72;
+  font-size: 12px;
+}
+
+.group-panel-standings {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.group-panel-standings th,
+.group-panel-standings td {
+  white-space: nowrap;
+  text-align: left;
+  padding: 7px 8px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+.group-panel-qualification {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 3px 7px;
+  background: rgba(255,255,255,.10);
+  text-transform: capitalize;
+}
+
+.group-panel-matches {
+  margin: 12px 0 0;
+  display: grid;
+  gap: 8px;
+}
+
+.group-panel-matches h3 {
+  margin: 8px 0 2px;
+  font-size: 14px;
+}
+
+.group-panel-match-card {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.055);
+  color: inherit;
+  text-decoration: none;
+}
+
+.group-panel-highlight-action {
+  cursor: pointer;
+  border-color: rgba(255,255,255,.30);
+}
+
+.group-panel-highlight-action:hover,
+.group-panel-highlight-action:focus-visible {
+  background: rgba(255,255,255,.11);
+  outline: 2px solid rgba(255,255,255,.28);
+  outline-offset: 2px;
+}
+
+.group-panel-status-pill {
+  justify-self: start;
+  border-radius: 999px;
+  padding: 3px 8px;
+  background: rgba(255,255,255,.12);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.group-panel-match-line {
+  font-weight: 800;
+}
+
+.group-panel-match-time,
+.group-panel-empty {
+  opacity: .72;
+  font-size: 12px;
+}
+
+.group-panel-highlight-link {
+  color: #fff;
+  font-weight: 800;
+}
+
