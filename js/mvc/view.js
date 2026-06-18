@@ -104,6 +104,13 @@ export function createBracketView(root) {
         code.textContent = slot.selectedTeam.abbr || slot.selectedTeam.id || "";
 
         identity.append(flag, code);
+        if (slot.pickValidity?.state === "invalid") {
+          const warning = document.createElement("span");
+          warning.className = "picked-cell-warning";
+          warning.textContent = "!";
+          warning.setAttribute("aria-label", slot.pickValidity.reason || "Invalid pick");
+          identity.append(warning);
+        }
         value.append(identity);
       } else {
         value.textContent = slot.pickable ? "Pick" : "";
@@ -111,6 +118,11 @@ export function createBracketView(root) {
 
       button.append(label, value);
       if (slot.selectedTeam) button.classList.add("has-pick");
+      if (slot.pickValidity?.state === "invalid") {
+        button.classList.add("has-invalid-pick");
+        button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
+        button.setAttribute("aria-label", `${slot.label}: invalid pick. ${button.title}`);
+      }
       if (slot.pickable) button.classList.add("is-pickable");
       button.addEventListener("click", () => handlers.onSlotClick?.(slot.slotId));
       layer.append(button);

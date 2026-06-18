@@ -229,52 +229,113 @@ export async function createBracketModel() {
     return slot.round === "R32" ? getR32Choices(slotId) : getKnockoutChoices(slotId);
   }
 
+  function standingsEntryForTeam(groupId, teamId) {
+    const standings = getGroupStandings(groupId);
+    const targetId = String(teamId || "").toUpperCase();
+    return (standings?.entries || []).find((entry) => {
+      return [entry.teamId, entry.id, entry.abbr].some((value) => String(value || "").toUpperCase() === targetId);
+    }) || null;
+  }
+
+  function ordinalRank(rank) {
+    const numeric = Number(rank);
+    if (!Number.isFinite(numeric)) return String(rank || "unknown rank");
+    const suffix = numeric === 1 ? "st" : numeric === 2 ? "nd" : numeric === 3 ? "rd" : "th";
+    return `${numeric}${suffix}`;
+  }
+
+  function expectedRankForR32Logic(logic) {
+    if (logic?.qualifierKind === "group-winner") return { rank: 1, role: "winner" };
+    if (logic?.qualifierKind === "group-runner-up") return { rank: 2, role: "runner-up" };
+    return null;
+  }
+
+  function duplicateR32Pick(slotId, teamId) {
+    return Object.entries(picks).find(([otherSlotId, otherTeamId]) => {
+      return otherSlotId !== slotId && otherTeamId === teamId && slotsById.get(otherSlotId)?.round === "R32";
+    }) || null;
+  }
+
+  function pickValidityForSlot(slot, team) {
+    if (!team) return { state: "empty", reason: "No pick has been made." };
+
+    const choices = getChoices(slot.slotId);
+    if (choices.length && !choices.some((choice) => choice.id === team.id)) {
+      return {
+        state: "invalid",
+        reason: `${team.abbr || team.id} is not available from this slot's current source or feeder path.`,
+      };
+    }
+
+    if (slot.round === "R32" && duplicateR32Pick(slot.slotId, team.id)) {
+      return {
+        state: "invalid",
+        reason: `${team.abbr || team.id} is already assigned to another Round of 32 slot.`,
+      };
+    }
+
+    if (slot.round === "R32") {
+      const logic = r32LogicByGeometryId.get(slot.slotId);
+      const expectation = expectedRankForR32Logic(logic);
+      const groupId = logic?.groups?.length === 1 ? logic.groups[0] : null;
+      if (expectation && groupId) {
+        const entry = standingsEntryForTeam(groupId, team.id);
+        if (!entry) {
+          return {
+            state: "unknown",
+            reason: `${team.abbr || team.id} is not present in the local Group ${groupId} standings snapshot.`,
+          };
+        }
+        if (Number(entry.rank) !== expectation.rank) {
+          return {
+            state: "invalid",
+            reason: `${team.abbr || team.id} is currently ${ordinalRank(entry.rank)} in Group ${groupId}; this slot expects the Group ${groupId} ${expectation.role}.`,
+          };
+        }
+      }
+    }
+
+    return { state: "valid", reason: "Pick currently satisfies the slot rule." };
+  }
+
   function isPickable(slotId) {
     return getChoices(slotId).length > 0;
   }
 
   function validatePick(slotId, teamId) {
     if (!teamId) return { valid: true };
+    if (!slotsById.has(slotId)) {
+      return { valid: false, reason: "Unknown bracket slot." };
+    }
+    if (!teamById.has(teamId)) {
+      return { valid: false, reason: "Unknown team." };
+    }
     const choices = getChoices(slotId);
     if (!choices.some((team) => team.id === teamId)) {
-      return { valid: false, reason: "Team is not available from this slot's current feeder path." };
-    }
-    const slot = slotsById.get(slotId);
-    if (slot?.round === "R32") {
-      const duplicate = Object.entries(picks).find(([otherSlotId, otherTeamId]) => {
-        return otherSlotId !== slotId && otherTeamId === teamId && slotsById.get(otherSlotId)?.round === "R32";
-      });
-      if (duplicate) {
-        return { valid: false, reason: "That team is already assigned to another Round of 32 slot." };
-      }
+      return { valid: false, reason: "Team is outside this slot's source scope." };
     }
     return { valid: true };
   }
 
   function cascadeClearInvalidDescendants() {
-    const cleared = [];
-    for (const round of ["R16", "QF", "SF", "FINAL_FOUR"]) {
-      for (const slot of slots.filter((candidate) => candidate.round === round)) {
-        const currentTeamId = picks[slot.slotId];
-        if (!currentTeamId) continue;
-        const choices = getChoices(slot.slotId);
-        if (!choices.some((team) => team.id === currentTeamId)) {
-          delete picks[slot.slotId];
-          cleared.push(slot.slotId);
-        }
-      }
-    }
-    return cleared;
+    // Card 207: conflicts are rendered as warnings, not cleared as side effects.
+    // Preserve downstream picks during import/refresh so user intent remains visible.
+    return [];
   }
 
   function setPick(slotId, teamId) {
-    const validation = validatePick(slotId, teamId);
-    if (!validation.valid) return { ok: false, ...validation, cleared: [] };
+    if (!slotsById.has(slotId)) {
+      return { ok: false, reason: "Unknown bracket slot.", cleared: [] };
+    }
+    if (teamId && !teamById.has(teamId)) {
+      return { ok: false, reason: "Unknown team.", cleared: [] };
+    }
     if (teamId) picks[slotId] = teamId;
     else delete picks[slotId];
-    const cleared = cascadeClearInvalidDescendants();
     saveToStorage(picks);
-    return { ok: true, cleared };
+    const slot = slotsById.get(slotId);
+    const team = selectedTeam(slotId);
+    return { ok: true, cleared: [], pickValidity: pickValidityForSlot(slot, team) };
   }
 
   function clearPick(slotId) {
@@ -533,6 +594,7 @@ export async function createBracketModel() {
         pickable: choices.length > 0,
         choices,
         selectedTeam: team,
+        pickValidity: pickValidityForSlot(slot, team),
         feederSlotIds: dependencyMap.get(slot.slotId) || [],
         label: logic?.fifaLabel || slot.slotId,
       };
@@ -545,7 +607,7 @@ export async function createBracketModel() {
     return { picked, pickable, totalSlots: slots.length };
   }
 
-  cascadeClearInvalidDescendants();
+  // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.
   saveToStorage(picks);
 
   return {
