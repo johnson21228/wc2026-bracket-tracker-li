@@ -658,3 +658,54 @@
   line-height: 1;
   text-shadow: 0 1px 1px rgba(0, 0, 0, .78);
 }
+
+/* Card 209: interaction overlay stack.
+   Transient inspection surfaces must sit above the bottom frame/group rail. */
+:root {
+  --wc-z-group-rail: 60;
+  --wc-z-pick-menu: 9000;
+  --wc-z-group-panel: 10000;
+}
+
+.group-button-rail,
+.board-group-rail,
+.group-rail,
+[data-group-rail] {
+  z-index: var(--wc-z-group-rail);
+}
+
+.r32-pick-menu-layer,
+.pick-menu-layer,
+[data-pick-menu-layer] {
+  position: absolute;
+  z-index: var(--wc-z-pick-menu);
+  pointer-events: none;
+}
+
+.r32-pick-menu-popover,
+.pick-menu-popover,
+.r32-pick-menu-layer > *,
+.pick-menu-layer > *,
+[data-pick-menu-layer] > * {
+  position: relative;
+  z-index: var(--wc-z-pick-menu);
+  pointer-events: auto;
+}
+
+.board-group-panel-layer,
+.group-panel-layer,
+[data-group-panel-layer] {
+  position: absolute;
+  z-index: var(--wc-z-group-panel);
+  pointer-events: none;
+}
+
+.group-panel-popover,
+.board-group-panel-layer > *,
+.group-panel-layer > *,
+[data-group-panel-layer] > * {
+  position: relative;
+  z-index: var(--wc-z-group-panel);
+  pointer-events: auto;
+}
+
