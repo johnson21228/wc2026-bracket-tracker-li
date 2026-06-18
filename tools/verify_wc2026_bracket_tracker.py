@@ -5,6 +5,29 @@ from pathlib import Path
 import json
 import sys
 import subprocess
+def is_allowed_pages_root_redirect(path):
+    """Allow only a tiny GitHub Pages root shim that redirects to site/."""
+    if path.name != "index.html" or not path.exists():
+        return False
+    html = path.read_text(errors="ignore")
+    has_meta_redirect = 'http-equiv="refresh"' in html and 'url=site/' in html
+    has_js_redirect = 'window.location.replace("site/"' in html or "window.location.replace('site/'" in html
+    has_site_link = 'href="site/"' in html or "href='site/'" in html
+    forbidden_runtime_refs = [
+        'src="js/',
+        "src='js/",
+        'href="css/',
+        "href='css/",
+        'data/current/',
+        'site/js/',
+        'site/css/',
+    ]
+    return (
+        has_meta_redirect
+        and has_js_redirect
+        and has_site_link
+        and not any(marker in html for marker in forbidden_runtime_refs)
+    )
 
 ROOT = Path.cwd()
 
@@ -84,7 +107,14 @@ def main() -> int:
     if missing:
         fail("Missing required files:", missing)
 
-    forbidden = [p for p in FORBIDDEN_ROOT_FILES if (ROOT / p).exists()]
+    forbidden = []
+    for name in FORBIDDEN_ROOT_FILES:
+        candidate = ROOT / name
+        if not candidate.exists():
+            continue
+        if name == "index.html" and is_allowed_pages_root_redirect(candidate):
+            continue
+        forbidden.append(name)
     if forbidden:
         fail("Root HTML entrypoints are stale; deployable site must live under site/:", forbidden)
 
