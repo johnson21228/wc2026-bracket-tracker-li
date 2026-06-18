@@ -474,6 +474,7 @@
 }
 
 .group-rail-tile {
+  opacity: 0.66;
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 5px;
