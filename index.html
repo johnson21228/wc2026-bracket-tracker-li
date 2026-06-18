@@ -1,35 +1,15 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WC2026 Bracket Tracker</title>
-  <link rel="preload" as="image" href="assets/board/pub_background.jpeg">
-  <link rel="preload" as="image" href="assets/board/gameboard.svg">
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/board.css">
-  <link rel="stylesheet" href="css/dev.css">
-</head>
-<body>
-  <main id="wc2026-app" class="wc2026-app" data-wc2026-app>
-    <section class="app-shell" aria-labelledby="app-title">
-      <header class="app-header">
-        <p class="eyebrow">Game 1</p>
-        <h1 id="app-title">World Cup 2026 Bracket Tracker</h1>
-        <p class="app-summary">
-          Clean MVC runtime: one site, one native 1536×1024 board plane, explicit pick buttons,
-          and downstream pick clearing when upstream picks change.
-        </p>
-        <div class="app-actions">
-          <button type="button" class="ghost-button" data-action="clear-all">Clear picks</button>
-        </div>
-      </header>
-      <div class="board-scroll" data-board-scroll>
-        <section class="pixel-native-board-plane" data-board-plane aria-label="World Cup bracket board"></section>
-      </div>
-      <section class="status-panel" data-status-panel aria-live="polite"></section>
-    </section>
-  </main>
-  <script type="module" src="js/app.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>WC2026 Bracket Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="0; url=site/">
+    <script>
+      window.location.replace("site/" + window.location.search + window.location.hash);
+    </script>
+  </head>
+  <body>
+    <p>Opening <a href="site/">WC2026 Bracket Tracker</a>…</p>
+  </body>
 </html>
