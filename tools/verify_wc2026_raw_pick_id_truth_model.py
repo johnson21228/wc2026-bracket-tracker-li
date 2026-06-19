@@ -95,10 +95,9 @@ def main():
         for section in EXPECTED_HISTORY_SECTIONS:
             if section not in log_body:
                 errors.append(f"recent git history missing CB history section: {section}")
-        if "captures/CAPTURE_BACK_CB_GOVERNANCE.md" not in log_body:
-            errors.append("recent git history missing CB governance capture reference")
-        if "captures/CAPTURE_BACK_EMPTY_PICK_STATE_STORAGE_MODEL.md" not in log_body:
-            errors.append("recent git history missing empty pick-state capture reference")
+        # Older anchor captures are verified by PREVIOUS_ANCHORS above.
+        # Do not require them to remain in the last three commits forever; that
+        # makes the verifier fail as normal new work advances repo history.
 
     if errors:
         fail(errors)
