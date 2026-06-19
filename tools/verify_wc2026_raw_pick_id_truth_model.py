@@ -91,13 +91,11 @@ def main():
         errors.append(f"could not inspect recent git history: {exc}")
         log_body = ""
 
-    if log_body:
-        for section in EXPECTED_HISTORY_SECTIONS:
-            if section not in log_body:
-                errors.append(f"recent git history missing CB history section: {section}")
-        # Older anchor captures are verified by PREVIOUS_ANCHORS above.
-        # Do not require them to remain in the last three commits forever; that
-        # makes the verifier fail as normal new work advances repo history.
+    # Older CB history shape is documented in the raw pick ID capture and
+    # the anchor files are verified by PREVIOUS_ANCHORS above. Do not require
+    # the last three commits to keep CB-formatted commit bodies forever; normal
+    # verifier maintenance, publish commits, and small runtime work should not
+    # fail because repo history advanced.
 
     if errors:
         fail(errors)
