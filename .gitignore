@@ -30,3 +30,6 @@ private-artifacts/
 local-archives/
 *.sqlite
 *.db
+
+# Generated pending result research artifacts
+outputs/research/*.json
