@@ -8,31 +8,39 @@ Why:
 
 - authentication and database are bundled
 - Row Level Security can protect user-owned bracket rows
+- RLS can also allow shared read access when game rules allow it
 - no always-on custom server is required
 - static frontend hosting can remain in place
-- the browser can use the public anon key safely when RLS is correct
+- the browser can use the public anon/publishable key safely when RLS is correct
 
-## MVP table
+## Canonical MVP table target
 
-```sql
-create table public.user_brackets (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  game_id text not null check (game_id in ('game1', 'game2')),
-  status text not null default 'draft' check (status in ('draft', 'submitted', 'locked')),
-  picks_json jsonb not null default '{}'::jsonb,
-  submitted_at timestamptz,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  unique(user_id, game_id)
-);
-```
+The current SQL target is not the older private-only `status` table sketch. The canonical target is documented in:
+
+- `docs/backend/wc2026_supabase_shared_pick_sql_target.md`
+- `source/sql/wc2026_supabase_shared_pick_schema_draft.sql`
+- `source/sql/wc2026_supabase_shared_pick_rls_draft.sql`
+
+The backend should include:
+
+- `public.profiles` for display names without exposing raw auth emails
+- `public.user_brackets` with one row per `(user_id, game_id)`
+- `picks_json` for the canonical pick-state document
+- `visibility` for future shared pick views
+- `submitted_at` and `locked_at` for contest safety and shared-read eligibility
 
 ## Security posture
 
-Enable Row Level Security. Users may read and write only their own draft brackets. Submitted or locked brackets must not be editable through the normal client path.
+Enable Row Level Security. Users may write only their own unsubmitted/unlocked bracket rows. Owners may always read their own rows. Other signed-in users may read rows only when `visibility`, `submitted_at`, or `locked_at` allows it.
 
-The service role key must never be committed. Never commit the Supabase service role key. The public anon key may be present in browser config only when RLS is correct.
+The service role key must never be committed. Never commit the Supabase service role key. The public anon/publishable key may be present in browser config only when RLS is correct.
+
+Core invariant:
+
+```text
+WRITE is private.
+READ can be shared when game rules allow it.
+```
 
 ## Alternatives
 

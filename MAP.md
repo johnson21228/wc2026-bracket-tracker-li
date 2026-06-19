@@ -67,6 +67,10 @@ After the official Round of 32 is known, players fill the full knockout bracket 
 - `docs/architecture/wc2026_public_multi_user_play_architecture.md` — static site + local/remote storage architecture.
 - `docs/backend/wc2026_inexpensive_backend_options.md` — inexpensive backend options and Supabase posture.
 
+- `docs/backend/wc2026_supabase_shared_pick_sql_target.md` — canonical Supabase profiles/user_brackets shared-pick SQL target before dashboard execution.
+- `source/sql/wc2026_supabase_shared_pick_schema_draft.sql` — draft schema SQL for profiles and user_brackets.
+- `source/sql/wc2026_supabase_shared_pick_rls_draft.sql` — draft RLS SQL for owner-only writes and owner-or-shared reads.
+
 
 - `captures/CAPTURE_BACK_EMPTY_PICK_STATE_STORAGE_MODEL.md` — Capture Back for complete empty pick-state storage refinement.
 
@@ -93,3 +97,10 @@ After the official Round of 32 is known, players fill the full knockout bracket 
 
 Invariant: `pickId is truth; visual slot is projection; UI geometry may change; pickId must not change.`
 
+## Bracketeering Model Persistence Contract
+
+- `cards/222_confirm_bracketeering_model_persistence_contract_card.md` — confirms the saved bracket model seam before Supabase SQL is applied.
+- `docs/architecture/bracketeering_model_persistence_contract.md` — durable model contract for Pages runtime state to Supabase/Postgres persistence.
+- `li/world_cup/bracketeering_model_persistence_contract_rule.md` — requires owner-write/shared-read persistence design and keeps Supabase behind BracketStore.
+- `captures/CAPTURE_BACK_BRACKETEERING_MODEL_PERSISTENCE_CONTRACT.md` — Capture Back record for the model persistence contract.
+- `tools/verify_wc2026_bracketeering_model_persistence_contract.py` — verifier for this capture.

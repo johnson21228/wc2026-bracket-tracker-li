@@ -54,6 +54,18 @@ The backend stores two JSON documents per user:
 
 This is intentionally simpler than a normalized pick row table. The bracket has a small bounded number of picks, and full-document save/load matches the existing local/export workflow.
 
+
+## Shared pick visibility invariant
+
+The Supabase target must not be private-only. The product direction is:
+
+```text
+WRITE is private.
+READ can be shared when game rules allow it.
+```
+
+Account-backed drafts default to private. Later shared player pick views should read from `public.profiles` plus `public.user_brackets` only when bracket rows are public, submitted, or locked. Raw auth emails must not be used as public display names.
+
 ## Site-running invariant
 
 Every public-play change must preserve the current local/static site behavior until the new behavior is intentionally promoted. The local storage path is not throwaway; it is the anonymous mode, offline fallback, and migration source.
