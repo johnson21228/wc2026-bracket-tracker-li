@@ -67,3 +67,18 @@ After the official Round of 32 is known, players fill the full knockout bracket 
 - `docs/architecture/wc2026_public_multi_user_play_architecture.md` — static site + local/remote storage architecture.
 - `docs/backend/wc2026_inexpensive_backend_options.md` — inexpensive backend options and Supabase posture.
 
+
+- `captures/CAPTURE_BACK_EMPTY_PICK_STATE_STORAGE_MODEL.md` — Capture Back for complete empty pick-state storage refinement.
+
+- `tools/verify_wc2026_empty_pick_state_storage_li.py` — Verifies the empty pick-state storage LI refinement.
+
+- `prompts/implement_card_212_empty_pick_state_storage.md` — Next implementation prompt for Card 212.
+
+## Capture Back governance
+
+- Current Capture Back reports live in `captures/`.
+- Legacy/historical Capture Back material may remain in `capture_back/`.
+- New CB overlays should write report markdown to `captures/CAPTURE_BACK_*.md` and print the written path during apply.
+- Governance rule: `li/repo/capture_back_governance_rule.md`.
+- Current governance report: `captures/CAPTURE_BACK_CB_GOVERNANCE.md`.
+

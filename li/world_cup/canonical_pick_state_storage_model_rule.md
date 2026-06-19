@@ -1,43 +1,28 @@
-# Canonical Pick State Storage Model Rule
+# Canonical Pick-State Storage Model Rule
 
-User bracket storage must be represented as one canonical pick-state document per user per game.
+## Rule
 
-## Game states
+Workbench must treat a user's Bracketeering Pub bracket state as a complete canonical pick-state document, not as an ad hoc sparse set of browser-local picks.
 
-Each authenticated user has at most one active bracket document for each game:
+Each user has two game pick states:
 
-- `game1`: full group-stage prediction bracket
-- `game2`: knockout prediction bracket after the actual Round of 32 field is known
+- `game1`: full group-stage prediction bracket, with 64 explicit pick slots.
+- `game2`: knockout prediction bracket, with 32 explicit pick slots.
 
-## Expected pick counts
+The canonical document must be created as a complete empty pick-state shell before the user makes picks.
 
-The model must account for champion and third-place picks.
+## Required empty initialization
 
-- Game 1 expected pick count: 64
-- Game 2 expected pick count: 32
+A new bracket state must initialize every required slot explicitly:
 
-Game 1 contains:
+- `game1`: 32 Round-of-32 entrant slots, 16 Round-of-32 winners, 8 Round-of-16 winners, 4 quarterfinal winners, 2 semifinal winners/finalists, 1 champion, and 1 third-place winner.
+- `game2`: 16 Round-of-32 winners, 8 Round-of-16 winners, 4 quarterfinal winners, 2 semifinal winners/finalists, 1 champion, and 1 third-place winner.
 
-- 32 Round-of-32 entrant picks
-- 16 Round-of-32 winner picks
-- 8 Round-of-16 winner picks
-- 4 quarterfinal winner picks
-- 2 semifinal winner/finalist picks
-- 1 final winner/champion pick
-- 1 third-place winner pick
+All initialized slots must be empty until the user makes a pick. A missing required slot is a model error. An empty required slot is a valid draft value.
 
-Game 2 contains:
+## Canonical shape
 
-- 16 Round-of-32 winner picks
-- 8 Round-of-16 winner picks
-- 4 quarterfinal winner picks
-- 2 semifinal winner/finalist picks
-- 1 final winner/champion pick
-- 1 third-place winner pick
-
-## Canonical document shape
-
-The stable storage unit is a JSON document with this conceptual shape:
+The storage shape should support this semantic form:
 
 ```json
 {
@@ -46,34 +31,50 @@ The stable storage unit is a JSON document with this conceptual shape:
   "status": "draft",
   "expectedPickCount": 64,
   "picksBySlot": {
-    "SLOT-ID": {
-      "slotId": "SLOT-ID",
-      "teamId": "MEX",
-      "label": "Mexico"
+    "L-R32-01": {
+      "slotId": "L-R32-01",
+      "round": "R32_ENTRANT",
+      "pick": null,
+      "source": "empty"
+    },
+    "CHAMPION": {
+      "slotId": "CHAMPION",
+      "round": "CHAMPION",
+      "pick": null,
+      "source": "empty"
+    },
+    "THIRD-PLACE-WINNER": {
+      "slotId": "THIRD-PLACE-WINNER",
+      "round": "THIRD_PLACE",
+      "pick": null,
+      "source": "empty"
     }
   }
 }
 ```
 
-The exact slot IDs are repo-owned and must come from a canonical slot manifest or model authority, not from backend table assumptions.
+The exact slot IDs are repo-owned and must be derived from the bracket slot manifest/model, not invented in the backend.
 
-## Storage implementations
+## Draft vs submitted
 
-Local and remote stores must use the same canonical document shape:
+Draft state may contain empty picks. Submitted/locked state must not contain empty required picks.
 
-- `LocalStorageBracketStore` is the first implementation.
-- `RemoteBracketStore` is a later implementation.
-- Export/import should be able to round-trip through the same shape.
+## Storage adapter invariant
 
-## UI ownership
+Local storage and future remote storage must use the same canonical document. The difference between local-only mode and signed-in mode is the storage adapter, not the bracket state shape.
 
-The UI may use a single Final Four menu to choose finalists, champion, and third-place winner. The server does not need to understand the menu. The saved document records the resulting slots.
+## Site-running invariant
 
-## Validation ownership
+Any implementation of this rule must preserve the current local/static site as playable. Backend work must not be required for the anonymous local bracket workflow to run.
 
-The model layer validates:
+## Public play storage adapter requirements
 
-- expected slot completeness
-- champion is drawn from final participants
-- third-place winner is drawn from semifinal losers
-- downstream picks are invalidated or warned when upstream picks change
+Game 1 expected pick count: 64
+Game 2 expected pick count: 32
+
+The canonical pick state must explicitly account for semifinal losers so the third-place winner can be selected from the two semifinal losers.
+
+LocalStorageBracketStore is the first storage adapter and must keep the static/local site running.
+
+RemoteBracketStore is the future signed-in storage adapter and must use the same canonical pick-state document shape.
+

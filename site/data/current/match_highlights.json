@@ -28,6 +28,14 @@
       "verifiedAt": "2026-06-18",
       "matchEvidence": "Argentina 3-0 Algeria",
       "verificationMode": "user-provided-url"
+    },
+    "66456928": {
+      "provider": "FIFA",
+      "title": "Brazil 1-1 Morocco",
+      "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/brazil-morocco-highlights-match-report",
+      "verifiedAt": "2026-06-19",
+      "matchEvidence": "Brazil 1-1 Morocco",
+      "verificationMode": "web-verified"
     }
   }
 }

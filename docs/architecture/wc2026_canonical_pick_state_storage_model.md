@@ -1,44 +1,64 @@
-# WC2026 Canonical Pick State Storage Model
+# WC2026 Canonical Pick-State Storage Model
 
-## Purpose
+## Goal
 
-Define the durable user bracket document that local storage, export/import, and future server storage can all share.
+Define the storage model that lets the current local-only Bracketeering Pub site evolve into an invite-ready public-play site with signed-in user storage.
 
-## User storage unit
+The storage model is intentionally simple: one canonical pick-state JSON document per user per game.
 
-A user has one pick-state document per game:
+## Two stored game states
 
-```text
-user + game1 -> one bracket document
-user + game2 -> one bracket document
-```
+Each user has two possible pick-state documents:
+
+| Game | Meaning | Expected slots |
+| --- | --- | ---: |
+| `game1` | Full group-stage prediction bracket | 64 |
+| `game2` | Knockout-round prediction bracket | 32 |
 
 ## Pick counts
 
-Game 1 expected total: 64 picks.
+### Game 1
 
-```text
-32 R32 entrants
-16 R32 winners
-8 R16 winners
-4 QF winners
-2 SF winners / finalists
-1 champion
-1 third-place winner
-```
+Game 1 starts before the Round of 32 field is known from the user's prediction. It stores:
 
-Game 2 expected total: 32 picks.
+- 32 Round-of-32 entrant picks;
+- 16 Round-of-32 match winners;
+- 8 Round-of-16 match winners;
+- 4 quarterfinal match winners;
+- 2 semifinal winners/finalists;
+- 1 final winner/champion;
+- 1 third-place winner.
 
-```text
-16 R32 winners
-8 R16 winners
-4 QF winners
-2 SF winners / finalists
-1 champion
-1 third-place winner
-```
+Total: 64 stored pick slots.
 
-## Canonical JSON shape
+### Game 2
+
+Game 2 starts when the actual Round of 32 field is known. It stores:
+
+- 16 Round-of-32 match winners;
+- 8 Round-of-16 match winners;
+- 4 quarterfinal match winners;
+- 2 semifinal winners/finalists;
+- 1 final winner/champion;
+- 1 third-place winner.
+
+Total: 32 stored pick slots.
+
+## Empty-document invariant
+
+A new pick state is not sparse.
+
+The app must create a complete empty bracket document first:
+
+- `game1` always has 64 slot records;
+- `game2` always has 32 slot records;
+- every required slot is present from initialization;
+- an unpicked slot has `pick: null` and `source: "empty"`;
+- a missing required slot is an error.
+
+This is the key bridge to server-backed play. The server should never need to infer which slots exist.
+
+## Canonical document shape
 
 ```json
 {
@@ -46,45 +66,80 @@ Game 2 expected total: 32 picks.
   "gameId": "game1",
   "status": "draft",
   "expectedPickCount": 64,
+  "createdAt": "2026-06-19T00:00:00Z",
+  "updatedAt": "2026-06-19T00:00:00Z",
   "picksBySlot": {
     "L-R32-01": {
       "slotId": "L-R32-01",
-      "teamId": "MEX",
-      "label": "Mexico"
+      "round": "R32_ENTRANT",
+      "pick": null,
+      "source": "empty"
+    },
+    "L-R16-01": {
+      "slotId": "L-R16-01",
+      "round": "R32_WINNER",
+      "pick": null,
+      "source": "empty"
+    },
+    "FINAL-LEFT": {
+      "slotId": "FINAL-LEFT",
+      "round": "SF_WINNER",
+      "pick": null,
+      "source": "empty"
     },
     "CHAMPION": {
       "slotId": "CHAMPION",
-      "teamId": "MEX",
-      "label": "Mexico"
+      "round": "CHAMPION",
+      "pick": null,
+      "source": "empty"
     },
     "THIRD-PLACE-WINNER": {
       "slotId": "THIRD-PLACE-WINNER",
-      "teamId": "FRA",
-      "label": "France"
+      "round": "THIRD_PLACE",
+      "pick": null,
+      "source": "empty"
     }
-  },
-  "updatedAt": "2026-06-19T12:00:00Z"
+  }
 }
 ```
 
-Slot IDs are logical identifiers owned by the repo. A later implementation should generate or validate against a manifest rather than hardcoding every slot in the backend.
+The exact slot IDs should come from the repo's game board and slot manifests. The backend should store the document; it should not define bracket geometry.
 
-## Status values
+## Draft, submitted, locked
 
-- `draft`: editable
-- `submitted`: user-submitted and not editable by normal client flow
-- `locked`: locked by contest timing or admin policy
+- `draft`: empty required slots are allowed.
+- `submitted`: every required slot must have a non-empty pick.
+- `locked`: submitted state is preserved against later editing.
 
-## Final Four behavior
+## Third-place pick
 
-The UI can manage finalists, champion, and third-place winner through one Final Four menu. The storage model records the result:
+The third-place winner is an explicit stored pick. The UI may manage it from the same Final Four menu as champion/finalist selection, but storage must store the resulting third-place winner in its own required slot.
 
-- two semifinal winner/finalist slots
-- champion slot
-- third-place winner slot
+The third-place candidate set is derived from the semifinal losers. That derivation is UI/model logic; the stored result is the selected third-place winner.
 
-The third-place winner must be selected from the losers of the two semifinal matches.
+## Local first, remote later
 
-## Local first
+The current implementation should use this document shape with local storage before any remote backend is added.
 
-The current local storage system should be routed through this shape before adding a remote backend. That makes server storage a transport change, not a game-state rewrite.
+```text
+UI picks
+  ↓
+Canonical complete pick-state document
+  ↓
+BracketRepository
+  ↓
+LocalStorageBracketStore now
+  ↓
+RemoteBracketStore later
+```
+
+This keeps the site running while preparing the exact document that Supabase/Postgres can later store.
+
+## Canonical public play pick counts
+
+Game 1 expected total: 64 picks
+Game 2 expected total: 32 picks
+
+Game 1 initializes all 64 required pick slots as empty.
+Game 2 initializes all 32 required pick slots as empty.
+

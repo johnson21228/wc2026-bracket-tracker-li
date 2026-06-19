@@ -1,6 +1,7 @@
 .PHONY: verify pack clean-hygiene open-site publish-pages
 
 verify:
+	python3 tools/verify_capture_back_governance.py
 	python3 tools/verify_wc2026_pick_conflicts_warn_not_block.py
 	python3 tools/verify_wc2026_bracket_tracker.py
 	python3 tools/verify_wc2026_fifa_r32_bridge.py
@@ -38,6 +39,7 @@ verify:
 	python3 tools/verify_wc2026_group_stage_background_runtime.py
 	python3 tools/verify_wc2026_interaction_overlay_stack.py
 	python3 tools/verify_wc2026_public_multi_user_play_li.py
+	python3 tools/verify_wc2026_empty_pick_state_storage_li.py
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py
 
