@@ -104,3 +104,14 @@ Invariant: `pickId is truth; visual slot is projection; UI geometry may change; 
 - `li/world_cup/bracketeering_model_persistence_contract_rule.md` — requires owner-write/shared-read persistence design and keeps Supabase behind BracketStore.
 - `captures/CAPTURE_BACK_BRACKETEERING_MODEL_PERSISTENCE_CONTRACT.md` — Capture Back record for the model persistence contract.
 - `tools/verify_wc2026_bracketeering_model_persistence_contract.py` — verifier for this capture.
+
+## Pages-Owned Board Zoom-Out Scale
+
+- `captures/CAPTURE_BACK_PAGES_OWNED_BOARD_ZOOM_OUT_SCALE.md` — Capture Back for the reversible board zoom-out scope.
+- `cards/223_add_pages_owned_board_zoom_out_scale_card.md` — Next implementation card for Pages-owned zoom-out scale.
+- `docs/features/pages_owned_board_zoom_out_scale.md` — Explains native coordinate preservation and render-scale conversion.
+- `li/world_cup/pages_owned_board_zoom_out_scale_rule.md` — LI rule keeping zoom in the Pages View/Controller layer.
+- `prompts/implement_pages_owned_board_zoom_out_scale.md` — Implementation prompt for the future zoom-out patch.
+- `tools/verify_wc2026_pages_owned_board_zoom_out_scale.py` — Verifies the zoom-out LI capture is installed.
+
+Invariant: all board actors speak native gameboard coordinates; only the Pages View shell converts native coordinates to rendered screen coordinates.
