@@ -37,7 +37,7 @@ for token in [
     "--wc-z-group-rail",
     "--wc-z-pick-menu",
     "--wc-z-group-panel",
-    ".r32-pick-menu-layer",
+    ".board-r32-pick-menu-layer",
     ".board-group-panel-layer",
     ".group-panel-popover",
     "pointer-events: auto",
