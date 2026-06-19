@@ -58,3 +58,12 @@ After the official Round of 32 is known, players fill the full knockout bracket 
 - `cards/156_normalize_canonical_rendered_knockout_visual_state_card.md` — normalizes canonical rendered R16/QF/SF card visual state.
 - `docs/features/game1_canonical_render_visual_uniformity.md` — explains that all rendered knockout cards come from canonical state and share one visual treatment.
 - `li/world_cup/game1_canonical_render_visual_uniformity_rule.md` — requires canonical rendered knockout picks to use consistent visual treatment.
+
+## Public Multi-User Play LI
+
+- `li/world_cup/public_multi_user_play_rule.md` — invite-ready public play rule.
+- `li/world_cup/canonical_pick_state_storage_model_rule.md` — Game 1/Game 2 canonical user pick-state storage model.
+- `li/world_cup/site_running_public_play_invariant_rule.md` — keep-site-running invariant for backend migration.
+- `docs/architecture/wc2026_public_multi_user_play_architecture.md` — static site + local/remote storage architecture.
+- `docs/backend/wc2026_inexpensive_backend_options.md` — inexpensive backend options and Supabase posture.
+

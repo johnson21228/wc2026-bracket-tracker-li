@@ -15,10 +15,18 @@
   "highlights": {
     "66456922": {
       "provider": "YouTube",
-      "title": "Highlights | Switzerland 4-1 Bosnia and Herzegovina | FIFA World Cup 2026™",
+      "title": "Switzerland 4-1 Bosnia and Herzegovina highlights",
       "url": "https://youtu.be/v08lQx6pThk",
       "verifiedAt": "2026-06-19",
       "matchEvidence": "Switzerland 4-1 Bosnia and Herzegovina",
+      "verificationMode": "user-provided-url"
+    },
+    "66457018": {
+      "provider": "YouTube",
+      "title": "Highlights | Argentina 3-0 Algeria | FIFA World Cup 2026™",
+      "url": "https://youtu.be/JH_WRKTCPK4",
+      "verifiedAt": "2026-06-18",
+      "matchEvidence": "Argentina 3-0 Algeria",
       "verificationMode": "user-provided-url"
     }
   }
