@@ -31,7 +31,7 @@ def main():
     html = read("site/index.html")
     html_tokens = [
         'class="eyebrow">Footie FÜHN</p>',
-        '<h1 id="app-title">Bracketeering Pub</h1>',
+        '<h1 id="app-title">bracketeering Pub</h1>',
         'Scroll the game board below and make your picks.',
         'data-action="clear-all"',
         'data-action="export-picks"',
