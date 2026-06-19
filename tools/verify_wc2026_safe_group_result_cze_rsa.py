@@ -33,7 +33,10 @@ sui = by_id.get("66456922")
 if not sui:
     errors.append("missing watchlist match 66456922")
 elif sui.get("status") == "final":
-    errors.append("66456922 should not be patched as final by Card 202")
+    if sui.get("homeScore") != 4 or sui.get("awayScore") != 1:
+        errors.append("66456922 final score should be Switzerland 4-1 Bosnia and Herzegovina")
+    if not sui.get("resultSourceUrl"):
+        errors.append("66456922 missing resultSourceUrl")
 
 standings = read("site/data/current/group_standings.json")
 group_a = standings.get("groups", {}).get("A", {}).get("entries", [])
