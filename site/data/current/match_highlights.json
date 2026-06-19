@@ -204,6 +204,22 @@
       "matchEvidence": "Ivory Coast 1-0 Ecuador",
       "verificationNote": "Stored because FOX Sports YouTube metadata identifies extended highlights between Ivory Coast and Ecuador in the 2026 FIFA World Cup; the checked-in match snapshot carries the 1-0 final score.",
       "verifiedAt": "2026-06-18"
+    },
+    "66456920": {
+      "provider": "FOX Sports",
+      "title": "Canada vs Qatar Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-08x1poc4k4nj1flm",
+      "matchEvidence": "Canada 6-0 Qatar",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Canada and Qatar in the 2026 FIFA World Cup; Guardian evidence confirms the 6-0 final score.",
+      "verifiedAt": "2026-06-19"
+    },
+    "66456908": {
+      "provider": "FOX Sports",
+      "title": "Mexico vs South Korea Extended Highlights | 2026 FIFA World Cup™",
+      "url": "https://www.foxsports.com/watch/fmc-yodc270m0znv8rfk",
+      "matchEvidence": "Mexico 1-0 South Korea",
+      "verificationNote": "Stored because FOX Sports metadata identifies the full game highlights between Mexico and South Korea in the 2026 FIFA World Cup; Reuters/AP/ESPN evidence confirms the 1-0 final score.",
+      "verifiedAt": "2026-06-19"
     }
   }
 }
