@@ -2,6 +2,7 @@
 
 verify:
 	python3 tools/verify_capture_back_governance.py
+	python3 tools/verify_wc2026_raw_pick_id_truth_model.py
 	python3 tools/verify_wc2026_pick_conflicts_warn_not_block.py
 	python3 tools/verify_wc2026_bracket_tracker.py
 	python3 tools/verify_wc2026_fifa_r32_bridge.py

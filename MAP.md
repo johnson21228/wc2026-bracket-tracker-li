@@ -82,3 +82,14 @@ After the official Round of 32 is known, players fill the full knockout bracket 
 - Governance rule: `li/repo/capture_back_governance_rule.md`.
 - Current governance report: `captures/CAPTURE_BACK_CB_GOVERNANCE.md`.
 
+## Raw Pick ID Truth Model
+
+- Capture Back: `captures/CAPTURE_BACK_PICK_ID_TRUTH_MODEL.md`
+- LI rule: `li/world_cup/raw_pick_id_truth_rule.md`
+- Architecture: `docs/architecture/wc2026_raw_pick_id_truth_model.md`
+- Card: `cards/221_define_raw_pick_id_truth_model_card.md`
+- Prompt: `prompts/implement_raw_pick_id_truth_model.md`
+- Verifier: `tools/verify_wc2026_raw_pick_id_truth_model.py`
+
+Invariant: `pickId is truth; visual slot is projection; UI geometry may change; pickId must not change.`
+
