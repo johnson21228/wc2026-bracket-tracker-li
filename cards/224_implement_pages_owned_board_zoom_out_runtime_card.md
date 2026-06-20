@@ -2,7 +2,7 @@
 
 ## Goal
 
-Allow the Bracketeering Pub board to zoom out below native size without changing the native board coordinate system.
+Allow the FIFA Bracketeering board to zoom out below native size without changing the native board coordinate system.
 
 ## Acceptance
 
@@ -11,7 +11,7 @@ Allow the Bracketeering Pub board to zoom out below native size without changing
 - The native board plane remains 1536×1024.
 - Render scale uses CSS transform on the native plane and explicit frame dimensions for layout.
 - Menu and group-panel placement convert rendered scroll bounds back to native board coordinates.
-- The hero title is restored to `Bracketeering Pub`.
+- The hero title is restored to `FIFA Bracketeering`.
 - `make verify` passes.
 
 ## Safety

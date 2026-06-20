@@ -1,6 +1,6 @@
 # Pages-Owned Board Zoom-Out Runtime
 
-The Bracketeering Pub board supports View-owned render scaling.
+The FIFA Bracketeering board supports View-owned render scaling.
 
 The native board plane remains the source of truth for board coordinates. The View wraps that native plane in a render-scale frame, scales the plane visually, and sizes the frame to the rendered dimensions so zooming out changes the scrollable layout.
 

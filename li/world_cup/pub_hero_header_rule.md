@@ -4,8 +4,8 @@ The Game 1 hero header is product language, not runtime implementation copy.
 
 The hero header must present the app as the pub game experience:
 
-- eyebrow: `Footie FÜHN`
-- main title: `Bracketeering Pub`
+- eyebrow: `World Cup 2026`
+- main title: `FIFA Bracketeering`
 - subtitle: `Scroll the game board below and make your picks.`
 - utility actions: `Clear picks`, `Export picks`, and `Import picks`
 

@@ -6,8 +6,8 @@ Replace implementation-facing hero copy with pub/game-facing product language an
 
 ## Acceptance
 
-- Hero eyebrow is `Footie FÜHN`.
-- Hero title is `Bracketeering Pub`.
+- Hero eyebrow is `World Cup 2026`.
+- Hero title is `FIFA Bracketeering`.
 - Hero subtitle is `Scroll the game board below and make your picks.`.
 - Header actions include `Clear picks`, `Export picks`, and `Import picks`.
 - Export creates a JSON pick snapshot.
