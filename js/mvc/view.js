@@ -1,3 +1,5 @@
+import { positionFloatingSurfaceNearAnchor } from "../services/FloatingSurfacePlacement.js";
+
 function teamLabel(team) {
   if (!team) return "";
   return `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id}`;
@@ -31,6 +33,7 @@ export function createBracketView(root) {
   const importPicksFile = root.querySelector('[data-import-picks-file]');
   let handlers = {};
   let pendingGroupPanelAnchorBoundsPx = null;
+  let pendingGroupPanelAnchorElement = null;
   let boardScale = Number(boardZoomSelect?.value || 1) || 1;
   let boardNativeSize = { width: 1536, height: 1024 };
   const BOARD_MIN_SCALE = 0.5;
@@ -240,57 +243,41 @@ export function createBracketView(root) {
   }
 
   function placeGroupPanelOverAnchor(panel, anchorBoundsPx) {
-    const viewport = visibleBoardViewport();
-    const margin = 14;
-    const visibleRight = viewport.left + viewport.width;
-    const visibleBottom = viewport.top + viewport.height;
-    const maxPanelWidth = Math.max(280, Math.min(520, viewport.width - margin * 2));
-    const maxPanelHeight = Math.max(240, viewport.height - margin * 2);
-
-    panel.style.width = `${Math.round(maxPanelWidth)}px`;
-    panel.style.maxHeight = `${Math.round(maxPanelHeight)}px`;
-
-    const panelWidth = panel.offsetWidth || maxPanelWidth;
-    const panelHeight = Math.min(panel.scrollHeight || 420, maxPanelHeight);
-
-    let left = viewport.left + margin;
-    let top = viewport.top + margin;
-
-    if (anchorBoundsPx) {
-      left = anchorBoundsPx.x + anchorBoundsPx.width / 2 - panelWidth / 2;
-      top = anchorBoundsPx.y - panelHeight - margin;
-      if (top < viewport.top + margin) {
-        top = anchorBoundsPx.y + anchorBoundsPx.height + margin;
-      }
-    }
-
-    left = Math.max(viewport.left + margin, Math.min(left, visibleRight - panelWidth - margin));
-    top = Math.max(viewport.top + margin, Math.min(top, visibleBottom - panelHeight - margin));
-
-    panel.style.left = `${Math.round(left)}px`;
-    panel.style.top = `${Math.round(top)}px`;
+    // Card 233: shared 50% zoom safe placement uses rendered screen coordinates.
+    const anchorElement = pendingGroupPanelAnchorElement;
+    positionFloatingSurfaceNearAnchor({
+      anchorEl: anchorElement,
+      anchorBoundsPx,
+      surfaceEl: panel,
+      boardPlane,
+      viewportEl: boardScroll || boardPlane.parentElement,
+      preferredPlacement: "above-then-below",
+      bottomControlSelectors: ["[data-group-rail-layer]", ".board-group-rail-layer", ".group-rail", ".bottom-frame-controls"],
+      margin: 14,
+      gap: 12,
+      minWidth: 280,
+      maxWidth: 520,
+      maxHeight: 640,
+    });
   }
 
-  function placePickMenu(popover, anchorBoundsPx) {
+  function placePickMenu(popover, anchorBoundsPx, anchorElement = null) {
     // Placement is board-attached; the menu scrolls with the game board.
-    const viewport = visibleBoardViewport();
-    const margin = 12;
-    const width = popover.offsetWidth || 292;
-    const height = popover.offsetHeight || 420;
-    const visibleRight = viewport.left + viewport.width;
-    const visibleBottom = viewport.top + viewport.height;
-
-    let left = anchorBoundsPx.x + anchorBoundsPx.width + margin;
-    if (left + width > visibleRight - margin) {
-      left = anchorBoundsPx.x - width - margin;
-    }
-    left = Math.max(viewport.left + margin, Math.min(left, visibleRight - width - margin));
-
-    let top = anchorBoundsPx.y;
-    top = Math.max(viewport.top + margin, Math.min(top, visibleBottom - height - margin));
-
-    popover.style.left = `${Math.round(left)}px`;
-    popover.style.top = `${Math.round(top)}px`;
+    // Card 233: shared 50% zoom safe placement uses rendered screen coordinates.
+    positionFloatingSurfaceNearAnchor({
+      anchorEl: anchorElement,
+      anchorBoundsPx,
+      surfaceEl: popover,
+      boardPlane,
+      viewportEl: boardScroll || boardPlane.parentElement,
+      preferredPlacement: "right-then-left",
+      bottomControlSelectors: ["[data-group-rail-layer]", ".board-group-rail-layer", ".group-rail", ".bottom-frame-controls"],
+      margin: 12,
+      gap: 10,
+      minWidth: 292,
+      maxWidth: 340,
+      maxHeight: 560,
+    });
   }
 
 
@@ -312,6 +299,7 @@ export function createBracketView(root) {
       button.setAttribute("aria-label", group.accessibleLabel || `Open ${group.label} panel`);
       button.addEventListener("click", () => {
         pendingGroupPanelAnchorBoundsPx = boardLocalBoundsForElement(button);
+        pendingGroupPanelAnchorElement = button;
         handlers.onGroupPanelOpen?.(group.groupId);
       });
 
@@ -409,6 +397,8 @@ export function createBracketView(root) {
         groupButton.textContent = group.label;
         groupButton.addEventListener("click", (event) => {
           event.stopPropagation();
+          pendingGroupPanelAnchorBoundsPx = boardLocalBoundsForElement(groupButton);
+          pendingGroupPanelAnchorElement = groupButton;
           handlers.onGroupPanelOpen?.(group.groupId);
         });
         groupHeader.append(groupButton);
@@ -442,7 +432,8 @@ export function createBracketView(root) {
 
     popover.append(sections);
     layer.append(popover);
-    placePickMenu(popover, menuModel.anchorBoundsPx);
+    const anchorElement = Array.from(boardPlane.querySelectorAll("[data-slot-id]")).find((node) => node.dataset.slotId === menuModel.slotId) || null;
+    placePickMenu(popover, menuModel.anchorBoundsPx, anchorElement);
   }
 
 
@@ -595,7 +586,9 @@ export function createBracketView(root) {
     layer.append(panel);
 
     const anchorBoundsPx = pendingGroupPanelAnchorBoundsPx;
+    const anchorElement = pendingGroupPanelAnchorElement;
     pendingGroupPanelAnchorBoundsPx = null;
+    pendingGroupPanelAnchorElement = null;
     placeGroupPanelOverAnchor(panel, anchorBoundsPx);
   }
 

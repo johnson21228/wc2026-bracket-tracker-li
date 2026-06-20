@@ -1,4 +1,5 @@
 import { createGame1R32PickController } from "../controllers/Game1R32PickController.js";
+import { positionFloatingSurfaceNearAnchor } from "../services/FloatingSurfacePlacement.js";
 
 function closeExistingMenu(layer) {
   layer.querySelectorAll(".r32-pick-menu-popover").forEach((node) => node.remove());
@@ -111,18 +112,8 @@ function createMenu({ layer, controller, button, slotViewModel }) {
   popover.setAttribute("role", "dialog");
   popover.setAttribute("aria-label", title);
 
-  const rect = {
-    x: Number(button.style.left.replace("px", "")) || 0,
-    y: Number(button.style.top.replace("px", "")) || 0,
-    width: Number(button.style.width.replace("px", "")) || 0,
-    height: Number(button.style.height.replace("px", "")) || 0,
-  };
-
-  const maxLeft = 1536 - 270;
-  const left = Math.max(12, Math.min(maxLeft, rect.x + rect.width + 8));
-  const top = Math.max(12, Math.min(900, rect.y - 16));
-  popover.style.left = `${left}px`;
-  popover.style.top = `${top}px`;
+  popover.style.left = "0px";
+  popover.style.top = "0px";
 
   const heading = document.createElement("div");
   heading.className = "r32-pick-menu-heading";
@@ -186,6 +177,19 @@ function createMenu({ layer, controller, button, slotViewModel }) {
 
   popover.append(list, actions);
   layer.append(popover);
+  positionFloatingSurfaceNearAnchor({
+    anchorEl: button,
+    surfaceEl: popover,
+    boardPlane: layer.closest("[data-board-plane]") || layer.parentElement,
+    viewportEl: layer.closest(".game1-board-viewport") || layer.closest("[data-board-scroll]"),
+    preferredPlacement: "right-then-left",
+    bottomControlSelectors: ["[data-group-rail-layer]", ".board-group-rail-layer", ".group-rail", ".bottom-frame-controls"],
+    margin: 12,
+    gap: 10,
+    minWidth: 270,
+    maxWidth: 320,
+    maxHeight: 520,
+  });
 }
 
 function createSlotButton({ layer, controller, slotViewModel }) {
