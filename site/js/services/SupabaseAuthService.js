@@ -1,7 +1,7 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import { WC2026_SUPABASE_PUBLIC_CONFIG } from "../config/supabase.public.js";
 
-const CONFIG_PLACEHOLDER_PATTERN = /YOUR_PROJECT_REF|YOUR_ANON_KEY|service_role/i;
+const CONFIG_PLACEHOLDER_PATTERN = /YOUR_PROJECT_REF|YOUR_PUBLISHABLE_KEY/i;
 
 function safeDisplayLabel(user) {
   const metadata = user?.user_metadata || {};
@@ -21,9 +21,9 @@ function publicUserSummary(session) {
 
 export function isSupabaseAuthConfigured(config = WC2026_SUPABASE_PUBLIC_CONFIG) {
   if (!config?.enabled) return false;
-  if (!config.supabaseUrl || !config.supabaseAnonKey) return false;
+  if (!config.supabaseUrl || !config.supabasePublishableKey) return false;
   if (CONFIG_PLACEHOLDER_PATTERN.test(config.supabaseUrl)) return false;
-  if (CONFIG_PLACEHOLDER_PATTERN.test(config.supabaseAnonKey)) return false;
+  if (CONFIG_PLACEHOLDER_PATTERN.test(config.supabasePublishableKey)) return false;
   return true;
 }
 
@@ -57,7 +57,7 @@ export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONF
   function ensureClient() {
     if (!isSupabaseAuthConfigured(config)) return null;
     if (!client) {
-      client = createClient(config.supabaseUrl, config.supabaseAnonKey, {
+      client = createClient(config.supabaseUrl, config.supabasePublishableKey, {
         auth: {
           persistSession: true,
           autoRefreshToken: true,
@@ -101,7 +101,7 @@ export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONF
         configured: false,
         status: "not-configured",
         user: null,
-        message: "Supabase Auth is not configured yet. Add project URL and anon key before sign-in.",
+        message: "Supabase Auth is not configured yet. Add project URL and publishable key before sign-in.",
       });
       return currentState;
     }

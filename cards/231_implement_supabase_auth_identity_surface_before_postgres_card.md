@@ -42,3 +42,6 @@ This card implements the first runtime step after the identity surface definitio
 - Sign-out clears the Supabase session.
 - Status remains honest: signed-in still says `Local bracket for now` until `SupabaseBracketStore` is implemented.
 - `make verify` passes.
+
+
+Card 231 refinement: use Supabase's current browser-safe publishable key terminology, not legacy anon-key terminology.

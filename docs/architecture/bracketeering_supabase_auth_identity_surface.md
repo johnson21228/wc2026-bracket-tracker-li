@@ -71,3 +71,21 @@ LocalStorageBracketStore owns:
 Same BracketDocument. Different store.
 
 This card implements only the Auth/status surface. The store remains localStorage until the Postgres SQL/RLS has been applied and `SupabaseBracketStore` is implemented.
+
+## Current Supabase public config
+
+The Pages site is configured with the current Supabase browser-safe publishable key terminology.
+
+Confirmed dashboard settings:
+
+- Site URL: `https://johnson21228.github.io/wc2026-bracket-tracker-li/`
+- Redirect URL: `https://johnson21228.github.io/wc2026-bracket-tracker-li/`
+
+Configured site values:
+
+- Project URL: `https://tkjqsegszveugdvoeits.supabase.co`
+- Publishable key: browser-safe publishable key in `site/js/config/supabase.public.js`
+
+Do not put service_role keys, database passwords, JWT secrets, or secret keys in site code.
+
+This card still does not implement Supabase/Postgres bracket persistence. LocalStorage remains the active BracketDocument store until SupabaseBracketStore is implemented.

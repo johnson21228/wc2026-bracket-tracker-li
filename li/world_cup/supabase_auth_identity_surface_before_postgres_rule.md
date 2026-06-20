@@ -14,3 +14,6 @@ until `SupabaseBracketStore` writes the canonical BracketDocument to `user_brack
 Supabase Auth can be connected before Postgres persistence. The site must not imply that picks are saved to Supabase until the remote store is implemented and verified.
 
 The board, pick menu, and controller must not call Supabase directly. Auth surface code may talk to Supabase Auth. Bracket persistence must remain behind BracketRepository/store boundaries.
+
+
+Card 231 refinement: use Supabase's current browser-safe publishable key terminology, not legacy anon-key terminology.
