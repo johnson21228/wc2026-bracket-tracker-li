@@ -4,6 +4,20 @@ export function createSupabaseIdentitySurface({ root, authService }) {
     return { start() {} };
   }
 
+  if (surface.dataset.authDisabled === "true") {
+    surface.innerHTML = `
+      <div class="identity-card" data-auth-state="disabled">
+        <div class="identity-summary">
+          <span class="identity-kicker">Player</span>
+          <strong class="identity-title">Local bracket active</strong>
+          <span class="identity-detail">Sign-in paused</span>
+        </div>
+        <p class="identity-message" aria-live="polite">Local bracket remains active.</p>
+      </div>
+    `;
+    return { start() {} };
+  }
+
   let latestState = authService?.currentState?.() || {
     configured: false,
     status: "not-configured",
