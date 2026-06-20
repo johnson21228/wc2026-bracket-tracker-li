@@ -620,6 +620,10 @@
   min-width: 0;
 }
 
+:root {
+  --wc2026-picked-cell-flag-size: 34px;
+}
+
 .picked-cell-flag {
   display: flex;
   align-items: center;
@@ -770,3 +774,17 @@
 .group-panel-popover {
   overscroll-behavior: contain;
 }
+
+
+/* Card pending: pick menu flags share the picked gameboard flag size. */
+.r32-pick-menu-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--wc2026-picked-cell-flag-size);
+  min-width: var(--wc2026-picked-cell-flag-size);
+  height: var(--wc2026-picked-cell-flag-size);
+  font-size: var(--wc2026-picked-cell-flag-size);
+  line-height: 1;
+}
+
