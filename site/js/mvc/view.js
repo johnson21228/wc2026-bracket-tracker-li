@@ -33,11 +33,14 @@ export function createBracketView(root) {
   let pendingGroupPanelAnchorBoundsPx = null;
   let boardScale = Number(boardZoomSelect?.value || 1) || 1;
   let boardNativeSize = { width: 1536, height: 1024 };
+  const BOARD_MIN_SCALE = 0.5;
+  const BOARD_MAX_SCALE = 1.25;
+  const BOARD_WHEEL_ZOOM_STEP = 0.08;
 
   function clampBoardScale(value) {
     const numeric = Number(value);
     if (!Number.isFinite(numeric)) return 1;
-    return Math.max(0.5, Math.min(1.25, numeric));
+    return Math.max(BOARD_MIN_SCALE, Math.min(BOARD_MAX_SCALE, numeric));
   }
 
   function applyBoardRenderScale(nextScale = boardScale) {
@@ -58,6 +61,47 @@ export function createBracketView(root) {
       boardScaleFrame.style.width = `${renderWidth}px`;
       boardScaleFrame.style.height = `${renderHeight}px`;
     }
+
+    syncBoardZoomSelect();
+  }
+
+  function syncBoardZoomSelect() {
+    if (!boardZoomSelect) return;
+    const existingOptions = Array.from(boardZoomSelect.options || []);
+    const matchingOption = existingOptions.find((option) => Math.abs(Number(option.value) - boardScale) < 0.001);
+    if (matchingOption) {
+      boardZoomSelect.value = matchingOption.value;
+      return;
+    }
+
+    let customOption = boardZoomSelect.querySelector("option[data-board-zoom-custom]");
+    if (!customOption) {
+      customOption = document.createElement("option");
+      customOption.setAttribute("data-board-zoom-custom", "true");
+      boardZoomSelect.appendChild(customOption);
+    }
+    const percent = Math.round(boardScale * 100);
+    customOption.value = String(boardScale);
+    customOption.textContent = `${percent}%`;
+    boardZoomSelect.value = customOption.value;
+  }
+
+  function zoomBoardAroundPoint(nextScale, clientX, clientY) {
+    const viewport = boardScroll || boardPlane.parentElement || boardPlane;
+    const nextBoardScale = clampBoardScale(nextScale);
+    if (Math.abs(nextBoardScale - boardScale) < 0.001) return;
+
+    const viewportRect = viewport.getBoundingClientRect();
+    const pointerX = clientX - viewportRect.left;
+    const pointerY = clientY - viewportRect.top;
+    const nativeX = ((viewport.scrollLeft || 0) + pointerX) / boardScale;
+    const nativeY = ((viewport.scrollTop || 0) + pointerY) / boardScale;
+
+    applyBoardRenderScale(nextBoardScale);
+
+    viewport.scrollLeft = Math.max(0, (nativeX * boardScale) - pointerX);
+    viewport.scrollTop = Math.max(0, (nativeY * boardScale) - pointerY);
+    handlers.onCloseMenu?.();
   }
 
   function setHandlers(nextHandlers) {
@@ -81,6 +125,13 @@ export function createBracketView(root) {
       applyBoardRenderScale(boardZoomSelect.value);
       handlers.onCloseMenu?.();
     });
+    boardScroll?.addEventListener("wheel", (event) => {
+      const wantsBoardZoom = event.ctrlKey || event.metaKey;
+      if (!wantsBoardZoom) return;
+      event.preventDefault();
+      const direction = event.deltaY > 0 ? -1 : 1;
+      zoomBoardAroundPoint(boardScale + (direction * BOARD_WHEEL_ZOOM_STEP), event.clientX, event.clientY);
+    }, { passive: false });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         handlers.onCloseMenu?.();
