@@ -110,6 +110,12 @@ function scrubPlayerFacingText(text) {
   cleaned = cleaned.replace(/\bfeeder\b/gi, "previous match");
   cleaned = cleaned.replace(/Winner from\s+L-[A-Z0-9-]+\s*\/\s*L-[A-Z0-9-]+/gi, "Winner from previous match");
   cleaned = cleaned.replace(/\bL-R32-\d+\s*\/\s*L-R32-\d+\b/gi, "previous matches");
+  cleaned = cleaned.replace(/\bWinner Group ([A-L])\b/gi, "Group $1 winner");
+  cleaned = cleaned.replace(/\bRunner-up Group ([A-L])\b/gi, "Group $1 runner-up");
+  cleaned = cleaned.replace(/\b1([A-L])\b/g, "Group $1 winner");
+  cleaned = cleaned.replace(/\b2([A-L])\b/g, "Group $1 runner-up");
+  cleaned = cleaned.replace(/\b3\s+[A-L](?:\s*\/\s*[A-L])+\b/gi, "Possible third-place teams");
+  cleaned = cleaned.replace(/\b3\s+[A-L]{2,}\b/gi, "Possible third-place teams");
   cleaned = cleaned.replace(/^\s*3\s+[A-L]+\s*$/i, "Possible third-place teams");
 
   return cleaned;
