@@ -788,3 +788,26 @@
   line-height: 1;
 }
 
+
+/* Runtime tune: make pick-menu flags match the visible picked-cell flag scale. */
+:root {
+  --wc2026-picked-flag-size: 2.1rem;
+}
+
+.picked-cell-flag,
+.r32-pick-menu-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--wc2026-picked-flag-size) * 1.25);
+  font-size: var(--wc2026-picked-flag-size) !important;
+  line-height: 1 !important;
+  flex: 0 0 auto;
+}
+
+.r32-pick-menu-option,
+.r32-pick-menu-team,
+.r32-pick-menu-item,
+.r32-pick-menu-row {
+  min-height: calc(var(--wc2026-picked-flag-size) * 1.55);
+}
