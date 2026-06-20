@@ -21,6 +21,9 @@ function groupEntries(groupContext) {
 
 export function createBracketView(root) {
   const boardPlane = root.querySelector("[data-board-plane]");
+  const boardScroll = root.querySelector("[data-board-scroll]");
+  const boardScaleFrame = root.querySelector("[data-board-scale-frame]");
+  const boardZoomSelect = root.querySelector("[data-board-zoom]");
   const statusPanel = root.querySelector("[data-status-panel]");
   const clearAllButton = root.querySelector('[data-action="clear-all"]');
   const exportPicksButton = root.querySelector('[data-action="export-picks"]');
@@ -28,6 +31,34 @@ export function createBracketView(root) {
   const importPicksFile = root.querySelector('[data-import-picks-file]');
   let handlers = {};
   let pendingGroupPanelAnchorBoundsPx = null;
+  let boardScale = Number(boardZoomSelect?.value || 1) || 1;
+  let boardNativeSize = { width: 1536, height: 1024 };
+
+  function clampBoardScale(value) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return 1;
+    return Math.max(0.5, Math.min(1.25, numeric));
+  }
+
+  function applyBoardRenderScale(nextScale = boardScale) {
+    boardScale = clampBoardScale(nextScale);
+    const renderWidth = Math.round(boardNativeSize.width * boardScale);
+    const renderHeight = Math.round(boardNativeSize.height * boardScale);
+
+    for (const element of [boardScaleFrame, boardPlane]) {
+      if (!element) continue;
+      element.style.setProperty("--board-w-px", `${boardNativeSize.width}px`);
+      element.style.setProperty("--board-h-px", `${boardNativeSize.height}px`);
+      element.style.setProperty("--board-render-scale", String(boardScale));
+      element.style.setProperty("--board-render-w-px", `${renderWidth}px`);
+      element.style.setProperty("--board-render-h-px", `${renderHeight}px`);
+    }
+
+    if (boardScaleFrame) {
+      boardScaleFrame.style.width = `${renderWidth}px`;
+      boardScaleFrame.style.height = `${renderHeight}px`;
+    }
+  }
 
   function setHandlers(nextHandlers) {
     handlers = nextHandlers;
@@ -46,6 +77,10 @@ export function createBracketView(root) {
       reader.addEventListener("error", () => report("Could not read import file."));
       reader.readAsText(file);
     });
+    boardZoomSelect?.addEventListener("change", () => {
+      applyBoardRenderScale(boardZoomSelect.value);
+      handlers.onCloseMenu?.();
+    });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         handlers.onCloseMenu?.();
@@ -54,8 +89,8 @@ export function createBracketView(root) {
   }
 
   function renderBoardShell(nativeSize) {
-    boardPlane.style.setProperty("--board-w-px", `${nativeSize.width}px`);
-    boardPlane.style.setProperty("--board-h-px", `${nativeSize.height}px`);
+    boardNativeSize = nativeSize;
+    applyBoardRenderScale(boardScale);
     boardPlane.innerHTML = `
       <img class="board-background-layer" src="assets/board/pub_background.jpeg" alt="" aria-hidden="true">
       <img class="board-linework-layer" src="assets/board/gameboard.svg" alt="" aria-hidden="true">
@@ -130,26 +165,26 @@ export function createBracketView(root) {
   }
 
   function visibleBoardViewport() {
-    const viewport = boardPlane.parentElement || boardPlane;
+    const viewport = boardScroll || boardPlane.parentElement || boardPlane;
     return {
-      left: viewport.scrollLeft || 0,
-      top: viewport.scrollTop || 0,
-      width: viewport.clientWidth || boardPlane.clientWidth,
-      height: viewport.clientHeight || boardPlane.clientHeight,
+      left: (viewport.scrollLeft || 0) / boardScale,
+      top: (viewport.scrollTop || 0) / boardScale,
+      width: (viewport.clientWidth || boardPlane.clientWidth) / boardScale,
+      height: (viewport.clientHeight || boardPlane.clientHeight) / boardScale,
     };
   }
 
 
 
   function boardLocalBoundsForElement(element) {
-    const viewport = boardPlane.parentElement || boardPlane;
+    const viewport = boardScroll || boardPlane.parentElement || boardPlane;
     const boardRect = boardPlane.getBoundingClientRect();
     const rect = element.getBoundingClientRect();
     return {
-      x: rect.left - boardRect.left + (viewport.scrollLeft || 0),
-      y: rect.top - boardRect.top + (viewport.scrollTop || 0),
-      width: rect.width,
-      height: rect.height,
+      x: (rect.left - boardRect.left + (viewport.scrollLeft || 0)) / boardScale,
+      y: (rect.top - boardRect.top + (viewport.scrollTop || 0)) / boardScale,
+      width: rect.width / boardScale,
+      height: rect.height / boardScale,
     };
   }
 

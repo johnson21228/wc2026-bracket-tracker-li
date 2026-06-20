@@ -1,11 +1,25 @@
+.board-scale-frame {
+  --board-w-px: 1536px;
+  --board-h-px: 1024px;
+  --board-render-scale: 1;
+  --board-render-w-px: var(--board-w-px);
+  --board-render-h-px: var(--board-h-px);
+  position: relative;
+  width: var(--board-render-w-px);
+  height: var(--board-render-h-px);
+}
+
 .pixel-native-board-plane {
   --board-w-px: 1536px;
   --board-h-px: 1024px;
+  --board-render-scale: 1;
   position: relative;
   width: var(--board-w-px);
   height: var(--board-h-px);
   overflow: hidden;
   isolation: isolate;
+  transform: scale(var(--board-render-scale));
+  transform-origin: top left;
 }
 
 .board-background-layer,
