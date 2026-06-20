@@ -15,7 +15,7 @@
     <section class="app-shell" aria-labelledby="app-title">
       <header class="app-header">
         <p class="eyebrow">Footie FÜHN</p>
-        <h1 id="app-title">bracketeering Pub</h1>
+        <h1 id="app-title">Bracketeering Pub</h1>
         <p class="app-summary">Scroll the game board below and make your picks.</p>
         <div class="app-actions">
           <button type="button" class="ghost-button" data-action="clear-all">Clear picks</button>
@@ -23,9 +23,20 @@
           <button type="button" class="ghost-button" data-action="import-picks">Import picks</button>
           <input type="file" class="visually-hidden" data-import-picks-file accept="application/json,.json" aria-label="Import picks JSON file">
         </div>
+        <div class="board-zoom-controls" data-board-zoom-controls>
+          <label for="board-zoom-select">Board zoom</label>
+          <select id="board-zoom-select" data-board-zoom aria-label="Board zoom">
+            <option value="0.5">50%</option>
+            <option value="0.75">75%</option>
+            <option value="1" selected>100%</option>
+            <option value="1.25">125%</option>
+          </select>
+        </div>
       </header>
       <div class="board-scroll" data-board-scroll>
-        <section class="pixel-native-board-plane" data-board-plane aria-label="World Cup bracket board"></section>
+        <div class="board-scale-frame" data-board-scale-frame>
+          <section class="pixel-native-board-plane" data-board-plane aria-label="World Cup bracket board"></section>
+        </div>
       </div>
       <section class="status-panel" data-status-panel aria-live="polite"></section>
     </section>

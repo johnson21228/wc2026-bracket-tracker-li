@@ -40,6 +40,7 @@ verify:
 	python3 tools/verify_wc2026_group_stage_background_runtime.py
 	python3 tools/verify_wc2026_interaction_overlay_stack.py
 	python3 tools/verify_wc2026_pages_owned_board_zoom_out_scale.py
+	python3 tools/verify_wc2026_pages_owned_board_zoom_out_runtime.py
 	python3 tools/verify_wc2026_public_multi_user_play_li.py
 	python3 tools/verify_wc2026_empty_pick_state_storage_li.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
