@@ -32,7 +32,7 @@ def main():
     html_tokens = [
         'class="eyebrow">World Cup 2026</p>',
         '<h1 id="app-title">FIFA Bracketeering</h1>',
-        'Scroll the game board below and make your picks.',
+        'Scroll and zoom the game board below and make your picks.',
         'data-action="clear-all"',
                                             ]
     missing_html = [t for t in html_tokens if t not in html]
