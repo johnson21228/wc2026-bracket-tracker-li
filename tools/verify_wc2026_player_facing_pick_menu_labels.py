@@ -47,6 +47,19 @@ if re.search(r"subtitle\.textContent\s*=\s*title", js):
 if re.search(r"label\.textContent\s*=\s*logicSlot\.fifaLabel", js):
     errors.append("slot button label still directly renders logicSlot.fifaLabel")
 
+
+compact_required = [
+    "Group $1 winner",
+    "Group $1 runner-up",
+    "\\b1([A-L])\\b",
+    "\\b2([A-L])\\b",
+    "\\b3\\s+[A-L]{2,}\\b",
+]
+
+for token in compact_required:
+    if token not in js:
+        errors.append(f"missing compact slot-code player-facing scrub coverage: {token}")
+
 if errors:
     print("WC2026 player-facing pick menu label verification failed:")
     for error in errors:
