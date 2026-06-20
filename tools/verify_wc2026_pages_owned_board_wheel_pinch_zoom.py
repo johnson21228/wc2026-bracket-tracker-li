@@ -39,7 +39,7 @@ def main():
         "const wantsBoardZoom = event.ctrlKey || event.metaKey;",
         "event.preventDefault();",
         "zoomBoardAroundPoint(boardScale + (direction * BOARD_WHEEL_ZOOM_STEP), event.clientX, event.clientY);",
-        "boardScroll?.addEventListener("wheel"",
+        'boardScroll?.addEventListener("wheel"',
         "{ passive: false }",
     ]
     missing_view = [token for token in view_tokens if token not in view]
