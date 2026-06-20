@@ -56,7 +56,7 @@ def main() -> int:
         fail("Missing clean MVC files:", missing)
 
     html = read("site/index.html")
-    if '<main id="wc2026-app"' not in html or 'src="js/app.js"' not in html:
+    if '<main id="wc2026-app"' not in html or 'src="js/app.js' not in html:
         fail("Single site shell is not wired to app.js:", ["site/index.html"])
     if "mvc-test.html" in html:
         fail("Single site must not link to a separate MVC test page:", ["site/index.html"])
