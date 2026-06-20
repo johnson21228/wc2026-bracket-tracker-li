@@ -1,6 +1,8 @@
 import { createBracketModel } from "./mvc/model.js";
 import { createBracketView } from "./mvc/view.js";
 import { createBracketController } from "./mvc/controller.js";
+import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
+import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
 
 async function main() {
   const root = document.querySelector("[data-wc2026-app]");
@@ -11,6 +13,9 @@ async function main() {
   const model = await createBracketModel();
   const view = createBracketView(root);
   const controller = createBracketController({ model, view });
+  const authService = createSupabaseAuthService();
+  const identitySurface = createSupabaseIdentitySurface({ root, authService });
+  identitySurface.start();
   controller.start();
 }
 

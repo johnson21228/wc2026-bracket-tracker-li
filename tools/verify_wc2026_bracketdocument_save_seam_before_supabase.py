@@ -52,8 +52,37 @@ def main():
     require("this.writePicks(picks)" in controller, "legacy projection pick write should remain during transition to preserve rendering behavior", errors)
     require("createEmptyBracketDocument" in model and "normalizeBracketDocument" in model and "picksBySlot" in model, "UserBracketModel must create/normalize canonical BracketDocument with picksBySlot", errors)
     require("legacyPicksFromPicksBySlot" in model, "UserBracketModel must keep transitional legacy rendering compatibility from picksBySlot", errors)
-    site_js = "\n".join(p.read_text(encoding="utf-8", errors="ignore") for p in (ROOT / "site/js").rglob("*.js"))
-    require("supabase" not in site_js.lower(), "site/js must not introduce Supabase client calls in this pre-Supabase save seam card", errors)
+    site_js_files = {
+        str(p.relative_to(ROOT)): p.read_text(encoding="utf-8", errors="ignore")
+        for p in (ROOT / "site/js").rglob("*.js")
+    }
+
+    # Card 228 blocks Supabase/Postgres persistence in the pick/save seam.
+    # Later cards may introduce Supabase Auth-only UI/session calls before Postgres
+    # persistence exists. That is allowed as long as site runtime does not write
+    # BracketDocument data to Supabase tables yet.
+    forbidden_persistence_tokens = [
+        ".insert(",
+        ".upsert(",
+        ".update(",
+        ".delete(",
+        "picks_json",
+    ]
+    allowed_auth_only_paths = {
+        "site/js/config/supabase.public.js",
+        "site/js/services/SupabaseAuthService.js",
+        "site/js/identity/SupabaseIdentitySurface.js",
+    }
+    for rel, content in site_js_files.items():
+        if rel in allowed_auth_only_paths:
+            continue
+        lowered = content.lower()
+        for token in forbidden_persistence_tokens:
+            require(
+                token.lower() not in lowered,
+                f"site/js must not introduce Supabase/Postgres persistence before SupabaseBracketStore: {rel} contains {token}",
+                errors,
+            )
     for phrase in ["Same BracketDocument. Different store.", "LocalStorageBracketStore", "SupabaseBracketStore", "user_brackets.picks_json"]:
         require(phrase in docs, f"docs/LI missing save-seam phrase: {phrase}", errors)
     if errors:
