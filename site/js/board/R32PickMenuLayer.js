@@ -24,6 +24,107 @@ function renderPickText(button, pick) {
 
 
 
+function groupsFromLogicSlot(logicSlot = {}) {
+  const rawGroups = Array.isArray(logicSlot.groups)
+    ? logicSlot.groups
+    : String(logicSlot.groups || logicSlot.eligibleGroups || "")
+        .split(/[,\s/]+/)
+        .filter(Boolean);
+
+  return rawGroups
+    .map((group) => String(group).trim().replace(/^Group\s+/i, "").toUpperCase())
+    .filter((group) => /^[A-L]$/.test(group));
+}
+
+function qualifierKindFromLogicSlot(logicSlot = {}) {
+  return String(
+    logicSlot.qualifierKind ||
+    logicSlot.sourceKind ||
+    logicSlot.pickability ||
+    logicSlot.kind ||
+    ""
+  ).toLowerCase();
+}
+
+function playerFacingSlotLabel(logicSlot = {}) {
+  const kind = qualifierKindFromLogicSlot(logicSlot);
+  const groups = groupsFromLogicSlot(logicSlot);
+  const firstGroup = groups[0] || "";
+
+  if ((kind.includes("winner") || kind.includes("group-winner")) && firstGroup) {
+    return `Group ${firstGroup} winner`;
+  }
+
+  if ((kind.includes("runner") || kind.includes("second") || kind.includes("group-runner")) && firstGroup) {
+    return `Group ${firstGroup} runner-up`;
+  }
+
+  if (kind.includes("third") || kind.includes("candidate")) {
+    if (groups.length === 1) return `Third-place team from Group ${firstGroup}`;
+    return "Third-place team";
+  }
+
+  if (kind.includes("knockout") || kind.includes("feeder")) {
+    return "Possible winners";
+  }
+
+  const rawLabel = String(logicSlot.fifaLabel || logicSlot.label || "").trim();
+  if (/^L-[A-Z0-9-]+$/i.test(rawLabel)) return "Pick possible winner";
+  if (/^L-[A-Z0-9-]+\s*\/\s*L-[A-Z0-9-]+$/i.test(rawLabel)) return "Pick possible winner";
+  return rawLabel || "Pick team";
+}
+
+function playerFacingMenuSubtitle(logicSlot = {}, fallback = "") {
+  const kind = qualifierKindFromLogicSlot(logicSlot);
+  const groups = groupsFromLogicSlot(logicSlot);
+  const firstGroup = groups[0] || "";
+
+  if (kind.includes("third") || kind.includes("candidate")) {
+    if (groups.length === 1) return `Possible third-place teams from Group ${firstGroup}`;
+    return "Possible third-place teams";
+  }
+
+  if (kind.includes("knockout") || kind.includes("feeder")) {
+    return "Pick a possible winner";
+  }
+
+  if ((kind.includes("winner") || kind.includes("group-winner")) && firstGroup) {
+    return `Pick the Group ${firstGroup} winner`;
+  }
+
+  if ((kind.includes("runner") || kind.includes("second") || kind.includes("group-runner")) && firstGroup) {
+    return `Pick the Group ${firstGroup} runner-up`;
+  }
+
+  return scrubPlayerFacingText(fallback || "Pick team");
+}
+
+function scrubPlayerFacingText(text) {
+  let cleaned = String(text || "");
+
+  cleaned = cleaned.replace(/THIRD-PLACE-CANDIDATE-SET/gi, "Possible third-place teams");
+  cleaned = cleaned.replace(/KNOCKOUT-FEEDER/gi, "Possible winners");
+  cleaned = cleaned.replace(/\bFeeder choices\b/gi, "Possible winners");
+  cleaned = cleaned.replace(/\bcandidate-set\b/gi, "possible teams");
+  cleaned = cleaned.replace(/\bknockout-feeder\b/gi, "possible winners");
+  cleaned = cleaned.replace(/\bfeeder\b/gi, "previous match");
+  cleaned = cleaned.replace(/Winner from\s+L-[A-Z0-9-]+\s*\/\s*L-[A-Z0-9-]+/gi, "Winner from previous match");
+  cleaned = cleaned.replace(/\bL-R32-\d+\s*\/\s*L-R32-\d+\b/gi, "previous matches");
+  cleaned = cleaned.replace(/^\s*3\s+[A-L]+\s*$/i, "Possible third-place teams");
+
+  return cleaned;
+}
+
+function scrubPlayerFacingTree(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+
+  for (const node of nodes) {
+    node.nodeValue = scrubPlayerFacingText(node.nodeValue);
+  }
+}
+
 function trackingPayloadFrom({ button, slotViewModel, phase }) {
   return {
     phase,
@@ -110,7 +211,7 @@ function createMenu({ layer, controller, button, slotViewModel }) {
   popover.className = "r32-pick-menu-popover";
   popover.dataset.fifaSlotId = logicSlot.fifaSlotId;
   popover.setAttribute("role", "dialog");
-  popover.setAttribute("aria-label", title);
+  popover.setAttribute("aria-label", playerFacingMenuSubtitle(logicSlot, title));
 
   popover.style.left = "0px";
   popover.style.top = "0px";
@@ -119,10 +220,10 @@ function createMenu({ layer, controller, button, slotViewModel }) {
   heading.className = "r32-pick-menu-heading";
 
   const headingTitle = document.createElement("strong");
-  headingTitle.textContent = logicSlot.fifaLabel;
+  headingTitle.textContent = playerFacingSlotLabel(logicSlot);
 
   const subtitle = document.createElement("span");
-  subtitle.textContent = title;
+  subtitle.textContent = playerFacingMenuSubtitle(logicSlot, title);
 
   heading.append(headingTitle, subtitle);
   popover.append(heading);
@@ -176,6 +277,7 @@ function createMenu({ layer, controller, button, slotViewModel }) {
   actions.append(clear, close);
 
   popover.append(list, actions);
+  scrubPlayerFacingTree(popover);
   layer.append(popover);
   positionFloatingSurfaceNearAnchor({
     anchorEl: button,
@@ -214,7 +316,7 @@ function createSlotButton({ layer, controller, slotViewModel }) {
 
   const label = document.createElement("span");
   label.className = "r32-pick-slot-label";
-  label.textContent = logicSlot.fifaLabel;
+  label.textContent = playerFacingSlotLabel(logicSlot);
 
   const current = document.createElement("span");
   current.className = "r32-pick-slot-current";
@@ -229,7 +331,7 @@ function createSlotButton({ layer, controller, slotViewModel }) {
     return button;
   }
 
-  button.title = title;
+  button.title = playerFacingMenuSubtitle(logicSlot, title);
   button.addEventListener("pointerenter", () => trackButton({ layer, button, slotViewModel, phase: "hover" }));
   button.addEventListener("focus", () => trackButton({ layer, button, slotViewModel, phase: "focus" }));
   button.addEventListener("pointerleave", () => clearButtonTracking({ layer, button }));

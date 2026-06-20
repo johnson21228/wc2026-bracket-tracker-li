@@ -14,6 +14,7 @@ verify:
 	python3 tools/verify_wc2026_pick_menu_group_panel_link_li.py
 	python3 tools/verify_wc2026_pick_menu_interaction_placement_li.py
 	python3 tools/verify_wc2026_pick_menu_runtime_v2.py
+	python3 tools/verify_wc2026_player_facing_pick_menu_labels.py
 	python3 tools/verify_wc2026_group_standings_model_data.py
 	python3 tools/verify_wc2026_make_opensite_target.py
 	python3 tools/verify_wc2026_group_panel_runtime_v1.py
