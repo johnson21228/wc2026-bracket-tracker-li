@@ -48,3 +48,7 @@ Required runtime fields are `schemaVersion`, `gameId`, `status`, `expectedPickCo
 
 `user_brackets.picks_json` stores this same canonical `BracketDocument`; Supabase remains durable persistence only.
 
+
+## Card 228 save seam rule
+
+Controllers may update the runtime `BracketDocument`, but persistence must cross the repository/store boundary. The pre-Supabase target is `LocalStorageBracketStore`; the later remote target is `SupabaseBracketStore` writing the same document to `user_brackets.picks_json`.

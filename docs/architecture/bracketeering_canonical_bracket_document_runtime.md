@@ -59,3 +59,9 @@ Account identity belongs outside the durable document whenever possible:
 - `picks_json` owns the portable `BracketDocument`.
 
 Anonymous localStorage and signed-in Supabase play therefore use the same document shape.
+
+## Card 228 local save seam
+
+Pick mutation should update the canonical `BracketDocument` and request persistence through `BracketRepository.saveUserBracket(document)`. The current concrete store is `LocalStorageBracketStore`; a future signed-in store can be `SupabaseBracketStore` without changing board/controller ownership.
+
+Key invariant: Same BracketDocument. Different store.

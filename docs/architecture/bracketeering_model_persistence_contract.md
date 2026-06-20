@@ -85,3 +85,9 @@ Required runtime fields are `schemaVersion`, `gameId`, `status`, `expectedPickCo
 
 `user_brackets.picks_json` stores this same canonical `BracketDocument`; Supabase remains durable persistence only.
 
+
+## Card 228 save seam clarification
+
+Before Supabase is implemented, the Pages runtime must already save the canonical `BracketDocument` through the repository/store seam. Anonymous play saves through `LocalStorageBracketStore`; later signed-in play will route the same document to `SupabaseBracketStore` and `user_brackets.picks_json`.
+
+Key invariant: Same BracketDocument. Different store.

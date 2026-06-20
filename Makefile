@@ -46,6 +46,7 @@ verify:
 	python3 tools/verify_wc2026_empty_pick_state_storage_li.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
 	python3 tools/verify_wc2026_full_canonical_bracket_document_runtime.py
+	python3 tools/verify_wc2026_bracketdocument_save_seam_before_supabase.py
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py
 
