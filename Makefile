@@ -40,6 +40,7 @@ verify:
 	python3 tools/verify_wc2026_pick_validity_no_current_rank_block.py
 	python3 tools/verify_wc2026_group_stage_background_runtime.py
 	python3 tools/verify_wc2026_interaction_overlay_stack.py
+	python3 tools/verify_wc2026_zoom50_floating_surface_placement.py
 	python3 tools/verify_wc2026_pages_owned_board_zoom_out_scale.py
 	python3 tools/verify_wc2026_pages_owned_board_zoom_out_runtime.py
 	python3 tools/verify_wc2026_pages_owned_board_wheel_pinch_zoom.py

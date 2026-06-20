@@ -723,3 +723,50 @@
   pointer-events: auto;
 }
 
+
+
+/* Card 233: 50 percent zoom floating-surface placement.
+   Pick menus and group panels must be fully visible and above bottom controls at 50% zoom. */
+:root {
+  --wc-z-pick-menu: 11000;
+  --wc-z-group-panel: 12000;
+}
+
+.board-menu-layer,
+.board-r32-pick-menu-layer,
+.r32-pick-menu-layer,
+.pick-menu-layer,
+[data-menu-layer],
+[data-pick-menu-layer] {
+  position: absolute;
+  inset: 0;
+  z-index: var(--wc-z-pick-menu);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.board-group-panel-layer,
+.group-panel-layer,
+[data-group-panel-layer] {
+  position: absolute;
+  inset: 0;
+  z-index: var(--wc-z-group-panel);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.pick-menu-popover,
+.r32-pick-menu-popover,
+.group-panel-popover,
+[data-floating-surface-placement="zoom-50-safe"] {
+  z-index: inherit;
+  pointer-events: auto;
+  box-sizing: border-box;
+  overscroll-behavior: contain;
+}
+
+.pick-menu-group-sections,
+.r32-pick-menu-list,
+.group-panel-popover {
+  overscroll-behavior: contain;
+}
