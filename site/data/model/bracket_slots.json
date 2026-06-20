@@ -735,5 +735,607 @@
         "height": 168
       }
     }
-  ]
+  ],
+  "canonicalDocumentModel": "BracketDocument",
+  "canonicalPickCounts": {
+    "game1": 64,
+    "game2": 32
+  },
+  "canonicalPickSlots": [
+    {
+      "slotId": "L-R32-01",
+      "sitePickId": "L-R32-01",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-01",
+      "geometrySlotId": "L-R32-01",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-02",
+      "sitePickId": "L-R32-02",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-02",
+      "geometrySlotId": "L-R32-02",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-03",
+      "sitePickId": "L-R32-03",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-03",
+      "geometrySlotId": "L-R32-03",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-04",
+      "sitePickId": "L-R32-04",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-04",
+      "geometrySlotId": "L-R32-04",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-05",
+      "sitePickId": "L-R32-05",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-05",
+      "geometrySlotId": "L-R32-05",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-06",
+      "sitePickId": "L-R32-06",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-06",
+      "geometrySlotId": "L-R32-06",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-07",
+      "sitePickId": "L-R32-07",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-07",
+      "geometrySlotId": "L-R32-07",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-08",
+      "sitePickId": "L-R32-08",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-08",
+      "geometrySlotId": "L-R32-08",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-09",
+      "sitePickId": "L-R32-09",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-09",
+      "geometrySlotId": "L-R32-09",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-10",
+      "sitePickId": "L-R32-10",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-10",
+      "geometrySlotId": "L-R32-10",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-11",
+      "sitePickId": "L-R32-11",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-11",
+      "geometrySlotId": "L-R32-11",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-12",
+      "sitePickId": "L-R32-12",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-12",
+      "geometrySlotId": "L-R32-12",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-13",
+      "sitePickId": "L-R32-13",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-13",
+      "geometrySlotId": "L-R32-13",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-14",
+      "sitePickId": "L-R32-14",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-14",
+      "geometrySlotId": "L-R32-14",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-15",
+      "sitePickId": "L-R32-15",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-15",
+      "geometrySlotId": "L-R32-15",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R32-16",
+      "sitePickId": "L-R32-16",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "L-R32-16",
+      "geometrySlotId": "L-R32-16",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-01",
+      "sitePickId": "R-R32-01",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-01",
+      "geometrySlotId": "R-R32-01",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-02",
+      "sitePickId": "R-R32-02",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-02",
+      "geometrySlotId": "R-R32-02",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-03",
+      "sitePickId": "R-R32-03",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-03",
+      "geometrySlotId": "R-R32-03",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-04",
+      "sitePickId": "R-R32-04",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-04",
+      "geometrySlotId": "R-R32-04",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-05",
+      "sitePickId": "R-R32-05",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-05",
+      "geometrySlotId": "R-R32-05",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-06",
+      "sitePickId": "R-R32-06",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-06",
+      "geometrySlotId": "R-R32-06",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-07",
+      "sitePickId": "R-R32-07",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-07",
+      "geometrySlotId": "R-R32-07",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-08",
+      "sitePickId": "R-R32-08",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-08",
+      "geometrySlotId": "R-R32-08",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-09",
+      "sitePickId": "R-R32-09",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-09",
+      "geometrySlotId": "R-R32-09",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-10",
+      "sitePickId": "R-R32-10",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-10",
+      "geometrySlotId": "R-R32-10",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-11",
+      "sitePickId": "R-R32-11",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-11",
+      "geometrySlotId": "R-R32-11",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-12",
+      "sitePickId": "R-R32-12",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-12",
+      "geometrySlotId": "R-R32-12",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-13",
+      "sitePickId": "R-R32-13",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-13",
+      "geometrySlotId": "R-R32-13",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-14",
+      "sitePickId": "R-R32-14",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-14",
+      "geometrySlotId": "R-R32-14",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-15",
+      "sitePickId": "R-R32-15",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-15",
+      "geometrySlotId": "R-R32-15",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R32-16",
+      "sitePickId": "R-R32-16",
+      "kind": "entrant",
+      "round": "R32_ENTRANT",
+      "displayLabel": "R-R32-16",
+      "geometrySlotId": "R-R32-16",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R16-01",
+      "sitePickId": "L-R16-01",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "L-R16-01",
+      "geometrySlotId": "L-R16-01",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R16-02",
+      "sitePickId": "L-R16-02",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "L-R16-02",
+      "geometrySlotId": "L-R16-02",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R16-03",
+      "sitePickId": "L-R16-03",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "L-R16-03",
+      "geometrySlotId": "L-R16-03",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R16-04",
+      "sitePickId": "L-R16-04",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "L-R16-04",
+      "geometrySlotId": "L-R16-04",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R16-05",
+      "sitePickId": "L-R16-05",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "L-R16-05",
+      "geometrySlotId": "L-R16-05",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R16-06",
+      "sitePickId": "L-R16-06",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "L-R16-06",
+      "geometrySlotId": "L-R16-06",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R16-07",
+      "sitePickId": "L-R16-07",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "L-R16-07",
+      "geometrySlotId": "L-R16-07",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-R16-08",
+      "sitePickId": "L-R16-08",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "L-R16-08",
+      "geometrySlotId": "L-R16-08",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R16-01",
+      "sitePickId": "R-R16-01",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "R-R16-01",
+      "geometrySlotId": "R-R16-01",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R16-02",
+      "sitePickId": "R-R16-02",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "R-R16-02",
+      "geometrySlotId": "R-R16-02",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R16-03",
+      "sitePickId": "R-R16-03",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "R-R16-03",
+      "geometrySlotId": "R-R16-03",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R16-04",
+      "sitePickId": "R-R16-04",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "R-R16-04",
+      "geometrySlotId": "R-R16-04",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R16-05",
+      "sitePickId": "R-R16-05",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "R-R16-05",
+      "geometrySlotId": "R-R16-05",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R16-06",
+      "sitePickId": "R-R16-06",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "R-R16-06",
+      "geometrySlotId": "R-R16-06",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R16-07",
+      "sitePickId": "R-R16-07",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "R-R16-07",
+      "geometrySlotId": "R-R16-07",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-R16-08",
+      "sitePickId": "R-R16-08",
+      "kind": "winner",
+      "round": "R32_WINNER",
+      "displayLabel": "R-R16-08",
+      "geometrySlotId": "R-R16-08",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-QF-01",
+      "sitePickId": "L-QF-01",
+      "kind": "winner",
+      "round": "R16_WINNER",
+      "displayLabel": "L-QF-01",
+      "geometrySlotId": "L-QF-01",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-QF-02",
+      "sitePickId": "L-QF-02",
+      "kind": "winner",
+      "round": "R16_WINNER",
+      "displayLabel": "L-QF-02",
+      "geometrySlotId": "L-QF-02",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-QF-03",
+      "sitePickId": "L-QF-03",
+      "kind": "winner",
+      "round": "R16_WINNER",
+      "displayLabel": "L-QF-03",
+      "geometrySlotId": "L-QF-03",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-QF-04",
+      "sitePickId": "L-QF-04",
+      "kind": "winner",
+      "round": "R16_WINNER",
+      "displayLabel": "L-QF-04",
+      "geometrySlotId": "L-QF-04",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-QF-01",
+      "sitePickId": "R-QF-01",
+      "kind": "winner",
+      "round": "R16_WINNER",
+      "displayLabel": "R-QF-01",
+      "geometrySlotId": "R-QF-01",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-QF-02",
+      "sitePickId": "R-QF-02",
+      "kind": "winner",
+      "round": "R16_WINNER",
+      "displayLabel": "R-QF-02",
+      "geometrySlotId": "R-QF-02",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-QF-03",
+      "sitePickId": "R-QF-03",
+      "kind": "winner",
+      "round": "R16_WINNER",
+      "displayLabel": "R-QF-03",
+      "geometrySlotId": "R-QF-03",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-QF-04",
+      "sitePickId": "R-QF-04",
+      "kind": "winner",
+      "round": "R16_WINNER",
+      "displayLabel": "R-QF-04",
+      "geometrySlotId": "R-QF-04",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-SF-01",
+      "sitePickId": "L-SF-01",
+      "kind": "winner",
+      "round": "QF_WINNER",
+      "displayLabel": "L-SF-01",
+      "geometrySlotId": "L-SF-01",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "L-SF-02",
+      "sitePickId": "L-SF-02",
+      "kind": "winner",
+      "round": "QF_WINNER",
+      "displayLabel": "L-SF-02",
+      "geometrySlotId": "L-SF-02",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-SF-01",
+      "sitePickId": "R-SF-01",
+      "kind": "winner",
+      "round": "QF_WINNER",
+      "displayLabel": "R-SF-01",
+      "geometrySlotId": "R-SF-01",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "R-SF-02",
+      "sitePickId": "R-SF-02",
+      "kind": "winner",
+      "round": "QF_WINNER",
+      "displayLabel": "R-SF-02",
+      "geometrySlotId": "R-SF-02",
+      "source": "site/data/model/bracket_slots.json"
+    },
+    {
+      "slotId": "FINAL-LEFT",
+      "sitePickId": "FINAL-LEFT",
+      "kind": "winner",
+      "round": "SF_WINNER",
+      "displayLabel": "FINAL-LEFT",
+      "sourceSlotIds": [
+        "L-SF-01",
+        "L-SF-02"
+      ],
+      "geometrySlotId": "CENTER-FINAL-FOUR",
+      "source": "canonical-bracket-document-runtime"
+    },
+    {
+      "slotId": "FINAL-RIGHT",
+      "sitePickId": "FINAL-RIGHT",
+      "kind": "winner",
+      "round": "SF_WINNER",
+      "displayLabel": "FINAL-RIGHT",
+      "sourceSlotIds": [
+        "R-SF-01",
+        "R-SF-02"
+      ],
+      "geometrySlotId": "CENTER-FINAL-FOUR",
+      "source": "canonical-bracket-document-runtime"
+    },
+    {
+      "slotId": "CHAMPION",
+      "sitePickId": "CHAMPION",
+      "kind": "winner",
+      "round": "CHAMPION",
+      "displayLabel": "CHAMPION",
+      "sourceSlotIds": [
+        "FINAL-LEFT",
+        "FINAL-RIGHT"
+      ],
+      "geometrySlotId": "CENTER-FINAL-FOUR",
+      "source": "canonical-bracket-document-runtime"
+    },
+    {
+      "slotId": "THIRD-PLACE-WINNER",
+      "sitePickId": "THIRD-PLACE-WINNER",
+      "kind": "winner",
+      "round": "THIRD_PLACE",
+      "displayLabel": "THIRD-PLACE-WINNER",
+      "sourceSlotIds": [
+        "L-SF-01",
+        "L-SF-02",
+        "R-SF-01",
+        "R-SF-02"
+      ],
+      "geometrySlotId": "CENTER-FINAL-FOUR",
+      "source": "canonical-bracket-document-runtime"
+    }
+  ],
+  "legacyGeometrySlotNote": "slots remains the board geometry manifest. canonicalPickSlots is the durable runtime/Supabase pick document slot list. CENTER-FINAL-FOUR remains geometry/legacy UI surface."
 }

@@ -143,3 +143,15 @@ Game 2 expected total: 32 picks
 Game 1 initializes all 64 required pick slots as empty.
 Game 2 initializes all 32 required pick slots as empty.
 
+<!-- CARD-227-CANONICAL-BRACKET-DOCUMENT-RUNTIME -->
+
+## Card 227 runtime confirmation
+
+The Pages runtime must use the canonical `BracketDocument` before Supabase persistence is introduced.
+
+Required runtime fields are `schemaVersion`, `gameId`, `status`, `expectedPickCount`, `updatedAt`, and `picksBySlot`.
+
+`CHAMPION` and `THIRD-PLACE-WINNER` are first-class runtime/model slots. Game 1 expected total: 64 picks. Game 2 expected total: 32 picks.
+
+`user_brackets.picks_json` stores this same canonical `BracketDocument`; Supabase remains durable persistence only.
+
