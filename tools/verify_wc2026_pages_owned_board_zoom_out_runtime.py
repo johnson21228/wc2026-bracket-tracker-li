@@ -29,7 +29,7 @@ required = {
         "boardNativeSize",
         "applyBoardRenderScale",
         "clampBoardScale",
-        "Math.max(0.5, Math.min(1.25, numeric))",
+        "Math.max(BOARD_MIN_SCALE, Math.min(BOARD_MAX_SCALE, numeric))",
         "boardZoomSelect?.addEventListener",
         "(viewport.scrollLeft || 0) / boardScale",
         "rect.width / boardScale",
