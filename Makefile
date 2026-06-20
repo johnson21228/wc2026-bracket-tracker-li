@@ -1,4 +1,4 @@
-.PHONY: verify pack clean-hygiene open-site publish-pages
+.PHONY: verify pack clean-hygiene open-site publish-pages publish-pages-force check-pages
 
 verify:
 	python3 tools/verify_capture_back_governance.py
@@ -27,6 +27,7 @@ verify:
 	python3 tools/verify_wc2026_group_button_rail_visual_anchor.py
 
 	python3 tools/verify_wc2026_pages_publish_snapshot.py
+	python3 tools/verify_wc2026_fail_closed_pages_publish.py
 	python3 tools/verify_wc2026_pub_hero_header.py
 	python3 tools/verify_wc2026_hero_banner_spelling.py
 	python3 tools/verify_wc2026_picked_bracket_cell_identity_rendering.py
@@ -92,7 +93,13 @@ stopsite:
 		fi; \
 	fi
 
-.PHONY: publish-pages
+.PHONY: publish-pages publish-pages-force check-pages
 
 publish-pages:
-	python3 tools/publish_pages_snapshot.py
+	python3 tools/publish_pages_snapshot.py --strict --verify-live
+
+publish-pages-force:
+	python3 tools/publish_pages_snapshot.py --strict --verify-live --force-redeploy
+
+check-pages:
+	python3 tools/check_pages_publish_freshness.py
