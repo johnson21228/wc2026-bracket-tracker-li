@@ -4,12 +4,15 @@
   "season": 2026,
   "source": {
     "provider": "Workbench CB verified external highlight storage",
-    "capturedAt": "2026-06-18T15:15:00Z",
+    "capturedAt": "2026-06-20T12:00:00-04:00",
     "notes": [
       "Highlight URLs are checked-in data used by the group panel runtime.",
       "Runtime must not scrape ESPN, FOX, FIFA, YouTube, or any external source.",
       "Completed matches without a stored URL remain static evidence in the group panel.",
-      "Stored links were verified from search metadata against teams, World Cup 2026 context, and local final-score matchEvidence."
+      "Stored links were verified from search metadata against teams, World Cup 2026 context, and local final-score matchEvidence.",
+      "Card 232 patched user-provided highlight interview links for completed group matches through June 19.",
+      "Known correction: wff2tvitS-s belongs to Scotland 0-1 Morocco, not Canada 1-1 Bosnia and Herzegovina.",
+      "Known correction: HrbIda-C9SE belongs to Turkey 0-1 Paraguay, not Mexico 2-0 South Africa."
     ]
   },
   "highlights": {
@@ -36,6 +39,238 @@
       "verifiedAt": "2026-06-19",
       "matchEvidence": "Brazil 1-1 Morocco",
       "verificationMode": "web-verified"
+    },
+    "66456904": {
+      "provider": "YouTube",
+      "title": "Mexico 2-0 South Africa highlights",
+      "url": "https://www.youtube.com/watch?v=r1Afsds3ZD0",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Mexico 2-0 South Africa",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456906": {
+      "provider": "YouTube",
+      "title": "South Korea 2-1 Czechia highlights",
+      "url": "https://www.youtube.com/watch?v=QWoDfCkh7f8",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "South Korea 2-1 Czechia",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456916": {
+      "provider": "YouTube",
+      "title": "Canada 1-1 Bosnia and Herzegovina highlights",
+      "url": "https://www.youtube.com/watch?v=w-_rY5morQY",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Canada 1-1 Bosnia and Herzegovina",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456940": {
+      "provider": "YouTube",
+      "title": "United States 4-1 Paraguay highlights",
+      "url": "https://www.youtube.com/watch?v=BXD1_mhODBU",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "United States 4-1 Paraguay",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456918": {
+      "provider": "YouTube",
+      "title": "Qatar 1-1 Switzerland highlights",
+      "url": "https://www.youtube.com/watch?v=jSJs2nPJeLo",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Qatar 1-1 Switzerland",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "GS-2026-06-13-C1": {
+      "provider": "YouTube",
+      "title": "Haiti 0-1 Scotland highlights",
+      "url": "https://www.youtube.com/watch?v=J_2Y34vSbBA",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Haiti 0-1 Scotland",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456942": {
+      "provider": "YouTube",
+      "title": "Australia 2-0 Turkey highlights",
+      "url": "https://www.youtube.com/watch?v=xyKJHekC7io",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Australia 2-0 Turkey",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66457070": {
+      "provider": "YouTube",
+      "title": "Germany 7-1 Curacao highlights",
+      "url": "https://www.youtube.com/watch?v=xHtIzadh4Lg",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Germany 7-1 Curacao",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456968": {
+      "provider": "YouTube",
+      "title": "Netherlands 2-2 Japan highlights",
+      "url": "https://www.youtube.com/watch?v=SaTyQMmOpPM",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Netherlands 2-2 Japan",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66457072": {
+      "provider": "YouTube",
+      "title": "Ivory Coast 1-0 Ecuador highlights",
+      "url": "https://www.youtube.com/watch?v=j6uB9LcLMms",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Ivory Coast 1-0 Ecuador",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456970": {
+      "provider": "YouTube",
+      "title": "Sweden 5-1 Tunisia highlights",
+      "url": "https://www.youtube.com/watch?v=F47z0suCV7Y",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Sweden 5-1 Tunisia",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456994": {
+      "provider": "YouTube",
+      "title": "Spain 0-0 Cape Verde highlights",
+      "url": "https://www.youtube.com/watch?v=wzKYVElYRrw",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Spain 0-0 Cape Verde",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456982": {
+      "provider": "YouTube",
+      "title": "Belgium 1-1 Egypt highlights",
+      "url": "https://www.youtube.com/watch?v=gQOgcN7_IZE",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Belgium 1-1 Egypt",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456996": {
+      "provider": "YouTube",
+      "title": "Saudi Arabia 1-1 Uruguay highlights",
+      "url": "https://www.youtube.com/watch?v=Tz9R1OYdTSs",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Saudi Arabia 1-1 Uruguay",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456984": {
+      "provider": "YouTube",
+      "title": "Iran 2-2 New Zealand highlights",
+      "url": "https://www.youtube.com/watch?v=UZ_7qFbFYRY",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Iran 2-2 New Zealand",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66457006": {
+      "provider": "YouTube",
+      "title": "France 3-1 Senegal highlights",
+      "url": "https://www.youtube.com/watch?v=SlmYDbzHqjg",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "France 3-1 Senegal",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66457008": {
+      "provider": "YouTube",
+      "title": "Iraq 1-4 Norway highlights",
+      "url": "https://www.youtube.com/watch?v=ku1hsMdKDXQ",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Iraq 1-4 Norway",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66457020": {
+      "provider": "YouTube",
+      "title": "Austria 3-1 Jordan highlights",
+      "url": "https://www.youtube.com/watch?v=yOPRItttrPU",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Austria 3-1 Jordan",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66457030": {
+      "provider": "YouTube",
+      "title": "Portugal 1-1 DR Congo highlights",
+      "url": "https://www.youtube.com/watch?v=SjumRdNESKg",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Portugal 1-1 DR Congo",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66457042": {
+      "provider": "YouTube",
+      "title": "England 4-2 Croatia highlights",
+      "url": "https://www.youtube.com/watch?v=lGoe9nxRfyU",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "England 4-2 Croatia",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66457044": {
+      "provider": "YouTube",
+      "title": "Ghana 1-0 Panama highlights",
+      "url": "https://www.youtube.com/watch?v=hFO9DhasJ2A",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Ghana 1-0 Panama",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66457032": {
+      "provider": "YouTube",
+      "title": "Uzbekistan 1-3 Colombia highlights",
+      "url": "https://youtu.be/Qb3ipZFspnc",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Uzbekistan 1-3 Colombia",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456910": {
+      "provider": "YouTube",
+      "title": "Czechia 1-1 South Africa highlights",
+      "url": "https://www.youtube.com/watch?v=jijCaWH_IxM",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Czechia 1-1 South Africa",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456920": {
+      "provider": "YouTube",
+      "title": "Canada 6-0 Qatar highlights",
+      "url": "https://www.youtube.com/watch?v=vz9OTeU6gTM",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Canada 6-0 Qatar",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456908": {
+      "provider": "YouTube",
+      "title": "Mexico 1-0 South Korea highlights",
+      "url": "https://www.youtube.com/watch?v=F1sMvm6D-0Y",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Mexico 1-0 South Korea",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456944": {
+      "provider": "YouTube",
+      "title": "United States 2-0 Australia highlights",
+      "url": "https://www.youtube.com/watch?v=1gMiT5r-K7Q",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "United States 2-0 Australia",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456934": {
+      "provider": "YouTube",
+      "title": "Scotland 0-1 Morocco highlights",
+      "url": "https://www.youtube.com/watch?v=wff2tvitS-s",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Scotland 0-1 Morocco",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456946": {
+      "provider": "YouTube",
+      "title": "Turkey 0-1 Paraguay highlights",
+      "url": "https://www.youtube.com/watch?v=HrbIda-C9SE",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Turkey 0-1 Paraguay",
+      "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "GS-2026-06-19-C3": {
+      "provider": "YouTube",
+      "title": "Brazil 3-0 Haiti highlights",
+      "url": "https://www.youtube.com/watch?v=BphiVajPsFc",
+      "verifiedAt": "2026-06-20",
+      "matchEvidence": "Brazil 3-0 Haiti",
+      "verificationMode": "user-provided-url-and-playlist-interview"
     }
   }
 }
