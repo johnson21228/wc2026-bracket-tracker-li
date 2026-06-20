@@ -3,10 +3,465 @@
   "tournamentId": "wc2026",
   "brackets": {
     "steve-wc2026": {
+      "schemaVersion": 1,
       "id": "steve-wc2026",
       "userId": "steve",
       "tournamentId": "wc2026",
+      "gameId": "game1",
+      "status": "draft",
+      "expectedPickCount": 64,
+      "createdAt": null,
       "updatedAt": null,
+      "picksBySlot": {
+        "L-R32-01": {
+          "slotId": "L-R32-01",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-02": {
+          "slotId": "L-R32-02",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-03": {
+          "slotId": "L-R32-03",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-04": {
+          "slotId": "L-R32-04",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-05": {
+          "slotId": "L-R32-05",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-06": {
+          "slotId": "L-R32-06",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-07": {
+          "slotId": "L-R32-07",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-08": {
+          "slotId": "L-R32-08",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-09": {
+          "slotId": "L-R32-09",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-10": {
+          "slotId": "L-R32-10",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-11": {
+          "slotId": "L-R32-11",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-12": {
+          "slotId": "L-R32-12",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-13": {
+          "slotId": "L-R32-13",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-14": {
+          "slotId": "L-R32-14",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-15": {
+          "slotId": "L-R32-15",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R32-16": {
+          "slotId": "L-R32-16",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-01": {
+          "slotId": "R-R32-01",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-02": {
+          "slotId": "R-R32-02",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-03": {
+          "slotId": "R-R32-03",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-04": {
+          "slotId": "R-R32-04",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-05": {
+          "slotId": "R-R32-05",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-06": {
+          "slotId": "R-R32-06",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-07": {
+          "slotId": "R-R32-07",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-08": {
+          "slotId": "R-R32-08",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-09": {
+          "slotId": "R-R32-09",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-10": {
+          "slotId": "R-R32-10",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-11": {
+          "slotId": "R-R32-11",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-12": {
+          "slotId": "R-R32-12",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-13": {
+          "slotId": "R-R32-13",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-14": {
+          "slotId": "R-R32-14",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-15": {
+          "slotId": "R-R32-15",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R32-16": {
+          "slotId": "R-R32-16",
+          "kind": "entrant",
+          "round": "R32_ENTRANT",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R16-01": {
+          "slotId": "L-R16-01",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R16-02": {
+          "slotId": "L-R16-02",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R16-03": {
+          "slotId": "L-R16-03",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R16-04": {
+          "slotId": "L-R16-04",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R16-05": {
+          "slotId": "L-R16-05",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R16-06": {
+          "slotId": "L-R16-06",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R16-07": {
+          "slotId": "L-R16-07",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-R16-08": {
+          "slotId": "L-R16-08",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R16-01": {
+          "slotId": "R-R16-01",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R16-02": {
+          "slotId": "R-R16-02",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R16-03": {
+          "slotId": "R-R16-03",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R16-04": {
+          "slotId": "R-R16-04",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R16-05": {
+          "slotId": "R-R16-05",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R16-06": {
+          "slotId": "R-R16-06",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R16-07": {
+          "slotId": "R-R16-07",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-R16-08": {
+          "slotId": "R-R16-08",
+          "kind": "winner",
+          "round": "R32_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-QF-01": {
+          "slotId": "L-QF-01",
+          "kind": "winner",
+          "round": "R16_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-QF-02": {
+          "slotId": "L-QF-02",
+          "kind": "winner",
+          "round": "R16_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-QF-03": {
+          "slotId": "L-QF-03",
+          "kind": "winner",
+          "round": "R16_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-QF-04": {
+          "slotId": "L-QF-04",
+          "kind": "winner",
+          "round": "R16_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-QF-01": {
+          "slotId": "R-QF-01",
+          "kind": "winner",
+          "round": "R16_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-QF-02": {
+          "slotId": "R-QF-02",
+          "kind": "winner",
+          "round": "R16_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-QF-03": {
+          "slotId": "R-QF-03",
+          "kind": "winner",
+          "round": "R16_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-QF-04": {
+          "slotId": "R-QF-04",
+          "kind": "winner",
+          "round": "R16_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-SF-01": {
+          "slotId": "L-SF-01",
+          "kind": "winner",
+          "round": "QF_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "L-SF-02": {
+          "slotId": "L-SF-02",
+          "kind": "winner",
+          "round": "QF_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-SF-01": {
+          "slotId": "R-SF-01",
+          "kind": "winner",
+          "round": "QF_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "R-SF-02": {
+          "slotId": "R-SF-02",
+          "kind": "winner",
+          "round": "QF_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "FINAL-LEFT": {
+          "slotId": "FINAL-LEFT",
+          "kind": "winner",
+          "round": "SF_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "FINAL-RIGHT": {
+          "slotId": "FINAL-RIGHT",
+          "kind": "winner",
+          "round": "SF_WINNER",
+          "pick": null,
+          "source": "empty"
+        },
+        "CHAMPION": {
+          "slotId": "CHAMPION",
+          "kind": "winner",
+          "round": "CHAMPION",
+          "pick": null,
+          "source": "empty"
+        },
+        "THIRD-PLACE-WINNER": {
+          "slotId": "THIRD-PLACE-WINNER",
+          "kind": "winner",
+          "round": "THIRD_PLACE",
+          "pick": null,
+          "source": "empty"
+        }
+      },
       "picks": {
         "L-R32-01": {
           "kind": "unpicked"
@@ -188,10 +643,20 @@
         "R-SF-02": {
           "kind": "unpicked"
         },
-        "CENTER-FINAL-FOUR": {
+        "FINAL-LEFT": {
+          "kind": "unpicked"
+        },
+        "FINAL-RIGHT": {
+          "kind": "unpicked"
+        },
+        "CHAMPION": {
+          "kind": "unpicked"
+        },
+        "THIRD-PLACE-WINNER": {
           "kind": "unpicked"
         }
       }
     }
-  }
+  },
+  "canonicalDocumentModel": "BracketDocument"
 }

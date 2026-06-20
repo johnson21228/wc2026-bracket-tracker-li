@@ -1,3 +1,4 @@
+import { normalizeBracketDocument } from "../model/UserBracketModel.js";
 import { BracketStorageAdapter } from "./BracketStorageAdapter.js";
 
 const DEFAULT_NAMESPACE = "wc2026.bracket";
@@ -18,11 +19,21 @@ class LocalStorageBracketStore extends BracketStorageAdapter {
   }
 
   async saveUserBracket(bracket) {
+    if (!bracket?.picksBySlot) {
+      throw new Error("LocalStorageBracketStore.saveUserBracket requires canonical BracketDocument picksBySlot");
+    }
+    const canonicalBracketDocument = normalizeBracketDocument({
+      bracket,
+      bracketSlots: { canonicalPickSlots: Object.values(bracket.picksBySlot || {}) },
+      teamsById: {},
+      userId: bracket.userId,
+      gameId: bracket.gameId || "game1",
+    });
     window.localStorage.setItem(
-      keyFor(this.namespace, bracket.userId),
-      JSON.stringify(bracket, null, 2)
+      keyFor(this.namespace, canonicalBracketDocument.userId),
+      JSON.stringify(canonicalBracketDocument, null, 2)
     );
-    return bracket;
+    return canonicalBracketDocument;
   }
 
   async listUsers() {

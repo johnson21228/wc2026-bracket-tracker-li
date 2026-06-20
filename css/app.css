@@ -39,3 +39,100 @@ h1 { margin: 0; font-size: clamp(28px, 4vw, 56px); }
   color: inherit;
   padding: 8px 12px;
 }
+.supabase-identity-surface {
+  justify-self: end;
+  align-self: start;
+  min-width: min(100%, 280px);
+}
+
+.identity-card {
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 18px;
+  background: rgba(0,0,0,.28);
+  box-shadow: 0 16px 42px rgba(0,0,0,.25);
+  padding: 12px;
+  color: #f8f2ec;
+}
+
+.identity-summary {
+  display: grid;
+  gap: 2px;
+}
+
+.identity-kicker {
+  color: #d8bca5;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.identity-title {
+  font-size: 14px;
+}
+
+.identity-detail,
+.identity-message {
+  color: #e6d7c8;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.identity-message {
+  margin: 8px 0 0;
+}
+
+.identity-actions {
+  margin-top: 10px;
+}
+
+.identity-signin-form {
+  display: flex;
+  gap: 6px;
+}
+
+.identity-signin-form input {
+  min-width: 0;
+  flex: 1;
+  border: 1px solid rgba(255,255,255,.26);
+  border-radius: 999px;
+  background: rgba(255,255,255,.09);
+  color: inherit;
+  padding: 8px 10px;
+}
+
+.identity-signin-form input::placeholder {
+  color: rgba(248,242,236,.6);
+}
+
+.identity-button {
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  color: inherit;
+  padding: 8px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.identity-button:disabled,
+.identity-signin-form input:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+
+@media (min-width: 920px) {
+  .app-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
+  .app-actions,
+  .board-zoom-controls {
+    grid-column: 1;
+  }
+
+  .supabase-identity-surface {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+}

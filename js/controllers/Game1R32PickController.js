@@ -1,3 +1,6 @@
+import { teamPickValue, unpickedPickValue } from "../model/PickValue.js";
+import { setBracketPick } from "../model/UserBracketModel.js";
+import { createStaticBracketRepository } from "../services/BracketRepository.js";
 const GAME1_R32_PICK_STORAGE_KEY = "wc2026.game1.r32ProjectionPicks.v1";
 
 const GAME1_R32_PICKABLE_STATES = new Set([
@@ -145,13 +148,27 @@ function pickRecordFromTeam({ fifaSlot, team }) {
 }
 
 class Game1R32PickController {
-  constructor({ logic, bridge, geometry, lifecycle, teams, storageKey = GAME1_R32_PICK_STORAGE_KEY }) {
+  constructor({
+    logic,
+    bridge,
+    geometry,
+    lifecycle,
+    teams,
+    storageKey = GAME1_R32_PICK_STORAGE_KEY,
+    bracketRepository = createStaticBracketRepository(),
+    userId = "anonymous",
+    userBracket = null,
+  }) {
     this.logic = logic;
     this.bridge = bridge;
     this.geometry = geometry;
     this.lifecycle = lifecycle;
     this.teams = teams;
     this.storageKey = storageKey;
+    this.bracketRepository = bracketRepository;
+    this.userId = userId;
+    this.userBracket = userBracket;
+    this.lastSavePromise = null;
 
     this.logicByFifaSlotId = byKey(logic.slots || [], "fifaSlotId");
     this.geometryBySlotId = byKey(geometry.slots || [], "slotId");
@@ -240,6 +257,43 @@ class Game1R32PickController {
     return { ok: true, slot, team };
   }
 
+  canonicalSitePickIdForFifaSlot(fifaSlotId) {
+    const bridgeSlot = (this.bridge.slots || []).find((slot) => slot.fifaSlotId === fifaSlotId);
+    return bridgeSlot?.geometrySlotId || fifaSlotId;
+  }
+
+  saveBracketDocumentFromProjectionPicks(picks) {
+    if (!this.bracketRepository || !this.userBracket) return null;
+
+    let nextBracket = this.userBracket;
+    for (const bridgeSlot of this.bridge.slots || []) {
+      const sitePickId = bridgeSlot.geometrySlotId || bridgeSlot.fifaSlotId;
+      const pick = picks[bridgeSlot.fifaSlotId] || null;
+      const teamId = pick?.teamId || pick?.abbr || null;
+      nextBracket = setBracketPick({
+        bracket: nextBracket,
+        sitePickId,
+        pickValue: teamId ? teamPickValue(teamId) : unpickedPickValue(),
+      });
+    }
+
+    this.userBracket = nextBracket;
+    this.lastSavePromise = this.bracketRepository
+      .saveUserBracket(nextBracket)
+      .then((savedBracket) => {
+        this.userBracket = savedBracket || nextBracket;
+        return this.userBracket;
+      })
+      .catch((error) => {
+        window.dispatchEvent(new CustomEvent("wc2026:bracketDocumentSaveFailed", {
+          detail: { error: String(error?.message || error) },
+        }));
+        return nextBracket;
+      });
+
+    return this.lastSavePromise;
+  }
+
   setPick({ fifaSlotId, teamId }) {
     const validation = this.validatePick({ fifaSlotId, teamId });
     if (!validation.ok) return validation;
@@ -248,6 +302,7 @@ class Game1R32PickController {
     const record = pickRecordFromTeam({ fifaSlot: validation.slot.logicSlot, team: validation.team });
     picks[fifaSlotId] = record;
     this.writePicks(picks);
+    this.saveBracketDocumentFromProjectionPicks(picks);
 
     window.dispatchEvent(new CustomEvent("wc2026:game1R32ProjectionPickChanged", {
       detail: {
@@ -266,6 +321,7 @@ class Game1R32PickController {
     const previous = picks[fifaSlotId] || null;
     delete picks[fifaSlotId];
     this.writePicks(picks);
+    this.saveBracketDocumentFromProjectionPicks(picks);
 
     window.dispatchEvent(new CustomEvent("wc2026:game1R32ProjectionPickChanged", {
       detail: {
@@ -296,16 +352,29 @@ async function createGame1R32PickController({
   lifecycleSource = "data/model/game1_lifecycle.json",
   teamSources = DEFAULT_TEAM_SOURCES,
   storageKey = GAME1_R32_PICK_STORAGE_KEY,
+  bracketRepository = createStaticBracketRepository(),
+  userId = "anonymous",
 } = {}) {
-  const [logic, bridge, geometry, lifecycle, teams] = await Promise.all([
+  const [logic, bridge, geometry, lifecycle, teams, userBracket] = await Promise.all([
     fetchJson(logicSource),
     fetchJson(bridgeSource),
     fetchJson(geometryManifest),
     fetchJson(lifecycleSource, { optional: true }),
     loadTeams({ sources: teamSources }),
+    bracketRepository.loadUserBracket(userId),
   ]);
 
-  return new Game1R32PickController({ logic, bridge, geometry, lifecycle, teams, storageKey });
+  return new Game1R32PickController({
+    logic,
+    bridge,
+    geometry,
+    lifecycle,
+    teams,
+    storageKey,
+    bracketRepository,
+    userId,
+    userBracket,
+  });
 }
 
 export {
