@@ -4,7 +4,13 @@
 
 This is the canonical Bracketeering Pub Supabase target **before any SQL is applied**.
 
-It supersedes the earlier private-only `user_brackets` assumption and the earlier `status`-only table sketch.
+It is now finalized against:
+
+- Card 227 canonical `BracketDocument` runtime
+- Card 228 `BracketDocument` save seam before Supabase
+- Card 229 SQL/RLS finalization
+
+The SQL remains a draft file until it is intentionally applied in the Supabase dashboard and captured as dashboard evidence.
 
 ## Product invariant
 
@@ -31,13 +37,13 @@ Display names are optional at first, but if present should be bounded to a reaso
 
 ### `public.user_brackets`
 
-Purpose: store one canonical pick-state JSON document per signed-in player per game.
+Purpose: store one canonical `BracketDocument` per signed-in player per game.
 
 Expected columns:
 
 - `user_id uuid not null references auth.users(id) on delete cascade`
 - `game_id text not null check (game_id in ('game1', 'game2'))`
-- `picks_json jsonb not null default '{}'::jsonb`
+- `picks_json jsonb not null`
 - `visibility text not null default 'private' check (visibility in ('private', 'public', 'room'))`
 - `submitted_at timestamptz`
 - `locked_at timestamptz`
@@ -45,7 +51,18 @@ Expected columns:
 - `updated_at timestamptz not null default now()`
 - `primary key (user_id, game_id)`
 
-`picks_json` stores the canonical pick-state document defined by `docs/architecture/wc2026_canonical_pick_state_storage_model.md`. Supabase stores the document; it does not define bracket geometry, slot layout, or advancement rules.
+`picks_json` stores the same canonical `BracketDocument` used by the Pages runtime and localStorage save seam. Supabase stores the document; it does not define bracket geometry, slot layout, menu rules, controller behavior, or advancement rules.
+
+Required top-level `picks_json` fields:
+
+- `schemaVersion`
+- `gameId`
+- `status`
+- `expectedPickCount`
+- `updatedAt`
+- `picksBySlot`
+
+The SQL target checks that `picks_json.gameId` matches the row `game_id`, and that the document status is one of `draft`, `submitted`, or `locked`.
 
 ## RLS target
 
@@ -62,15 +79,36 @@ Bracket policies:
 - owner can read their own bracket at any time
 - other signed-in users can read brackets when `visibility = 'public'`, `submitted_at is not null`, or `locked_at is not null`
 - owner can insert only their own bracket rows
-- owner can update only their own unsubmitted and unlocked bracket rows
+- owner can update only their own existing unlocked bracket rows
 - delete is omitted for MVP unless an explicit bracket reset/delete behavior is designed
+
+## Submit/lock update correction
+
+The owner update policy must not require `submitted_at is null` and `locked_at is null` in `WITH CHECK`.
+
+That older shape blocks the normal lifecycle update that sets `submitted_at` or `locked_at`.
+
+The finalized shape is:
+
+```text
+USING: owner may update their own existing row while old locked_at is null
+WITH CHECK: resulting row must still belong to the same owner
+```
+
+A database trigger enforces finality:
+
+- if the old row is locked, no update is allowed
+- if the old row is already submitted, `picks_json`, `user_id`, and `game_id` cannot change
+- if `locked_at` is set while `submitted_at` is null, the trigger fills `submitted_at`
+
+This lets the browser perform normal draft save, submit, and lock transitions while preventing post-finality bracket rewriting.
 
 ## Frontend consequences
 
 Card 216 should implement account-backed save/load against this contract, not the superseded private-only contract.
 
 - Anonymous players continue using localStorage.
-- Signed-in players save/load `game1` and later `game2` through `RemoteBracketStore`.
+- Signed-in players save/load `game1` and later `game2` through `SupabaseBracketStore` behind the repository seam.
 - Draft rows default to `visibility = 'private'`.
 - Submit/lock behavior writes `submitted_at` and/or `locked_at`.
 - Shared player pick views are future-gated UI work, but the schema and RLS must not block them.
@@ -91,15 +129,12 @@ Allowed browser/runtime configuration:
 
 The browser-safe key is only safe when RLS is enabled and correct.
 
-<!-- CARD-227-CANONICAL-BRACKET-DOCUMENT-RUNTIME -->
+## Sequencing
 
-## Card 227 runtime confirmation
-
-The Pages runtime must use the canonical `BracketDocument` before Supabase persistence is introduced.
-
-Required runtime fields are `schemaVersion`, `gameId`, `status`, `expectedPickCount`, `updatedAt`, and `picksBySlot`.
-
-`CHAMPION` and `THIRD-PLACE-WINNER` are first-class runtime/model slots. Game 1 expected total: 64 picks. Game 2 expected total: 32 picks.
-
-`user_brackets.picks_json` stores this same canonical `BracketDocument`; Supabase remains durable persistence only.
-
+```text
+Runtime BracketDocument: complete
+Local save seam: complete
+SQL/RLS finalization: this card
+Supabase dashboard apply: next explicit step
+SupabaseBracketStore: after SQL apply
+```

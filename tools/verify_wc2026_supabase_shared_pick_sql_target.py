@@ -46,11 +46,24 @@ if "status text" in schema:
     errors.append("schema draft must not use superseded status text column as DB authority")
 if "references auth.users(id)" not in schema:
     errors.append("schema must reference auth.users(id)")
+if "picks_json ->> 'gameId' = game_id" not in schema:
+    errors.append("schema must check that picks_json.gameId matches user_brackets.game_id")
+if "prevent_user_bracket_finalized_mutation" not in schema:
+    errors.append("schema must include finality trigger for submitted/locked bracket rows")
 
 rls = read("source/sql/wc2026_supabase_shared_pick_rls_draft.sql")
-for token in ["user_id = auth.uid()", "visibility = 'public'", "submitted_at is not null", "locked_at is not null", "and submitted_at is null", "and locked_at is null"]:
+for token in ["user_id = auth.uid()", "visibility = 'public'", "submitted_at is not null", "locked_at is not null"]:
     if token not in rls:
         errors.append(f"RLS draft missing expected rule fragment: {token}")
+
+policy_start = rls.find("create policy \"user_brackets_update_own_unlocked\"")
+policy = rls[policy_start:] if policy_start != -1 else rls
+with_check_start = policy.find("with check")
+with_check = policy[with_check_start:] if with_check_start != -1 else ""
+if "submitted_at is null" in with_check or "locked_at is null" in with_check:
+    errors.append("RLS update WITH CHECK must not block submit/lock lifecycle updates")
+if "create policy \"user_brackets_update_own_unlocked\"" not in rls:
+    errors.append("RLS draft must use finalized owner-unlocked update policy")
 
 readiness = read("cards/221_confirm_supabase_sql_readiness_card.md")
 if "`status`" in readiness and "`submitted_at` and `locked_at`" not in readiness:

@@ -1,6 +1,6 @@
 -- Draft RLS policies for Bracketeering Pub shared player pick visibility.
 -- Status: NOT APPLIED unless captured dashboard evidence says otherwise.
--- This supersedes the earlier private-only owner-select policy.
+-- Finalized against canonical BracketDocument persistence and submit/lock lifecycle.
 -- Review before running. Contains no secrets.
 
 alter table public.profiles enable row level security;
@@ -48,20 +48,24 @@ to authenticated
 with check (user_id = auth.uid());
 
 drop policy if exists "user_brackets_update_own_unsubmitted" on public.user_brackets;
-create policy "user_brackets_update_own_unsubmitted"
+drop policy if exists "user_brackets_update_own_unlocked" on public.user_brackets;
+create policy "user_brackets_update_own_unlocked"
 on public.user_brackets
 for update
 to authenticated
 using (
   user_id = auth.uid()
-  and submitted_at is null
   and locked_at is null
 )
 with check (
   user_id = auth.uid()
-  and submitted_at is null
-  and locked_at is null
 );
+
+-- The update policy intentionally does not require submitted_at/locked_at to
+-- remain null in WITH CHECK. Otherwise the browser could never perform the
+-- normal submit/lock lifecycle update. The schema trigger
+-- public.prevent_user_bracket_finalized_mutation() prevents changing picks_json
+-- after submitted and prevents any update after locked.
 
 -- Delete is intentionally omitted for the MVP.
 -- Add only after an explicit account bracket reset/delete behavior is designed.
