@@ -81,14 +81,19 @@ def main():
     if root_cb:
         errors.append("root Capture Back files are forbidden: " + ", ".join(str(p) for p in root_cb))
 
-    try:
-        log_body = subprocess.check_output(
-            ["git", "log", "-3", "--format=%B%n---END-COMMIT---"],
-            text=True,
-            stderr=subprocess.DEVNULL,
-        )
-    except Exception as exc:
-        errors.append(f"could not inspect recent git history: {exc}")
+    if Path(".git").exists():
+        try:
+            log_body = subprocess.check_output(
+                ["git", "log", "-3", "--format=%B%n---END-COMMIT---"],
+                text=True,
+                stderr=subprocess.DEVNULL,
+            )
+        except Exception as exc:
+            errors.append(f"could not inspect recent git history: {exc}")
+            log_body = ""
+    else:
+        # Packed artifacts intentionally exclude .git. The durable CB/history
+        # anchors above are the pack-safe authority for this verifier.
         log_body = ""
 
     # Older CB history shape is documented in the raw pick ID capture and
