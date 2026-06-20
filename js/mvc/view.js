@@ -28,9 +28,6 @@ export function createBracketView(root) {
   const boardZoomSelect = root.querySelector("[data-board-zoom]");
   const statusPanel = root.querySelector("[data-status-panel]");
   const clearAllButton = root.querySelector('[data-action="clear-all"]');
-  const exportPicksButton = root.querySelector('[data-action="export-picks"]');
-  const importPicksButton = root.querySelector('[data-action="import-picks"]');
-  const importPicksFile = root.querySelector('[data-import-picks-file]');
   let handlers = {};
   let pendingGroupPanelAnchorBoundsPx = null;
   let pendingGroupPanelAnchorElement = null;
@@ -110,20 +107,6 @@ export function createBracketView(root) {
   function setHandlers(nextHandlers) {
     handlers = nextHandlers;
     clearAllButton?.addEventListener("click", () => handlers.onClearAll?.());
-    exportPicksButton?.addEventListener("click", () => handlers.onExportPicks?.());
-    importPicksButton?.addEventListener("click", () => {
-      if (!importPicksFile) return;
-      importPicksFile.value = "";
-      importPicksFile.click();
-    });
-    importPicksFile?.addEventListener("change", () => {
-      const file = importPicksFile.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.addEventListener("load", () => handlers.onImportPicks?.(String(reader.result || ""), file.name));
-      reader.addEventListener("error", () => report("Could not read import file."));
-      reader.readAsText(file);
-    });
     boardZoomSelect?.addEventListener("change", () => {
       applyBoardRenderScale(boardZoomSelect.value);
       handlers.onCloseMenu?.();
