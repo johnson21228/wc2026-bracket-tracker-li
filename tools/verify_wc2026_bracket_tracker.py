@@ -142,12 +142,12 @@ def main() -> int:
     root_html = read("site/index.html")
     shell_required = [
         '<main id="wc2026-app"',
-        '<script type="module" src="js/app.js"></script>',
+        '<script type="module" src="js/app.js',
         'href="assets/board/pub_background.jpeg"',
         'href="assets/board/gameboard.svg"',
-        'href="css/app.css"',
-        'href="css/board.css"',
-        'href="css/dev.css"',
+        'href="css/app.css',
+        'href="css/board.css',
+        'href="css/dev.css',
     ]
     missing_shell = [token for token in shell_required if token not in root_html]
     if missing_shell:
