@@ -34,15 +34,10 @@ def main():
         '<h1 id="app-title">Bracketeering Pub</h1>',
         'Scroll the game board below and make your picks.',
         'data-action="clear-all"',
-        'data-action="export-picks"',
-        'data-action="import-picks"',
-        'data-import-picks-file',
-        'Export picks',
-        'Import picks',
-    ]
+                                            ]
     missing_html = [t for t in html_tokens if t not in html]
     if missing_html:
-        fail("Pub hero header HTML tokens missing:", missing_html)
+        fail("Pub hero header required HTML tokens missing:", missing_html)
 
     stale = [
         "World Cup 2026 Bracket Tracker",
@@ -54,16 +49,10 @@ def main():
 
     view = read("site/js/mvc/view.js")
     view_tokens = [
-        'data-action="export-picks"',
-        'data-action="import-picks"',
-        'data-import-picks-file',
-        'onExportPicks',
-        'onImportPicks',
-        'readAsText',
-    ]
+                                                    ]
     missing_view = [t for t in view_tokens if t not in view]
     if missing_view:
-        fail("Pub hero header view wiring tokens missing:", missing_view)
+        fail("Pub hero header required view wiring tokens missing:", missing_view)
 
     controller = read("site/js/mvc/controller.js")
     controller_tokens = [
@@ -91,6 +80,43 @@ def main():
     makefile = read("Makefile")
     if "python3 tools/verify_wc2026_pub_hero_header.py" not in makefile:
         fail("Makefile does not run pub hero header verifier:", ["Makefile"])
+
+
+    forbidden_player_storage_tokens = [
+        'data-action="export-picks"',
+        'data-action="import-picks"',
+        'data-import-picks-file',
+        'Export picks',
+        'Import picks',
+        'Capture Picks',
+        'Capture picks',
+    ]
+
+    forbidden_present = [token for token in forbidden_player_storage_tokens if token in html]
+    if forbidden_present:
+        print("Player-facing storage UI tokens must not be present:")
+        for token in forbidden_present:
+            print(f"- {token}")
+        return 1
+
+
+    forbidden_player_storage_view_tokens = [
+        "onExportPicks",
+        "onImportPicks",
+        "readAsText",
+    ]
+
+    view_text_for_storage_check = Path("site/js/mvc/view.js").read_text()
+    forbidden_view_present = [
+        token
+        for token in forbidden_player_storage_view_tokens
+        if token in view_text_for_storage_check
+    ]
+    if forbidden_view_present:
+        print("Player-facing storage view wiring must not be present:")
+        for token in forbidden_view_present:
+            print(f"- {token}")
+        return 1
 
     print("OK: WC2026 pub hero header LI and runtime are captured and verified.")
 
