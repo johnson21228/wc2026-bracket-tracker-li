@@ -25,3 +25,9 @@ Player-facing ID refinement:
 - Durable pick IDs such as L-R16-01, R32-01, CHAMPION, and KNOCKOUT-* are backend/datamodel identifiers only.
 - Pick menus must not render these IDs as visible titles, section labels, source roles, or accessibility labels.
 - Knockout winner menus should present the candidate choices directly under a player-facing title such as "Make your pick".
+
+
+Final player-facing chrome refinement:
+- Non-group knockout menus must not render source-label rows when the source label is a backend slot ID such as L-R16-01.
+- Non-group knockout menus must not render generic section headers such as "Winner choices".
+- The player-facing menu chrome is: clean title, candidate team choices, close control.

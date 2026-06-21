@@ -42,6 +42,22 @@ if "`${slot.slotId}:" in view:
 if 'groupLabel.textContent = group.label || "Choices"' in view:
     errors.append("non-group knockout menus still render generic section labels such as Winner choices")
 
+
+if "source.textContent = menuModel.sourceLabel" in view:
+    errors.append("pick menu source label still directly exposes menuModel.sourceLabel")
+
+if "titleBlock.append(title, source)" in view and "!isInternalPickSlotId(sourceLabel)" not in view:
+    errors.append("pick menu source label append is not guarded against internal/backend IDs")
+
+if 'pick-menu-group-label-static' in view:
+    errors.append("non-group static pick-menu group header class is still rendered")
+
+if "groupLabel.textContent = group.label" in view:
+    errors.append("non-group knockout menus still render generic section labels such as Winner choices")
+
+if "if (group.panelAvailable && group.groupId)" not in view:
+    errors.append("group header rendering is not limited to real group-backed sections")
+
 if errors:
     print("Knockout pick menu no-feeder-language verification failed:")
     for error in errors:

@@ -568,9 +568,13 @@ export function createBracketView(root) {
 
     const source = document.createElement("div");
     source.className = "pick-menu-source-label";
-    source.textContent = menuModel.sourceLabel;
-
-    titleBlock.append(title, source);
+    const sourceLabel = String(menuModel.sourceLabel || "").trim();
+    if (sourceLabel && !isInternalPickSlotId(sourceLabel) && isPlayerFacingPickMenuSourceLabel(sourceLabel)) {
+      source.textContent = sourceLabel;
+      titleBlock.append(title, source);
+    } else {
+      titleBlock.append(title);
+    }
 
     const close = document.createElement("button");
     close.type = "button";
@@ -621,20 +625,16 @@ export function createBracketView(root) {
           handlers.onGroupPanelOpen?.(group.groupId);
         });
         groupHeader.append(groupButton);
-      } else {
-        const groupLabel = document.createElement("span");
-        groupLabel.className = "pick-menu-group-label-static";
-        groupLabel.textContent = group.label;
-        groupHeader.append(groupLabel);
-      }
 
-      if (group.groupId && isPlayerFacingPickMenuSourceLabel(group.sourceRole)) {
-        const sourceRole = document.createElement("span");
-        sourceRole.className = "pick-menu-group-role";
-        sourceRole.textContent = group.sourceRole;
-        groupHeader.append(sourceRole);
+        if (isPlayerFacingPickMenuSourceLabel(group.sourceRole)) {
+          const sourceRole = document.createElement("span");
+          sourceRole.className = "pick-menu-group-role";
+          sourceRole.textContent = group.sourceRole;
+          groupHeader.append(sourceRole);
+        }
+
+        section.append(groupHeader);
       }
-      section.append(groupHeader);
 
       const list = document.createElement("div");
       list.className = "pick-menu-list";

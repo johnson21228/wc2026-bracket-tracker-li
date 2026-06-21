@@ -23,3 +23,9 @@ Player-facing ID rule:
 - Player UI must not expose durable pick IDs, game IDs, source IDs, or slot IDs.
 - These identifiers remain valid for model/controller/storage logic only.
 - Pick menu chrome should use player-facing language and candidate team choices.
+
+
+Final player-facing chrome rule:
+- No source-label rows for backend slot IDs.
+- No generic "Winner choices" section headers for non-group knockout menus.
+- Group headers remain allowed only for real group-backed sections.
