@@ -407,8 +407,14 @@ export async function createBracketModel() {
     return [...(currentMatchesByGroupId.get(normalizeGroupId(groupId)) || [])];
   }
 
-  function getMatchHighlights(matchId) {
-    return currentHighlightsByMatchId.get(String(matchId)) || null;
+  function getMatchHighlights(match) {
+    if (!match) return null;
+
+    return (
+      currentHighlightsByMatchId.get(String(match.espnMatchId || "")) ||
+      currentHighlightsByMatchId.get(String(match.matchId || "")) ||
+      null
+    );
   }
 
   function getKnockoutMatches() {
@@ -430,7 +436,7 @@ export async function createBracketModel() {
     const matches = getGroupMatches(normalizedGroupId).map((match) => {
       const homeTeam = teamById.get(match.homeTeamId) || null;
       const awayTeam = teamById.get(match.awayTeamId) || null;
-      const highlight = getMatchHighlights(match.matchId);
+      const highlight = getMatchHighlights(match);
       const completed = match.status === "final" || match.status === "complete" || match.status === "completed";
       return {
         ...match,

@@ -4,7 +4,7 @@
   "season": 2026,
   "source": {
     "provider": "Workbench CB verified external highlight storage",
-    "capturedAt": "2026-06-20T12:00:00-04:00",
+    "capturedAt": "2026-06-21T13:30:00-04:00",
     "notes": [
       "Highlight URLs are checked-in data used by the group panel runtime.",
       "Runtime must not scrape ESPN, FOX, FIFA, YouTube, or any external source.",
@@ -12,7 +12,8 @@
       "Stored links were verified from search metadata against teams, World Cup 2026 context, and local final-score matchEvidence.",
       "Card 232 patched user-provided highlight interview links for completed group matches through June 19.",
       "Known correction: wff2tvitS-s belongs to Scotland 0-1 Morocco, not Canada 1-1 Bosnia and Herzegovina.",
-      "Known correction: HrbIda-C9SE belongs to Turkey 0-1 Paraguay, not Mexico 2-0 South Africa."
+      "Known correction: HrbIda-C9SE belongs to Turkey 0-1 Paraguay, not Mexico 2-0 South Africa.",
+      "Card 235 patched user-provided June 20/21 Group E/F final scores and YouTube highlight links."
     ]
   },
   "highlights": {
@@ -271,6 +272,38 @@
       "verifiedAt": "2026-06-20",
       "matchEvidence": "Brazil 3-0 Haiti",
       "verificationMode": "user-provided-url-and-playlist-interview"
+    },
+    "66456972": {
+      "provider": "YouTube",
+      "title": "Netherlands 5-1 Sweden highlights",
+      "url": "https://youtu.be/IRllRLrG7Sg",
+      "verifiedAt": "2026-06-21",
+      "matchEvidence": "Netherlands 5-1 Sweden",
+      "verificationMode": "user-provided-url"
+    },
+    "66457074": {
+      "provider": "YouTube",
+      "title": "Germany 2-1 Côte d’Ivoire highlights",
+      "url": "https://www.youtube.com/watch?v=xHtIzadh4Lg&pp=ygUHZ2VybWFueQ%3D%3D",
+      "verifiedAt": "2026-06-21",
+      "matchEvidence": "Germany 2-1 Côte d’Ivoire",
+      "verificationMode": "user-provided-url"
+    },
+    "66457076": {
+      "provider": "YouTube",
+      "title": "Ecuador 0-0 Curaçao highlights",
+      "url": "https://youtu.be/_JQLeADlzXM",
+      "verifiedAt": "2026-06-21",
+      "matchEvidence": "Ecuador 0-0 Curaçao",
+      "verificationMode": "user-provided-url"
+    },
+    "66456974": {
+      "provider": "YouTube",
+      "title": "Tunisia 0-4 Japan highlights",
+      "url": "https://youtu.be/ATmlGGfCyBA",
+      "verifiedAt": "2026-06-21",
+      "matchEvidence": "Tunisia 0-4 Japan",
+      "verificationMode": "user-provided-url"
     }
   }
 }
