@@ -209,6 +209,17 @@ export function createBracketView(root) {
   }
 
 
+  function displayTeamForSlot(slot) {
+    if (activeGameValue() === "game-2" && slot.round === "R32" && slot.game2ResolvedTeam) {
+      return slot.game2ResolvedTeam;
+    }
+    return slot.selectedTeam;
+  }
+
+  function isGame2ResolvedR32Display(slot, displayTeam) {
+    return activeGameValue() === "game-2" && slot.round === "R32" && Boolean(displayTeam) && Boolean(slot.game2ResolvedTeam);
+  }
+
   function renderSlots(slotModels) {
     const layer = boardPlane.querySelector("[data-pick-layer]");
     layer.innerHTML = "";
@@ -222,10 +233,12 @@ export function createBracketView(root) {
       const activeGameDisabledReason = disabledReasonForActiveGame(slot);
       button.disabled = !slot.pickable || !enabledForActiveGame;
       button.dataset.pickDisabledByActiveGame = enabledForActiveGame ? "false" : "true";
+      const displayTeam = displayTeamForSlot(slot);
+      const game2ResolvedR32Display = isGame2ResolvedR32Display(slot, displayTeam);
       button.setAttribute(
         "aria-label",
-        slot.selectedTeam
-          ? `${slot.slotId}: ${fullTeamLabel(slot.selectedTeam)}`
+        displayTeam
+          ? `${slot.slotId}: ${fullTeamLabel(displayTeam)}`
           : `${slot.slotId}: ${slot.pickable && enabledForActiveGame ? "choose team" : activeGameDisabledReason || "waiting for feeder picks"}`
       );
       applyBounds(button, slot.boundsPx);
@@ -237,13 +250,13 @@ export function createBracketView(root) {
       const value = document.createElement("span");
       value.className = "pick-slot-value";
 
-      if (slot.selectedTeam) {
+      if (displayTeam) {
         const identity = document.createElement("span");
         identity.className = "picked-cell-identity";
 
         const flag = document.createElement("span");
         flag.className = "picked-cell-flag";
-        flag.textContent = slot.selectedTeam.flag || "";
+        flag.textContent = displayTeam.flag || "";
         flag.setAttribute("aria-hidden", "true");
 
         if (slot.boundsPx?.height) {
@@ -252,10 +265,10 @@ export function createBracketView(root) {
 
         const code = document.createElement("span");
         code.className = "picked-cell-code";
-        code.textContent = slot.selectedTeam.abbr || slot.selectedTeam.id || "";
+        code.textContent = displayTeam.abbr || displayTeam.id || "";
 
         identity.append(flag, code);
-        if (slot.pickValidity?.state === "invalid") {
+        if (slot.selectedTeam && slot.pickValidity?.state === "invalid") {
           const warning = document.createElement("span");
           warning.className = "picked-cell-warning";
           warning.textContent = "!";
@@ -271,8 +284,13 @@ export function createBracketView(root) {
       }
 
       button.append(label, value);
-      if (slot.selectedTeam) button.classList.add("has-pick");
-      if (!slot.selectedTeam) button.classList.add("is-unpicked");
+      if (displayTeam) button.classList.add("has-pick");
+      if (game2ResolvedR32Display) {
+        button.classList.add("has-game2-resolved-r32");
+        button.dataset.game2ResolvedR32Source = slot.game2ResolvedSource || "unknown";
+        button.setAttribute("data-game2-resolved-r32-source", slot.game2ResolvedSource || "unknown");
+      }
+      if (!displayTeam) button.classList.add("is-unpicked");
       if (slot.pickValidity?.state === "invalid") {
         button.classList.add("has-invalid-pick");
         button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
