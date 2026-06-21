@@ -6,7 +6,7 @@
   "source": {
     "provider": "ESPN",
     "url": "https://www.espn.com/soccer/standings/_/league/fifa.world",
-    "capturedAt": "2026-06-20T08:02:00-04:00",
+    "capturedAt": "2026-06-21T13:30:00-04:00",
     "captureMode": "manual-cb-normalized-snapshot",
     "notes": [
       "Seeded from ESPN standings page and completed match evidence available during CB capture.",
@@ -15,7 +15,8 @@
       "Card 202 patched confirmed Czechia 1-1 South Africa final result from Reuters evidence; live/watchlist matches were not patched.",
       "Card 232 patched June 19 user-provided finals and refreshed provisional standings from checked-in final match evidence.",
       "Group C includes Brazil 3-0 Haiti and Scotland 0-1 Morocco user-provided final evidence.",
-      "Group D includes United States 2-0 Australia and Turkey 0-1 Paraguay user-provided final evidence."
+      "Group D includes United States 2-0 Australia and Turkey 0-1 Paraguay user-provided final evidence.",
+      "Groups E and F refreshed from June 20/21 user-provided final score interview evidence."
     ]
   },
   "groups": {
@@ -324,68 +325,68 @@
           "abbr": "GER",
           "name": "Germany",
           "sourceOrder": 1,
-          "played": 1,
-          "wins": 1,
+          "played": 2,
+          "wins": 2,
           "draws": 0,
           "losses": 0,
-          "goalsFor": 7,
-          "goalsAgainst": 1,
-          "goalDifference": 6,
-          "points": 3,
+          "goalsFor": 9,
+          "goalsAgainst": 2,
+          "goalDifference": 7,
+          "points": 6,
+          "rankStatus": "provisional",
           "rank": 1,
-          "qualificationContext": "group-winner",
-          "rankStatus": "provisional"
+          "qualificationContext": "group-winner"
         },
         {
           "teamId": "CIV",
           "abbr": "CIV",
           "name": "Ivory Coast",
           "sourceOrder": 3,
-          "played": 1,
+          "played": 2,
           "wins": 1,
           "draws": 0,
-          "losses": 0,
-          "goalsFor": 1,
-          "goalsAgainst": 0,
-          "goalDifference": 1,
+          "losses": 1,
+          "goalsFor": 2,
+          "goalsAgainst": 2,
+          "goalDifference": 0,
           "points": 3,
+          "rankStatus": "provisional",
           "rank": 2,
-          "qualificationContext": "runner-up",
-          "rankStatus": "provisional"
+          "qualificationContext": "runner-up"
         },
         {
           "teamId": "ECU",
           "abbr": "ECU",
           "name": "Ecuador",
           "sourceOrder": 4,
-          "played": 1,
+          "played": 2,
           "wins": 0,
-          "draws": 0,
+          "draws": 1,
           "losses": 1,
           "goalsFor": 0,
           "goalsAgainst": 1,
           "goalDifference": -1,
-          "points": 0,
+          "points": 1,
+          "rankStatus": "provisional",
           "rank": 3,
-          "qualificationContext": "third-place-candidate",
-          "rankStatus": "provisional"
+          "qualificationContext": "third-place-candidate"
         },
         {
           "teamId": "CUW",
           "abbr": "CUW",
           "name": "Curacao",
           "sourceOrder": 2,
-          "played": 1,
+          "played": 2,
           "wins": 0,
-          "draws": 0,
+          "draws": 1,
           "losses": 1,
           "goalsFor": 1,
           "goalsAgainst": 7,
           "goalDifference": -6,
-          "points": 0,
+          "points": 1,
+          "rankStatus": "provisional",
           "rank": 4,
-          "qualificationContext": "fourth-place",
-          "rankStatus": "provisional"
+          "qualificationContext": "fourth-place"
         }
       ]
     },
@@ -394,72 +395,72 @@
       "label": "Group F",
       "entries": [
         {
-          "teamId": "SWE",
-          "abbr": "SWE",
-          "name": "Sweden",
-          "sourceOrder": 3,
-          "played": 1,
-          "wins": 1,
-          "draws": 0,
-          "losses": 0,
-          "goalsFor": 5,
-          "goalsAgainst": 1,
-          "goalDifference": 4,
-          "points": 3,
-          "rank": 1,
-          "qualificationContext": "group-winner",
-          "rankStatus": "provisional"
-        },
-        {
           "teamId": "NED",
           "abbr": "NED",
           "name": "Netherlands",
           "sourceOrder": 1,
-          "played": 1,
-          "wins": 0,
+          "played": 2,
+          "wins": 1,
           "draws": 1,
           "losses": 0,
-          "goalsFor": 2,
-          "goalsAgainst": 2,
-          "goalDifference": 0,
-          "points": 1,
-          "rank": 2,
-          "qualificationContext": "runner-up",
-          "rankStatus": "provisional"
+          "goalsFor": 7,
+          "goalsAgainst": 3,
+          "goalDifference": 4,
+          "points": 4,
+          "rankStatus": "provisional",
+          "rank": 1,
+          "qualificationContext": "group-winner"
         },
         {
           "teamId": "JPN",
           "abbr": "JPN",
           "name": "Japan",
           "sourceOrder": 2,
-          "played": 1,
-          "wins": 0,
+          "played": 2,
+          "wins": 1,
           "draws": 1,
           "losses": 0,
-          "goalsFor": 2,
+          "goalsFor": 6,
           "goalsAgainst": 2,
+          "goalDifference": 4,
+          "points": 4,
+          "rankStatus": "provisional",
+          "rank": 2,
+          "qualificationContext": "runner-up"
+        },
+        {
+          "teamId": "SWE",
+          "abbr": "SWE",
+          "name": "Sweden",
+          "sourceOrder": 3,
+          "played": 2,
+          "wins": 1,
+          "draws": 0,
+          "losses": 1,
+          "goalsFor": 6,
+          "goalsAgainst": 6,
           "goalDifference": 0,
-          "points": 1,
+          "points": 3,
+          "rankStatus": "provisional",
           "rank": 3,
-          "qualificationContext": "third-place-candidate",
-          "rankStatus": "provisional"
+          "qualificationContext": "third-place-candidate"
         },
         {
           "teamId": "TUN",
           "abbr": "TUN",
           "name": "Tunisia",
           "sourceOrder": 4,
-          "played": 1,
+          "played": 2,
           "wins": 0,
           "draws": 0,
-          "losses": 1,
+          "losses": 2,
           "goalsFor": 1,
-          "goalsAgainst": 5,
-          "goalDifference": -4,
+          "goalsAgainst": 9,
+          "goalDifference": -8,
           "points": 0,
+          "rankStatus": "provisional",
           "rank": 4,
-          "qualificationContext": "fourth-place",
-          "rankStatus": "provisional"
+          "qualificationContext": "fourth-place"
         }
       ]
     },
@@ -910,6 +911,24 @@
   },
   "thirdPlaceTable": [
     {
+      "teamId": "SWE",
+      "abbr": "SWE",
+      "name": "Sweden",
+      "played": 2,
+      "wins": 1,
+      "draws": 0,
+      "losses": 1,
+      "goalsFor": 6,
+      "goalsAgainst": 6,
+      "goalDifference": 0,
+      "points": 3,
+      "rankStatus": "provisional",
+      "qualificationContext": "third-place-advancing-context",
+      "groupId": "F",
+      "groupLabel": "Group F",
+      "thirdPlaceRank": 1
+    },
+    {
       "teamId": "SCO",
       "abbr": "SCO",
       "name": "Scotland",
@@ -921,11 +940,11 @@
       "goalsAgainst": 1,
       "goalDifference": 0,
       "points": 3,
+      "qualificationContext": "third-place-advancing-context",
+      "rankStatus": "provisional",
       "groupId": "C",
       "groupLabel": "Group C",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 1,
-      "qualificationContext": "third-place-advancing-context"
+      "thirdPlaceRank": 2
     },
     {
       "teamId": "PAR",
@@ -939,29 +958,11 @@
       "goalsAgainst": 4,
       "goalDifference": -2,
       "points": 3,
+      "qualificationContext": "third-place-advancing-context",
+      "rankStatus": "provisional",
       "groupId": "D",
       "groupLabel": "Group D",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 2,
-      "qualificationContext": "third-place-advancing-context"
-    },
-    {
-      "teamId": "JPN",
-      "abbr": "JPN",
-      "name": "Japan",
-      "played": 1,
-      "wins": 0,
-      "draws": 1,
-      "losses": 0,
-      "goalsFor": 2,
-      "goalsAgainst": 2,
-      "goalDifference": 0,
-      "points": 1,
-      "groupId": "F",
-      "groupLabel": "Group F",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 3,
-      "qualificationContext": "third-place-advancing-context"
+      "thirdPlaceRank": 3
     },
     {
       "teamId": "BEL",
@@ -975,11 +976,11 @@
       "goalsAgainst": 1,
       "goalDifference": 0,
       "points": 1,
+      "qualificationContext": "third-place-advancing-context",
+      "rankStatus": "provisional",
       "groupId": "G",
       "groupLabel": "Group G",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 4,
-      "qualificationContext": "third-place-advancing-context"
+      "thirdPlaceRank": 4
     },
     {
       "teamId": "COD",
@@ -993,11 +994,11 @@
       "goalsAgainst": 1,
       "goalDifference": 0,
       "points": 1,
+      "qualificationContext": "third-place-advancing-context",
+      "rankStatus": "provisional",
       "groupId": "K",
       "groupLabel": "Group K",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 5,
-      "qualificationContext": "third-place-advancing-context"
+      "thirdPlaceRank": 5
     },
     {
       "teamId": "ESP",
@@ -1011,11 +1012,11 @@
       "goalsAgainst": 0,
       "goalDifference": 0,
       "points": 1,
+      "qualificationContext": "third-place-advancing-context",
+      "rankStatus": "provisional",
       "groupId": "H",
       "groupLabel": "Group H",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 6,
-      "qualificationContext": "third-place-advancing-context"
+      "thirdPlaceRank": 6
     },
     {
       "teamId": "CZE",
@@ -1029,11 +1030,29 @@
       "goalsAgainst": 3,
       "goalDifference": -1,
       "points": 1,
+      "qualificationContext": "third-place-advancing-context",
+      "rankStatus": "provisional",
       "groupId": "A",
       "groupLabel": "Group A",
+      "thirdPlaceRank": 7
+    },
+    {
+      "teamId": "ECU",
+      "abbr": "ECU",
+      "name": "Ecuador",
+      "played": 2,
+      "wins": 0,
+      "draws": 1,
+      "losses": 1,
+      "goalsFor": 0,
+      "goalsAgainst": 1,
+      "goalDifference": -1,
+      "points": 1,
       "rankStatus": "provisional",
-      "thirdPlaceRank": 7,
-      "qualificationContext": "third-place-advancing-context"
+      "qualificationContext": "third-place-advancing-context",
+      "groupId": "E",
+      "groupLabel": "Group E",
+      "thirdPlaceRank": 8
     },
     {
       "teamId": "BIH",
@@ -1047,29 +1066,11 @@
       "goalsAgainst": 5,
       "goalDifference": -3,
       "points": 1,
+      "qualificationContext": "third-place-waitlist-context",
+      "rankStatus": "provisional",
       "groupId": "B",
       "groupLabel": "Group B",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 8,
-      "qualificationContext": "third-place-advancing-context"
-    },
-    {
-      "teamId": "ECU",
-      "abbr": "ECU",
-      "name": "Ecuador",
-      "played": 1,
-      "wins": 0,
-      "draws": 0,
-      "losses": 1,
-      "goalsFor": 0,
-      "goalsAgainst": 1,
-      "goalDifference": -1,
-      "points": 0,
-      "groupId": "E",
-      "groupLabel": "Group E",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 9,
-      "qualificationContext": "third-place-waitlist-context"
+      "thirdPlaceRank": 9
     },
     {
       "teamId": "PAN",
@@ -1083,11 +1084,11 @@
       "goalsAgainst": 1,
       "goalDifference": -1,
       "points": 0,
+      "qualificationContext": "third-place-waitlist-context",
+      "rankStatus": "provisional",
       "groupId": "L",
       "groupLabel": "Group L",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 10,
-      "qualificationContext": "third-place-waitlist-context"
+      "thirdPlaceRank": 10
     },
     {
       "teamId": "SEN",
@@ -1101,11 +1102,11 @@
       "goalsAgainst": 3,
       "goalDifference": -2,
       "points": 0,
+      "qualificationContext": "third-place-waitlist-context",
+      "rankStatus": "provisional",
       "groupId": "I",
       "groupLabel": "Group I",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 11,
-      "qualificationContext": "third-place-waitlist-context"
+      "thirdPlaceRank": 11
     },
     {
       "teamId": "JOR",
@@ -1119,11 +1120,11 @@
       "goalsAgainst": 3,
       "goalDifference": -2,
       "points": 0,
+      "qualificationContext": "third-place-waitlist-context",
+      "rankStatus": "provisional",
       "groupId": "J",
       "groupLabel": "Group J",
-      "rankStatus": "provisional",
-      "thirdPlaceRank": 12,
-      "qualificationContext": "third-place-waitlist-context"
+      "thirdPlaceRank": 12
     }
   ]
 }

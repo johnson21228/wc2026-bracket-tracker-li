@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-06-21T13:30:00-04:00",
+  "captureMode": "user-provided-score-and-highlight-interview",
+  "items": [
+    {
+      "matchId": "66456972",
+      "localMatchId": "GS-2026-06-20-F3",
+      "groupId": "F",
+      "decision": "PATCH",
+      "matchEvidence": "Netherlands 5-1 Sweden",
+      "highlightUrl": "https://youtu.be/IRllRLrG7Sg"
+    },
+    {
+      "matchId": "66457074",
+      "localMatchId": "GS-2026-06-20-E3",
+      "groupId": "E",
+      "decision": "PATCH",
+      "matchEvidence": "Germany 2-1 Côte d’Ivoire",
+      "highlightUrl": "https://www.youtube.com/watch?v=xHtIzadh4Lg&pp=ygUHZ2VybWFueQ%3D%3D"
+    },
+    {
+      "matchId": "66457076",
+      "localMatchId": "GS-2026-06-20-E4",
+      "groupId": "E",
+      "decision": "PATCH",
+      "matchEvidence": "Ecuador 0-0 Curaçao",
+      "highlightUrl": "https://youtu.be/_JQLeADlzXM"
+    },
+    {
+      "matchId": "66456974",
+      "localMatchId": "GS-2026-06-20-F4",
+      "groupId": "F",
+      "decision": "PATCH",
+      "matchEvidence": "Tunisia 0-4 Japan",
+      "highlightUrl": "https://youtu.be/ATmlGGfCyBA"
+    }
+  ],
+  "notes": [
+    "Preserve local canonical team IDs and existing fixture IDs.",
+    "Source screenshots used Ivory Coast/Curacao, but current local match rows preserve Côte d’Ivoire/Curaçao display spelling."
+  ]
+}
