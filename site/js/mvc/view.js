@@ -194,40 +194,7 @@ export function createBracketView(root) {
 
 
   function unpickedSlotDisplayText(slot) {
-    const raw = [
-      slot.label,
-      slot.slotId,
-      slot.sitePickId,
-      slot.sourceSlotId,
-      slot.qualificationSlot,
-      slot.qualificationLabel,
-    ].filter(Boolean).join(" ");
-
-    const compact = raw.replace(/\s+/g, " ").trim();
-
-    const groupWinner = compact.match(/\b(?:Group\s*)?([A-L])\s*(?:Winner|1st|1)\b/i)
-      || compact.match(/\b(?:Winner|1st|1)\s*(?:Group\s*)?([A-L])\b/i)
-      || compact.match(/\b([A-L])1\b/i)
-      || compact.match(/\b1([A-L])\b/i);
-
-    if (groupWinner) {
-      return `Group ${groupWinner[1].toUpperCase()} Winner`;
-    }
-
-    const groupRunnerUp = compact.match(/\b(?:Group\s*)?([A-L])\s*(?:Runner[- ]?up|2nd|2)\b/i)
-      || compact.match(/\b(?:Runner[- ]?up|2nd|2)\s*(?:Group\s*)?([A-L])\b/i)
-      || compact.match(/\b([A-L])2\b/i)
-      || compact.match(/\b2([A-L])\b/i);
-
-    if (groupRunnerUp) {
-      return `Group ${groupRunnerUp[1].toUpperCase()} Runner-up`;
-    }
-
-    if (/\b(?:Third|3rd|3)\b/i.test(compact) || /\b3[A-L/]*\b/i.test(compact)) {
-      return "Third Place";
-    }
-
-    return slot.label || "Unpicked";
+    return playerFacingEmptyPickText(slot);
   }
 
 
@@ -429,6 +396,14 @@ export function createBracketView(root) {
     if (slotId === "THIRD-PLACE-WINNER") return "Third-place pick";
 
     return "Bracket pick";
+  }
+
+
+  function playerFacingEmptyPickText(slot) {
+    const slotId = String(slot?.slotId || "").toUpperCase();
+    if (slotId === "CHAMPION") return "Champion";
+    if (slotId === "THIRD-PLACE-WINNER") return "3rd place";
+    return "Pick";
   }
 
   function playerFacingPickMenuTitle(menu, slot) {

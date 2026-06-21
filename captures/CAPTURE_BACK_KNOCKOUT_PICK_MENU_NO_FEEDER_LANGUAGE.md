@@ -37,3 +37,9 @@ Group-source player-facing chrome refinement:
 - Group seed labels such as 1A, 2B, or 3C are compact backend/source identifiers and must not render as pick-menu subtitle chrome.
 - Enum-style source roles such as GROUP-RUNNER-UP are datamodel terms and must not render in player UI.
 - Group-backed menus may show a clean group button, such as "Group B", and candidate teams.
+
+
+Bracket-cell empty pick refinement:
+- Durable slot IDs such as L-R16-02 must not render inside empty player-facing bracket cells.
+- Empty pick cells should render player-facing placeholder text such as "Pick" or a specific player-facing label such as "Champion".
+- Slot IDs remain valid as data attributes, controller keys, persistence keys, and test identifiers only.

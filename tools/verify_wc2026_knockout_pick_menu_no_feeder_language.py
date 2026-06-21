@@ -65,6 +65,39 @@ if "!/^[123][A-L]$/i.test(sourceLabel)" not in view:
 if "/^[A-Z0-9]+(?:-[A-Z0-9]+)+$/.test(value)" not in view:
     errors.append("enum-style source roles such as GROUP-RUNNER-UP are not hidden from player UI")
 
+
+if "function playerFacingEmptyPickText" not in view:
+    errors.append("view does not define player-facing empty pick text for blank bracket cells")
+
+visible_slot_id_patterns = [
+    "text.textContent = slot.slotId",
+    "label.textContent = slot.slotId",
+    "name.textContent = slot.slotId",
+    "cell.textContent = slot.slotId",
+    "button.textContent = slot.slotId",
+    "slot.label || slot.slotId",
+]
+for pattern in visible_slot_id_patterns:
+    if pattern in view:
+        errors.append(f"visible bracket-cell rendering can still expose internal slot ID via {pattern}")
+
+if "playerFacingEmptyPickText(slot)" not in view:
+    errors.append("empty bracket-cell rendering is not routed through player-facing placeholder text")
+
+
+unpicked_start = view.find("function unpickedSlotDisplayText(slot)")
+if unpicked_start == -1:
+    errors.append("view does not define unpickedSlotDisplayText")
+else:
+    unpicked_end = view.find("\n  function ", unpicked_start + 1)
+    unpicked_block = view[unpicked_start:unpicked_end if unpicked_end != -1 else len(view)]
+    if "return playerFacingEmptyPickText(slot);" not in unpicked_block:
+        errors.append("unpickedSlotDisplayText is not routed through playerFacingEmptyPickText")
+    if "slot.slotId" in unpicked_block:
+        errors.append("unpickedSlotDisplayText still includes slot.slotId")
+    if "slot.label" in unpicked_block:
+        errors.append("unpickedSlotDisplayText still includes raw slot.label")
+
 if errors:
     print("Knockout pick menu no-feeder-language verification failed:")
     for error in errors:

@@ -35,3 +35,9 @@ Group-source chrome rule:
 - Group seed labels such as 1A, 2B, or 3C are backend/source identifiers, not player-facing chrome.
 - Enum-style source roles such as GROUP-RUNNER-UP must be hidden from player UI.
 - Group-backed pick menus may keep clean group names and team choices.
+
+
+Bracket-cell empty pick rule:
+- Empty player-facing bracket cells must not show durable slot IDs such as L-R16-02.
+- Use player-facing placeholder text for empty pick cells.
+- Keep durable IDs only in data/model/controller/storage surfaces.
