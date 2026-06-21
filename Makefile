@@ -32,6 +32,7 @@ verify:
 	python3 tools/verify_wc2026_fail_closed_pages_publish.py
 	python3 tools/verify_wc2026_pub_hero_header.py
 	python3 tools/verify_wc2026_hero_banner_spelling.py
+	python3 tools/verify_wc2026_bracketeering_pub_hub_title.py
 	python3 tools/verify_wc2026_banner_game_selector_ui.py
 	python3 tools/verify_wc2026_banner_rules_panel_ui.py
 	python3 tools/verify_wc2026_active_game_pub_background.py
