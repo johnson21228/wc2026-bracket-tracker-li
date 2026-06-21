@@ -98,6 +98,111 @@ h1 { margin: 0; font-size: clamp(28px, 4vw, 56px); }
   outline-offset: 2px;
 }
 
+.rules-button {
+  min-width: 84px;
+}
+
+.rules-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0,0,0,.58);
+  backdrop-filter: blur(6px);
+}
+
+.rules-panel-backdrop[hidden] {
+  display: none;
+}
+
+.rules-panel {
+  width: min(760px, 100%);
+  max-height: min(720px, calc(100vh - 48px));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 24px;
+  background: rgba(27,20,18,.98);
+  color: #f8f2ec;
+  box-shadow: 0 28px 90px rgba(0,0,0,.55);
+  overflow: hidden;
+}
+
+.rules-panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+.rules-panel-kicker,
+.rules-panel-active-label {
+  margin: 0;
+  color: #d8bca5;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.rules-panel h2 {
+  margin: 2px 0 4px;
+  font-size: clamp(24px, 3vw, 36px);
+}
+
+.rules-panel-close {
+  align-self: start;
+}
+
+.rules-panel-body {
+  overflow-y: auto;
+  padding: 20px;
+  color: #eaded1;
+  line-height: 1.5;
+}
+
+.rules-panel-section[hidden] {
+  display: none;
+}
+
+.rules-panel-section + .rules-panel-section {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+
+.rules-panel-section h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #fff8f1;
+}
+
+.rules-panel-section h4 {
+  margin: 18px 0 6px;
+  color: #f2c7a9;
+}
+
+.rules-panel-section p {
+  margin: 0 0 10px;
+}
+
+.rules-panel-section ul,
+.rules-panel-section ol {
+  margin: 8px 0 0;
+  padding-left: 22px;
+}
+
+.rules-panel-section li + li {
+  margin-top: 6px;
+}
+
+.rules-panel-note {
+  color: #d8c7b7;
+}
+
+
 .supabase-identity-surface {
   justify-self: end;
   align-self: start;
