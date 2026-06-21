@@ -4,6 +4,7 @@ export function createBracketController({ model, view }) {
   function currentState() {
     return {
       slotModels: model.getSlotViewModels(),
+      finalFour: model.getFinalFourViewModel(),
       groupRail: model.getGroupRail(),
       openPickMenu: activeSlotId ? model.getPickMenu(activeSlotId) : null,
       summary: model.getSummary(),
@@ -15,7 +16,10 @@ export function createBracketController({ model, view }) {
   }
 
   function slotModel(slotId) {
-    return currentState().slotModels.find((slot) => slot.slotId === slotId) || null;
+    const state = currentState();
+    return state.slotModels.find((slot) => slot.slotId === slotId)
+      || (state.finalFour?.picks || []).find((slot) => slot.slotId === slotId)
+      || null;
   }
 
   function activeGameValue() {
@@ -169,7 +173,7 @@ export function createBracketController({ model, view }) {
 
   function start() {
     view.renderBoardShell(model.nativeSize);
-    view.setHandlers({ onSlotClick, onTeamPick, onClearPick, onClearAll, onExportPicks, onImportPicks, onCloseMenu, onGroupPanelOpen, onActiveGameChange });
+    view.setHandlers({ onSlotClick, onFinalFourSlotClick: onSlotClick, onTeamPick, onClearPick, onClearAll, onExportPicks, onImportPicks, onCloseMenu, onGroupPanelOpen, onActiveGameChange });
     redraw();
   }
 

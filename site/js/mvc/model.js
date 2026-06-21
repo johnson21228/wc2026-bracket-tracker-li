@@ -4,6 +4,36 @@ const ROUND_ORDER = ["R32", "R16", "QF", "SF", "FINAL_FOUR"];
 const BOARD_NATIVE_SIZE = Object.freeze({ width: 1536, height: 1024 });
 const GROUP_IDS = Object.freeze(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]);
 const CENTER_FINAL_FOUR_SLOT_ID = "CENTER-FINAL-FOUR";
+const FINAL_FOUR_PICK_SLOT_DEFS = Object.freeze([
+  {
+    slotId: "FINAL-LEFT",
+    round: "SF_WINNER",
+    kind: "winner",
+    displayLabel: "Left SF Winner",
+    sourceSlotIds: ["L-SF-01", "L-SF-02"],
+  },
+  {
+    slotId: "FINAL-RIGHT",
+    round: "SF_WINNER",
+    kind: "winner",
+    displayLabel: "Right SF Winner",
+    sourceSlotIds: ["R-SF-01", "R-SF-02"],
+  },
+  {
+    slotId: "CHAMPION",
+    round: "CHAMPION",
+    kind: "winner",
+    displayLabel: "Final Winner",
+    sourceSlotIds: ["FINAL-LEFT", "FINAL-RIGHT"],
+  },
+  {
+    slotId: "THIRD-PLACE-WINNER",
+    round: "THIRD_PLACE",
+    kind: "winner",
+    displayLabel: "3rd Place Winner",
+    sourceSlotIds: ["L-SF-01", "L-SF-02", "R-SF-01", "R-SF-02"],
+  },
+]);
 const GROUP_RAIL_LABEL_RANGE = "Group A through Group L";
 
 const DATA_URLS = Object.freeze({
@@ -230,6 +260,17 @@ export async function createBracketModel() {
 
   const dependencyMap = buildDependencyMap(slotsById, r32Bridge.slots || []);
   const game2FifaFinalR32AssignmentsBySlotId = normalizeGame2FifaFinalR32AssignmentsPayload(game2FifaFinalR32AssignmentsPayload, teamById);
+  const centerFinalFourSlot = slotsById.get(CENTER_FINAL_FOUR_SLOT_ID) || null;
+  const finalFourSlotsById = new Map(FINAL_FOUR_PICK_SLOT_DEFS.map((slot) => [
+    slot.slotId,
+    {
+      ...slot,
+      sitePickId: slot.slotId,
+      boundsPx: centerFinalFourSlot?.boundsPx || null,
+      side: "center",
+      source: "canonical-bracket-document-runtime",
+    },
+  ]));
   let picks = pickFromStorage();
 
   function getTeam(teamId) {
@@ -258,6 +299,48 @@ export async function createBracketModel() {
     return null;
   }
 
+  function getSlotDefinition(slotId) {
+    return slotsById.get(slotId) || finalFourSlotsById.get(slotId) || null;
+  }
+
+  function allPickSlots() {
+    return [...pickSurfaceSlots(slots), ...finalFourSlotsById.values()];
+  }
+
+  function teamsFromSlotIds(slotIds) {
+    return uniqueTeams((slotIds || []).map((sourceSlotId) => selectedTeam(sourceSlotId)).filter(Boolean));
+  }
+
+  function loserFromSemifinal(finalSlotId, sourceSlotIds) {
+    const winner = selectedTeam(finalSlotId);
+    const teams = teamsFromSlotIds(sourceSlotIds);
+    if (!winner || teams.length < 2) return null;
+    return teams.find((team) => team.id !== winner.id) || null;
+  }
+
+  function getFinalFourChoices(slotId) {
+    const finalFourSlot = finalFourSlotsById.get(slotId);
+    if (!finalFourSlot) return [];
+
+    if (slotId === "FINAL-LEFT" || slotId === "FINAL-RIGHT") {
+      const teams = teamsFromSlotIds(finalFourSlot.sourceSlotIds);
+      return teams.length === 2 ? teams : [];
+    }
+
+    if (slotId === "CHAMPION") {
+      const teams = teamsFromSlotIds(["FINAL-LEFT", "FINAL-RIGHT"]);
+      return teams.length === 2 ? teams : [];
+    }
+
+    if (slotId === "THIRD-PLACE-WINNER") {
+      const leftLoser = loserFromSemifinal("FINAL-LEFT", ["L-SF-01", "L-SF-02"]);
+      const rightLoser = loserFromSemifinal("FINAL-RIGHT", ["R-SF-01", "R-SF-02"]);
+      return leftLoser && rightLoser ? uniqueTeams([leftLoser, rightLoser]) : [];
+    }
+
+    return [];
+  }
+
   function resolvedGame2FeederTeam(slotId) {
     const slot = slotsById.get(slotId);
     if (slot?.round === "R32") return resolvedGame2R32Team(slotId);
@@ -284,7 +367,10 @@ export async function createBracketModel() {
   }
 
   function getChoices(slotId) {
-    const slot = slotsById.get(slotId);
+    const finalFourSlot = finalFourSlotsById.get(slotId);
+    if (finalFourSlot) return getFinalFourChoices(slotId);
+
+    const slot = getSlotDefinition(slotId);
     if (!slot) return [];
     return slot.round === "R32" ? getR32Choices(slotId) : getKnockoutChoices(slotId);
   }
@@ -359,7 +445,8 @@ export async function createBracketModel() {
   }
 
   function setPick(slotId, teamId) {
-    if (!slotsById.has(slotId)) {
+    const slot = getSlotDefinition(slotId);
+    if (!slot) {
       return { ok: false, reason: "Unknown bracket slot.", cleared: [] };
     }
     if (teamId && !teamById.has(teamId)) {
@@ -368,7 +455,6 @@ export async function createBracketModel() {
     if (teamId) picks[slotId] = teamId;
     else delete picks[slotId];
     saveToStorage(picks);
-    const slot = slotsById.get(slotId);
     const team = selectedTeam(slotId);
     return { ok: true, cleared: [], pickValidity: pickValidityForSlot(slot, team) };
   }
@@ -380,7 +466,7 @@ export async function createBracketModel() {
   function clearAll() {
     picks = {};
     saveToStorage(picks);
-    return { ok: true, cleared: slots.map((slot) => slot.slotId) };
+    return { ok: true, cleared: allPickSlots().map((slot) => slot.slotId) };
   }
 
   function exportPicksSnapshot() {
@@ -402,7 +488,7 @@ export async function createBracketModel() {
     const skipped = [];
     picks = {};
 
-    for (const slot of slots) {
+    for (const slot of allPickSlots()) {
       if (!Object.prototype.hasOwnProperty.call(incoming, slot.slotId)) continue;
       const teamId = String(incoming[slot.slotId] || "").trim();
       if (!teamId) continue;
@@ -526,9 +612,10 @@ export async function createBracketModel() {
   }
 
   function sourceTitleForSlot(slotId) {
-    const slot = slotsById.get(slotId);
+    const slot = getSlotDefinition(slotId);
     const logic = r32LogicByGeometryId.get(slotId);
     if (!slot) return slotId;
+    if (finalFourSlotsById.has(slotId)) return slot.displayLabel || slotId;
 
     if (logic?.qualifierKind === "group-winner" && logic.groups?.length === 1) {
       return `Group ${logic.groups[0]} winner`;
@@ -585,7 +672,7 @@ export async function createBracketModel() {
   }
 
   function getPickMenu(slotId) {
-    const slot = slotsById.get(slotId);
+    const slot = getSlotDefinition(slotId);
     if (!slot) return null;
     const choices = getChoices(slotId);
     const currentPick = selectedTeam(slotId);
@@ -622,6 +709,54 @@ export async function createBracketModel() {
     });
   }
 
+  function getFinalFourSlotViewModel(slotId) {
+    const slot = finalFourSlotsById.get(slotId);
+    if (!slot) return null;
+    const team = selectedTeam(slotId);
+    const choices = getChoices(slotId);
+    return {
+      slotId,
+      round: slot.round,
+      side: slot.side,
+      boundsPx: slot.boundsPx,
+      pickable: choices.length > 0,
+      choices,
+      selectedTeam: team,
+      pickValidity: pickValidityForSlot(slot, team),
+      feederSlotIds: [...(slot.sourceSlotIds || [])],
+      label: slot.displayLabel || slotId,
+      finalFourRole: slotId,
+    };
+  }
+
+  function getFinalFourViewModel() {
+    if (!centerFinalFourSlot?.boundsPx) return null;
+    const picks = ["FINAL-LEFT", "FINAL-RIGHT", "CHAMPION", "THIRD-PLACE-WINNER"]
+      .map(getFinalFourSlotViewModel)
+      .filter(Boolean);
+
+    return {
+      slotId: CENTER_FINAL_FOUR_SLOT_ID,
+      title: "Final Four",
+      boundsPx: centerFinalFourSlot.boundsPx,
+      semifinalRows: [
+        {
+          label: "Left SF",
+          teams: teamsFromSlotIds(["L-SF-01", "L-SF-02"]),
+          winner: selectedTeam("FINAL-LEFT"),
+          loser: loserFromSemifinal("FINAL-LEFT", ["L-SF-01", "L-SF-02"]),
+        },
+        {
+          label: "Right SF",
+          teams: teamsFromSlotIds(["R-SF-01", "R-SF-02"]),
+          winner: selectedTeam("FINAL-RIGHT"),
+          loser: loserFromSemifinal("FINAL-RIGHT", ["R-SF-01", "R-SF-02"]),
+        },
+      ],
+      picks,
+    };
+  }
+
   function getSlotViewModels() {
     return pickSurfaceSlots(slots).map((slot) => {
       const team = selectedTeam(slot.slotId);
@@ -647,8 +782,11 @@ export async function createBracketModel() {
 
   function getSummary() {
     const picked = Object.keys(picks).length;
-    const pickable = getSlotViewModels().filter((slot) => slot.pickable).length;
-    return { picked, pickable, totalSlots: pickSurfaceSlots(slots).length };
+    const pickable = [
+      ...getSlotViewModels(),
+      ...(getFinalFourViewModel()?.picks || []),
+    ].filter((slot) => slot.pickable).length;
+    return { picked, pickable, totalSlots: allPickSlots().length };
   }
 
   // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.
@@ -657,6 +795,7 @@ export async function createBracketModel() {
   return {
     nativeSize,
     getGroupRail,
+    getFinalFourViewModel,
     getSlotViewModels,
     getGroupStandings,
     getGroupMatches,
