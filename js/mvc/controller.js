@@ -18,10 +18,36 @@ export function createBracketController({ model, view }) {
     return currentState().slotModels.find((slot) => slot.slotId === slotId) || null;
   }
 
+  function activeGameValue() {
+    return view.activeGameValue?.() || "game-1";
+  }
+
+  function slotAllowedForActiveGame(slot) {
+    const activeGame = activeGameValue();
+    if (activeGame === "game-1") return slot.round === "R32";
+    if (activeGame === "game-2") return slot.round !== "R32";
+    return true;
+  }
+
+  function disabledReasonForActiveGame(slot) {
+    const activeGame = activeGameValue();
+    if (activeGame === "game-1" && slot.round !== "R32") {
+      return "Game 1 only accepts Round of 32 picks.";
+    }
+    if (activeGame === "game-2" && slot.round === "R32") {
+      return "Game 2 starts after the Round of 32 field.";
+    }
+    return "";
+  }
+
   function onSlotClick(slotId) {
     const slot = slotModel(slotId);
     if (!slot?.pickable) {
       view.report(`${slotId} is waiting for its feeder picks.`);
+      return;
+    }
+    if (!slotAllowedForActiveGame(slot)) {
+      view.report(disabledReasonForActiveGame(slot) || `${slotId} is disabled for the selected game.`);
       return;
     }
     activeSlotId = slotId;
@@ -62,6 +88,13 @@ export function createBracketController({ model, view }) {
     const groupContext = model.getGroupContext(groupId);
     view.openGroupPanel(groupContext);
     view.report(`Opened Group ${groupId} standings.`);
+  }
+
+  function onActiveGameChange(activeGame) {
+    activeSlotId = null;
+    view.closeMenu();
+    redraw();
+    view.report(activeGame === "game-2" ? "Game 2 pick surfaces are active. Round of 32 picking is disabled." : "Game 1 Round of 32 picking is active.");
   }
 
   function onClearAll() {
@@ -110,7 +143,7 @@ export function createBracketController({ model, view }) {
 
   function start() {
     view.renderBoardShell(model.nativeSize);
-    view.setHandlers({ onSlotClick, onTeamPick, onClearPick, onClearAll, onExportPicks, onImportPicks, onCloseMenu, onGroupPanelOpen });
+    view.setHandlers({ onSlotClick, onTeamPick, onClearPick, onClearAll, onExportPicks, onImportPicks, onCloseMenu, onGroupPanelOpen, onActiveGameChange });
     redraw();
   }
 
