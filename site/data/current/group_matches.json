@@ -1080,7 +1080,8 @@
       "kickoffET": "3:00 PM ET",
       "timezone": "America/New_York",
       "timeSource": "ESPN FIFA World Cup schedule",
-      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world"
+      "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
+      "espnMatchId": "66456986"
     },
     {
       "matchId": "GS-2026-06-21-G4",
