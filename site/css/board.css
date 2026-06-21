@@ -848,7 +848,7 @@
   cursor: default;
 }
 
-.pick-slot-button.has-game2-readonly-r32:disabled {
+.pick-slot-button.has-game2-readonly-r32 {
   opacity: 1;
   filter: none;
 }

@@ -231,10 +231,13 @@ export function createBracketView(root) {
       button.dataset.round = slot.round;
       const enabledForActiveGame = slotEnabledForActiveGame(slot);
       const activeGameDisabledReason = disabledReasonForActiveGame(slot);
-      button.disabled = !slot.pickable || !enabledForActiveGame;
-      button.dataset.pickDisabledByActiveGame = enabledForActiveGame ? "false" : "true";
       const displayTeam = displayTeamForSlot(slot);
       const game2ResolvedR32Display = isGame2ResolvedR32Display(slot, displayTeam);
+      const readOnlyGame2R32Display = game2ResolvedR32Display;
+      const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display;
+      const disabledByActiveGame = !enabledForActiveGame && !readOnlyGame2R32Display;
+      button.disabled = disabledByPickability || disabledByActiveGame;
+      button.dataset.pickDisabledByActiveGame = enabledForActiveGame ? "false" : "true";
       button.setAttribute(
         "aria-label",
         displayTeam
