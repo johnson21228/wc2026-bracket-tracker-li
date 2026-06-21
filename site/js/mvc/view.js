@@ -564,7 +564,7 @@ export function createBracketView(root) {
 
     const title = document.createElement("h2");
     title.className = "pick-menu-title";
-    title.textContent = playerFacingPickMenuTitle(menu, slot);
+    title.textContent = playerFacingPickMenuTitle(menuModel, menuModel);
 
     const source = document.createElement("div");
     source.className = "pick-menu-source-label";
