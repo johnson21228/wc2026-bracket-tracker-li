@@ -595,7 +595,7 @@ export function createBracketView(root) {
         groupHeader.append(groupLabel);
       }
 
-      if (isPlayerFacingPickMenuSourceLabel(group.sourceRole)) {
+      if (group.groupId && isPlayerFacingPickMenuSourceLabel(group.sourceRole)) {
         const sourceRole = document.createElement("span");
         sourceRole.className = "pick-menu-group-role";
         sourceRole.textContent = group.sourceRole;
