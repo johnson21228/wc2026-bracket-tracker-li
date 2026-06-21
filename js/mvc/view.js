@@ -401,7 +401,9 @@ export function createBracketView(root) {
   function isPlayerFacingPickMenuSourceLabel(text) {
     const value = String(text || "").trim();
     if (!value) return false;
-    return !/\bFEEDER\b|\bfeeder\b|^KNOCKOUT-/i.test(value);
+    if (/\bFEEDER\b|^KNOCKOUT-/i.test(value)) return false;
+    if (/^[A-Z0-9]+(?:-[A-Z0-9]+)+$/.test(value)) return false;
+    return true;
   }
 
 
@@ -569,7 +571,12 @@ export function createBracketView(root) {
     const source = document.createElement("div");
     source.className = "pick-menu-source-label";
     const sourceLabel = String(menuModel.sourceLabel || "").trim();
-    if (sourceLabel && !isInternalPickSlotId(sourceLabel) && isPlayerFacingPickMenuSourceLabel(sourceLabel)) {
+    const shouldRenderSourceLabel =
+      sourceLabel
+      && !isInternalPickSlotId(sourceLabel)
+      && !/^[123][A-L]$/i.test(sourceLabel)
+      && isPlayerFacingPickMenuSourceLabel(sourceLabel);
+    if (shouldRenderSourceLabel) {
       source.textContent = sourceLabel;
       titleBlock.append(title, source);
     } else {
