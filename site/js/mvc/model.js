@@ -236,12 +236,28 @@ export async function createBracketModel() {
     return game2SeededR32AssignmentsBySlotId.get(slotId) || null;
   }
 
-  function teamForFeederPath(slotId) {
-    const selected = selectedTeam(slotId);
-    if (selected) return selected;
+  function game1R32FallbackTeam(slotId) {
     const slot = slotsById.get(slotId);
-    if (slot?.round === "R32") return seededR32Team(slotId);
+    if (slot?.round !== "R32") return null;
+    return selectedTeam(slotId);
+  }
+
+  function resolvedGame2R32Team(slotId) {
+    const assigned = seededR32Team(slotId);
+    if (assigned) return { ...assigned, game2R32Source: "assignment_store" };
+    const fallback = game1R32FallbackTeam(slotId);
+    if (fallback) return { ...fallback, game2R32Source: "game1_r32_fallback" };
     return null;
+  }
+
+  function resolvedGame2FeederTeam(slotId) {
+    const slot = slotsById.get(slotId);
+    if (slot?.round === "R32") return resolvedGame2R32Team(slotId);
+    return selectedTeam(slotId);
+  }
+
+  function teamForFeederPath(slotId) {
+    return resolvedGame2FeederTeam(slotId);
   }
 
   function getR32Choices(slotId) {
@@ -603,6 +619,7 @@ export async function createBracketModel() {
       const team = selectedTeam(slot.slotId);
       const choices = getChoices(slot.slotId);
       const logic = r32LogicByGeometryId.get(slot.slotId);
+      const game2ResolvedTeam = slot.round === "R32" ? resolvedGame2R32Team(slot.slotId) : null;
       return {
         slotId: slot.slotId,
         round: slot.round,
@@ -611,6 +628,8 @@ export async function createBracketModel() {
         pickable: choices.length > 0,
         choices,
         selectedTeam: team,
+        game2ResolvedTeam,
+        game2ResolvedSource: game2ResolvedTeam?.game2R32Source || null,
         pickValidity: pickValidityForSlot(slot, team),
         feederSlotIds: dependencyMap.get(slot.slotId) || [],
         label: logic?.fifaLabel || slot.slotId,

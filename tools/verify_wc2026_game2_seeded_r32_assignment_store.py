@@ -53,7 +53,7 @@ require("site/js/mvc/model.js", "function normalizeSeededR32AssignmentPayload(se
 require("site/js/mvc/model.js", "const game2SeededR32AssignmentsBySlotId")
 require("site/js/mvc/model.js", "function seededR32Team(slotId)")
 require("site/js/mvc/model.js", "function teamForFeederPath(slotId)")
-require("site/js/mvc/model.js", 'if (slot?.round === "R32") return seededR32Team(slotId);')
+require("site/js/mvc/model.js", 'if (slot?.round === "R32") return resolvedGame2R32Team(slotId);')
 require("site/js/mvc/model.js", "const feederTeams = feeders.map((feederId) => teamForFeederPath(feederId));")
 
 knockout_start = model.index("function getKnockoutChoices")

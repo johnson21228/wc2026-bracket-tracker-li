@@ -38,6 +38,7 @@ verify:
 	python3 tools/verify_wc2026_active_game_pick_gating.py
 	python3 tools/verify_wc2026_active_game_pick_rules_pipeline.py
 	python3 tools/verify_wc2026_game2_seeded_r32_assignment_store.py
+	python3 tools/verify_wc2026_game2_resolved_r32_field.py
 	python3 tools/verify_wc2026_picked_bracket_cell_identity_rendering.py
 	python3 tools/verify_wc2026_update_results_prompt.py
 	python3 tools/verify_wc2026_knockout_schedule_model.py
