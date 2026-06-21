@@ -1034,17 +1034,17 @@
     {
       "matchId": "GS-2026-06-21-H4",
       "groupId": "H",
-      "status": "scheduled",
+      "status": "final",
       "kickoffDate": "2026-06-21",
       "kickoffLocal": "2026-06-21T12:00:00-04:00",
       "homeTeamId": "ESP",
       "homeTeamName": "Spain",
       "awayTeamId": "KSA",
       "awayTeamName": "Saudi Arabia",
-      "homeScore": null,
-      "awayScore": null,
-      "summary": "Spain vs Saudi Arabia",
-      "sourceProvider": "poster-derived",
+      "homeScore": 4,
+      "awayScore": 0,
+      "summary": "Spain 4-0 Saudi Arabia",
+      "sourceProvider": "ESPN",
       "posterMatchId": "GS-2026-06-21-H4",
       "fixtureAuthority": "poster-derived",
       "fixtureSourceArtifact": "site/data/group_stage_matches_from_poster.json",
@@ -1056,7 +1056,9 @@
       "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
       "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
       "timeConfidence": "high",
-      "espnMatchId": "66456998"
+      "espnMatchId": "66456998",
+      "resultEvidence": "user-provided ESPN final-score screenshot plus user-provided YouTube highlight URL",
+      "resultVerifiedAt": "2026-06-21"
     },
     {
       "matchId": "GS-2026-06-21-G3",

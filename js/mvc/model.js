@@ -3,6 +3,7 @@ const PICK_SNAPSHOT_APP_ID = "wc2026.braketeeringPub.picks";
 const ROUND_ORDER = ["R32", "R16", "QF", "SF", "FINAL_FOUR"];
 const BOARD_NATIVE_SIZE = Object.freeze({ width: 1536, height: 1024 });
 const GROUP_IDS = Object.freeze(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]);
+const CENTER_FINAL_FOUR_SLOT_ID = "CENTER-FINAL-FOUR";
 const GROUP_RAIL_LABEL_RANGE = "Group A through Group L";
 
 const DATA_URLS = Object.freeze({
@@ -67,6 +68,14 @@ function normalizeGame2FifaFinalR32AssignmentsPayload(payload, teamById) {
     if (team) result.set(slotId, team);
   }
   return result;
+}
+
+function isVisualOnlyGeometrySlot(slot) {
+  return slot?.slotId === CENTER_FINAL_FOUR_SLOT_ID || slot?.round === "FINAL_FOUR";
+}
+
+function pickSurfaceSlots(slots) {
+  return slots.filter((slot) => !isVisualOnlyGeometrySlot(slot));
 }
 
 function sortSlots(slots) {
@@ -614,7 +623,7 @@ export async function createBracketModel() {
   }
 
   function getSlotViewModels() {
-    return slots.map((slot) => {
+    return pickSurfaceSlots(slots).map((slot) => {
       const team = selectedTeam(slot.slotId);
       const choices = getChoices(slot.slotId);
       const logic = r32LogicByGeometryId.get(slot.slotId);
@@ -639,7 +648,7 @@ export async function createBracketModel() {
   function getSummary() {
     const picked = Object.keys(picks).length;
     const pickable = getSlotViewModels().filter((slot) => slot.pickable).length;
-    return { picked, pickable, totalSlots: slots.length };
+    return { picked, pickable, totalSlots: pickSurfaceSlots(slots).length };
   }
 
   // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.
