@@ -4,7 +4,7 @@ The browser runtime must have one explicit active board background image.
 
 For the current group-stage planning surface, the active board background is:
 
-`site/assets/board/pub_background.jpeg`
+`site/assets/board/pub_background_game1.jpeg`
 
 The knockout pub/calendar background remains retained as an asset for a later knockout-mode surface, but it must not be the default board background while the group-stage picking and group-panel surface is active.
 

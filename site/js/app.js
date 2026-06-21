@@ -58,6 +58,44 @@ function setupRulesPanel(root) {
   });
 }
 
+
+const ACTIVE_GAME_BACKGROUND_IMAGES = Object.freeze({
+  "game-1": "assets/board/pub_background_game1.jpeg",
+  "game-2": "assets/board/knockout_pub_background.jpeg",
+});
+
+function selectedDevGameValue(root) {
+  const selected = root.querySelector(".dev-game-selector-option input:checked");
+  return selected?.value || "game-1";
+}
+
+function syncActiveGameBackground(root) {
+  const background = root.querySelector(".board-background-layer");
+  if (!background) return;
+
+  const active = selectedDevGameValue(root);
+  const nextBackground =
+    ACTIVE_GAME_BACKGROUND_IMAGES[active] || ACTIVE_GAME_BACKGROUND_IMAGES["game-1"];
+
+  const current = background.getAttribute("src") || "";
+  if (current !== nextBackground) {
+    background.setAttribute("src", nextBackground);
+  }
+}
+
+function setupActiveGameBackground(root) {
+  syncActiveGameBackground(root);
+
+  root.addEventListener("change", (event) => {
+    if (
+      event.target instanceof HTMLInputElement &&
+      event.target.closest(".dev-game-selector-option")
+    ) {
+      syncActiveGameBackground(root);
+    }
+  });
+}
+
 async function main() {
   const root = document.querySelector("[data-wc2026-app]");
   if (!root) {
@@ -67,6 +105,7 @@ async function main() {
   setupRulesPanel(root);
   const model = await createBracketModel();
   const view = createBracketView(root);
+  setupActiveGameBackground(root);
   const controller = createBracketController({ model, view });
   const authService = createSupabaseAuthService();
   const identitySurface = createSupabaseIdentitySurface({ root, authService });

@@ -6,8 +6,8 @@ The visible site background has been switched back to the group-stage pub image 
 
 ## Runtime authority
 
-- `site/index.html` preloads `assets/board/pub_background.jpeg`.
-- `site/js/mvc/view.js` renders `assets/board/pub_background.jpeg`.
+- `site/index.html` preloads `assets/board/pub_background_game1.jpeg`.
+- `site/js/mvc/view.js` renders `assets/board/pub_background_game1.jpeg`.
 
 ## Boundary
 

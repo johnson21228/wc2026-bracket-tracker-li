@@ -34,6 +34,7 @@ verify:
 	python3 tools/verify_wc2026_hero_banner_spelling.py
 	python3 tools/verify_wc2026_banner_game_selector_ui.py
 	python3 tools/verify_wc2026_banner_rules_panel_ui.py
+	python3 tools/verify_wc2026_active_game_pub_background.py
 	python3 tools/verify_wc2026_picked_bracket_cell_identity_rendering.py
 	python3 tools/verify_wc2026_update_results_prompt.py
 	python3 tools/verify_wc2026_knockout_schedule_model.py

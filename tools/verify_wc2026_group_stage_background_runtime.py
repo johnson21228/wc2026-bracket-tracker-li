@@ -17,14 +17,14 @@ def require_file(path: str) -> None:
     if not (ROOT / path).exists():
         raise SystemExit(f"Missing required file: {path}")
 
-require_file("site/assets/board/pub_background.jpeg")
+require_file("site/assets/board/pub_background_game1.jpeg")
 require_file("site/assets/board/knockout_pub_background.jpeg")
 
 index = text("site/index.html")
 view = text("site/js/mvc/view.js")
 
-require("site/index.html", 'href="assets/board/pub_background.jpeg"')
-require("site/js/mvc/view.js", 'src="assets/board/pub_background.jpeg"')
+require("site/index.html", 'href="assets/board/pub_background_game1.jpeg"')
+require("site/js/mvc/view.js", 'src="assets/board/pub_background_game1.jpeg"')
 
 if 'href="assets/board/knockout_pub_background.jpeg"' in index:
     raise SystemExit("site/index.html still preloads the knockout pub background as the active runtime image")
@@ -32,17 +32,17 @@ if 'src="assets/board/knockout_pub_background.jpeg"' in view:
     raise SystemExit("site/js/mvc/view.js still renders the knockout pub background as the active runtime image")
 
 if (ROOT / "site/js/services/assetPaths.js").exists():
-    require("site/js/services/assetPaths.js", "assets/board/pub_background.jpeg")
+    require("site/js/services/assetPaths.js", "assets/board/pub_background_game1.jpeg")
 
 for path, tokens in {
     "li/world_cup/runtime_pub_background_selection_rule.md": [
-        "site/assets/board/pub_background.jpeg",
+        "site/assets/board/pub_background_game1.jpeg",
         "group-stage planning surface",
         "knockout pub/calendar background remains retained",
     ],
     "docs/features/runtime_pub_background_selection.md": [
         "Active runtime asset",
-        "site/assets/board/pub_background.jpeg",
+        "site/assets/board/pub_background_game1.jpeg",
         "site/js/mvc/view.js",
     ],
     "cards/204_publish_group_stage_background_card.md": [
@@ -52,7 +52,7 @@ for path, tokens in {
     "capture_back/CAPTURE_BACK_GROUP_STAGE_BACKGROUND_RUNTIME.md": [
         "site/index.html",
         "site/js/mvc/view.js",
-        "assets/board/pub_background.jpeg",
+        "assets/board/pub_background_game1.jpeg",
     ],
 }.items():
     for token in tokens:

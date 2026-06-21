@@ -1,5 +1,5 @@
 const BOARD_TRUTH_RESOURCES = Object.freeze({
-  backgroundImage: "assets/board/pub_background.jpeg",
+  backgroundImage: "assets/board/pub_background_game1.jpeg",
     svgGameboardDefinition: "assets/board/gameboard.svg",
   geometryManifest: "data/geometry/gameboard_manifest.json",
 });

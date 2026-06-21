@@ -46,7 +46,7 @@ REQUIRED = [
     "site/js/board/BoardShell.js",
     "site/js/board/BackgroundLayer.js",
     "site/js/dev/DeveloperFrame.js",
-    "site/assets/board/pub_background.jpeg",
+    "site/assets/board/pub_background_game1.jpeg",
     "site/assets/board/gameboard.svg",
     "site/data/geometry/gameboard_manifest.json",
     "li/repo/site_entrypoint_hygiene_rule.md",
@@ -143,7 +143,7 @@ def main() -> int:
     shell_required = [
         '<main id="wc2026-app"',
         '<script type="module" src="js/app.js',
-        'href="assets/board/pub_background.jpeg"',
+        'href="assets/board/pub_background_game1.jpeg"',
         'href="assets/board/gameboard.svg"',
         'href="css/app.css',
         'href="css/board.css',
@@ -172,7 +172,7 @@ def main() -> int:
 
     asset_paths = read("site/js/services/assetPaths.js")
     asset_required = [
-        'backgroundImage: "assets/board/pub_background.jpeg"',
+        'backgroundImage: "assets/board/pub_background_game1.jpeg"',
         'svgGameboardDefinition: "assets/board/gameboard.svg"',
         'geometryManifest: "data/geometry/gameboard_manifest.json"',
     ]

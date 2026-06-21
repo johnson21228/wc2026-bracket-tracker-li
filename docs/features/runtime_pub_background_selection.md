@@ -4,7 +4,7 @@ Card 204 makes the visible runtime board background use the group-stage pub imag
 
 Active runtime asset:
 
-`site/assets/board/pub_background.jpeg`
+`site/assets/board/pub_background_game1.jpeg`
 
 Retained future/alternate asset:
 

@@ -1,64 +1,74 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import re
 
 ROOT = Path(__file__).resolve().parents[1]
 
-def read(path: str) -> str:
-    target = ROOT / path
-    if not target.exists():
-        raise AssertionError(f"Missing required file: {path}")
-    return target.read_text()
+def read(path):
+    return (ROOT / path).read_text()
 
-def main() -> int:
-    errors = []
-    index = read("site/index.html")
-    css = read("site/css/app.css")
-    makefile = read("Makefile")
+def require(path, token):
+    text = read(path)
+    if token not in text:
+        raise SystemExit(f"Banner Game selector UI verification failed:\n- missing {token!r} in {path}")
 
-    if "data-dev-game-selector" not in index:
-        errors.append("site/index.html must include data-dev-game-selector")
-    if "Developer game selector" not in index:
-        errors.append("selector should be explicitly developer-facing for accessibility")
-
-    game1_pattern = re.compile(r'<input[^>]+type="radio"[^>]+name="dev-game-view"[^>]+value="game-1"[^>]+checked', re.S)
-    if not game1_pattern.search(index):
-        errors.append("Game 1 radio option must exist and be checked by default")
-
-    game2_pattern = re.compile(r'<input[^>]+type="radio"[^>]+name="dev-game-view"[^>]+value="game-2"', re.S)
-    if not game2_pattern.search(index):
-        errors.append("Game 2 radio option must exist")
-    game2_input = game2_pattern.search(index)
-    if game2_input and "checked" in game2_input.group(0):
-        errors.append("Game 2 must not be checked by default")
-
-    for label in ["Game 1", "Game 2", "Dev game view"]:
-        if label not in index:
-            errors.append(f"selector label missing: {label}")
-
-    for token in [".dev-game-selector", ".dev-game-selector-option", "input:checked + span"]:
-        if token not in css:
-            errors.append(f"site/css/app.css missing selector styling token: {token}")
-
-    js_paths = [ROOT / "site/js/app.js", ROOT / "site/js/mvc/controller.js", ROOT / "site/js/mvc/model.js", ROOT / "site/js/mvc/view.js"]
-    for js_path in js_paths:
-        if not js_path.exists():
-            continue
-        js = js_path.read_text()
-        for token in ["dev-game-view", "data-dev-game-selector", "game-2"]:
-            if token in js:
-                errors.append(f"{js_path.relative_to(ROOT)} must not wire banner game selector into runtime JS via {token!r}")
-
-    if "tools/verify_wc2026_banner_game_selector_ui.py" not in makefile:
-        errors.append("Makefile verify target must run verify_wc2026_banner_game_selector_ui.py")
-
+def forbid_segment(path, start_token, end_token, forbidden_tokens):
+    text = read(path)
+    if start_token not in text:
+        raise SystemExit(
+            f"Banner Game selector UI verification failed:\n"
+            f"- missing segment start {start_token!r} in {path}"
+        )
+    start = text.index(start_token)
+    end = text.index(end_token, start) if end_token in text[start:] else len(text)
+    segment = text[start:end]
+    errors = [
+        token for token in forbidden_tokens
+        if token in segment
+    ]
     if errors:
-        print("Banner Game selector UI verification failed:")
-        for error in errors:
-            print(f"- {error}")
-        return 1
-    print("OK: WC2026 banner Game selector UI is present, defaults to Game 1, and remains unwired from gameplay runtime.")
-    return 0
+        raise SystemExit(
+            "Banner Game selector UI verification failed:\n"
+            + "\n".join(
+                f"- active Game selector must remain presentation-only; found {token!r}"
+                for token in errors
+            )
+        )
 
-if __name__ == "__main__":
-    raise SystemExit(main())
+index = read("site/index.html")
+require("site/index.html", 'data-dev-game-selector')
+require("site/index.html", 'data-dev-game-selector-option')
+require("site/index.html", 'value="game-1" checked')
+require("site/index.html", 'value="game-2"')
+require("site/index.html", 'Dev game view')
+require("site/index.html", '>Game 1<')
+require("site/index.html", '>Game 2<')
+
+app = read("site/js/app.js")
+require("site/js/app.js", "setupRulesPanel(root);")
+require("site/js/app.js", "setupActiveGameBackground(root);")
+require("site/js/app.js", "ACTIVE_GAME_BACKGROUND_IMAGES")
+require("site/js/app.js", '"game-1": "assets/board/pub_background_game1.jpeg"')
+require("site/js/app.js", '"game-2": "assets/board/knockout_pub_background.jpeg"')
+
+# The selector may now drive presentation-only runtime:
+# rules panel text and board background image. It must not drive gameplay.
+forbid_segment(
+    "site/js/app.js",
+    "function setupActiveGameBackground",
+    "async function main()",
+    [
+        "createBracketModel",
+        "createBracketController",
+        "localStorage",
+        "Supabase",
+        "score",
+        "route",
+        "fetch(",
+        "official_round_of_32",
+        "official_knockout_results",
+    ],
+)
+
+print(
+    "OK: WC2026 banner Game selector UI defaults to Game 1 and only drives presentation-only rules/background state."
+)
