@@ -1,5 +1,6 @@
 import { createGame1R32PickController } from "../controllers/Game1R32PickController.js";
 import { positionFloatingSurfaceNearAnchor } from "../services/FloatingSurfacePlacement.js";
+import { registerFloatingSurfaceDismissal } from "../services/FloatingSurfaceDismissal.js";
 
 function closeExistingMenu(layer) {
   layer.querySelectorAll(".r32-pick-menu-popover").forEach((node) => node.remove());
@@ -360,6 +361,13 @@ async function createR32PickMenuLayer({
   layer.dataset.layerRole = "r32-pick-menu";
   layer.dataset.r32PickMenuState = "loading";
   layer.dataset.r32PickButtonTracking = "enabled";
+  const teardownFloatingSurfaceDismissal = registerFloatingSurfaceDismissal({
+    root: document,
+    surfaceSelectors: [".r32-pick-menu-popover"],
+    active: () => Boolean(layer.querySelector(".r32-pick-menu-popover")),
+    onDismiss: () => closeExistingMenu(layer),
+  });
+  layer.teardownFloatingSurfaceDismissal = teardownFloatingSurfaceDismissal;
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeExistingMenu(layer);

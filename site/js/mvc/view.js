@@ -1,4 +1,5 @@
 import { positionFloatingSurfaceNearAnchor } from "../services/FloatingSurfacePlacement.js";
+import { registerFloatingSurfaceDismissal } from "../services/FloatingSurfaceDismissal.js";
 
 function teamLabel(team) {
   if (!team) return "";
@@ -36,6 +37,7 @@ export function createBracketView(root) {
   const BOARD_MIN_SCALE = 0.5;
   const BOARD_MAX_SCALE = 1.25;
   const BOARD_WHEEL_ZOOM_STEP = 0.08;
+  let teardownFloatingSurfaceDismissal = null;
 
   function activeGameValue() {
     const selected = root.querySelector(".dev-game-selector-option input:checked");
@@ -128,8 +130,27 @@ export function createBracketView(root) {
     handlers.onCloseMenu?.();
   }
 
+  function floatingSurfaceIsOpen() {
+    return Boolean(boardPlane?.querySelector(".pick-menu-popover, .group-panel-popover"));
+  }
+
+  function dismissFloatingSurfaces() {
+    if (!floatingSurfaceIsOpen()) return;
+    handlers.onCloseMenu?.();
+    renderMenu(null);
+    renderGroupPanel(null);
+  }
+
   function setHandlers(nextHandlers) {
     handlers = nextHandlers;
+    if (!teardownFloatingSurfaceDismissal) {
+      teardownFloatingSurfaceDismissal = registerFloatingSurfaceDismissal({
+        root: document,
+        surfaceSelectors: [".pick-menu-popover", ".group-panel-popover"],
+        active: floatingSurfaceIsOpen,
+        onDismiss: dismissFloatingSurfaces,
+      });
+    }
     clearAllButton?.addEventListener("click", () => handlers.onClearAll?.());
     root.addEventListener("change", (event) => {
       if (
@@ -152,7 +173,7 @@ export function createBracketView(root) {
     }, { passive: false });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        handlers.onCloseMenu?.();
+        dismissFloatingSurfaces();
       }
     });
   }
