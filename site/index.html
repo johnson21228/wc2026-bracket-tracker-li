@@ -38,6 +38,7 @@
             <span>Game 2</span>
           </label>
         </fieldset>
+          <button type="button" class="ghost-button rules-button" data-rules-panel-open aria-haspopup="dialog" aria-controls="rules-panel">Rules</button>
           <button type="button" class="ghost-button" data-action="clear-all">Clear picks</button>
         <div class="board-zoom-controls" data-board-zoom-controls>
           <label for="board-zoom-select">Board zoom</label>
@@ -49,6 +50,56 @@
           </select>
         </div></div>
       </header>
+      <section class="rules-panel-backdrop" data-rules-panel id="rules-panel" hidden>
+        <div class="rules-panel" role="dialog" aria-modal="true" aria-labelledby="rules-panel-title">
+          <div class="rules-panel-header">
+            <div>
+              <p class="rules-panel-kicker">Bracketeering Rules</p>
+              <h2 id="rules-panel-title">Rules</h2>
+              <p class="rules-panel-active-label" data-rules-panel-active-label>Showing Game 1 rules</p>
+            </div>
+            <button type="button" class="ghost-button rules-panel-close" data-rules-panel-close>Close</button>
+          </div>
+          <div class="rules-panel-body" tabindex="0">
+            <section class="rules-panel-section" data-rules-panel-section="game-1">
+              <h3>Game 1 — Pick the Round of 32 field</h3>
+              <p>Before the final round of group-stage matches begins, choose the teams you think will make the Round of 32.</p>
+              <h4>Game 1 lock time</h4>
+              <p>All Game 1 picks must be submitted before kickoff of the earliest third-round group-stage match.</p>
+              <p>Some Round-of-32 places may already be known by then. That is part of the game. Many other places will still depend on final group-stage match results, including standings, goal difference, and third-place qualification.</p>
+              <h4>Scoring</h4>
+              <ul>
+                <li>1 point for each correctly predicted Round-of-32 team.</li>
+                <li>No perfect-32 bonus is currently set.</li>
+              </ul>
+            </section>
+            <section class="rules-panel-section" data-rules-panel-section="game-2" hidden>
+              <h3>Game 2 — Pick the knockout bracket</h3>
+              <p>After the knockout bracket is available, pick winners through the bracket.</p>
+              <h4>Scoring</h4>
+              <ul>
+                <li>Round of 32 correct winner: 1 point.</li>
+                <li>Round of 16 correct winner: 2 points.</li>
+                <li>Quarterfinal correct winner: 4 points.</li>
+                <li>Semifinal correct winner: 8 points.</li>
+                <li>Champion: 16 points.</li>
+              </ul>
+              <h4>Game 2 tiebreakers</h4>
+              <ol>
+                <li><strong>Higher Game 1 score.</strong> The tied player with the better Game 1 score wins the tiebreaker.</li>
+                <li><strong>Third-place pick.</strong> If still tied, the tiebreaker is the player&apos;s third-place pick.</li>
+                <li><strong>Earliest valid Game 1 save timestamp.</strong> If still tied, the player whose final Game 1 save was earliest wins, as long as that save happened before the Game 1 lock time.</li>
+              </ol>
+            </section>
+            <section class="rules-panel-section rules-panel-note">
+              <h3>Rule status</h3>
+              <p>These scoring rules are proposed until the pool owner locks them. After lock, changes should be captured as scoring-rule changes.</p>
+              <h3>Developer note</h3>
+              <p>Game selector is currently UI-only. Choosing Game 2 updates only the selector state and the rules text shown here. It does not switch gameplay, scoring, storage, routes, Supabase state, data loading, or board rendering yet.</p>
+            </section>
+          </div>
+        </div>
+      </section>
       <div class="board-scroll" data-board-scroll>
         <div class="board-scale-frame" data-board-scale-frame>
           <section class="pixel-native-board-plane" data-board-plane aria-label="World Cup bracket board"></section>

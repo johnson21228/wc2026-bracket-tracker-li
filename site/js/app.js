@@ -4,12 +4,67 @@ import { createBracketController } from "./mvc/controller.js";
 import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
 
+
+function setupRulesPanel(root) {
+  const openButton = root.querySelector("[data-rules-panel-open]");
+  const panel = root.querySelector("[data-rules-panel]");
+  if (!openButton || !panel) return;
+
+  const closeButton = panel.querySelector("[data-rules-panel-close]");
+  const activeLabel = panel.querySelector("[data-rules-panel-active-label]");
+  const sections = [...panel.querySelectorAll("[data-rules-panel-section]")];
+
+  function selectedGameValue() {
+    const selected = root.querySelector(".dev-game-selector-option input:checked");
+    return selected?.value || "game-1";
+  }
+
+  function syncRulesPanel() {
+    const active = selectedGameValue();
+    sections.forEach((section) => {
+      section.hidden = section.dataset.rulesPanelSection !== active;
+    });
+    if (activeLabel) {
+      activeLabel.textContent = active === "game-1" ? "Showing Game 1 rules" : "Showing Game 2 rules";
+    }
+  }
+
+  function openRulesPanel() {
+    syncRulesPanel();
+    panel.hidden = false;
+    closeButton?.focus();
+  }
+
+  function closeRulesPanel() {
+    panel.hidden = true;
+    openButton.focus();
+  }
+
+  openButton.addEventListener("click", openRulesPanel);
+  closeButton?.addEventListener("click", closeRulesPanel);
+
+  panel.addEventListener("click", (event) => {
+    if (event.target === panel) closeRulesPanel();
+  });
+
+  root.addEventListener("change", (event) => {
+    if (event.target instanceof HTMLInputElement && event.target.closest(".dev-game-selector-option")) {
+      syncRulesPanel();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !panel.hidden) closeRulesPanel();
+  });
+}
+
 async function main() {
   const root = document.querySelector("[data-wc2026-app]");
   if (!root) {
     throw new Error("Missing [data-wc2026-app] site root.");
   }
 
+  setupRulesPanel(root);
   const model = await createBracketModel();
   const view = createBracketView(root);
   const controller = createBracketController({ model, view });
