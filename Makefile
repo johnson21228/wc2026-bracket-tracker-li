@@ -33,10 +33,7 @@ verify:
 	python3 tools/verify_wc2026_pub_hero_header.py
 	python3 tools/verify_wc2026_hero_banner_spelling.py
 	python3 tools/verify_wc2026_banner_game_selector_ui.py
-<<<<<<< Updated upstream
 	python3 tools/verify_wc2026_banner_rules_panel_ui.py
-=======
->>>>>>> Stashed changes
 	python3 tools/verify_wc2026_picked_bracket_cell_identity_rendering.py
 	python3 tools/verify_wc2026_update_results_prompt.py
 	python3 tools/verify_wc2026_knockout_schedule_model.py
@@ -57,7 +54,6 @@ verify:
 	python3 tools/verify_wc2026_empty_pick_state_storage_li.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
 	python3 tools/verify_wc2026_supabase_sql_rls_finalization.py
-	python3 tools/verify_wc2026_supabase_first_reviewable_sql_setup.py
 	python3 tools/verify_wc2026_supabase_identity_ui_surface.py
 	python3 tools/verify_wc2026_supabase_auth_identity_surface_before_postgres.py
 	python3 tools/verify_wc2026_full_canonical_bracket_document_runtime.py
