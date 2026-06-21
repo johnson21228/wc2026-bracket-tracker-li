@@ -11,26 +11,8 @@ function setupRulesPanel(root) {
   if (!openButton || !panel) return;
 
   const closeButton = panel.querySelector("[data-rules-panel-close]");
-  const activeLabel = panel.querySelector("[data-rules-panel-active-label]");
-  const sections = [...panel.querySelectorAll("[data-rules-panel-section]")];
-
-  function selectedGameValue() {
-    const selected = root.querySelector(".dev-game-selector-option input:checked");
-    return selected?.value || "game-1";
-  }
-
-  function syncRulesPanel() {
-    const active = selectedGameValue();
-    sections.forEach((section) => {
-      section.hidden = section.dataset.rulesPanelSection !== active;
-    });
-    if (activeLabel) {
-      activeLabel.textContent = active === "game-1" ? "Showing Game 1 rules" : "Showing Game 2 rules";
-    }
-  }
 
   function openRulesPanel() {
-    syncRulesPanel();
     panel.hidden = false;
     closeButton?.focus();
   }
@@ -47,17 +29,10 @@ function setupRulesPanel(root) {
     if (event.target === panel) closeRulesPanel();
   });
 
-  root.addEventListener("change", (event) => {
-    if (event.target instanceof HTMLInputElement && event.target.closest(".dev-game-selector-option")) {
-      syncRulesPanel();
-    }
-  });
-
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !panel.hidden) closeRulesPanel();
   });
 }
-
 
 const ACTIVE_GAME_BACKGROUND_IMAGES = Object.freeze({
   "game-1": "assets/board/pub_background_game1.jpeg",
@@ -95,6 +70,7 @@ function setupActiveGameBackground(root) {
     }
   });
 }
+
 
 async function main() {
   const root = document.querySelector("[data-wc2026-app]");
