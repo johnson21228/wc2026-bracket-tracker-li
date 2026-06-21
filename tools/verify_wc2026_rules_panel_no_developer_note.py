@@ -7,14 +7,18 @@ FORBIDDEN = [
     "Developer note",
     "Game selector is currently UI-only",
     "It does not switch gameplay, scoring, storage, routes, Supabase state, data loading, or board rendering yet.",
+    "data-rules-panel-section",
+    "rules-panel-active-label",
+    "Showing Game 1 rules",
+    "Showing Game 2 rules",
 ]
 
 REQUIRED = [
     "Bracketeering Rules",
-    "Game 1 — Pick the Round of 32 field",
-    "Game 2",
-    'data-rules-panel-section="game-1"',
-    'data-rules-panel-section="game-2"',
+    "How Bracketeering Pub-Hub works",
+    "Game 1 Rules:",
+    "Game 2 Preview",
+    "Development preview",
 ]
 
 
@@ -24,17 +28,17 @@ def main() -> int:
 
     for token in FORBIDDEN:
         if token in html:
-            errors.append(f"forbidden developer-note text remains: {token}")
+            errors.append(f"forbidden Rules panel text remains: {token}")
 
     for token in REQUIRED:
         if token not in html:
-            errors.append(f"expected Rules panel token missing: {token}")
+            errors.append(f"expected single Rules panel token missing: {token}")
 
     if errors:
         print("Rules panel developer note verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: WC2026 Rules panel no longer exposes developer-only game selector caveats.")
+    print("OK: WC2026 Rules panel is single-display and exposes no developer-only caveats.")
     return 0
 
 

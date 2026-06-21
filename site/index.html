@@ -57,44 +57,35 @@
             <div>
               <p class="rules-panel-kicker">Bracketeering Rules</p>
               <h2 id="rules-panel-title">Rules</h2>
-              <p class="rules-panel-active-label" data-rules-panel-active-label>Showing Game 1 rules</p>
             </div>
             <button type="button" class="ghost-button rules-panel-close" data-rules-panel-close>Close</button>
           </div>
           <div class="rules-panel-body" tabindex="0">
-            <section class="rules-panel-section" data-rules-panel-section="game-1">
-              <h3>Game 1 — Pick the Round of 32 field</h3>
-              <p>The final Bracketeering Pub-Hub will merge Game 1 and Game 2 into one continuous experience, with the board transitioning seamlessly as FIFA finalizes the Round of 32. For development, the Game 1 / Game 2 selector lets us preview each rules view separately.</p>
+            <section class="rules-panel-section">
+              <h3>How Bracketeering Pub-Hub works</h3>
+              <p>Bracketeering Pub-Hub is being developed as one continuous two-game World Cup pool. Game 1 asks players to predict the Round of 32 field before the final group-stage matches are played. Game 2 carries those picks forward into the knockout bracket as FIFA finalizes the Round of 32.</p>
+              <p>When the site is live for real play, the transition from Game 1 to Game 2 should feel seamless: the same Pub-Hub board continues forward as official FIFA results determine the final Round of 32 field.</p>
+
+              <h4>Development preview</h4>
+              <p>The Dev Game View selector is present while the games are still being developed. It lets viewers preview Game 1 and a simulated Game 2 before the site is opened for real pool play.</p>
+              <p>For now, viewers are encouraged to make Game 1 picks and try the simulated Game 2 view.</p>
+
+              <h4>Game 1 Rules:</h4>
               <p>Before the final round of group-stage matches begins, choose the teams you think will make the Round of 32.</p>
-              <h4>Game 1 lock time</h4>
               <p>All Game 1 picks must be submitted before kickoff of the earliest third-round group-stage match.</p>
               <p>Some Round-of-32 places may already be known by then. That is part of the game. Many other places will still depend on final group-stage match results, including standings, goal difference, and third-place qualification.</p>
-              <h4>Scoring</h4>
+
+              <h4>Game 2 Preview</h4>
+              <p>Game 2 is the knockout-bracket game. After the Round of 32 field is finalized, players will pick winners through the bracket. During development, Game 2 may use simulated or fallback Round of 32 assignments so the bracket flow can be tested.</p>
+
+              <h4>Scoring preview</h4>
               <ul>
-                <li>1 point for each correctly predicted Round-of-32 team.</li>
+                <li>Game 1: 1 point for each correctly predicted Round-of-32 team.</li>
+                <li>Game 2 preview scoring: later knockout rounds are expected to be worth more than earlier rounds.</li>
               </ul>
-            </section>
-            <section class="rules-panel-section" data-rules-panel-section="game-2" hidden>
-              <h3>Game 2 — Pick the knockout bracket</h3>
-              <p>After the knockout bracket is available, pick winners through the bracket.</p>
-              <h4>Scoring</h4>
-              <ul>
-                <li>Round of 32 correct winner: 1 point.</li>
-                <li>Round of 16 correct winner: 2 points.</li>
-                <li>Quarterfinal correct winner: 4 points.</li>
-                <li>Semifinal correct winner: 8 points.</li>
-                <li>Champion: 16 points.</li>
-              </ul>
-              <h4>Game 2 tiebreakers</h4>
-              <ol>
-                <li><strong>Higher Game 1 score.</strong> The tied player with the better Game 1 score wins the tiebreaker.</li>
-                <li><strong>Third-place pick.</strong> If still tied, the tiebreaker is the player&apos;s third-place pick.</li>
-                <li><strong>Earliest valid Game 1 save timestamp.</strong> If still tied, the player whose final Game 1 save was earliest wins, as long as that save happened before the Game 1 lock time.</li>
-              </ol>
-            </section>
-            <section class="rules-panel-section rules-panel-note">
-              <h3>Rule status</h3>
-              <p>These scoring rules are proposed until the pool owner locks them. After lock, changes should be captured as scoring-rule changes.</p>
+
+              <h4>Rule status</h4>
+              <p>These rules are provisional while Bracketeering Pub-Hub is under development. Before real pool play begins, the pool owner should lock the final scoring rules and game timing.</p>
             </section>
           </div>
         </div>

@@ -16,60 +16,75 @@ def main() -> int:
     app_js = read("site/js/app.js")
     makefile = read("Makefile")
 
-    for token in [
+    required_index_tokens = [
         "data-rules-panel-open",
         "data-rules-panel",
         "data-rules-panel-close",
+        "rules-panel-body",
+        "How Bracketeering Pub-Hub works",
+        "one continuous two-game World Cup pool",
+        "Game 1 Rules:",
+        "Before the final round of group-stage matches begins",
+        "Development preview",
+        "Dev Game View selector is present while the games are still being developed",
+        "simulated Game 2",
+        "Game 2 Preview",
+        "Rule status",
+    ]
+    for token in required_index_tokens:
+        if token not in index:
+            errors.append(f"site/index.html missing single Rules panel token: {token}")
+
+    forbidden_index_tokens = [
         "data-rules-panel-section=\"game-1\"",
         "data-rules-panel-section=\"game-2\"",
-        "rules-panel-body",
-    ]:
-        if token not in index:
-            errors.append(f"site/index.html missing rules panel token: {token}")
-
-    for text in [
-        "Rules",
-        "Game 1 — Pick the Round of 32 field",
-        "before kickoff of the earliest third-round group-stage match",
-        "Some Round-of-32 places may already be known by then",
-        "Game 2 — Pick the knockout bracket",
-        "Game 2 tiebreakers",
-        "Higher Game 1 score",
-        "Third-place pick",
-        "Earliest valid Game 1 save timestamp",
-    ]:
-        if text not in index:
-            errors.append(f"rules panel text missing: {text}")
+        "rules-panel-active-label",
+        "Showing Game 1 rules",
+        "Showing Game 2 rules",
+        "Developer note",
+        "Game selector is currently UI-only",
+    ]
+    for token in forbidden_index_tokens:
+        if token in index:
+            errors.append(f"site/index.html still contains obsolete selector-driven Rules token: {token}")
 
     for token in [
         ".rules-panel-backdrop",
         ".rules-panel",
         ".rules-panel-body",
         "overflow-y: auto",
-        ".rules-panel-section[hidden]",
     ]:
         if token not in css:
             errors.append(f"site/css/app.css missing rules panel styling token: {token}")
 
-    for token in [
+    required_runtime_tokens = [
         "function setupRulesPanel",
         "data-rules-panel-open",
         "data-rules-panel-close",
-        "data-rules-panel-section",
         "Escape",
-        "rulesPanelSection",
-    ]:
+    ]
+    for token in required_runtime_tokens:
         if token not in app_js:
             errors.append(f"site/js/app.js missing rules panel runtime token: {token}")
 
-    # Guard the boundary: inspect only the rules-panel runtime body so existing unrelated
-    # imports/services do not fail this UI verifier. The panel may observe the UI selector,
-    # but must not call into model/controller/storage APIs to switch gameplay modes.
+    forbidden_runtime_tokens = [
+        "data-rules-panel-section",
+        "rulesPanelSection",
+        "selectedGameValue",
+        "syncRulesPanel",
+        "Showing Game 1 rules",
+        "Showing Game 2 rules",
+    ]
+    for token in forbidden_runtime_tokens:
+        if token in app_js:
+            errors.append(f"site/js/app.js still contains selector-driven Rules runtime token: {token}")
+
     rules_runtime = ""
     start = app_js.find("function setupRulesPanel")
     end = app_js.find("async function main", start)
     if start != -1 and end != -1:
         rules_runtime = app_js[start:end]
+
     forbidden_runtime_phrases = [
         "setActiveGame",
         "switchGame",
@@ -95,7 +110,7 @@ def main() -> int:
             print(f"- {error}")
         return 1
 
-    print("OK: WC2026 banner Rules panel shows active game rules and remains unwired from gameplay switching.")
+    print("OK: WC2026 Rules panel is a single player-facing Pub-Hub rules display.")
     return 0
 
 if __name__ == "__main__":
