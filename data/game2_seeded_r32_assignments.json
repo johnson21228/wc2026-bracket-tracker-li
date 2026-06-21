@@ -1,0 +1,268 @@
+{
+  "meta": {
+    "purpose": "Development seed for Game 2 knockout pick testing before official R32 assignments are final.",
+    "source": "development_seed",
+    "truthLevel": "test_seed_not_fifa_final",
+    "version": "2026-06-21",
+    "replaceableByOfficialFifaAssignments": true,
+    "warning": "This file is deterministic development/test seed data. It is not FIFA-final truth and must not be used as official results or user picks."
+  },
+  "assignments": [
+    {
+      "slotId": "L-R32-01",
+      "teamId": "MEX",
+      "label": "Mexico",
+      "abbr": "MEX",
+      "flag": "🇲🇽",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-02",
+      "teamId": "KOR",
+      "label": "Korea Republic",
+      "abbr": "KOR",
+      "flag": "🇰🇷",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-03",
+      "teamId": "CAN",
+      "label": "Canada",
+      "abbr": "CAN",
+      "flag": "🇨🇦",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-04",
+      "teamId": "SUI",
+      "label": "Switzerland",
+      "abbr": "SUI",
+      "flag": "🇨🇭",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-05",
+      "teamId": "BRA",
+      "label": "Brazil",
+      "abbr": "BRA",
+      "flag": "🇧🇷",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-06",
+      "teamId": "MAR",
+      "label": "Morocco",
+      "abbr": "MAR",
+      "flag": "🇲🇦",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-07",
+      "teamId": "USA",
+      "label": "USA",
+      "abbr": "USA",
+      "flag": "🇺🇸",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-08",
+      "teamId": "PAR",
+      "label": "Paraguay",
+      "abbr": "PAR",
+      "flag": "🇵🇾",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-09",
+      "teamId": "GER",
+      "label": "Germany",
+      "abbr": "GER",
+      "flag": "🇩🇪",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-10",
+      "teamId": "CIV",
+      "label": "Côte d’Ivoire",
+      "abbr": "CIV",
+      "flag": "🇨🇮",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-11",
+      "teamId": "NED",
+      "label": "Netherlands",
+      "abbr": "NED",
+      "flag": "🇳🇱",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-12",
+      "teamId": "JPN",
+      "label": "Japan",
+      "abbr": "JPN",
+      "flag": "🇯🇵",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-13",
+      "teamId": "BEL",
+      "label": "Belgium",
+      "abbr": "BEL",
+      "flag": "🇧🇪",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-14",
+      "teamId": "IRN",
+      "label": "IR Iran",
+      "abbr": "IRN",
+      "flag": "🇮🇷",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-15",
+      "teamId": "ESP",
+      "label": "Spain",
+      "abbr": "ESP",
+      "flag": "🇪🇸",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "L-R32-16",
+      "teamId": "URU",
+      "label": "Uruguay",
+      "abbr": "URU",
+      "flag": "🇺🇾",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-01",
+      "teamId": "FRA",
+      "label": "France",
+      "abbr": "FRA",
+      "flag": "🇫🇷",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-02",
+      "teamId": "NOR",
+      "label": "Norway",
+      "abbr": "NOR",
+      "flag": "🇳🇴",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-03",
+      "teamId": "ARG",
+      "label": "Argentina",
+      "abbr": "ARG",
+      "flag": "🇦🇷",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-04",
+      "teamId": "AUT",
+      "label": "Austria",
+      "abbr": "AUT",
+      "flag": "🇦🇹",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-05",
+      "teamId": "POR",
+      "label": "Portugal",
+      "abbr": "POR",
+      "flag": "🇵🇹",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-06",
+      "teamId": "COL",
+      "label": "Colombia",
+      "abbr": "COL",
+      "flag": "🇨🇴",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-07",
+      "teamId": "ENG",
+      "label": "England",
+      "abbr": "ENG",
+      "flag": "🏴",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-08",
+      "teamId": "GHA",
+      "label": "Ghana",
+      "abbr": "GHA",
+      "flag": "🇬🇭",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-09",
+      "teamId": "SWE",
+      "label": "Sweden",
+      "abbr": "SWE",
+      "flag": "🇸🇪",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-10",
+      "teamId": "AUS",
+      "label": "Australia",
+      "abbr": "AUS",
+      "flag": "🇦🇺",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-11",
+      "teamId": "ECU",
+      "label": "Ecuador",
+      "abbr": "ECU",
+      "flag": "🇪🇨",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-12",
+      "teamId": "SCO",
+      "label": "Scotland",
+      "abbr": "SCO",
+      "flag": "🏴",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-13",
+      "teamId": "CPV",
+      "label": "Cabo Verde",
+      "abbr": "CPV",
+      "flag": "🇨🇻",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-14",
+      "teamId": "SEN",
+      "label": "Senegal",
+      "abbr": "SEN",
+      "flag": "🇸🇳",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-15",
+      "teamId": "CRO",
+      "label": "Croatia",
+      "abbr": "CRO",
+      "flag": "🇭🇷",
+      "seedSource": "development_seed"
+    },
+    {
+      "slotId": "R-R32-16",
+      "teamId": "CZE",
+      "label": "Czechia",
+      "abbr": "CZE",
+      "flag": "🇨🇿",
+      "seedSource": "development_seed"
+    }
+  ]
+}
