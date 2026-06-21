@@ -300,3 +300,15 @@ h1 { margin: 0; font-size: clamp(28px, 4vw, 56px); }
     grid-row: 1 / span 3;
   }
 }
+
+
+.pick-slot-button.is-disabled-by-active-game {
+  cursor: not-allowed;
+  filter: saturate(0.8);
+  opacity: 0.82;
+}
+
+.pick-slot-button.is-disabled-by-active-game .pick-slot-value,
+.pick-slot-button.is-disabled-by-active-game .pick-slot-label {
+  opacity: 0.88;
+}

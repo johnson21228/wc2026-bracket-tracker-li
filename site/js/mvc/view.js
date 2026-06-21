@@ -37,6 +37,30 @@ export function createBracketView(root) {
   const BOARD_MAX_SCALE = 1.25;
   const BOARD_WHEEL_ZOOM_STEP = 0.08;
 
+  function activeGameValue() {
+    const selected = root.querySelector(".dev-game-selector-option input:checked");
+    return selected?.value || root.dataset.activeGame || "game-1";
+  }
+
+  function slotEnabledForActiveGame(slot) {
+    const activeGame = activeGameValue();
+    if (activeGame === "game-1") return slot.round === "R32";
+    if (activeGame === "game-2") return slot.round !== "R32";
+    return true;
+  }
+
+  function disabledReasonForActiveGame(slot) {
+    const activeGame = activeGameValue();
+    if (activeGame === "game-1" && slot.round !== "R32") {
+      return "Game 1 only accepts Round of 32 picks.";
+    }
+    if (activeGame === "game-2" && slot.round === "R32") {
+      return "Game 2 starts after the Round of 32 field.";
+    }
+    return "";
+  }
+
+
   function clampBoardScale(value) {
     const numeric = Number(value);
     if (!Number.isFinite(numeric)) return 1;
@@ -107,6 +131,14 @@ export function createBracketView(root) {
   function setHandlers(nextHandlers) {
     handlers = nextHandlers;
     clearAllButton?.addEventListener("click", () => handlers.onClearAll?.());
+    root.addEventListener("change", (event) => {
+      if (
+        event.target instanceof HTMLInputElement &&
+        event.target.closest(".dev-game-selector-option")
+      ) {
+        handlers.onActiveGameChange?.(activeGameValue());
+      }
+    });
     boardZoomSelect?.addEventListener("change", () => {
       applyBoardRenderScale(boardZoomSelect.value);
       handlers.onCloseMenu?.();
@@ -186,8 +218,16 @@ export function createBracketView(root) {
       button.className = "pick-slot-button";
       button.dataset.slotId = slot.slotId;
       button.dataset.round = slot.round;
-      button.disabled = !slot.pickable;
-      button.setAttribute("aria-label", slot.selectedTeam ? `${slot.slotId}: ${fullTeamLabel(slot.selectedTeam)}` : `${slot.slotId}: ${slot.pickable ? "choose team" : "waiting for feeder picks"}`);
+      const enabledForActiveGame = slotEnabledForActiveGame(slot);
+      const activeGameDisabledReason = disabledReasonForActiveGame(slot);
+      button.disabled = !slot.pickable || !enabledForActiveGame;
+      button.dataset.pickDisabledByActiveGame = enabledForActiveGame ? "false" : "true";
+      button.setAttribute(
+        "aria-label",
+        slot.selectedTeam
+          ? `${slot.slotId}: ${fullTeamLabel(slot.selectedTeam)}`
+          : `${slot.slotId}: ${slot.pickable && enabledForActiveGame ? "choose team" : activeGameDisabledReason || "waiting for feeder picks"}`
+      );
       applyBounds(button, slot.boundsPx);
 
       const label = document.createElement("span");
@@ -238,7 +278,11 @@ export function createBracketView(root) {
         button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
         button.setAttribute("aria-label", `${slot.label}: invalid pick. ${button.title}`);
       }
-      if (slot.pickable) button.classList.add("is-pickable");
+      if (slot.pickable && enabledForActiveGame) button.classList.add("is-pickable");
+      if (!enabledForActiveGame) {
+        button.classList.add("is-disabled-by-active-game");
+        button.title = activeGameDisabledReason;
+      }
       button.addEventListener("click", () => handlers.onSlotClick?.(slot.slotId));
       layer.append(button);
     }
@@ -637,5 +681,5 @@ export function createBracketView(root) {
     statusPanel.textContent = message;
   }
 
-  return { setHandlers, renderBoardShell, render, closeMenu, openGroupPanel, report };
+  return { setHandlers, renderBoardShell, render, closeMenu, openGroupPanel, report, activeGameValue };
 }
