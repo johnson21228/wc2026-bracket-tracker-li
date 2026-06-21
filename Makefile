@@ -51,6 +51,7 @@ verify:
 	python3 tools/verify_wc2026_safe_group_result_cze_rsa.py
 	python3 tools/verify_wc2026_june_20_21_results_and_highlights.py
 	python3 tools/verify_wc2026_spain_saudi_result_and_highlight.py
+	python3 tools/verify_wc2026_belgium_iran_result_and_highlight.py
 	python3 tools/verify_wc2026_current_group_order_rendering.py
 	python3 tools/verify_wc2026_pick_validity_rendering.py
 	python3 tools/verify_wc2026_pick_validity_no_current_rank_block.py

@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-06-21",
+  "source": "user-provided screenshot and YouTube highlight link",
+  "matchId": "66456986",
+  "group": "G",
+  "match": {
+    "home": "Belgium",
+    "away": "Iran",
+    "homeScore": 0,
+    "awayScore": 0,
+    "status": "FT",
+    "postMatchRecordsShown": {
+      "Belgium": "0-2-0",
+      "Iran": "0-2-0"
+    }
+  },
+  "highlight": {
+    "url": "https://youtu.be/YbiEe9pOV-s",
+    "source": "YouTube"
+  },
+  "patchScope": [
+    "site/data/current/group_matches.json",
+    "site/data/current/group_standings.json",
+    "site/data/current/match_highlights.json"
+  ],
+  "invariants": [
+    "Patch only confirmed final result data.",
+    "Preserve unrelated match, standings, highlight, View, and Controller behavior.",
+    "Keep evidence explicit and verifiable."
+  ]
+}
