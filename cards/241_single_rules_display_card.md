@@ -29,3 +29,7 @@ Use **Group Stage Finale** as the player-facing name for Game 1 lock timing.
 
 Canonical spelling: `Finale`.
 
+## Refinement: Game 2 reset language
+
+Final Game 2 starts from the official FIFA-supplied Round of 32 field, not from each player’s Game 1 predictions.
+

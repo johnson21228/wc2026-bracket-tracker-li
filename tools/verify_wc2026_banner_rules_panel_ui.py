@@ -30,6 +30,8 @@ def main() -> int:
         "Dev Game View selector is present while the games are still being developed",
         "simulated Game 2",
         "Game 2 Preview",
+        "not from each player’s Game 1 predictions",
+        "official FIFA-supplied Round of 32 field",
         "Rule status",
     ]
     for token in required_index_tokens:

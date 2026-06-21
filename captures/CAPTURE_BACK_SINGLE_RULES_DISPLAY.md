@@ -32,3 +32,9 @@ Canonical spelling: `Finale`.
 
 The rule copy should still define the exact lock condition: all Game 1 picks must be submitted before kickoff of the earliest third-round group-stage match.
 
+## Game 2 official Round of 32 reset
+
+Final Game 2 does not carry each player’s Game 1 picks forward into the knockout bracket.
+
+Game 2 should be described as resetting to the official FIFA-supplied Round of 32 field. Game 1 remains a prediction game about who will make the Round of 32. Game 2 is a knockout prediction game that starts from FIFA’s actual Round of 32 bracket.
+
