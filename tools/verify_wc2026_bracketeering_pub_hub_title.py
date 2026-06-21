@@ -2,7 +2,7 @@
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-NEW = "Bracketeering Pub-Hub"
+NEW = "Bracketeering Hub"
 OLD = "FIFA Bracketeering"
 
 player_facing_files = [
@@ -58,4 +58,4 @@ if errors:
     print("Pub-Hub title verification failed: " + "; ".join(errors))
     raise SystemExit(1)
 
-print("OK: player-facing Bracketeering title is renamed to Bracketeering Pub-Hub without touching gameplay/data surfaces.")
+print("OK: player-facing Bracketeering title is renamed to Bracketeering Hub without touching gameplay/data surfaces.")

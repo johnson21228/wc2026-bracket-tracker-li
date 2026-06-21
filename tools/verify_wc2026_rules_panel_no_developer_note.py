@@ -15,7 +15,7 @@ FORBIDDEN = [
 
 REQUIRED = [
     "Bracketeering Rules",
-    "How Bracketeering Pub-Hub works",
+    "How Bracketeering Hub works",
     "Game 1 Rules:",
     "Game 2 Preview",
     "Development preview",

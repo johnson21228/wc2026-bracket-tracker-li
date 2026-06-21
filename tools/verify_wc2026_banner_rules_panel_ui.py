@@ -21,7 +21,7 @@ def main() -> int:
         "data-rules-panel",
         "data-rules-panel-close",
         "rules-panel-body",
-        "How Bracketeering Pub-Hub works",
+        "How Bracketeering Hub works",
         "one continuous two-game World Cup pool",
         "Game 1 Rules:",
         "Before the final round of group-stage matches begins",

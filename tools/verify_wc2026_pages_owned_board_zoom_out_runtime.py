@@ -6,7 +6,7 @@ errors = []
 
 required = {
     "site/index.html": [
-        '<h1 id="app-title">Bracketeering Pub-Hub</h1>',
+        '<h1 id="app-title">Bracketeering Hub</h1>',
         'data-board-zoom',
         'data-board-scale-frame',
         '<option value="0.5">50%</option>',
