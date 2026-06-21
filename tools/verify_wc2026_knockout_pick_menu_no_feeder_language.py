@@ -27,8 +27,11 @@ if "function isInternalPickSlotId" not in view:
 if "function playerFacingPickMenuTitle" not in view:
     errors.append("view does not define a player-facing pick menu title helper")
 
-if "title.textContent = playerFacingPickMenuTitle(menu, slot)" not in view:
+if "title.textContent = playerFacingPickMenuTitle(" not in view:
     errors.append("pick menu title is not routed through the player-facing title helper")
+
+if "title.textContent = playerFacingPickMenuTitle(menuModel, menuModel)" not in view:
+    errors.append("pick menu title helper must use the resolved menu model, not undefined menu/slot variables")
 
 if "title.textContent = menu.title" in view or "title.textContent = slot.slotId" in view:
     errors.append("pick menu title can still expose internal menu title or slot ID")
