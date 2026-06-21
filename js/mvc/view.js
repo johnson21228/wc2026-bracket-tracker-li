@@ -185,6 +185,7 @@ export function createBracketView(root) {
       <img class="board-background-layer" src="assets/board/pub_background_game1.jpeg" alt="" aria-hidden="true">
       <img class="board-linework-layer" src="assets/board/gameboard.svg" alt="" aria-hidden="true">
       <div class="board-pick-layer" data-pick-layer></div>
+      <div class="board-final-four-layer" data-final-four-layer></div>
       <div class="board-menu-layer" data-menu-layer></div>
       <div class="board-group-rail-layer" data-group-rail-layer></div>
       <div class="board-group-panel-layer" data-group-panel-layer></div>
@@ -331,6 +332,70 @@ export function createBracketView(root) {
       button.addEventListener("click", () => handlers.onSlotClick?.(slot.slotId));
       layer.append(button);
     }
+  }
+
+  function renderFinalFourPanel(finalFourModel) {
+    const layer = boardPlane.querySelector("[data-final-four-layer]");
+    if (!layer) return;
+    layer.innerHTML = "";
+    if (!finalFourModel?.boundsPx) return;
+
+    const panel = document.createElement("section");
+    panel.className = "final-four-panel";
+    panel.dataset.slotId = finalFourModel.slotId;
+    panel.setAttribute("aria-label", "Final Four picks");
+    applyBounds(panel, finalFourModel.boundsPx);
+
+    const title = document.createElement("h2");
+    title.className = "final-four-title";
+    title.textContent = finalFourModel.title || "Final Four";
+    panel.append(title);
+
+    const semifinalSummary = document.createElement("div");
+    semifinalSummary.className = "final-four-semis";
+    for (const row of finalFourModel.semifinalRows || []) {
+      const line = document.createElement("div");
+      line.className = "final-four-semi-row";
+      const teams = (row.teams || []).map((team) => team.abbr || team.id).join(" / ") || "waiting";
+      const winner = row.winner ? `${row.winner.flag || ""} ${row.winner.abbr || row.winner.id}`.trim() : "pick";
+      line.textContent = `${row.label}: ${teams} → ${winner}`;
+      semifinalSummary.append(line);
+    }
+    panel.append(semifinalSummary);
+
+    const list = document.createElement("div");
+    list.className = "final-four-pick-list";
+
+    for (const pick of finalFourModel.picks || []) {
+      const enabledForActiveGame = slotEnabledForActiveGame(pick);
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "final-four-pick-row";
+      button.dataset.slotId = pick.slotId;
+      button.dataset.round = pick.round;
+      button.disabled = !(pick.pickable && enabledForActiveGame);
+      button.addEventListener("click", () => handlers.onFinalFourSlotClick?.(pick.slotId));
+
+      const label = document.createElement("span");
+      label.className = "final-four-pick-label";
+      label.textContent = pick.label;
+
+      const value = document.createElement("span");
+      value.className = "final-four-pick-value";
+      if (pick.selectedTeam) {
+        value.textContent = `${pick.selectedTeam.flag || ""} ${pick.selectedTeam.abbr || pick.selectedTeam.id}`.trim();
+        button.classList.add("has-pick");
+      } else {
+        value.textContent = pick.pickable && enabledForActiveGame ? "Pick" : "Waiting";
+        button.classList.add("is-unpicked");
+      }
+
+      button.append(label, value);
+      list.append(button);
+    }
+
+    panel.append(list);
+    layer.append(panel);
   }
 
   function visibleBoardViewport() {
@@ -709,6 +774,7 @@ export function createBracketView(root) {
 
   function render(state) {
     renderSlots(state.slotModels);
+    renderFinalFourPanel(state.finalFour);
     renderGroupRail(state.groupRail);
     renderMenu(state.openPickMenu);
     statusPanel.textContent = `${state.summary.picked} picks made. ${state.summary.pickable} slots are currently pickable.`;

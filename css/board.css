@@ -853,3 +853,106 @@
   filter: none;
 }
 
+
+
+/* Card 247: Final Four canonical pick display */
+.board-final-four-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.final-four-panel {
+  position: absolute;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 5px;
+  padding: 8px;
+  border: 1px solid rgba(255, 236, 205, .5);
+  border-radius: 12px;
+  background: rgba(20, 15, 14, .62);
+  color: rgba(255,255,255,.92);
+  box-shadow: 0 10px 28px rgba(0,0,0,.28);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.final-four-title {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.final-four-semis {
+  display: grid;
+  gap: 2px;
+  font-size: 9px;
+  line-height: 1.05;
+  opacity: .78;
+}
+
+.final-four-semi-row {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.final-four-pick-list {
+  display: grid;
+  gap: 4px;
+  min-height: 0;
+}
+
+.final-four-pick-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px;
+  align-items: center;
+  min-width: 0;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 8px;
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.93);
+  padding: 4px 5px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.final-four-pick-row:disabled {
+  cursor: default;
+  opacity: .55;
+}
+
+.final-four-pick-row.has-pick {
+  background: rgba(35, 88, 61, .72);
+  border-color: rgba(198, 255, 211, .58);
+}
+
+.final-four-pick-row:not(:disabled):hover,
+.final-four-pick-row:not(:disabled):focus-visible {
+  outline: 2px solid rgba(255, 229, 159, .86);
+  outline-offset: 1px;
+  background: rgba(164, 100, 45, .48);
+}
+
+.final-four-pick-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 9px;
+  line-height: 1;
+  opacity: .78;
+}
+
+.final-four-pick-value {
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 850;
+  white-space: nowrap;
+  text-shadow: 0 1px 1px rgba(0,0,0,.75);
+}
