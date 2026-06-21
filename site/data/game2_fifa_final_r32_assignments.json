@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "purpose": "FIFA-final Round of 32 assignments for Game 2.",
+    "source": "fifa_final_truth_target",
+    "truthLevel": "not_populated_yet",
+    "currentRuntimeFallback": "game1_r32_picks",
+    "notes": [
+      "This file is the future FIFA-final Game 2 R32 source.",
+      "Until assignments are populated, Game 2 resolves R32 teams from Game 1 R32 picks.",
+      "Game 1 fallback is local/user-derived and must not be treated as FIFA-final truth."
+    ]
+  },
+  "assignments": []
+}
