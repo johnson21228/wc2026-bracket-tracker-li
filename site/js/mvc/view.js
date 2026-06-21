@@ -287,6 +287,9 @@ export function createBracketView(root) {
       if (displayTeam) button.classList.add("has-pick");
       if (game2ResolvedR32Display) {
         button.classList.add("has-game2-resolved-r32");
+        button.classList.add("has-game2-readonly-r32");
+        button.dataset.game2ReadonlyR32 = "true";
+        button.setAttribute("data-game2-readonly-r32", "true");
         button.dataset.game2ResolvedR32Source = slot.game2ResolvedSource || "unknown";
         button.setAttribute("data-game2-resolved-r32-source", slot.game2ResolvedSource || "unknown");
       }
