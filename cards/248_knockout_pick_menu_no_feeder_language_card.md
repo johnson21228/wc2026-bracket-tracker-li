@@ -29,3 +29,9 @@ Final player-facing chrome rule:
 - No source-label rows for backend slot IDs.
 - No generic "Winner choices" section headers for non-group knockout menus.
 - Group headers remain allowed only for real group-backed sections.
+
+
+Group-source chrome rule:
+- Group seed labels such as 1A, 2B, or 3C are backend/source identifiers, not player-facing chrome.
+- Enum-style source roles such as GROUP-RUNNER-UP must be hidden from player UI.
+- Group-backed pick menus may keep clean group names and team choices.

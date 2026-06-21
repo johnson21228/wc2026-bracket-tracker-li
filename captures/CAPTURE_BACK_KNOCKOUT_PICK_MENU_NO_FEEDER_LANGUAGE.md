@@ -31,3 +31,9 @@ Final player-facing chrome refinement:
 - Non-group knockout menus must not render source-label rows when the source label is a backend slot ID such as L-R16-01.
 - Non-group knockout menus must not render generic section headers such as "Winner choices".
 - The player-facing menu chrome is: clean title, candidate team choices, close control.
+
+
+Group-source player-facing chrome refinement:
+- Group seed labels such as 1A, 2B, or 3C are compact backend/source identifiers and must not render as pick-menu subtitle chrome.
+- Enum-style source roles such as GROUP-RUNNER-UP are datamodel terms and must not render in player UI.
+- Group-backed menus may show a clean group button, such as "Group B", and candidate teams.

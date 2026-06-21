@@ -58,6 +58,13 @@ if "groupLabel.textContent = group.label" in view:
 if "if (group.panelAvailable && group.groupId)" not in view:
     errors.append("group header rendering is not limited to real group-backed sections")
 
+
+if "!/^[123][A-L]$/i.test(sourceLabel)" not in view:
+    errors.append("short seed/source labels such as 2B are not hidden from pick menu chrome")
+
+if "/^[A-Z0-9]+(?:-[A-Z0-9]+)+$/.test(value)" not in view:
+    errors.append("enum-style source roles such as GROUP-RUNNER-UP are not hidden from player UI")
+
 if errors:
     print("Knockout pick menu no-feeder-language verification failed:")
     for error in errors:
