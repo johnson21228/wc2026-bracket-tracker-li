@@ -22,3 +22,10 @@ Run:
 - `python3 tools/verify_wc2026_banner_rules_panel_ui.py`
 - `python3 tools/verify_wc2026_rules_panel_no_developer_note.py`
 - `make verify`
+
+## Refinement
+
+Use **Group Stage Finale** as the player-facing name for Game 1 lock timing.
+
+Canonical spelling: `Finale`.
+

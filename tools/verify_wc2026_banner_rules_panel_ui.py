@@ -25,6 +25,7 @@ def main() -> int:
         "one continuous two-game World Cup pool",
         "Game 1 Rules:",
         "Before the final round of group-stage matches begins",
+        "Group Stage Finale",
         "Development preview",
         "Dev Game View selector is present while the games are still being developed",
         "simulated Game 2",

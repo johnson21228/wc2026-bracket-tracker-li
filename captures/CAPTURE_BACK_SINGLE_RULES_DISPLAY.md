@@ -23,3 +23,12 @@ The Rules panel should not switch based on the Dev Game View selector. It should
 ## Verification
 
 `tools/verify_wc2026_banner_rules_panel_ui.py` now verifies the single Rules display and rejects the old selector-driven rules sections.
+
+## Group Stage Finale lock language
+
+Game 1 lock timing should be described player-facing as the start of the **Group Stage Finale**.
+
+Canonical spelling: `Finale`.
+
+The rule copy should still define the exact lock condition: all Game 1 picks must be submitted before kickoff of the earliest third-round group-stage match.
+
