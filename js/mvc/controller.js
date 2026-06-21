@@ -40,14 +40,32 @@ export function createBracketController({ model, view }) {
     return "";
   }
 
+  function pickMenuNotReadyReason(slot) {
+    const activeGame = activeGameValue();
+    if (activeGame === "game-2" && slot.round !== "R32" && !slot.pickable) {
+      return "This Game 2 pick menu is not ready yet.";
+    }
+    return "";
+  }
+
+  function reportBlockedPick(slot) {
+    const activeGameReason = disabledReasonForActiveGame(slot);
+    const notReadyReason = pickMenuNotReadyReason(slot);
+    view.report(activeGameReason || notReadyReason || `${slot.slotId} is not ready for picking.`);
+  }
+
   function onSlotClick(slotId) {
     const slot = slotModel(slotId);
-    if (!slot?.pickable) {
-      view.report(`${slotId} is waiting for its feeder picks.`);
+    if (!slot) {
+      view.report(`${slotId} is not available.`);
       return;
     }
     if (!slotAllowedForActiveGame(slot)) {
-      view.report(disabledReasonForActiveGame(slot) || `${slotId} is disabled for the selected game.`);
+      reportBlockedPick(slot);
+      return;
+    }
+    if (!slot.pickable) {
+      view.report(pickMenuNotReadyReason(slot) || `${slotId} is waiting for its feeder picks.`);
       return;
     }
     activeSlotId = slotId;
@@ -61,6 +79,14 @@ export function createBracketController({ model, view }) {
   }
 
   function onTeamPick(slotId, teamId) {
+    const slot = slotModel(slotId);
+    if (!slot || !slotAllowedForActiveGame(slot) || pickMenuNotReadyReason(slot)) {
+      if (slot) reportBlockedPick(slot);
+      else view.report(`${slotId} is not available.`);
+      redraw();
+      return;
+    }
+
     const result = model.setPick(slotId, teamId);
     if (!result.ok) {
       view.report(result.reason || "Pick was not accepted.");
