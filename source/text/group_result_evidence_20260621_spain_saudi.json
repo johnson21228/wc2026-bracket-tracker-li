@@ -1,0 +1,21 @@
+{
+  "capturedAt": "2026-06-21",
+  "verificationMode": "user-provided-final-score-screenshot-and-highlight-url",
+  "match": {
+    "matchId": "66456998",
+    "posterMatchId": "GS-2026-06-21-H4",
+    "groupId": "H",
+    "matchDate": "2026-06-21",
+    "homeTeam": "Spain",
+    "awayTeam": "Saudi Arabia",
+    "homeScore": 4,
+    "awayScore": 0,
+    "summary": "Spain 4-0 Saudi Arabia",
+    "highlightUrl": "https://youtu.be/w453UjgtQw4"
+  },
+  "notes": [
+    "User provided ESPN final-score screenshot showing FT Spain 4-0 Saudi Arabia.",
+    "User provided YouTube highlight URL.",
+    "Runtime reads checked-in JSON only and does not scrape external sources."
+  ]
+}

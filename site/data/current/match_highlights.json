@@ -13,7 +13,8 @@
       "Card 232 patched user-provided highlight interview links for completed group matches through June 19.",
       "Known correction: wff2tvitS-s belongs to Scotland 0-1 Morocco, not Canada 1-1 Bosnia and Herzegovina.",
       "Known correction: HrbIda-C9SE belongs to Turkey 0-1 Paraguay, not Mexico 2-0 South Africa.",
-      "Card 235 patched user-provided June 20/21 Group E/F final scores and YouTube highlight links."
+      "Card 235 patched user-provided June 20/21 Group E/F final scores and YouTube highlight links.",
+      "Card 245 patched user-provided Spain 4-0 Saudi Arabia final score and YouTube highlight link."
     ]
   },
   "highlights": {
@@ -303,6 +304,14 @@
       "url": "https://youtu.be/ATmlGGfCyBA",
       "verifiedAt": "2026-06-21",
       "matchEvidence": "Tunisia 0-4 Japan",
+      "verificationMode": "user-provided-url"
+    },
+    "66456998": {
+      "provider": "YouTube",
+      "title": "Spain 4-0 Saudi Arabia highlights",
+      "url": "https://youtu.be/w453UjgtQw4",
+      "verifiedAt": "2026-06-21",
+      "matchEvidence": "Spain 4-0 Saudi Arabia",
       "verificationMode": "user-provided-url"
     }
   }
