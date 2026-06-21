@@ -19,3 +19,9 @@ Player-facing language should describe the action instead:
 ## Scope
 
 This is a UI-language cleanup only. It does not change bracket dependency logic, pick storage, source slot IDs, or canonical pick IDs.
+
+
+Player-facing ID refinement:
+- Durable pick IDs such as L-R16-01, R32-01, CHAMPION, and KNOCKOUT-* are backend/datamodel identifiers only.
+- Pick menus must not render these IDs as visible titles, section labels, source roles, or accessibility labels.
+- Knockout winner menus should present the candidate choices directly under a player-facing title such as "Make your pick".

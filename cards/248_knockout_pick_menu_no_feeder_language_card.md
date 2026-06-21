@@ -17,3 +17,9 @@ Remove internal feeder terminology from player-facing knockout winner pick menus
 ## Verification
 
 `tools/verify_wc2026_knockout_pick_menu_no_feeder_language.py`
+
+
+Player-facing ID rule:
+- Player UI must not expose durable pick IDs, game IDs, source IDs, or slot IDs.
+- These identifiers remain valid for model/controller/storage logic only.
+- Pick menu chrome should use player-facing language and candidate team choices.

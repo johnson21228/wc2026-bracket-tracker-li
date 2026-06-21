@@ -263,8 +263,8 @@ export function createBracketView(root) {
       button.setAttribute(
         "aria-label",
         displayTeam
-          ? `${slot.slotId}: ${fullTeamLabel(displayTeam)}`
-          : `${slot.slotId}: ${slot.pickable && enabledForActiveGame ? "choose team" : activeGameDisabledReason || "waiting for earlier picks"}`
+          ? `${playerFacingSlotLabel(slot)}: ${fullTeamLabel(displayTeam)}`
+          : `${playerFacingSlotLabel(slot)}: ${slot.pickable && enabledForActiveGame ? "choose team" : activeGameDisabledReason || "waiting for earlier picks"}`
       );
       applyBounds(button, slot.boundsPx);
 
@@ -404,6 +404,39 @@ export function createBracketView(root) {
     return !/\bFEEDER\b|\bfeeder\b|^KNOCKOUT-/i.test(value);
   }
 
+
+  function isInternalPickSlotId(text) {
+    const value = String(text || "").trim();
+    return /^(?:[LR]-)?(?:R32|R16|QF|SF|FINAL|CHAMPION|THIRD-PLACE|CENTER-FINAL-FOUR)(?:-\d+)?$/i.test(value)
+      || /^KNOCKOUT-/i.test(value);
+  }
+
+  function playerFacingSlotLabel(slot) {
+    const label = String(slot?.label || slot?.displayLabel || "").trim();
+    if (label && !isInternalPickSlotId(label) && isPlayerFacingPickMenuSourceLabel(label)) return label;
+
+    const round = String(slot?.round || "").toUpperCase();
+    if (round === "R32") return "Round of 32 pick";
+    if (round === "R16") return "Round of 16 pick";
+    if (round === "QF") return "Quarterfinal pick";
+    if (round === "SF") return "Semifinal pick";
+    if (round === "FINAL") return "Final pick";
+
+    const slotId = String(slot?.slotId || "").toUpperCase();
+    if (slotId === "CHAMPION") return "Champion pick";
+    if (slotId === "THIRD-PLACE-WINNER") return "Third-place pick";
+
+    return "Bracket pick";
+  }
+
+  function playerFacingPickMenuTitle(menu, slot) {
+    const title = String(menu?.title || "").trim();
+    if (title && !isInternalPickSlotId(title) && isPlayerFacingPickMenuSourceLabel(title)) {
+      return title;
+    }
+    return "Make your pick";
+  }
+
   function visibleBoardViewport() {
     const viewport = boardScroll || boardPlane.parentElement || boardPlane;
     return {
@@ -531,7 +564,7 @@ export function createBracketView(root) {
 
     const title = document.createElement("h2");
     title.className = "pick-menu-title";
-    title.textContent = menuModel.title;
+    title.textContent = playerFacingPickMenuTitle(menu, slot);
 
     const source = document.createElement("div");
     source.className = "pick-menu-source-label";
