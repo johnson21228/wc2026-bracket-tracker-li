@@ -15,7 +15,7 @@ const DATA_URLS = Object.freeze({
   currentMatches: "data/current/group_matches.json",
   currentHighlights: "data/current/match_highlights.json",
   knockoutMatches: "data/current/knockout_matches.json",
-  game2SeededR32Assignments: "data/game2_seeded_r32_assignments.json",
+  game2FifaFinalR32Assignments: "data/game2_fifa_final_r32_assignments.json",
 });
 
 async function readJson(url) {
@@ -50,10 +50,9 @@ function groupTeamsFromPayload(groupsPayload, teamById) {
   return result;
 }
 
-function normalizeSeededR32AssignmentPayload(seedPayload, teamById) {
-  if (seedPayload?.meta?.source !== "development_seed") return new Map();
-  if (seedPayload?.meta?.truthLevel !== "test_seed_not_fifa_final") return new Map();
-  const assignments = Array.isArray(seedPayload.assignments) ? seedPayload.assignments : [];
+function normalizeGame2FifaFinalR32AssignmentsPayload(payload, teamById) {
+  if (payload?.meta?.source !== "fifa_final_truth_target") return new Map();
+  const assignments = Array.isArray(payload.assignments) ? payload.assignments : [];
   const result = new Map();
   for (const assignment of assignments) {
     const slotId = String(assignment.slotId || "").trim();
@@ -62,7 +61,7 @@ function normalizeSeededR32AssignmentPayload(seedPayload, teamById) {
     const team = normalizeTeamRecord(teamById.get(teamId) || {
       id: teamId,
       abbr: assignment.abbr || teamId,
-      name: assignment.label || teamId,
+      name: assignment.label || assignment.name || teamId,
       flag: assignment.flag || "",
     });
     if (team) result.set(slotId, team);
@@ -178,7 +177,7 @@ export async function createBracketModel() {
     currentMatchesPayload,
     currentHighlightsPayload,
     knockoutMatchesPayload,
-    game2SeededR32AssignmentsPayload,
+    game2FifaFinalR32AssignmentsPayload,
   ] = await Promise.all([
     readJson(DATA_URLS.geometry),
     readJson(DATA_URLS.r32Bridge),
@@ -189,7 +188,7 @@ export async function createBracketModel() {
     readJson(DATA_URLS.currentMatches),
     readJson(DATA_URLS.currentHighlights),
     readJson(DATA_URLS.knockoutMatches),
-    readJson(DATA_URLS.game2SeededR32Assignments),
+    readJson(DATA_URLS.game2FifaFinalR32Assignments),
   ]);
 
   const nativeSize = geometry.nativeSizePx || BOARD_NATIVE_SIZE;
@@ -221,7 +220,7 @@ export async function createBracketModel() {
   }
 
   const dependencyMap = buildDependencyMap(slotsById, r32Bridge.slots || []);
-  const game2SeededR32AssignmentsBySlotId = normalizeSeededR32AssignmentPayload(game2SeededR32AssignmentsPayload, teamById);
+  const game2FifaFinalR32AssignmentsBySlotId = normalizeGame2FifaFinalR32AssignmentsPayload(game2FifaFinalR32AssignmentsPayload, teamById);
   let picks = pickFromStorage();
 
   function getTeam(teamId) {
@@ -232,8 +231,8 @@ export async function createBracketModel() {
     return getTeam(picks[slotId]);
   }
 
-  function seededR32Team(slotId) {
-    return game2SeededR32AssignmentsBySlotId.get(slotId) || null;
+  function fifaFinalR32Team(slotId) {
+    return game2FifaFinalR32AssignmentsBySlotId.get(slotId) || null;
   }
 
   function game1R32FallbackTeam(slotId) {
@@ -243,8 +242,8 @@ export async function createBracketModel() {
   }
 
   function resolvedGame2R32Team(slotId) {
-    const assigned = seededR32Team(slotId);
-    if (assigned) return { ...assigned, game2R32Source: "assignment_store" };
+    const fifaFinal = fifaFinalR32Team(slotId);
+    if (fifaFinal) return { ...fifaFinal, game2R32Source: "fifa_final_assignment" };
     const fallback = game1R32FallbackTeam(slotId);
     if (fallback) return { ...fallback, game2R32Source: "game1_r32_fallback" };
     return null;
