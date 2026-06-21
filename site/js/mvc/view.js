@@ -264,7 +264,7 @@ export function createBracketView(root) {
         "aria-label",
         displayTeam
           ? `${slot.slotId}: ${fullTeamLabel(displayTeam)}`
-          : `${slot.slotId}: ${slot.pickable && enabledForActiveGame ? "choose team" : activeGameDisabledReason || "waiting for feeder picks"}`
+          : `${slot.slotId}: ${slot.pickable && enabledForActiveGame ? "choose team" : activeGameDisabledReason || "waiting for earlier picks"}`
       );
       applyBounds(button, slot.boundsPx);
 
@@ -396,6 +396,12 @@ export function createBracketView(root) {
 
     panel.append(list);
     layer.append(panel);
+  }
+
+  function isPlayerFacingPickMenuSourceLabel(text) {
+    const value = String(text || "").trim();
+    if (!value) return false;
+    return !/\bFEEDER\b|\bfeeder\b|^KNOCKOUT-/i.test(value);
   }
 
   function visibleBoardViewport() {
@@ -589,10 +595,12 @@ export function createBracketView(root) {
         groupHeader.append(groupLabel);
       }
 
-      const sourceRole = document.createElement("span");
-      sourceRole.className = "pick-menu-group-role";
-      sourceRole.textContent = group.sourceRole || "source";
-      groupHeader.append(sourceRole);
+      if (isPlayerFacingPickMenuSourceLabel(group.sourceRole)) {
+        const sourceRole = document.createElement("span");
+        sourceRole.className = "pick-menu-group-role";
+        sourceRole.textContent = group.sourceRole;
+        groupHeader.append(sourceRole);
+      }
       section.append(groupHeader);
 
       const list = document.createElement("div");
