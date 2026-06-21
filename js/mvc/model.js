@@ -628,7 +628,7 @@ export async function createBracketModel() {
     }
     if (slot.round !== "R32") {
       const feeders = dependencyMap.get(slotId) || [];
-      return feeders.length ? `Winner from ${feeders.join(" / ")}` : "Feeder path winner";
+      return "Projected winner choices";
     }
     return logic?.fifaLabel ? `${logic.fifaLabel} choices` : `${slotId} choices`;
   }
@@ -664,9 +664,9 @@ export async function createBracketModel() {
 
     return [{
       groupId: null,
-      label: "Feeder choices",
+      label: "Winner choices",
       panelAvailable: false,
-      sourceRole: "knockout-feeder",
+      sourceRole: "projected winners",
       choices: choices.map((team) => choiceWithState(team, "projected")),
     }];
   }
