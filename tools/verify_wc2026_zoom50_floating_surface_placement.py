@@ -36,6 +36,8 @@ def main() -> int:
         ("getBoundingClientRect()", "rendered screen coordinate measurement"),
         ("DEFAULT_BOTTOM_CONTROL_SELECTORS", "bottom control selector list"),
         ("floatingSurfaceSafeBottomExcludesControls", "bottom control exclusion marker"),
+("floatingSurfaceSafeRectUsesBoardRect", "board-rect safe area marker"),
+("intersectRects(intersectRects(viewportRect, windowRect), boardRect)", "safe rect intersects viewport, window, and rendered board"),
         ("zoom-50-safe", "50 percent zoom safe marker"),
     ]:
         require(helper, token, label, errors)

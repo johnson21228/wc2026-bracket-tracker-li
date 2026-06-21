@@ -97,7 +97,8 @@ function computeVisibleSafeRect({ boardPlane, viewportEl, margin, bottomControlS
     right: window.innerWidth || document.documentElement.clientWidth || viewportRect.right,
     bottom: window.innerHeight || document.documentElement.clientHeight || viewportRect.bottom,
   };
-  let safeClient = intersectRects(viewportRect, windowRect);
+  const boardRect = boardPlane.getBoundingClientRect();
+  let safeClient = intersectRects(intersectRects(viewportRect, windowRect), boardRect);
 
   const bottomControlTop = findBottomControlRect({
     boardPlane,
@@ -110,10 +111,9 @@ function computeVisibleSafeRect({ boardPlane, viewportEl, margin, bottomControlS
   }
 
   if (rectWidth(safeClient) < margin * 2 || rectHeight(safeClient) < margin * 2) {
-    safeClient = viewportRect;
+    safeClient = intersectRects(viewportRect, boardRect);
   }
 
-  const boardRect = boardPlane.getBoundingClientRect();
   const scale = boardScaleFromRenderedRect(boardPlane);
   const safeBoard = clientRectToBoardRect({ boardRect, scale, rect: safeClient });
   return {
@@ -199,6 +199,7 @@ function positionFloatingSurfaceNearAnchor({
   surfaceEl.style.top = `${Math.round(top)}px`;
   surfaceEl.dataset.floatingSurfacePlacementSide = selected.placement;
   surfaceEl.dataset.floatingSurfaceSafeBottomExcludesControls = "true";
+  surfaceEl.dataset.floatingSurfaceSafeRectUsesBoardRect = "true";
   surfaceEl.dataset.floatingSurfaceBoardScale = String(Number.isFinite(scale) ? Math.round(scale * 100) / 100 : 1);
 
   return { left, top, width: measuredWidth, height: measuredHeight, placement: selected.placement, safeRect };
