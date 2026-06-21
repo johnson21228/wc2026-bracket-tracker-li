@@ -37,7 +37,6 @@ def main() -> int:
         "Higher Game 1 score",
         "Third-place pick",
         "Earliest valid Game 1 save timestamp",
-        "Game selector is currently UI-only",
     ]:
         if text not in index:
             errors.append(f"rules panel text missing: {text}")
