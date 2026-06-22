@@ -1292,7 +1292,7 @@
         "L-SF-01",
         "L-SF-02"
       ],
-      "geometrySlotId": "CENTER-FINAL-FOUR",
+      "geometrySlotId": "FINAL-LEFT",
       "source": "canonical-bracket-document-runtime"
     },
     {
@@ -1305,7 +1305,7 @@
         "R-SF-01",
         "R-SF-02"
       ],
-      "geometrySlotId": "CENTER-FINAL-FOUR",
+      "geometrySlotId": "FINAL-RIGHT",
       "source": "canonical-bracket-document-runtime"
     },
     {
@@ -1318,7 +1318,7 @@
         "FINAL-LEFT",
         "FINAL-RIGHT"
       ],
-      "geometrySlotId": "CENTER-FINAL-FOUR",
+      "geometrySlotId": "CHAMPION",
       "source": "canonical-bracket-document-runtime"
     },
     {
@@ -1337,5 +1337,5 @@
       "source": "canonical-bracket-document-runtime"
     }
   ],
-  "legacyGeometrySlotNote": "slots remains the board geometry manifest. canonicalPickSlots is the durable runtime/Supabase pick document slot list. CENTER-FINAL-FOUR remains geometry/legacy UI surface."
+  "legacyGeometrySlotNote": "canonicalPickSlots is the durable runtime/Supabase pick document slot list. FINAL-LEFT, CHAMPION, and FINAL-RIGHT now point to explicit source-derived center-stack geometry. CENTER-FINAL-FOUR is legacy visual-only terminology, not runtime pick-slot geometry."
 }

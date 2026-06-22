@@ -1,4 +1,4 @@
-import { createBracketModel } from "./mvc/model.js";
+import { createBracketModel } from "./mvc/model.js?v=final-four-scope-fix-1300269";
 import { createBracketView } from "./mvc/view.js";
 import { createBracketController } from "./mvc/controller.js";
 import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
