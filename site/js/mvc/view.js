@@ -37,6 +37,7 @@ export function createBracketView(root) {
   const BOARD_MIN_SCALE = 0.5;
   const BOARD_MAX_SCALE = 1.25;
   const BOARD_WHEEL_ZOOM_STEP = 0.08;
+  const BOARD_DRAG_PAN_THRESHOLD_PX = 5;
   let teardownFloatingSurfaceDismissal = null;
 
   function activeGameValue() {
@@ -141,6 +142,106 @@ export function createBracketView(root) {
     renderGroupPanel(null);
   }
 
+
+
+  function isBoardPanInteractiveTarget(target) {
+    const element = target?.closest?.(`
+      button,
+      a,
+      select,
+      input,
+      textarea,
+      [role="button"],
+      [data-action],
+      [data-board-zoom],
+      [data-rules-panel],
+      [data-rules-panel-open],
+      [data-game-selector],
+      [data-game-selector-button],
+      [data-dev-game-selector],
+      [data-pick-button],
+      [data-pick-slot-button],
+      [data-r32-pick-button],
+      .r32-pick-slot-button,
+      .group-rail-button,
+      .group-button,
+      .pick-menu-popover,
+      .r32-pick-menu-popover,
+      .group-panel-popover,
+      .rules-panel,
+      .banner-game-selector,
+      .board-zoom-controls,
+      [data-menu-layer],
+      [data-pick-menu-layer],
+      [data-group-panel-layer]
+    `);
+    return Boolean(element);
+  }
+
+  function installMouseBoardDragPan() {
+    if (!boardScroll || boardScroll.dataset.mouseDragPanInstalled === "true") return;
+    boardScroll.dataset.mouseDragPanInstalled = "true";
+
+    let dragState = null;
+
+    function clearDragState() {
+      if (!dragState) return;
+      boardScroll.classList.remove("is-drag-panning");
+      boardScroll.classList.remove("is-drag-pan-armed");
+      dragState = null;
+    }
+
+    boardScroll.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "touch") return;
+      if (event.pointerType && event.pointerType !== "mouse") return;
+      if (!event.isPrimary) return;
+      if (event.button !== 0) return;
+      if (isBoardPanInteractiveTarget(event.target)) return;
+
+      dragState = {
+        pointerId: event.pointerId,
+        startClientX: event.clientX,
+        startClientY: event.clientY,
+        startScrollLeft: boardScroll.scrollLeft || 0,
+        startScrollTop: boardScroll.scrollTop || 0,
+        dragging: false,
+      };
+      boardScroll.classList.add("is-drag-pan-armed");
+      boardScroll.setPointerCapture?.(event.pointerId);
+    });
+
+    boardScroll.addEventListener("pointermove", (event) => {
+      if (!dragState || event.pointerId !== dragState.pointerId) return;
+      if (event.pointerType === "touch") return;
+
+      const deltaX = event.clientX - dragState.startClientX;
+      const deltaY = event.clientY - dragState.startClientY;
+      const movedEnough = Math.hypot(deltaX, deltaY) >= BOARD_DRAG_PAN_THRESHOLD_PX;
+      if (!dragState.dragging && !movedEnough) return;
+
+      dragState.dragging = true;
+      boardScroll.classList.add("is-drag-panning");
+      event.preventDefault();
+      boardScroll.scrollLeft = dragState.startScrollLeft - deltaX;
+      boardScroll.scrollTop = dragState.startScrollTop - deltaY;
+    });
+
+    boardScroll.addEventListener("pointerup", (event) => {
+      if (!dragState || event.pointerId !== dragState.pointerId) return;
+      clearDragState();
+    });
+
+    boardScroll.addEventListener("pointercancel", (event) => {
+      if (!dragState || event.pointerId !== dragState.pointerId) return;
+      clearDragState();
+    });
+
+    boardScroll.addEventListener("lostpointercapture", (event) => {
+      if (!dragState || event.pointerId !== dragState.pointerId) return;
+      clearDragState();
+    });
+  }
+
   function setHandlers(nextHandlers) {
     handlers = nextHandlers;
     if (!teardownFloatingSurfaceDismissal) {
@@ -164,6 +265,7 @@ export function createBracketView(root) {
       applyBoardRenderScale(boardZoomSelect.value);
       handlers.onCloseMenu?.();
     });
+    installMouseBoardDragPan();
     boardScroll?.addEventListener("wheel", (event) => {
       const wantsBoardZoom = event.ctrlKey || event.metaKey;
       if (!wantsBoardZoom) return;

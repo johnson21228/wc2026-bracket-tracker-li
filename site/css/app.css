@@ -312,3 +312,19 @@ h1 { margin: 0; font-size: clamp(28px, 4vw, 56px); }
 .pick-slot-button.is-disabled-by-active-game .pick-slot-label {
   opacity: 0.88;
 }
+
+
+/* Card 251: mouse-only map-style board drag-pan affordance. */
+.board-scroll {
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+}
+
+.board-scroll.is-drag-panning {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.board-scroll.is-drag-panning * {
+  user-select: none;
+}
