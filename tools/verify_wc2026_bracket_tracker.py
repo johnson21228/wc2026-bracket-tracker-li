@@ -144,7 +144,7 @@ def main() -> int:
         '<main id="wc2026-app"',
         '<script type="module" src="js/app.js',
         'href="assets/board/pub_background_game1.jpeg"',
-        'href="assets/board/gameboard.svg"',
+        'href="assets/playfield/uniform_pick_card_gameboard.svg"',
         'href="css/app.css',
         'href="css/board.css',
         'href="css/dev.css',
