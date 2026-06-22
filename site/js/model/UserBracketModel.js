@@ -1,5 +1,43 @@
 import { normalizePickValue, unpickedPickValue, validatePickValue } from "./PickValue.js";
 
+const CURRENT_BRACKET_DOCUMENT_SCHEMA_VERSION = 2;
+const DEFAULT_BRACKET_LIFECYCLE_STATE = "GROUP_STAGE_OPEN";
+
+function normalizePhaseLocks(phaseLocks = {}) {
+  return {
+    r32LockedAt: phaseLocks?.r32LockedAt || null,
+  };
+}
+
+function r32LockedAtForBracket(bracket) {
+  return normalizePhaseLocks(bracket?.phaseLocks).r32LockedAt;
+}
+
+function isR32BracketSlot(slotOrRecord) {
+  const round = String(slotOrRecord?.round || "").toUpperCase();
+  return round === "R32" || round === "R32_ENTRANT";
+}
+
+function pickValuesEquivalent(left, right) {
+  return JSON.stringify(normalizePickValue(left)) === JSON.stringify(normalizePickValue(right));
+}
+
+function canEditBracketSlot(slotOrRecord, bracket) {
+  const status = String(bracket?.status || "draft").toLowerCase();
+  if (status === "locked") return false;
+  if (isR32BracketSlot(slotOrRecord)) return !r32LockedAtForBracket(bracket);
+  return true;
+}
+
+function canMutateBracketPick({ bracket, sitePickId, pickValue }) {
+  const record = bracket?.picksBySlot?.[sitePickId] || null;
+  const slot = record || { slotId: sitePickId, round: roundForLegacySlot(sitePickId, null) };
+  if (canEditBracketSlot(slot, bracket)) return true;
+  const currentPick = pickValueFromSlotRecord(record);
+  return pickValuesEquivalent(currentPick, pickValue);
+}
+
+
 function slotsFromModel(bracketSlots) {
   if (Array.isArray(bracketSlots)) return bracketSlots;
   return bracketSlots?.slots || [];
@@ -80,12 +118,14 @@ function createEmptyBracketDocument({
   );
 
   return {
-    schemaVersion: 1,
+    schemaVersion: CURRENT_BRACKET_DOCUMENT_SCHEMA_VERSION,
     id: bracketId || `${userId || "user"}-${tournamentId}`,
     userId,
     tournamentId,
     gameId,
     status: "draft",
+    lifecycleState: DEFAULT_BRACKET_LIFECYCLE_STATE,
+    phaseLocks: normalizePhaseLocks(),
     expectedPickCount: canonicalSlots.length,
     createdAt: null,
     updatedAt: null,
@@ -127,12 +167,14 @@ function normalizeBracketDocument({ bracket, bracketSlots, teamsById, userId = "
   const documentTournamentId = String(bracket?.tournamentId || "wc2026");
 
   return {
-    schemaVersion: Number(bracket?.schemaVersion || 1),
+    schemaVersion: Math.max(Number(bracket?.schemaVersion || 1), CURRENT_BRACKET_DOCUMENT_SCHEMA_VERSION),
     id: String(bracket?.id || `${documentUserId || "user"}-${documentTournamentId}`),
     userId: documentUserId,
     tournamentId: documentTournamentId,
     gameId: String(bracket?.gameId || gameId),
     status: String(bracket?.status || "draft"),
+    lifecycleState: String(bracket?.lifecycleState || DEFAULT_BRACKET_LIFECYCLE_STATE),
+    phaseLocks: normalizePhaseLocks(bracket?.phaseLocks),
     expectedPickCount: canonicalSlots.length,
     createdAt: bracket?.createdAt || null,
     updatedAt: bracket?.updatedAt || null,
@@ -148,6 +190,9 @@ function normalizeUserBracket(args) {
 
 function setBracketPick({ bracket, sitePickId, pickValue }) {
   const normalizedPick = normalizePickValue(pickValue);
+  if (!canMutateBracketPick({ bracket, sitePickId, pickValue: normalizedPick })) {
+    throw new Error("R32 picks are locked and cannot be changed after R32 lock-in.");
+  }
   const existingRecord = bracket?.picksBySlot?.[sitePickId] || {
     slotId: sitePickId,
     kind: sitePickId === "CHAMPION" || sitePickId === "THIRD-PLACE-WINNER" ? "winner" : "winner",
@@ -166,7 +211,9 @@ function setBracketPick({ bracket, sitePickId, pickValue }) {
 
   return {
     ...bracket,
-    schemaVersion: Number(bracket?.schemaVersion || 1),
+    schemaVersion: Math.max(Number(bracket?.schemaVersion || 1), CURRENT_BRACKET_DOCUMENT_SCHEMA_VERSION),
+    lifecycleState: bracket?.lifecycleState || DEFAULT_BRACKET_LIFECYCLE_STATE,
+    phaseLocks: normalizePhaseLocks(bracket?.phaseLocks),
     updatedAt: new Date().toISOString(),
     picksBySlot,
     picks: legacyPicksFromPicksBySlot(picksBySlot),
@@ -174,6 +221,10 @@ function setBracketPick({ bracket, sitePickId, pickValue }) {
 }
 
 export {
+  CURRENT_BRACKET_DOCUMENT_SCHEMA_VERSION,
+  DEFAULT_BRACKET_LIFECYCLE_STATE,
+  canEditBracketSlot,
+  canMutateBracketPick,
   canonicalPickSlotsFromModel,
   createEmptyBracketDocument,
   createEmptyUserBracket,

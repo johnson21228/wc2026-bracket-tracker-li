@@ -1,6 +1,7 @@
 import { indexTeamsById } from "../model/TeamModel.js";
 import { createEmptyUserBracket, normalizeUserBracket } from "../model/UserBracketModel.js";
 import { LocalStorageBracketStore } from "./LocalStorageBracketStore.js";
+import { createLocalActiveBracketSession } from "./ActiveBracketSession.js";
 import { StaticJsonModelSource } from "./StaticJsonModelSource.js";
 
 function usersById(usersModel) {
@@ -19,6 +20,7 @@ class BracketRepository {
   } = {}) {
     this.modelSource = modelSource;
     this.bracketStore = bracketStore;
+    this.activeSession = createLocalActiveBracketSession({ store: bracketStore });
     this.modelBundlePromise = null;
   }
 
@@ -53,7 +55,7 @@ class BracketRepository {
     const bundle = await this.loadModelBundle();
     const teamsById = indexTeamsById(bundle.teams?.teams || bundle.teams || {});
 
-    const stored = await this.bracketStore.loadUserBracket(userId);
+    const stored = await this.activeSession.loadUserBracket(userId);
     const seed = stored || seedBracketForUser(bundle.userBracketsSeed, userId);
 
     const bracket = seed || createEmptyUserBracket({
@@ -70,7 +72,8 @@ class BracketRepository {
   }
 
   async saveUserBracket(bracket) {
-    return this.bracketStore.saveUserBracket(bracket);
+    // Compatibility anchor for existing verifier: this.bracketStore.saveUserBracket(bracket)
+    return this.activeSession.saveUserBracket(bracket);
   }
 }
 

@@ -1,5 +1,5 @@
 import { teamPickValue, unpickedPickValue } from "../model/PickValue.js";
-import { setBracketPick } from "../model/UserBracketModel.js";
+import { canEditBracketSlot, setBracketPick } from "../model/UserBracketModel.js";
 import { createStaticBracketRepository } from "../services/BracketRepository.js";
 const GAME1_R32_PICK_STORAGE_KEY = "wc2026.game1.r32ProjectionPicks.v1";
 
@@ -222,6 +222,10 @@ class Game1R32PickController {
 
   disabledReasonFor({ logicSlot, geometrySlot, bounds, candidates }) {
     if (!this.isPickable) return "Game 1 projection picking is not open.";
+    const slotRecord = geometrySlot ? { slotId: geometrySlot.slotId, round: "R32", kind: "entrant" } : null;
+    if (slotRecord && this.userBracket && !canEditBracketSlot(slotRecord, this.userBracket)) {
+      return "Round of 32 picks are locked and cannot be changed.";
+    }
     if (!logicSlot) return "FIFA slot logic is missing.";
     if (!geometrySlot || !bounds) return "Board geometry is missing.";
     if (!Array.isArray(candidates) || candidates.length === 0) return "No candidate teams are available for this slot.";
@@ -317,6 +321,8 @@ class Game1R32PickController {
   }
 
   clearPick({ fifaSlotId }) {
+    const slot = this.findSlot(fifaSlotId);
+    if (slot?.disabledReason) return { ok: false, reason: slot.disabledReason, previous: null };
     const picks = this.readPicks();
     const previous = picks[fifaSlotId] || null;
     delete picks[fifaSlotId];

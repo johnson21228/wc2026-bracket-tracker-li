@@ -115,3 +115,5 @@ Invariant: `pickId is truth; visual slot is projection; UI geometry may change; 
 - `tools/verify_wc2026_pages_owned_board_zoom_out_scale.py` — Verifies the zoom-out LI capture is installed.
 
 Invariant: all board actors speak native gameboard coordinates; only the Pages View shell converts native coordinates to rendered screen coordinates.
+
+- `li/world_cup/active_bracket_store_boundary_rule.md` — keeps local and future Supabase bracket stores separate while sharing BracketDocument/R32 lock rules.

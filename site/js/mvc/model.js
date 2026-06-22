@@ -1,3 +1,4 @@
+import { canEditBracketSlot } from "../model/UserBracketModel.js";
 const STORAGE_KEY = "wc2026.game1.cleanMvcPicks.v1";
 const PICK_SNAPSHOT_APP_ID = "wc2026.braketeeringPub.picks";
 const ROUND_ORDER = ["R32", "R16", "QF", "SF", "SF_WINNER", "CHAMPION", "FINAL_FOUR"];
@@ -286,6 +287,36 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     },
   ]));
   let picks = pickFromStorage();
+  let activeBracketDocument = {
+    schemaVersion: 2,
+    tournamentId: "wc2026",
+    gameId: "game1",
+    status: "draft",
+    lifecycleState: "GROUP_STAGE_OPEN",
+    phaseLocks: { r32LockedAt: null },
+    picksBySlot: {},
+  };
+
+  function canEditSlotInActiveBracket(slot) {
+    return canEditBracketSlot(slot, activeBracketDocument);
+  }
+
+  function activeBracketSlotBlockedReason(slot) {
+    if (canEditSlotInActiveBracket(slot)) return "";
+    if (slot?.round === "R32") return "Round of 32 picks are locked and cannot be changed.";
+    return "This bracket is locked.";
+  }
+
+  function setR32LockedAtForTesting(r32LockedAt) {
+    activeBracketDocument = {
+      ...activeBracketDocument,
+      phaseLocks: {
+        ...(activeBracketDocument.phaseLocks || {}),
+        r32LockedAt: r32LockedAt || null,
+      },
+    };
+    return activeBracketDocument;
+  }
 
   function getTeam(teamId) {
     return teamById.get(teamId) || null;
@@ -501,6 +532,10 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     }
     if (teamId && !teamById.has(teamId)) {
       return { ok: false, reason: "Unknown team.", cleared: [] };
+    }
+    const blockedReason = activeBracketSlotBlockedReason(slot);
+    if (blockedReason) {
+      return { ok: false, reason: blockedReason, cleared: [] };
     }
     if (teamId) picks[slotId] = teamId;
     else delete picks[slotId];
@@ -736,7 +771,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       anchorBoundsPx: slot.boundsPx,
       groups: getGroupedPickChoices(slotId),
       choices,
-      pickable: choices.length > 0,
+      pickable: choices.length > 0 && canEditSlotInActiveBracket(slot),
     };
   }
 
@@ -818,7 +853,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
         round: slot.round,
         side: slot.side,
         boundsPx: slot.boundsPx,
-        pickable: choices.length > 0,
+        pickable: choices.length > 0 && canEditSlotInActiveBracket(slot),
         choices,
         selectedTeam: team,
         game2ResolvedTeam,
