@@ -25,6 +25,7 @@ for token in [
     'attr(data-winner-flag) " " attr(data-winner-flag);',
     "white-space: pre;",
     "filter:",
+    "box-shadow:",
     "drop-shadow",
     "pointer-events: none",
 ]:

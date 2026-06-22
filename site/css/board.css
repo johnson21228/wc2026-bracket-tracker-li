@@ -1024,9 +1024,13 @@
 /* Champion Pixel Aura: visual-only winner flair for the filled CHAMPION slot.
    Uses four faint flag emoji instances in a soft 2x2 glow grid. */
 .pick-slot-button.is-champion-winner {
+  position: relative;
   overflow: visible;
   isolation: isolate;
   z-index: 6;
+  box-shadow:
+    0 0 10px rgba(255, 232, 150, .44),
+    0 0 24px rgba(255, 184, 56, .26);
 }
 
 .pick-slot-button.is-champion-winner::before,
@@ -1064,12 +1068,12 @@
   place-items: center;
   white-space: pre;
   text-align: center;
-  font-size: calc(var(--wc2026-champion-aura-y, 22px) * 1.55);
+  font-size: calc(var(--wc2026-champion-aura-y, 22px) * 1.75);
   letter-spacing: .06em;
   line-height: .94;
-  opacity: .18;
+  opacity: .30;
   filter:
-    blur(.65px)
+    blur(.45px)
     saturate(1.2)
     drop-shadow(0 0 8px rgba(255, 232, 150, .52))
     drop-shadow(0 0 20px rgba(255, 184, 56, .30));
