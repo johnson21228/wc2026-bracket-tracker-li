@@ -16,7 +16,6 @@ checks = {
         "group-panel-matches",
         "group-panel-match-card",
         "group-panel-status-pill",
-        "group-panel-qualification",
         "renderMatchEvidence",
         "isCompletedMatch",
         "matchResultText",

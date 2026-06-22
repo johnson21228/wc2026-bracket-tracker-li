@@ -19,6 +19,7 @@ verify:
 	python3 tools/verify_wc2026_group_standings_model_data.py
 	python3 tools/verify_wc2026_make_opensite_target.py
 	python3 tools/verify_wc2026_group_panel_runtime_v1.py
+	python3 tools/verify_wc2026_group_panel_no_context_column.py
 	python3 tools/verify_wc2026_group_panel_highlight_link_storage.py
 	python3 tools/verify_wc2026_group_panel_highlight_espn_join.py
 	python3 tools/verify_wc2026_complete_group_matches_from_poster.py
