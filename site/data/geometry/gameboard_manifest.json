@@ -13,7 +13,7 @@
   },
   "boardModel": {
     "id": "uniform_pick_card_gameboard_final_four_center_stack",
-    "description": "Transparent middle-layer material-colored bracket with sampled tan pick-card fills, lightened brown linework, stronger R32 selectable-target fill, uniform pick-card geometry through semifinal, and one special twice-tall Final Four center card.",
+    "description": "Transparent middle-layer material-colored bracket with sampled tan pick-card fills, lightened brown linework, stronger R32 selectable-target fill, uniform pick-card geometry through semifinal, and an explicit final-stack layout with same-size top-center champion cell.",
     "standardPickCardPx": {
       "width": 140,
       "height": 44
@@ -38,29 +38,53 @@
       "cells": [
         {
           "slotId": "FINAL-LEFT",
-          "x": 663,
-          "y": 382,
-          "width": 210,
-          "height": 44
+          "x": 590,
+          "y": 478,
+          "width": 140,
+          "height": 44,
+          "boundsPx": {
+            "x": 590,
+            "y": 478,
+            "width": 140,
+            "height": 44
+          },
+          "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+          "note": "Derived from SVG final-stack layout: SF winners centered between SF feeder slots; champion same-size and top-center."
         },
         {
           "slotId": "CHAMPION",
-          "x": 558,
-          "y": 468,
-          "width": 420,
-          "height": 88
+          "x": 698,
+          "y": 118,
+          "width": 140,
+          "height": 44,
+          "boundsPx": {
+            "x": 698,
+            "y": 118,
+            "width": 140,
+            "height": 44
+          },
+          "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+          "note": "Derived from SVG final-stack layout: SF winners centered between SF feeder slots; champion same-size and top-center."
         },
         {
           "slotId": "FINAL-RIGHT",
-          "x": 663,
-          "y": 596,
-          "width": 210,
-          "height": 44
+          "x": 806,
+          "y": 478,
+          "width": 140,
+          "height": 44,
+          "boundsPx": {
+            "x": 806,
+            "y": 478,
+            "width": 140,
+            "height": 44
+          },
+          "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+          "note": "Derived from SVG final-stack layout: SF winners centered between SF feeder slots; champion same-size and top-center."
         }
       ],
-      "championCellRule": "CHAMPION is twice the width and twice the height of FINAL-LEFT and FINAL-RIGHT."
+      "championCellRule": "CHAMPION uses the same pick-card size as FINAL-LEFT and FINAL-RIGHT and is placed top-center of the SVG bracket."
     },
-    "legacyFinalFourCard": "CENTER-FINAL-FOUR removed as runtime pick-slot geometry; source-truth SVG uses explicit center-stack slots."
+    "legacyFinalFourCard": "CENTER-FINAL-FOUR remains legacy visual-only terminology; runtime pick geometry uses explicit FINAL-LEFT, CHAMPION, and FINAL-RIGHT slots derived from the SVG final-stack layout."
   },
   "presentationPolicy": {
     "background": "transparent",
@@ -1198,9 +1222,9 @@
       "round": "SF_WINNER",
       "side": "center",
       "boundsPx": {
-        "x": 663,
-        "y": 382,
-        "width": 210,
+        "x": 590,
+        "y": 478,
+        "width": 140,
         "height": 44
       },
       "rx": 8,
@@ -1211,17 +1235,17 @@
       "stroke": "#AA9691",
       "roundIndex": 1,
       "specialRole": "upper-semifinal-winner",
-      "note": "Source-derived Final Four center-stack runtime geometry projection."
+      "note": "Derived from SVG final-stack layout: SF winners centered between SF feeder slots; champion same-size and top-center."
     },
     {
       "slotId": "CHAMPION",
       "round": "CHAMPION",
       "side": "center",
       "boundsPx": {
-        "x": 558,
-        "y": 468,
-        "width": 420,
-        "height": 88
+        "x": 698,
+        "y": 118,
+        "width": 140,
+        "height": 44
       },
       "rx": 12,
       "ry": 12,
@@ -1231,16 +1255,16 @@
       "stroke": "#AA9691",
       "roundIndex": 1,
       "specialRole": "final-winner-champion",
-      "note": "Source-derived Final Four center-stack runtime geometry projection."
+      "note": "Derived from SVG final-stack layout: SF winners centered between SF feeder slots; champion same-size and top-center."
     },
     {
       "slotId": "FINAL-RIGHT",
       "round": "SF_WINNER",
       "side": "center",
       "boundsPx": {
-        "x": 663,
-        "y": 596,
-        "width": 210,
+        "x": 806,
+        "y": 478,
+        "width": 140,
         "height": 44
       },
       "rx": 8,
@@ -1251,7 +1275,7 @@
       "stroke": "#AA9691",
       "roundIndex": 2,
       "specialRole": "lower-semifinal-winner",
-      "note": "Source-derived Final Four center-stack runtime geometry projection."
+      "note": "Derived from SVG final-stack layout: SF winners centered between SF feeder slots; champion same-size and top-center."
     }
   ]
 }
