@@ -180,6 +180,12 @@ function buildDependencyMap(slotsById, r32BridgeSlots) {
     }
   }
 
+  const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
+    "FINAL-LEFT": Object.freeze(["L-SF-01", "L-SF-02"]),
+    "FINAL-RIGHT": Object.freeze(["R-SF-01", "R-SF-02"]),
+    "CHAMPION": Object.freeze(["FINAL-LEFT", "FINAL-RIGHT"]),
+  });
+
   for (const [slotId, feederIds] of Object.entries(FINAL_FOUR_PRECEDENT_CONSTRAINTS)) {
     if (slotsById.has(slotId)) {
       dependencies.set(slotId, feederIds.filter((feederId) => slotsById.has(feederId)));
