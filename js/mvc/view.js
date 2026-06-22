@@ -300,7 +300,7 @@ export function createBracketView(root) {
     applyBoardRenderScale(boardScale);
     boardPlane.innerHTML = `
       <img class="board-background-layer" src="assets/board/pub_background_game1.jpeg" alt="" aria-hidden="true">
-      <img class="board-linework-layer" src="assets/board/gameboard.svg" alt="" aria-hidden="true">
+      <img class="board-linework-layer" src="assets/playfield/uniform_pick_card_gameboard.svg" alt="" aria-hidden="true">
       <div class="board-pick-layer" data-pick-layer></div>
       <div class="board-final-four-layer" data-final-four-layer></div>
       <div class="board-menu-layer" data-menu-layer></div>
