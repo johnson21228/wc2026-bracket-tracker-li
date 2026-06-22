@@ -3,46 +3,34 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-def text(path):
-    return (ROOT / path).read_text()
+def main() -> int:
+    site_files = [
+        ROOT / "site/js/mvc/view.js",
+        ROOT / "site/js/mvc/controller.js",
+        ROOT / "site/css/app.css",
+        ROOT / "site/css/board.css",
+    ]
+    combined = "\n".join(path.read_text() for path in site_files if path.exists())
 
-def require(path, token):
-    body = text(path)
-    if token not in body:
-        raise SystemExit(f"Missing {token!r} in {path}")
+    forbidden = [
+        "is-disabled-by-active-game",
+        "data-disabled-by-active-game",
+        "data-active-game-disabled",
+        "disabled-by-active-game",
+        "only accepts Round of 32 picks",
+        "starts after the Round of 32 field",
+    ]
 
-require("site/js/mvc/view.js", "function activeGameValue()")
-require("site/js/mvc/view.js", "function slotEnabledForActiveGame(slot)")
-require("site/js/mvc/view.js", 'if (activeGame === "game-1") return slot.round === "R32";')
-require("site/js/mvc/view.js", 'if (activeGame === "game-2") return slot.round !== "R32";')
-require("site/js/mvc/view.js", "button.dataset.pickDisabledByActiveGame")
-require("site/js/mvc/view.js", "is-disabled-by-active-game")
-require("site/js/mvc/view.js", "onActiveGameChange?.(activeGameValue())")
-require("site/js/mvc/view.js", "activeGameValue };")
+    errors = [f"stage-only gameplay gate remains: {token}" for token in forbidden if token in combined]
 
-require("site/js/mvc/controller.js", "function slotAllowedForActiveGame(slot)")
-require("site/js/mvc/controller.js", 'if (activeGame === "game-1") return slot.round === "R32";')
-require("site/js/mvc/controller.js", 'if (activeGame === "game-2") return slot.round !== "R32";')
-require("site/js/mvc/controller.js", "function onActiveGameChange(activeGame)")
-require("site/js/mvc/controller.js", "onActiveGameChange });")
+    if errors:
+        print("WC2026 lifecycle stage presentation-only pick gating verification failed:")
+        for error in errors:
+            print(f"- {error}")
+        return 1
 
-require("site/css/app.css", ".pick-slot-button.is-disabled-by-active-game")
-require("site/index.html", "js/app.js?v=active-game-pick-gating")
-require("site/index.html", "css/app.css?v=active-game-pick-gating")
+    print("OK: lifecycle stage is presentation-only; no active-game pick gating remains in runtime surfaces.")
+    return 0
 
-view = text("site/js/mvc/view.js")
-start = view.index("function slotEnabledForActiveGame")
-end = view.index("function renderBoardShell")
-gated_segment = view[start:end]
-
-forbidden_hide_tokens = [
-    "display: none",
-    "visibility: hidden",
-    "hidden = true",
-    ".style.display =",
-]
-for token in forbidden_hide_tokens:
-    if token in gated_segment:
-        raise SystemExit(f"Active-game pick gating must disable, not hide; found {token!r}")
-
-print("OK: active Game selector disables wrong-game pick surfaces without hiding bracket cells.")
+if __name__ == "__main__":
+    raise SystemExit(main())

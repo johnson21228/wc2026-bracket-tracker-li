@@ -32,8 +32,6 @@ def main() -> int:
     require_contains(view, 'data-dev-game-selector', errors, "site/js/mvc/view.js")
     require_contains(view, 'game-1', errors, "site/js/mvc/view.js")
     require_contains(view, 'game-2', errors, "site/js/mvc/view.js")
-    require_contains(view, "Group Stage only accepts Round of 32 picks.", errors, "site/js/mvc/view.js")
-    require_contains(view, "Knockout Stage starts after the Round of 32 field.", errors, "site/js/mvc/view.js")
 
     require_not_contains(site, ">Game 1<", errors, "site/index.html")
     require_not_contains(site, ">Game 2<", errors, "site/index.html")
@@ -52,7 +50,7 @@ def main() -> int:
             print(f"- {error}")
         return 1
 
-    print("OK: Stage selector appears after the zoom control, uses Group/Knockout Stage labels, and preserves legacy game hooks during migration.")
+    print("OK: Stage selector uses Group/Knockout Stage labels and preserves legacy selector hooks during presentation-only gameplay migration.")
     return 0
 
 if __name__ == "__main__":

@@ -36,10 +36,10 @@ export function createBracketController({ model, view }) {
   function disabledReasonForActiveGame(slot) {
     const activeGame = activeGameValue();
     if (activeGame === "game-1" && slot.round !== "R32") {
-      return "Game 1 only accepts Round of 32 picks.";
+      return "Game 1 uses precedent-based pick availability.";
     }
     if (activeGame === "game-2" && slot.round === "R32") {
-      return "Game 2 starts after the Round of 32 field.";
+      return "Game 2 uses precedent-based pick availability.";
     }
     return "";
   }

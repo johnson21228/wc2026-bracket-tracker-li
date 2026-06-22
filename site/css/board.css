@@ -969,3 +969,17 @@
   width: 100%;
   height: 100%;
 }
+
+
+/* Card 254: lifecycle stage is presentation-only for gameplay.
+   Legacy active-game disabled classes may remain in older markup during
+   migration, but they must not hide, mute, or block pick surfaces. */
+.is-stage-presentation-context,
+.has-active-game-disabled-state,
+[data-stage-presentation-context="true"],
+[data-stage-presentation-context="true"] {
+  opacity: inherit !important;
+  filter: none !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}

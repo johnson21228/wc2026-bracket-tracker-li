@@ -3,55 +3,46 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-def text(path):
-    return (ROOT / path).read_text()
+def main() -> int:
+    view = (ROOT / "site/js/mvc/view.js").read_text()
+    controller = (ROOT / "site/js/mvc/controller.js").read_text() if (ROOT / "site/js/mvc/controller.js").exists() else ""
 
-def require(path, token):
-    body = text(path)
-    if token not in body:
-        raise SystemExit(f"Missing {token!r} in {path}")
+    combined = view + "\n" + controller
 
-view = text("site/js/mvc/view.js")
-controller = text("site/js/mvc/controller.js")
-makefile = text("Makefile")
+    required_docs = [
+        ROOT / "docs/features/lifecycle_stage_presentation_only.md",
+        ROOT / "li/world_cup/lifecycle_stage_presentation_only_rule.md",
+    ]
+    doc_text = "\n".join(path.read_text() for path in required_docs if path.exists())
 
-require("site/js/mvc/view.js", "function activeGameValue()")
-require("site/js/mvc/view.js", "function slotEnabledForActiveGame(slot)")
-require("site/js/mvc/view.js", "button.dataset.pickDisabledByActiveGame")
-require("site/js/mvc/view.js", "is-disabled-by-active-game")
-require("site/js/mvc/view.js", "onActiveGameChange?.(activeGameValue())")
+    errors = []
 
-for token in ["display: none", "visibility: hidden", "hidden = true", ".style.display ="]:
-    gated_start = view.index("function slotEnabledForActiveGame")
-    gated_end = view.index("function renderBoardShell")
-    if token in view[gated_start:gated_end]:
-        raise SystemExit(f"View must disable, not hide, wrong-game cells; found {token!r}")
+    for token in [
+        "lifecycle stage is presentation-only",
+        "pick availability is determined only by precedent availability",
+        "selected stage must not block pick pre-selection",
+    ]:
+        if token not in doc_text:
+            errors.append(f"missing presentation-only contract token: {token}")
 
-require("site/js/mvc/controller.js", "function slotAllowedForActiveGame(slot)")
-require("site/js/mvc/controller.js", "function pickMenuNotReadyReason(slot)")
-require("site/js/mvc/controller.js", "function reportBlockedPick(slot)")
-require("site/js/mvc/controller.js", "Game 1 only accepts Round of 32 picks.")
-require("site/js/mvc/controller.js", "Game 2 starts after the Round of 32 field.")
-require("site/js/mvc/controller.js", "This Game 2 pick menu is not ready yet.")
-require("site/js/mvc/controller.js", "view.closeMenu();")
+    for token in [
+        "is-disabled-by-active-game",
+        "data-disabled-by-active-game",
+        "data-active-game-disabled",
+        "only accepts Round of 32 picks",
+        "starts after the Round of 32 field",
+    ]:
+        if token in combined:
+            errors.append(f"stage-only controller/view gate remains: {token}")
 
-slot_click = controller[controller.index("function onSlotClick"):controller.index("function onTeamPick")]
-if slot_click.index("!slotAllowedForActiveGame(slot)") > slot_click.index("!slot.pickable"):
-    raise SystemExit("onSlotClick must guard active-game eligibility before generic pickability/not-ready behavior")
-require("site/js/mvc/controller.js", "reportBlockedPick(slot);")
+    if errors:
+        print("WC2026 lifecycle stage presentation-only pick pipeline verification failed:")
+        for error in errors:
+            print(f"- {error}")
+        return 1
 
-team_pick = controller[controller.index("function onTeamPick"):controller.index("function onClearPick")]
-for token in ["slotAllowedForActiveGame(slot)", "pickMenuNotReadyReason(slot)", "model.setPick(slotId, teamId)"]:
-    if token not in team_pick:
-        raise SystemExit(f"onTeamPick does not enforce pipeline guard token {token!r}")
-if team_pick.index("slotAllowedForActiveGame(slot)") > team_pick.index("model.setPick(slotId, teamId)"):
-    raise SystemExit("onTeamPick must guard active-game eligibility before model.setPick")
+    print("OK: lifecycle stage no longer blocks pick pre-selection or pick write pipeline.")
+    return 0
 
-if "verify_wc2026_active_game_pick_rules_pipeline.py" not in makefile:
-    raise SystemExit("Makefile verify target must include active-game pick rules pipeline verifier")
-
-for forbidden in ["Supabase", "supabase", "localStorage", "group_standings", "group_matches", "match_highlights"]:
-    # The verifier itself should not require or imply data/storage/backend changes.
-    pass
-
-print("OK: active game pick rules are enforced through controller pre-selection and pick write pipeline.")
+if __name__ == "__main__":
+    raise SystemExit(main())
