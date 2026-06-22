@@ -6,7 +6,7 @@
     "provider": "local-normalized-snapshot",
     "fixtureAuthority": "poster-derived group-stage schedule",
     "fixtureAuthorityPath": "site/data/group_stage_matches_from_poster.json",
-    "capturedAt": "2026-06-18T13:30:00Z",
+    "capturedAt": "2026-06-22T11:20:00-04:00",
     "captureMode": "manual-cb-normalized-snapshot-plus-poster-fixtures",
     "doesNotScrapeEspnAtRuntime": true,
     "notes": [
@@ -15,7 +15,9 @@
       "Existing current/result evidence is preserved where it corresponds to a poster fixture.",
       "Missing poster fixtures are represented as scheduled local snapshot matches and may show Time TBD when no kickoff time is available.",
       "The browser runtime reads checked-in JSON only and does not scrape ESPN at runtime.",
-      "Third-place source-slot semantics are intentionally out of scope for this data repair."
+      "Third-place source-slot semantics are intentionally out of scope for this data repair.",
+      "User-provided June 21 Group G/H finals patched: Uruguay 2-2 Cabo Verde and New Zealand 1-3 Egypt.",
+      "Belgium 0-0 IR Iran normalized from complete to final so group panels treat all completed Group G/H matches consistently."
     ]
   },
   "matches": [
@@ -1007,16 +1009,16 @@
     {
       "matchId": "GS-2026-06-21-H3",
       "groupId": "H",
-      "status": "scheduled",
+      "status": "final",
       "kickoffDate": "2026-06-21",
       "kickoffLocal": "2026-06-21T18:00:00-04:00",
       "homeTeamId": "URU",
       "homeTeamName": "Uruguay",
       "awayTeamId": "CPV",
       "awayTeamName": "Cabo Verde",
-      "homeScore": null,
-      "awayScore": null,
-      "summary": "Uruguay vs Cabo Verde",
+      "homeScore": 2,
+      "awayScore": 2,
+      "summary": "Uruguay 2-2 Cabo Verde",
       "sourceProvider": "poster-derived",
       "posterMatchId": "GS-2026-06-21-H3",
       "fixtureAuthority": "poster-derived",
@@ -1029,7 +1031,10 @@
       "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
       "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
       "timeConfidence": "high",
-      "espnMatchId": "66457000"
+      "espnMatchId": "66457000",
+      "resultSource": "user-provided-score-and-highlight-interview",
+      "resultSourceUrl": "https://youtu.be/ZXvFKZM1nL4",
+      "resultVerifiedAt": "2026-06-22"
     },
     {
       "matchId": "GS-2026-06-21-H4",
@@ -1063,7 +1068,7 @@
     {
       "matchId": "GS-2026-06-21-G3",
       "groupId": "G",
-      "status": "complete",
+      "status": "final",
       "kickoffDate": "2026-06-21",
       "kickoffLocal": "2026-06-21T15:00:00-04:00",
       "homeTeamId": "BEL",
@@ -1072,7 +1077,7 @@
       "awayTeamName": "IR Iran",
       "homeScore": 0,
       "awayScore": 0,
-      "summary": "Belgium vs IR Iran",
+      "summary": "Belgium 0-0 IR Iran",
       "sourceProvider": "espn-cross-check",
       "posterMatchId": "GS-2026-06-21-G3",
       "fixtureAuthority": "poster-derived",
@@ -1081,21 +1086,24 @@
       "timezone": "America/New_York",
       "timeSource": "ESPN FIFA World Cup schedule",
       "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
-      "espnMatchId": "66456986"
+      "espnMatchId": "66456986",
+      "resultSource": "user-provided-score-and-highlight-interview",
+      "resultSourceUrl": "https://youtu.be/YbiEe9pOV-s",
+      "resultVerifiedAt": "2026-06-22"
     },
     {
       "matchId": "GS-2026-06-21-G4",
       "groupId": "G",
-      "status": "scheduled",
+      "status": "final",
       "kickoffDate": "2026-06-21",
       "kickoffLocal": "2026-06-21T21:00:00-04:00",
       "homeTeamId": "NZL",
       "homeTeamName": "New Zealand",
       "awayTeamId": "EGY",
       "awayTeamName": "Egypt",
-      "homeScore": null,
-      "awayScore": null,
-      "summary": "New Zealand vs Egypt",
+      "homeScore": 1,
+      "awayScore": 3,
+      "summary": "New Zealand 1-3 Egypt",
       "sourceProvider": "poster-derived",
       "posterMatchId": "GS-2026-06-21-G4",
       "fixtureAuthority": "poster-derived",
@@ -1108,7 +1116,10 @@
       "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
       "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
       "timeConfidence": "high",
-      "espnMatchId": "66456988"
+      "espnMatchId": "66456988",
+      "resultSource": "user-provided-score-and-highlight-interview",
+      "resultSourceUrl": "https://youtu.be/Ihp4QH9YkBc",
+      "resultVerifiedAt": "2026-06-22"
     },
     {
       "matchId": "GS-2026-06-22-I3",

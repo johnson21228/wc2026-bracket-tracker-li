@@ -68,6 +68,7 @@ verify:
 	python3 tools/verify_wc2026_interaction_overlay_stack.py
 	python3 tools/verify_wc2026_zoom50_floating_surface_placement.py
 	python3 tools/verify_wc2026_floating_surface_dismissal_view_owned.py
+	python3 tools/verify_wc2026_floating_board_surfaces_above_overlay_controls.py
 	python3 tools/verify_wc2026_center_final_four_visual_only.py
 	python3 tools/verify_wc2026_final_stack_svg_manifest_alignment.py
 	python3 tools/verify_wc2026_final_four_pick_display.py

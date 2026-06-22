@@ -4,7 +4,7 @@
   "season": 2026,
   "source": {
     "provider": "Workbench CB verified external highlight storage",
-    "capturedAt": "2026-06-21T13:30:00-04:00",
+    "capturedAt": "2026-06-22T11:20:00-04:00",
     "notes": [
       "Highlight URLs are checked-in data used by the group panel runtime.",
       "Runtime must not scrape ESPN, FOX, FIFA, YouTube, or any external source.",
@@ -14,7 +14,9 @@
       "Known correction: wff2tvitS-s belongs to Scotland 0-1 Morocco, not Canada 1-1 Bosnia and Herzegovina.",
       "Known correction: HrbIda-C9SE belongs to Turkey 0-1 Paraguay, not Mexico 2-0 South Africa.",
       "Card 235 patched user-provided June 20/21 Group E/F final scores and YouTube highlight links.",
-      "Card 245 patched user-provided Spain 4-0 Saudi Arabia final score and YouTube highlight link."
+      "Card 245 patched user-provided Spain 4-0 Saudi Arabia final score and YouTube highlight link.",
+      "June 21 Group G/H user-provided highlights added for Uruguay-Cabo Verde and New Zealand-Egypt.",
+      "Belgium-Iran highlight normalized into the canonical highlights map keyed by ESPN match ID 66456986."
     ]
   },
   "highlights": {
@@ -313,13 +315,30 @@
       "verifiedAt": "2026-06-21",
       "matchEvidence": "Spain 4-0 Saudi Arabia",
       "verificationMode": "user-provided-url"
+    },
+    "66457000": {
+      "provider": "YouTube",
+      "title": "Uruguay 2-2 Cabo Verde highlights",
+      "url": "https://youtu.be/ZXvFKZM1nL4",
+      "verifiedAt": "2026-06-22",
+      "matchEvidence": "Uruguay 2-2 Cabo Verde",
+      "verificationMode": "user-provided-url"
+    },
+    "66456988": {
+      "provider": "YouTube",
+      "title": "New Zealand 1-3 Egypt highlights",
+      "url": "https://youtu.be/Ihp4QH9YkBc",
+      "verifiedAt": "2026-06-22",
+      "matchEvidence": "New Zealand 1-3 Egypt",
+      "verificationMode": "user-provided-url"
+    },
+    "66456986": {
+      "provider": "YouTube",
+      "title": "Belgium 0-0 IR Iran highlights",
+      "url": "https://youtu.be/YbiEe9pOV-s",
+      "verifiedAt": "2026-06-21",
+      "matchEvidence": "Belgium 0-0 IR Iran",
+      "verificationMode": "user-provided-url"
     }
-  },
-  "66456986": {
-    "matchId": "66456986",
-    "home": "Belgium",
-    "away": "Iran",
-    "url": "https://youtu.be/YbiEe9pOV-s",
-    "source": "YouTube"
   }
 }
