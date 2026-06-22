@@ -1,6 +1,6 @@
 const STORAGE_KEY = "wc2026.game1.cleanMvcPicks.v1";
 const PICK_SNAPSHOT_APP_ID = "wc2026.braketeeringPub.picks";
-const ROUND_ORDER = ["R32", "R16", "QF", "SF", "FINAL_FOUR"];
+const ROUND_ORDER = ["R32", "R16", "QF", "SF", "SF_WINNER", "CHAMPION", "FINAL_FOUR"];
 const BOARD_NATIVE_SIZE = Object.freeze({ width: 1536, height: 1024 });
 const GROUP_IDS = Object.freeze(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]);
 const CENTER_FINAL_FOUR_SLOT_ID = "CENTER-FINAL-FOUR";
@@ -180,8 +180,10 @@ function buildDependencyMap(slotsById, r32BridgeSlots) {
     }
   }
 
-  if (slotsById.has("CENTER-FINAL-FOUR")) {
-    dependencies.set("CENTER-FINAL-FOUR", ["L-SF-01", "L-SF-02", "R-SF-01", "R-SF-02"].filter((slotId) => slotsById.has(slotId)));
+  for (const [slotId, feederIds] of Object.entries(FINAL_FOUR_PRECEDENT_CONSTRAINTS)) {
+    if (slotsById.has(slotId)) {
+      dependencies.set(slotId, feederIds.filter((feederId) => slotsById.has(feederId)));
+    }
   }
 
   return dependencies;
@@ -229,6 +231,12 @@ export async function createBracketModel() {
     readJson(DATA_URLS.knockoutMatches),
     readJson(DATA_URLS.game2FifaFinalR32Assignments),
   ]);
+
+const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
+  "FINAL-LEFT": Object.freeze(["L-SF-01", "L-SF-02"]),
+  "FINAL-RIGHT": Object.freeze(["R-SF-01", "R-SF-02"]),
+  "CHAMPION": Object.freeze(["FINAL-LEFT", "FINAL-RIGHT"]),
+});
 
   const nativeSize = geometry.nativeSizePx || BOARD_NATIVE_SIZE;
   const slots = sortSlots(geometry.slots || []);
@@ -359,6 +367,7 @@ export async function createBracketModel() {
   }
 
   function getKnockoutChoices(slotId) {
+    // Final Four center-stack cells use the same dependency-map menu path as other knockout picks.
     const feeders = dependencyMap.get(slotId) || [];
     if (!feeders.length) return [];
     const feederTeams = feeders.map((feederId) => teamForFeederPath(feederId));
