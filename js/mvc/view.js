@@ -400,10 +400,7 @@ export function createBracketView(root) {
 
 
   function playerFacingEmptyPickText(slot) {
-    const slotId = String(slot?.slotId || "").toUpperCase();
-    if (slotId === "CHAMPION") return "Champion";
-    if (slotId === "THIRD-PLACE-WINNER") return "3rd place";
-    return "Pick";
+    return "Choose Team";
   }
 
   function playerFacingPickMenuTitle(menu, slot) {
