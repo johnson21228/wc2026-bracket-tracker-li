@@ -137,3 +137,6 @@ publish-pages-force:
 
 check-pages:
 	python3 tools/check_pages_publish_freshness.py
+force-pages-publish:
+	python3 tools/force_pages_publish.py
+
