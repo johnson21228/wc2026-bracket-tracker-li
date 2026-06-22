@@ -617,3 +617,51 @@ body {
 .board-zoom-controls {
   display: none !important;
 }
+
+
+/* Card 266: browser floating controls stay fixed-size while the board zooms.
+   These controls are viewport chrome, not board geometry. */
+.map-board-icon-controls,
+.map-icon-button,
+.supabase-identity-surface,
+.supabase-identity-surface .identity-card,
+.rules-panel-backdrop,
+.info-panel-backdrop,
+.status-panel {
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+.map-board-icon-controls,
+.supabase-identity-surface,
+.status-panel {
+  position: fixed !important;
+  contain: layout style;
+}
+
+.map-board-icon-controls {
+  width: max-content;
+  height: max-content;
+}
+
+.map-icon-button {
+  flex: 0 0 auto;
+  inline-size: 34px;
+  block-size: 34px;
+  min-inline-size: 34px;
+  min-block-size: 34px;
+  max-inline-size: 34px;
+  max-block-size: 34px;
+}
+
+@media (max-width: 760px) {
+  .map-icon-button {
+    inline-size: 32px;
+    block-size: 32px;
+    min-inline-size: 32px;
+    min-block-size: 32px;
+    max-inline-size: 32px;
+    max-block-size: 32px;
+  }
+}
+

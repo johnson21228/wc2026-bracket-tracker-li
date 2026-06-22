@@ -69,9 +69,11 @@ verify:
 	python3 tools/verify_wc2026_zoom50_floating_surface_placement.py
 	python3 tools/verify_wc2026_floating_surface_dismissal_view_owned.py
 	python3 tools/verify_wc2026_floating_board_surfaces_above_overlay_controls.py
+	python3 tools/verify_wc2026_floating_controls_fixed_size_during_zoom.py
 	python3 tools/verify_wc2026_center_final_four_visual_only.py
 	python3 tools/verify_wc2026_final_stack_svg_manifest_alignment.py
 	python3 tools/verify_wc2026_final_four_pick_display.py
+	python3 tools/verify_wc2026_champion_pixel_aura.py
 	python3 tools/verify_wc2026_remove_player_storage_ui.py
 	python3 tools/verify_wc2026_map_style_full_window_board_shell.py
 	python3 tools/verify_wc2026_map_icon_controls.py

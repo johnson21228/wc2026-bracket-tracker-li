@@ -401,6 +401,14 @@ export function createBracketView(root) {
       const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display;
       button.disabled = disabledByPickability;
       button.dataset.pickDisabledByPrecedent = enabledByPrecedent ? "false" : "true";
+      if (displayTeam && String(slot.slotId || "").toUpperCase() === "CHAMPION") {
+        button.classList.add("is-champion-winner");
+        button.dataset.winnerFlag = displayTeam.flag || "";
+        const auraX = Math.max(18, Math.round((slot.boundsPx?.width || 96) * 0.36));
+        const auraY = Math.max(14, Math.round((slot.boundsPx?.height || 44) * 0.55));
+        button.style.setProperty("--wc2026-champion-aura-x", `${auraX}px`);
+        button.style.setProperty("--wc2026-champion-aura-y", `${auraY}px`);
+      }
       button.setAttribute(
         "aria-label",
         displayTeam
