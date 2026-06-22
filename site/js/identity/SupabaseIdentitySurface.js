@@ -30,13 +30,13 @@ export function createSupabaseIdentitySurface({ root, authService }) {
     if (state.status === "checking") return "Checking sign-in";
     if (state.status === "sending") return "Sending link";
     if (state.status === "link-sent") return "Check email";
-    return "Sign in to save";
+    return "Sign in";
   }
 
   function persistenceLabel(state) {
-    if (state.status === "signed-in") return "Local bracket for now";
+    if (state.status === "signed-in") return "Identity confirmed · local bracket active";
     if (state.status === "not-configured") return "Local bracket · Supabase Auth not configured";
-    return "Local bracket";
+    return "Local bracket active";
   }
 
   function render(state = latestState) {
@@ -74,8 +74,8 @@ export function createSupabaseIdentitySurface({ root, authService }) {
     form.className = "identity-signin-form";
     form.innerHTML = `
       <label class="visually-hidden" for="supabase-auth-email">Email address</label>
-      <input id="supabase-auth-email" type="email" inputmode="email" autocomplete="email" placeholder="email" ${canAttemptSignIn ? "" : "disabled"}>
-      <button type="submit" class="identity-button" ${canAttemptSignIn && !isBusy ? "" : "disabled"}>Sign in</button>
+      <input id="supabase-auth-email" type="email" inputmode="email" autocomplete="email" placeholder="email for sign-in" ${canAttemptSignIn ? "" : "disabled"}>
+      <button type="submit" class="identity-button" ${canAttemptSignIn && !isBusy ? "" : "disabled"}>Email magic link</button>
     `;
     form.addEventListener("submit", (event) => {
       event.preventDefault();

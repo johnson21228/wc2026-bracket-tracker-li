@@ -128,3 +128,4 @@ Invariant: all board actors speak native gameboard coordinates; only the Pages V
 
 - `li/world_cup/supabase_sql_dashboard_apply_checklist_rule.md` — requires checklist and evidence capture before any Supabase dashboard SQL application, without activating remote mode.
 - `li/world_cup/guarded_supabase_remote_smoke_path_rule.md` — keeps Supabase remote smoke testing explicit, terminal-only, and outside public runtime activation.
+- `li/world_cup/supabase_sign_in_identity_only_smoke_path_rule.md` — enables optional Supabase sign-in as an identity-only smoke path while bracket persistence remains local.

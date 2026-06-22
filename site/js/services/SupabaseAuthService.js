@@ -50,7 +50,7 @@ export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONF
       configured: true,
       status: user ? "signed-in" : "signed-out",
       user,
-      message: message || (user ? "Signed in. Local bracket for now." : "Signed out. Local bracket remains active."),
+      message: message || (user ? "Signed in. Your bracket still saves locally for now." : "Signed out. Local bracket remains active."),
     };
   }
 
@@ -81,7 +81,7 @@ export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONF
       emit(stateFromSession(data?.session || null));
 
       supabase.auth.onAuthStateChange((_event, session) => {
-        emit(stateFromSession(session, session ? "Signed in. Local bracket for now." : "Signed out. Local bracket remains active."));
+        emit(stateFromSession(session, session ? "Signed in. Your bracket still saves locally for now." : "Signed out. Local bracket remains active."));
       });
     } catch (error) {
       emit({
@@ -120,11 +120,19 @@ export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONF
         options: { emailRedirectTo: redirectTo },
       });
       if (error) throw error;
-      emit({ ...currentState, status: "link-sent", message: "Check your email for the Supabase sign-in link. Local bracket remains active." });
+      emit({ ...currentState, status: "link-sent", message: "Check your email for the Supabase sign-in link. Your bracket still saves locally for now." });
     } catch (error) {
       emit({ ...currentState, status: "error", message: `Supabase sign-in failed: ${error?.message || String(error)}` });
     }
     return currentState;
+  }
+
+  async function signInWithMagicLink(email) {
+    return signInWithEmail(email);
+  }
+
+  function getCurrentSession() {
+    return currentSession;
   }
 
   async function signOut() {
@@ -146,5 +154,5 @@ export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONF
     return () => listeners.delete(listener);
   }
 
-  return { start, subscribe, signInWithEmail, signOut, currentState: () => currentState };
+  return { start, subscribe, signInWithEmail, signInWithMagicLink, getCurrentSession, signOut, currentState: () => currentState };
 }
