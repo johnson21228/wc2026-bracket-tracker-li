@@ -34,6 +34,10 @@ for path, tokens in {
 model = read("site/js/mvc/model.js")
 for token in [
     "function pickValidityForSlot",
+    "not one of the current feeder teams for this winner slot",
+    "validityChoices = choices.length ? choices : knownFeederChoices",
+    "getFinalFourKnownFeederChoicesForValidity",
+    "function getKnownFeederChoicesForValidity",
     "function standingsEntryForTeam",
     "pickValidityForSlot",
     "duplicateR32Pick",

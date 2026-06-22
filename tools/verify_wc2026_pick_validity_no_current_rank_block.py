@@ -28,7 +28,7 @@ forbid(model, "Number(entry.rank) !== expectation.rank")
 forbid(model, "expectedRankForR32Logic(logic)")
 
 # Source scope and structural duplicate conflict are still part of validity.
-require(model, "not available from this slot's current source or feeder path")
+require(model, "not one of the current feeder teams for this winner slot")
 require(model, "already assigned to another Round of 32 slot")
 require(model, "pickValidityForSlot")
 
