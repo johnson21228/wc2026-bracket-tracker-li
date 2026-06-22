@@ -1,6 +1,6 @@
 published-from-site
-publishedAt=2026-06-22T12:57:44Z
-sourceCommit=b81f53144852ff89fcb01fce7d50e51a5ad86f7b
+publishedAt=2026-06-22T13:01:49Z
+sourceCommit=c1a353b205704793e43a00b878b639e8d9c22ee4
 criticalJsonSha256:
   data/current/group_matches.json=437238101d1b35f6eba1368c6a95fd0bebb643cf0879812c04a87ee5fda2090e
   data/current/group_standings.json=bcd7922d45a296a5ac4eb2d550946b5a92555fc9eed9ab52d8ad000997d8c599
