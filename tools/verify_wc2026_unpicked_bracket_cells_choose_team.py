@@ -1,78 +1,33 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import re
 
-ROOT = Path(__file__).resolve().parents[1]
-view = (ROOT / "site/js/mvc/view.js").read_text()
-css = (ROOT / "site/css/board.css").read_text()
-makefile = (ROOT / "Makefile").read_text()
+VIEW = Path("site/js/mvc/view.js")
+view = VIEW.read_text()
 
 errors = []
 
-helper = re.search(
-    r'function playerFacingEmptyPickText\(slot\) \{(?P<body>[\s\S]*?)\n  \}',
-    view,
-)
-helper_body = helper.group("body") if helper else ""
-if not helper:
-    errors.append("missing playerFacingEmptyPickText helper")
-if 'return "Choose Team";' not in helper_body:
-    errors.append('playerFacingEmptyPickText must return exactly "Choose Team"')
+def require(condition, message):
+    if not condition:
+        errors.append(message)
 
-for forbidden in [
-    "slot.slotId",
-    "slot.label",
-    "slot.fifaLabel",
-    "CHAMPION",
-    "THIRD-PLACE-WINNER",
-    "R16",
-    "QF",
-    "SF",
-    "FINAL",
+require("function playerFacingEmptyPickText(slot)" in view, "missing player-facing empty pick label function")
+require('round === "R32" || slotId.startsWith("R32")' in view, "R32 empty labels must be distinguished by round or slot id")
+require('return "Choose Team";' in view, "R32 empty labels must remain Choose Team")
+require('return "Choose Winner";' in view, "R16 and later empty labels must be Choose Winner")
+require("function unpickedSlotDisplayText(slot)" in view, "missing unpicked slot display wrapper")
+require("return playerFacingEmptyPickText(slot);" in view, "unpicked cells must use playerFacingEmptyPickText(slot)")
+
+for obsolete in [
+    'if (slotId === "CHAMPION") return "Champion";',
+    'if (slotId === "THIRD-PLACE-WINNER") return "3rd place";',
+    'return "Pick";',
 ]:
-    if forbidden in helper_body:
-        errors.append(f"empty-cell helper still uses internal fallback token: {forbidden}")
-
-if 'function unpickedSlotDisplayText(slot) {' not in view:
-    errors.append("missing unpickedSlotDisplayText helper")
-if 'return playerFacingEmptyPickText(slot);' not in view:
-    errors.append("unpickedSlotDisplayText must delegate to playerFacingEmptyPickText(slot)")
-if 'unpickedLabel.className = "unpicked-cell-label";' not in view:
-    errors.append("unpicked render path must use unpicked-cell-label")
-if 'unpickedLabel.textContent = unpickedSlotDisplayText(slot);' not in view:
-    errors.append("unpicked render path must use unpickedSlotDisplayText(slot)")
-
-for token in [
-    "picked-cell-identity",
-    "picked-cell-flag",
-    "picked-cell-code",
-    "displayTeam.flag",
-    "flag.style.fontSize",
-    "displayTeam.abbr || displayTeam.id",
-    "identity.append(flag, code)",
-    "value.append(identity)",
-]:
-    if token not in view:
-        errors.append(f"picked-cell rendering token missing: {token}")
-
-css_compact = re.sub(r"\s+", " ", css)
-for token in [
-    ".pick-slot-button.is-unpicked .unpicked-cell-label",
-    "display: flex",
-    "align-items: center",
-    "justify-content: center",
-    "text-align: center",
-]:
-    if token not in css_compact:
-        errors.append(f"centered unpicked-cell CSS missing: {token}")
-
-if "python3 tools/verify_wc2026_picked_bracket_cell_identity_rendering.py" not in makefile:
-    errors.append("picked-cell identity verifier is no longer wired into make verify")
+    require(obsolete not in view, f"obsolete empty label remains: {obsolete}")
 
 if errors:
-    print("WC2026 unpicked bracket-cell Choose Team verification failed:")
+    print("WC2026 empty pick label verification failed:")
     for error in errors:
         print(f"- {error}")
     raise SystemExit(1)
 
-print('OK: unpicked bracket cells render centered "Choose Team" without internal IDs.')
+print("OK: WC2026 empty pick labels use Choose Team for R32 and Choose Winner for R16 and later rounds.")

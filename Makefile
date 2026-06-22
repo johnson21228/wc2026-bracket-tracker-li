@@ -72,6 +72,10 @@ verify:
 	python3 tools/verify_wc2026_final_stack_svg_manifest_alignment.py
 	python3 tools/verify_wc2026_final_four_pick_display.py
 	python3 tools/verify_wc2026_remove_player_storage_ui.py
+	python3 tools/verify_wc2026_map_style_full_window_board_shell.py
+	python3 tools/verify_wc2026_map_icon_controls.py
+	python3 tools/verify_wc2026_later_round_choose_winner_labels.py
+	python3 tools/verify_wc2026_scotland_flag_emoji_data.py
 	python3 tools/verify_wc2026_pages_owned_board_zoom_out_scale.py
 	python3 tools/verify_wc2026_pages_owned_board_zoom_out_runtime.py
 	python3 tools/verify_wc2026_pages_owned_board_wheel_pinch_zoom.py

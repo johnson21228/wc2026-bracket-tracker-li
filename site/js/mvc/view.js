@@ -37,6 +37,7 @@ export function createBracketView(root) {
   const BOARD_MIN_SCALE = 0.5;
   const BOARD_MAX_SCALE = 1.25;
   const BOARD_WHEEL_ZOOM_STEP = 0.08;
+  const BOARD_BUTTON_ZOOM_STEP = 0.25;
   const BOARD_DRAG_PAN_THRESHOLD_PX = 5;
   const BOARD_DOUBLE_CLICK_ZOOM_STEP = 0.18;
   let teardownFloatingSurfaceDismissal = null;
@@ -120,6 +121,54 @@ export function createBracketView(root) {
     viewport.scrollLeft = Math.max(0, (nativeX * boardScale) - pointerX);
     viewport.scrollTop = Math.max(0, (nativeY * boardScale) - pointerY);
     handlers.onCloseMenu?.();
+    updateEmptyPickLabels();
+  }
+
+
+  function stepBoardZoomFromIcon(direction) {
+    if (!boardZoomSelect) return;
+    const zoomOptions = Array.from(boardZoomSelect.options || [])
+      .map((option) => Number(option.value))
+      .filter((value) => Number.isFinite(value))
+      .sort((a, b) => a - b);
+
+    if (!zoomOptions.length) {
+      applyBoardRenderScale(boardScale + (direction * BOARD_BUTTON_ZOOM_STEP));
+      handlers.onCloseMenu?.();
+      return;
+    }
+
+    const current = Number(boardZoomSelect.value || boardScale);
+    const next = direction > 0
+      ? zoomOptions.find((value) => value > current + 0.001) ?? zoomOptions[zoomOptions.length - 1]
+      : [...zoomOptions].reverse().find((value) => value < current - 0.001) ?? zoomOptions[0];
+
+    boardZoomSelect.value = String(next);
+    boardZoomSelect.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
+  function emptyPickLabelForSlot(slotId) {
+    const normalizedSlotId = String(slotId || "").toUpperCase();
+    return normalizedSlotId.startsWith("R32") ? "Choose Team" : "Choose Winner";
+  }
+
+  function updateEmptyPickLabels() {
+    const pickButtons = Array.from(root.querySelectorAll("[data-pick-id], [data-slot-id], [data-bracket-slot-id]"));
+    pickButtons.forEach((element) => {
+      const slotId = element.getAttribute("data-pick-id")
+        || element.getAttribute("data-slot-id")
+        || element.getAttribute("data-bracket-slot-id")
+        || "";
+      const label = emptyPickLabelForSlot(slotId);
+
+      if ((element.textContent || "").trim() === "Choose Team" || (element.textContent || "").trim() === "Choose Winner") {
+        element.textContent = label;
+      }
+
+      if (element.getAttribute("aria-label") === "Choose Team" || element.getAttribute("aria-label") === "Choose Winner") {
+        element.setAttribute("aria-label", label);
+      }
+    });
   }
 
   function floatingSurfaceIsOpen() {
@@ -274,6 +323,15 @@ export function createBracketView(root) {
       ) {
         handlers.onActiveGameChange?.(activeGameValue());
       }
+    });
+    root.addEventListener("click", (event) => {
+      const zoomButton = event.target instanceof Element
+        ? event.target.closest("[data-board-zoom-in], [data-board-zoom-out]")
+        : null;
+      if (!zoomButton || !root.contains(zoomButton)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      stepBoardZoomFromIcon(zoomButton.hasAttribute("data-board-zoom-in") ? 1 : -1);
     });
     boardZoomSelect?.addEventListener("change", () => {
       applyBoardRenderScale(boardZoomSelect.value);
@@ -516,8 +574,14 @@ export function createBracketView(root) {
 
 
   function playerFacingEmptyPickText(slot) {
-    return "Choose Team";
+    const round = String(slot?.round || "").toUpperCase();
+    const slotId = String(slot?.slotId || "").toUpperCase();
+
+    if (round === "R32" || slotId.startsWith("R32")) return "Choose Team";
+
+    return "Choose Winner";
   }
+
 
   function playerFacingPickMenuTitle(menu, slot) {
     const title = String(menu?.title || "").trim();

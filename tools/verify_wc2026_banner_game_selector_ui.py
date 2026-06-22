@@ -44,7 +44,7 @@ require("site/index.html", '>Group Stage<')
 require("site/index.html", '>Knockout Stage<')
 
 app = read("site/js/app.js")
-require("site/js/app.js", "setupRulesPanel(root);")
+require("site/js/app.js", "setupInfoPanel(root);")
 require("site/js/app.js", "setupActiveGameBackground(root);")
 require("site/js/app.js", "ACTIVE_GAME_BACKGROUND_IMAGES")
 require("site/js/app.js", '"game-1": "assets/board/pub_background_game1.jpeg"')

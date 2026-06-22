@@ -1,46 +1,36 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
-SITE = Path("site/index.html")
+html = Path("site/index.html").read_text()
+errors = []
 
-FORBIDDEN = [
+for token in [
+    "Bracketeering Rules",
+    "FIFA Bracketeering Hub",
+    "official FIFA-supplied",
     "Developer note",
     "Game selector is currently UI-only",
-    "It does not switch gameplay, scoring, storage, routes, Supabase state, data loading, or board rendering yet.",
-    "data-rules-panel-section",
-    "rules-panel-active-label",
-    "Showing Game 1 rules",
-    "Showing Game 2 rules",
-]
-
-REQUIRED = [
-    "Bracketeering Rules",
-    "How Bracketeering Hub works",
-    "Group Stage Rules:",
-    "Knockout Stage Preview",
     "Development preview",
-]
+    "Game 1 Rules:",
+    "Game 2 Preview",
+]:
+    if token in html:
+        errors.append(f"forbidden Info panel text remains: {token}")
 
+for token in [
+    "Bracketeering Info",
+    "World Cup Bracketeering Hub",
+    "How to play",
+    "Navigate the game board like Google Maps",
+    "Group Stage is used as the first tiebreaker",
+    "Knockout Stage picks are locked when the first knockout match begins",
+    "16 points for correctly picking the World Cup champion",
+]:
+    if token not in html:
+        errors.append(f"expected Info panel token missing: {token}")
 
-def main() -> int:
-    html = SITE.read_text()
-    errors = []
+if errors:
+    print("Info panel developer note verification failed: " + "; ".join(errors))
+    raise SystemExit(1)
 
-    for token in FORBIDDEN:
-        if token in html:
-            errors.append(f"forbidden Rules panel text remains: {token}")
-
-    for token in REQUIRED:
-        if token not in html:
-            errors.append(f"expected single Rules panel token missing: {token}")
-
-    if errors:
-        print("Rules panel lifecycle-stage nomenclature verification failed: " + "; ".join(errors))
-        return 1
-
-    print("OK: WC2026 Rules panel is single-display, uses lifecycle-stage naming, and exposes no developer-only caveats.")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+print("OK: WC2026 Info panel is single-display, player-facing, and exposes no developer-only caveats.")
