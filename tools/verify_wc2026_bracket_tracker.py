@@ -173,7 +173,7 @@ def main() -> int:
     asset_paths = read("site/js/services/assetPaths.js")
     asset_required = [
         'backgroundImage: "assets/board/pub_background_game1.jpeg"',
-        'svgGameboardDefinition: "assets/board/gameboard.svg"',
+        'svgGameboardDefinition: "assets/playfield/uniform_pick_card_gameboard.svg"',
         'geometryManifest: "data/geometry/gameboard_manifest.json"',
     ]
     missing_assets = [token for token in asset_required if token not in asset_paths]

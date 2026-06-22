@@ -50,6 +50,7 @@ verify:
 	python3 tools/verify_wc2026_game2_r32_readonly_rendering.py
 	python3 tools/verify_wc2026_picked_bracket_cell_identity_rendering.py
 	python3 tools/verify_wc2026_single_geometry_truth_li.py
+	python3 tools/verify_wc2026_runtime_uses_single_geometry_svg_truth.py
 	python3 tools/verify_wc2026_final_four_center_stack_geometry.py
 	python3 tools/verify_wc2026_final_four_center_stack_pick_menu.py
 	python3 tools/verify_wc2026_unpicked_bracket_cells_choose_team.py
