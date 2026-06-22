@@ -458,6 +458,19 @@ export function createBracketView(root) {
       }
 
       button.append(label, value);
+
+      if (displayTeam && String(slot.slotId || "").toUpperCase() === "CHAMPION") {
+        button.classList.add("is-champion-winner");
+        const winnerFlag = displayTeam.flag || "🏆";
+        button.dataset.winnerFlag = winnerFlag;
+
+        const aura = document.createElement("span");
+        aura.className = "champion-pixel-aura";
+        aura.setAttribute("aria-hidden", "true");
+        aura.textContent = `${winnerFlag} ${winnerFlag}\n${winnerFlag} ${winnerFlag}`;
+        button.prepend(aura);
+      }
+
       if (displayTeam) button.classList.add("has-pick");
       if (game2ResolvedR32Display) {
         button.classList.add("has-game2-resolved-r32");

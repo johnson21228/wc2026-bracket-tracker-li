@@ -10,22 +10,22 @@ errors = []
 for token in [
     'String(slot.slotId || "").toUpperCase() === "CHAMPION"',
     'button.classList.add("is-champion-winner")',
-    'button.dataset.winnerFlag = displayTeam.flag || ""',
-    '--wc2026-champion-aura-x',
-    '--wc2026-champion-aura-y',
+    'button.dataset.winnerFlag = winnerFlag',
+    'const aura = document.createElement("span")',
+    'aura.className = "champion-pixel-aura"',
+    'aura.textContent = `${winnerFlag} ${winnerFlag}\\n${winnerFlag} ${winnerFlag}`',
+    'button.prepend(aura)',
 ]:
     if token not in view:
         errors.append(f"missing view token: {token}")
 
 for token in [
-    "Champion Pixel Aura",
+    "Champion Pixel Aura DOM underlay",
     ".pick-slot-button.is-champion-winner",
-    "content:",
-    'attr(data-winner-flag) " " attr(data-winner-flag) "\\A"',
-    'attr(data-winner-flag) " " attr(data-winner-flag);',
+    "position: absolute;",
+    ".champion-pixel-aura",
     "white-space: pre;",
-    "filter:",
-    "box-shadow:",
+    "opacity: .42;",
     "drop-shadow",
     "pointer-events: none",
 ]:
@@ -41,4 +41,4 @@ if errors:
         print(f"- {error}")
     raise SystemExit(1)
 
-print("OK: WC2026 Champion Pixel Aura renders only for a picked CHAMPION slot using a fuzzy glowing 2x2 flag underlay.")
+print("OK: WC2026 Champion Pixel Aura renders as an explicit visible 2x2 flag DOM underlay for a picked CHAMPION slot.")
