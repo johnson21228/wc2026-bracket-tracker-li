@@ -764,12 +764,11 @@ export function createBracketView(root) {
 
     const table = document.createElement("table");
     table.className = "group-panel-table group-panel-standings";
-    table.innerHTML = `<thead><tr><th>Rank</th><th>Team</th><th>MP</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Context</th></tr></thead>`;
+    table.innerHTML = `<thead><tr><th>Rank</th><th>Team</th><th>MP</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead>`;
     const body = document.createElement("tbody");
     for (const entry of groupContext.entries || groupEntries(groupContext)) {
       const row = document.createElement("tr");
-      const context = qualificationText(entry);
-      row.innerHTML = `<td>${entry.rank ?? ""}</td><td>${entry.name || entry.abbr}</td><td>${entry.played ?? ""}</td><td>${entry.wins ?? ""}</td><td>${entry.draws ?? ""}</td><td>${entry.losses ?? ""}</td><td>${entry.goalsFor ?? ""}</td><td>${entry.goalsAgainst ?? ""}</td><td>${entry.goalDifference ?? ""}</td><td>${entry.points ?? ""}</td><td><span class="group-panel-qualification">${context}</span></td>`;
+      row.innerHTML = `<td>${entry.rank ?? ""}</td><td>${entry.name || entry.abbr}</td><td>${entry.played ?? ""}</td><td>${entry.wins ?? ""}</td><td>${entry.draws ?? ""}</td><td>${entry.losses ?? ""}</td><td>${entry.goalsFor ?? ""}</td><td>${entry.goalsAgainst ?? ""}</td><td>${entry.goalDifference ?? ""}</td><td>${entry.points ?? ""}</td>`;
       body.append(row);
     }
     table.append(body);

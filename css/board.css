@@ -398,13 +398,6 @@
   border-bottom: 1px solid rgba(255,255,255,.14);
 }
 
-.group-panel-qualification {
-  display: inline-block;
-  border-radius: 999px;
-  padding: 3px 7px;
-  background: rgba(255,255,255,.10);
-  text-transform: capitalize;
-}
 
 .group-panel-matches {
   margin: 12px 0 0;
