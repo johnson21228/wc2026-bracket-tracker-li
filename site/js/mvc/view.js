@@ -51,15 +51,8 @@ export function createBracketView(root) {
 }
 
   function disabledReasonForActiveGame(slot) {
-    const activeGame = activeGameValue();
-    if (activeGame === "game-1" && slot.round !== "R32") {
-      return "Waiting for Round of 32 precedent.";
-    }
-    if (activeGame === "game-2" && slot.round === "R32") {
-      return "Waiting for earlier picks.";
-    }
     return "";
-  }
+}
 
 
   function clampBoardScale(value) {
