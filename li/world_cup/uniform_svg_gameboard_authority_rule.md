@@ -61,3 +61,33 @@ The center Final Four pick card is special. It may be taller and wider than stan
 This rule establishes the asset pipeline and geometry authority only. It does not require Game 1 or Game 2 to switch immediately.
 
 Legacy board assets remain valid until a later migration CB intentionally points pages at this SVG/manifest family.
+
+<!-- WC2026_SINGLE_GEOMETRY_TRUTH_START -->
+## Single Geometry Truth
+
+WC2026 board geometry has one canonical truth.
+
+The source-truth board geometry artifact is:
+
+- `site/assets/playfield/uniform_pick_card_gameboard.svg`
+
+The app-readable runtime projection is:
+
+- `site/data/geometry/uniform_pick_card_gameboard_manifest.json`
+
+The rendered/review derivative is:
+
+- `site/assets/playfield/uniform_pick_card_gameboard.png`
+
+Canonical rule:
+
+- SVG/source geometry is the source-truth board geometry.
+- JSON manifest is a generated/runtime projection of the SVG/source geometry.
+- PNG is a rendered derivative for review, fallback, or visual inspection.
+- Runtime code may read JSON for convenience, but JSON must not become an independent hand-maintained geometry truth.
+- CSS may style rendered surfaces, but CSS must not define canonical slot bounds.
+- View/controller/model code must not invent pick-cell geometry that is absent from the source-truth geometry.
+- Geometry changes must update the source-truth SVG first, then regenerate or synchronize the JSON projection from that same source.
+
+This prevents SVG, JSON, PNG, CSS, and runtime code from becoming competing geometry authorities.
+<!-- WC2026_SINGLE_GEOMETRY_TRUTH_END -->
