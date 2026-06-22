@@ -6,13 +6,19 @@
   <title>WC2026 Bracket Tracker</title>
   <link rel="preload" as="image" href="assets/board/pub_background_game1.jpeg">
   <link rel="preload" as="image" href="assets/playfield/uniform_pick_card_gameboard.svg">
-  <link rel="stylesheet" href="css/app.css?v=active-game-pick-gating">
+  <link rel="stylesheet" href="css/app.css?v=map-style-full-window-board">
   <link rel="stylesheet" href="css/board.css?v=active-game-background">
   <link rel="stylesheet" href="css/dev.css?v=active-game-background">
 </head>
 <body>
   <main id="wc2026-app" class="wc2026-app" data-wc2026-app>
     <section class="app-shell" aria-labelledby="app-title">
+      <div class="map-board-icon-controls" data-map-board-icon-controls aria-label="Board tools">
+        <button type="button" class="map-icon-button" data-board-zoom-in aria-label="Zoom in">+</button>
+        <button type="button" class="map-icon-button" data-info-panel-open data-rules-panel-open aria-haspopup="dialog" aria-controls="info-panel" aria-label="Get info">i</button>
+        <button type="button" class="map-icon-button" data-board-zoom-out aria-label="Zoom out">−</button>
+      </div>
+
       <header class="app-header">
         <p class="eyebrow">World Cup 2026</p>
         <h1 id="app-title">Bracketeering Hub</h1>
@@ -27,70 +33,77 @@
           </div>
         </div>
         <div class="app-actions">
-          <button type="button" class="ghost-button rules-button" data-rules-panel-open aria-haspopup="dialog" aria-controls="rules-panel">Rules</button>
+          <button type="button" class="ghost-button rules-button" data-info-panel-open data-rules-panel-open aria-haspopup="dialog" aria-controls="info-panel">Info</button>
           <button type="button" class="ghost-button" data-action="clear-all">Clear picks</button>
-        <div class="board-zoom-controls" data-board-zoom-controls>
-          <label for="board-zoom-select">Board zoom</label>
-          <select id="board-zoom-select" data-board-zoom aria-label="Board zoom">
-            <option value="0.5">50%</option>
-            <option value="0.75">75%</option>
-            <option value="1" selected>100%</option>
-            <option value="1.25">125%</option>
-          </select>
-        </div>
-        <fieldset class="dev-game-selector" data-dev-game-selector aria-label="Developer stage selector">
-          <legend>Dev game view</legend>
-          <label class="dev-game-selector-option">
-            <input type="radio" name="dev-game-view" value="game-1" checked data-dev-game-selector-option>
-            <span>Group Stage</span>
-          </label>
-          <label class="dev-game-selector-option">
-            <input type="radio" name="dev-game-view" value="game-2" data-dev-game-selector-option>
-            <span>Knockout Stage</span>
-          </label>
-        </fieldset>
+          <div class="board-zoom-controls" data-board-zoom-controls>
+            <label for="board-zoom-select">Board zoom</label>
+            <select id="board-zoom-select" data-board-zoom aria-label="Board zoom">
+              <option value="0.5">50%</option>
+              <option value="0.75">75%</option>
+              <option value="1" selected>100%</option>
+              <option value="1.25">125%</option>
+            </select>
+          </div>
+          <fieldset class="dev-game-selector" data-dev-game-selector aria-label="Developer stage selector" data-legacy-label="Dev game view">
+            <legend>Stage selector</legend>
+            <label class="dev-game-selector-option">
+              <input type="radio" name="dev-game-view" value="game-1" checked data-dev-game-selector-option>
+              <span>Group Stage</span>
+            </label>
+            <label class="dev-game-selector-option">
+              <input type="radio" name="dev-game-view" value="game-2" data-dev-game-selector-option>
+              <span>Knockout Stage</span>
+            </label>
+          </fieldset>
         </div>
       </header>
-      <section class="rules-panel-backdrop" data-rules-panel id="rules-panel" hidden>
-        <div class="rules-panel" role="dialog" aria-modal="true" aria-labelledby="rules-panel-title">
-          <div class="rules-panel-header">
+
+      <section class="rules-panel-backdrop info-panel-backdrop" data-info-panel data-rules-panel id="info-panel" hidden>
+        <div class="rules-panel info-panel" role="dialog" aria-modal="true" aria-labelledby="info-panel-title">
+          <div class="rules-panel-header info-panel-header">
             <div>
-              <p class="rules-panel-kicker">Bracketeering Rules</p>
-              <h2 id="rules-panel-title">Rules</h2>
+              <p class="rules-panel-kicker info-panel-kicker">Bracketeering Info</p>
+              <h2 id="info-panel-title">World Cup Bracketeering Hub</h2>
             </div>
-            <button type="button" class="ghost-button rules-panel-close" data-rules-panel-close>Close</button>
+            <button type="button" class="ghost-button rules-panel-close info-panel-close" data-info-panel-close data-rules-panel-close>Close</button>
           </div>
-          <div class="rules-panel-body" tabindex="0">
-            <section class="rules-panel-section">
-              <h3>How Bracketeering Hub works</h3>
-              <p>Bracketeering Hub is being developed as one continuous two-game World Cup pool. Group Stage asks players to predict the Round of 32 field before the final group-stage matches are played. Knockout Stage resets the bracket to the official FIFA-supplied Round of 32 field, then asks players to pick winners through the knockout rounds.</p>
-              <p>When the site is live for real play, the transition from Group Stage to Knockout Stage should feel seamless: Group Stage closes at the Group Stage Finale, then Knockout Stage opens on the official FIFA Round of 32 bracket.</p>
+          <div class="rules-panel-body info-panel-body" tabindex="0">
+            <section class="rules-panel-section info-panel-section">
+              <h3>How to play</h3>
+              <p>This is your World Cup Bracketeering Hub. Tap or click each bracket slot and pick a team. This is Bracketeering!</p>
+              <p>Navigate the game board like Google Maps: scroll, zoom, and pan to move around, then tap or click to make your picks.</p>
+              <p>If a pick turns red, open that cell and choose a currently available team to correct it.</p>
+              <p>Your picks are saved in your browser for now. This website may later evolve to store your picks online and let players view other players’ picks.</p>
 
-              <h4>Development preview</h4>
-              <p>The Dev Stage selector is present while the games are still being developed. It lets viewers preview Group Stage and a simulated Knockout Stage before the site is opened for real pool play.</p>
-              <p>For now, viewers are encouraged to make Group Stage picks and try the simulated Knockout Stage view.</p>
+              <h4>The game has two parts</h4>
+              <p><strong>Group Stage</strong> asks players to predict the teams that will reach the Round of 32 before the final group-stage matches are played.</p>
+              <p><strong>Knockout Stage</strong> starts from the official Round of 32 field and asks players to pick winners through the knockout rounds.</p>
 
-              <h4>Group Stage Rules:</h4>
-              <p>Before the final round of group-stage matches begins, choose the teams you think will make the Round of 32.</p>
-              <p>Group Stage locks at the start of the <strong>Group Stage Finale</strong>: all Group Stage picks must be submitted before kickoff of the earliest third-round group-stage match.</p>
-              <p>Some Round-of-32 places may already be known by then. That is part of the game. Many other places will still depend on final group-stage match results, including standings, goal difference, and third-place qualification.</p>
+              <h4>Group Stage</h4>
+              <p>Group Stage picks are locked at the start of the <strong>Group Stage Finale</strong>. All Group Stage picks must be submitted before kickoff of the earliest third-round group-stage match.</p>
+              <p>Group Stage is used as the first tiebreaker if there is a tie after the final match on July 19.</p>
+              <p>Some Round-of-32 places may already be known by the time Group Stage locks. That is part of the game. Other places will still depend on final group-stage results, including standings, goal difference, and third-place qualification.</p>
 
-              <h4>Knockout Stage Preview</h4>
-              <p>Knockout Stage is the knockout-bracket game. It starts from the official FIFA-supplied Round of 32 field, not from each player’s Group Stage predictions. During development, Knockout Stage may use simulated or fallback Round of 32 assignments so the bracket flow can be tested.</p>
+              <h4>Knockout Stage</h4>
+              <p>Knockout Stage picks are locked when the first knockout match begins.</p>
 
-              <h4>Scoring preview</h4>
+              <h4>Scoring</h4>
+              <p><strong>Group Stage:</strong> 1 point for each correctly predicted Round-of-32 team. The team must be in the correct bracket slot.</p>
+              <p><strong>Knockout Stage:</strong></p>
               <ul>
-                <li>Group Stage: 1 point for each correctly predicted Round-of-32 team.</li>
-                <li>Knockout Stage preview scoring: later knockout rounds are expected to be worth more than earlier rounds.</li>
+                <li>1 point for each correct Round of 32 winner.</li>
+                <li>2 points for each correct Round of 16 winner.</li>
+                <li>4 points for each correct Quarterfinal winner.</li>
+                <li>8 points for each correct Semifinal winner.</li>
+                <li>16 points for correctly picking the World Cup champion.</li>
               </ul>
-
-              <h4>Rule status</h4>
-              <p>These rules are provisional while Bracketeering Hub is under development. Before real pool play begins, the pool owner should lock the final scoring rules and game timing.</p>
+              <p>Knockout points are awarded when the team you picked wins that match. Later rounds are worth more because they are harder and more important.</p>
             </section>
           </div>
         </div>
       </section>
-      <div class="board-scroll" data-board-scroll>
+
+<div class="board-scroll" data-board-scroll>
         <div class="board-scale-frame" data-board-scale-frame>
           <section class="pixel-native-board-plane" data-board-plane aria-label="World Cup bracket board"></section>
         </div>

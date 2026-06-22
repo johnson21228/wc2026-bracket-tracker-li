@@ -5,34 +5,39 @@ import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
 
 
-function setupRulesPanel(root) {
-  const openButton = root.querySelector("[data-rules-panel-open]");
-  const panel = root.querySelector("[data-rules-panel]");
-  if (!openButton || !panel) return;
+function setupInfoPanel(root) {
+  const openButtons = Array.from(root.querySelectorAll("[data-info-panel-open], [data-rules-panel-open]"));
+  const panel = root.querySelector("[data-info-panel]") || root.querySelector("[data-rules-panel]");
+  if (!openButtons.length || !panel) return;
 
-  const closeButton = panel.querySelector("[data-rules-panel-close]");
+  const closeButton = panel.querySelector("[data-info-panel-close]") || panel.querySelector("[data-rules-panel-close]");
+  let lastOpenButton = openButtons[0];
 
-  function openRulesPanel() {
+  function openInfoPanel(event) {
+    if (event?.currentTarget instanceof HTMLElement) {
+      lastOpenButton = event.currentTarget;
+    }
     panel.hidden = false;
     closeButton?.focus();
   }
 
-  function closeRulesPanel() {
+  function closeInfoPanel() {
     panel.hidden = true;
-    openButton.focus();
+    lastOpenButton?.focus();
   }
 
-  openButton.addEventListener("click", openRulesPanel);
-  closeButton?.addEventListener("click", closeRulesPanel);
+  openButtons.forEach((button) => button.addEventListener("click", openInfoPanel));
+  closeButton?.addEventListener("click", closeInfoPanel);
 
   panel.addEventListener("click", (event) => {
-    if (event.target === panel) closeRulesPanel();
+    if (event.target === panel) closeInfoPanel();
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !panel.hidden) closeRulesPanel();
+    if (event.key === "Escape" && !panel.hidden) closeInfoPanel();
   });
 }
+
 
 const ACTIVE_GAME_BACKGROUND_IMAGES = Object.freeze({
   "game-1": "assets/board/pub_background_game1.jpeg",
@@ -78,7 +83,7 @@ async function main() {
     throw new Error("Missing [data-wc2026-app] site root.");
   }
 
-  setupRulesPanel(root);
+  setupInfoPanel(root);
   const model = await createBracketModel();
   const view = createBracketView(root);
   setupActiveGameBackground(root);

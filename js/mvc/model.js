@@ -390,6 +390,39 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     return slot.round === "R32" ? getR32Choices(slotId) : getKnockoutChoices(slotId);
   }
 
+  function getFinalFourKnownFeederChoicesForValidity(slotId) {
+    const finalFourSlot = finalFourSlotsById.get(slotId);
+    if (!finalFourSlot) return [];
+
+    if (slotId === "FINAL-LEFT" || slotId === "FINAL-RIGHT") {
+      return teamsFromSlotIds(finalFourSlot.sourceSlotIds);
+    }
+
+    if (slotId === "CHAMPION") {
+      return teamsFromSlotIds(["FINAL-LEFT", "FINAL-RIGHT"]);
+    }
+
+    if (slotId === "THIRD-PLACE-WINNER") {
+      return uniqueTeams([
+        loserFromSemifinal("FINAL-LEFT", ["L-SF-01", "L-SF-02"]),
+        loserFromSemifinal("FINAL-RIGHT", ["R-SF-01", "R-SF-02"]),
+      ].filter(Boolean));
+    }
+
+    return [];
+  }
+
+  function getKnownFeederChoicesForValidity(slot) {
+    if (!slot || slot.round === "R32") return getChoices(slot?.slotId);
+
+    if (finalFourSlotsById.has(slot.slotId)) {
+      return getFinalFourKnownFeederChoicesForValidity(slot.slotId);
+    }
+
+    const feederSlotIds = dependencyMap.get(slot.slotId) || [];
+    return uniqueTeams(feederSlotIds.map((feederId) => teamForFeederPath(feederId)).filter(Boolean));
+  }
+
   function standingsEntryForTeam(groupId, teamId) {
     const standings = getGroupStandings(groupId);
     const targetId = String(teamId || "").toUpperCase();
@@ -416,10 +449,12 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     if (!team) return { state: "empty", reason: "No pick has been made." };
 
     const choices = getChoices(slot.slotId);
-    if (choices.length && !choices.some((choice) => choice.id === team.id)) {
+    const knownFeederChoices = getKnownFeederChoicesForValidity(slot);
+    const validityChoices = choices.length ? choices : knownFeederChoices;
+    if (validityChoices.length && !validityChoices.some((choice) => choice.id === team.id)) {
       return {
         state: "invalid",
-        reason: `${team.abbr || team.id} is not available from this slot's current source or feeder path.`,
+        reason: `${team.abbr || team.id} is not one of the current feeder teams for this winner slot.`,
       };
     }
 

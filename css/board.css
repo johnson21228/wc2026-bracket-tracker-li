@@ -983,3 +983,40 @@
   pointer-events: auto !important;
   cursor: pointer !important;
 }
+
+
+/* Card 265: floating board surfaces over app overlay controls.
+   Pick menus and group panels are transient board-owned surfaces. When either is open,
+   promote the board scroll stacking context above fixed app chrome such as login and map controls. */
+:root {
+  --wc-z-app-overlay-control: 46;
+  --wc-z-floating-board-surface-host: 13000;
+  --wc-z-pick-menu: 13100;
+  --wc-z-group-panel: 13200;
+}
+
+.board-scroll:has(.r32-pick-menu-popover),
+.board-scroll:has(.pick-menu-popover),
+.board-scroll:has(.group-panel-popover) {
+  z-index: var(--wc-z-floating-board-surface-host);
+}
+
+.board-r32-pick-menu-layer,
+.r32-pick-menu-layer,
+.pick-menu-layer,
+[data-pick-menu-layer] {
+  z-index: var(--wc-z-pick-menu);
+}
+
+.board-group-panel-layer,
+.group-panel-layer,
+[data-group-panel-layer] {
+  z-index: var(--wc-z-group-panel);
+}
+
+.r32-pick-menu-popover,
+.pick-menu-popover,
+.group-panel-popover,
+[data-floating-surface-placement="zoom-50-safe"] {
+  z-index: var(--wc-z-group-panel) !important;
+}
