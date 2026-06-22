@@ -39,7 +39,7 @@
   user-select: none;
 }
 
-.board-background-layer { z-index: 0; opacity: .72; }
+.board-background-layer { z-index: 0; opacity: .48; }
 .board-linework-layer { z-index: 1; opacity: .92; }
 .board-pick-layer { z-index: 2; pointer-events: none; }
 .board-menu-layer { z-index: 3; pointer-events: none; }
