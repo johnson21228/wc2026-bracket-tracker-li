@@ -302,14 +302,14 @@ h1 { margin: 0; font-size: clamp(28px, 4vw, 56px); }
 }
 
 
-.pick-slot-button.is-disabled-by-active-game {
+.pick-slot-button.is-stage-presentation-context {
   cursor: not-allowed;
   filter: saturate(0.8);
   opacity: 0.82;
 }
 
-.pick-slot-button.is-disabled-by-active-game .pick-slot-value,
-.pick-slot-button.is-disabled-by-active-game .pick-slot-label {
+.pick-slot-button.is-stage-presentation-context .pick-slot-value,
+.pick-slot-button.is-stage-presentation-context .pick-slot-label {
   opacity: 0.88;
 }
 
@@ -327,4 +327,18 @@ h1 { margin: 0; font-size: clamp(28px, 4vw, 56px); }
 
 .board-scroll.is-drag-panning * {
   user-select: none;
+}
+
+
+/* Card 254: lifecycle stage is presentation-only for gameplay.
+   Legacy active-game disabled classes may remain in older markup during
+   migration, but they must not hide, mute, or block pick surfaces. */
+.is-stage-presentation-context,
+.has-active-game-disabled-state,
+[data-stage-presentation-context="true"],
+[data-stage-presentation-context="true"] {
+  opacity: inherit !important;
+  filter: none !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
 }

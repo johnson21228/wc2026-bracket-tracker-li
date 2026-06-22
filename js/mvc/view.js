@@ -46,20 +46,17 @@ export function createBracketView(root) {
     return selected?.value || root.dataset.activeGame || "game-1";
   }
 
-  function slotEnabledForActiveGame(slot) {
-    const activeGame = activeGameValue();
-    if (activeGame === "game-1") return slot.round === "R32";
-    if (activeGame === "game-2") return slot.round !== "R32";
+  function slotEnabledByPrecedent(slot) {
     return true;
-  }
+}
 
   function disabledReasonForActiveGame(slot) {
     const activeGame = activeGameValue();
     if (activeGame === "game-1" && slot.round !== "R32") {
-      return "Group Stage only accepts Round of 32 picks.";
+      return "Waiting for Round of 32 precedent.";
     }
     if (activeGame === "game-2" && slot.round === "R32") {
-      return "Knockout Stage starts after the Round of 32 field.";
+      return "Waiting for earlier picks.";
     }
     return "";
   }
@@ -345,20 +342,19 @@ export function createBracketView(root) {
       button.className = "pick-slot-button";
       button.dataset.slotId = slot.slotId;
       button.dataset.round = slot.round;
-      const enabledForActiveGame = slotEnabledForActiveGame(slot);
-      const activeGameDisabledReason = disabledReasonForActiveGame(slot);
+      const enabledByPrecedent = slotEnabledByPrecedent(slot);
+      const precedentUnavailableReason = disabledReasonForActiveGame(slot);
       const displayTeam = displayTeamForSlot(slot);
       const game2ResolvedR32Display = isGame2ResolvedR32Display(slot, displayTeam);
       const readOnlyGame2R32Display = game2ResolvedR32Display;
       const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display;
-      const disabledByActiveGame = !enabledForActiveGame && !readOnlyGame2R32Display;
-      button.disabled = disabledByPickability || disabledByActiveGame;
-      button.dataset.pickDisabledByActiveGame = enabledForActiveGame ? "false" : "true";
+      button.disabled = disabledByPickability;
+      button.dataset.pickDisabledByPrecedent = enabledByPrecedent ? "false" : "true";
       button.setAttribute(
         "aria-label",
         displayTeam
           ? `${playerFacingSlotLabel(slot)}: ${fullTeamLabel(displayTeam)}`
-          : `${playerFacingSlotLabel(slot)}: ${slot.pickable && enabledForActiveGame ? "choose team" : activeGameDisabledReason || "waiting for earlier picks"}`
+          : `${playerFacingSlotLabel(slot)}: ${slot.pickable ? "choose team" : "waiting for earlier picks"}`
       );
       applyBounds(button, slot.boundsPx);
 
@@ -418,10 +414,10 @@ export function createBracketView(root) {
         button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
         button.setAttribute("aria-label", `${slot.label}: invalid pick. ${button.title}`);
       }
-      if (slot.pickable && enabledForActiveGame) button.classList.add("is-pickable");
-      if (!enabledForActiveGame) {
-        button.classList.add("is-disabled-by-active-game");
-        button.title = activeGameDisabledReason;
+      if (slot.pickable) button.classList.add("is-pickable");
+      if (!enabledByPrecedent) {
+        button.classList.add("is-waiting-for-precedent");
+        button.title = precedentUnavailableReason;
       }
       button.addEventListener("click", () => handlers.onSlotClick?.(slot.slotId));
       layer.append(button);
@@ -461,13 +457,13 @@ export function createBracketView(root) {
     list.className = "final-four-pick-list";
 
     for (const pick of finalFourModel.picks || []) {
-      const enabledForActiveGame = slotEnabledForActiveGame(pick);
+      const enabledByPrecedent = slotEnabledByPrecedent(pick);
       const button = document.createElement("button");
       button.type = "button";
       button.className = "final-four-pick-row";
       button.dataset.slotId = pick.slotId;
       button.dataset.round = pick.round;
-      button.disabled = !(pick.pickable && enabledForActiveGame);
+      button.disabled = !pick.pickable;
       button.addEventListener("click", () => handlers.onFinalFourSlotClick?.(pick.slotId));
 
       const label = document.createElement("span");
@@ -480,7 +476,7 @@ export function createBracketView(root) {
         value.textContent = `${pick.selectedTeam.flag || ""} ${pick.selectedTeam.abbr || pick.selectedTeam.id}`.trim();
         button.classList.add("has-pick");
       } else {
-        value.textContent = pick.pickable && enabledForActiveGame ? "Pick" : "Waiting";
+        value.textContent = pick.pickable ? "Pick" : "Waiting";
         button.classList.add("is-unpicked");
       }
 
