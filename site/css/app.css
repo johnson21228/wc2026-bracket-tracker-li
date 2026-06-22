@@ -904,3 +904,51 @@ body {
   bottom: auto !important;
 }
 
+
+/* Card 277 runtime repair: readable sign-in panel anchored right, extending left.
+   The backdrop covers the full viewport so tapping empty space closes the panel. */
+.supabase-identity-surface {
+  contain: none !important;
+}
+
+.supabase-identity-surface .identity-panel-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  padding-top: max(72px, calc(env(safe-area-inset-top) + 64px)) !important;
+  padding-right: max(16px, env(safe-area-inset-right)) !important;
+  padding-left: max(16px, env(safe-area-inset-left)) !important;
+  padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+  box-sizing: border-box !important;
+}
+
+.supabase-identity-surface .identity-panel-backdrop[hidden] {
+  display: none !important;
+}
+
+.supabase-identity-surface .identity-panel {
+  width: min(440px, calc(100vw - 32px)) !important;
+  min-width: min(360px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px) !important;
+  max-height: calc(100vh - 88px) !important;
+  overflow: auto !important;
+  margin: 0 !important;
+}
+
+.supabase-identity-surface .identity-panel-header h2 {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+.supabase-identity-surface .identity-panel-intro,
+.supabase-identity-surface .identity-local-note,
+.supabase-identity-surface .identity-panel-state {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
