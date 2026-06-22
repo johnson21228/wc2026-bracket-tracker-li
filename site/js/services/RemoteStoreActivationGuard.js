@@ -49,10 +49,28 @@ function createRemoteStoreActivationGuard(input = {}) {
 
 const DEFAULT_REMOTE_STORE_ACTIVATION_GUARD = createRemoteStoreActivationGuard();
 
+function assertRemoteStoreActivationAllowed({
+  requestedMode,
+  explicitDeveloperSmoke = false,
+  publicRuntime = true,
+} = {}) {
+  if (requestedMode === "remote" && explicitDeveloperSmoke === true && publicRuntime === false) {
+    return true;
+  }
+
+  if (requestedMode === "remote") {
+    DEFAULT_REMOTE_STORE_ACTIVATION_GUARD.assertRemoteStoreEnabled();
+  }
+
+  return true;
+}
+
+
 export {
   DEFAULT_REMOTE_STORE_ACTIVATION,
   DEFAULT_REMOTE_STORE_ACTIVATION_GUARD,
   REMOTE_STORE_DISABLED_REASON,
+  assertRemoteStoreActivationAllowed,
   createRemoteStoreActivationGuard,
   normalizeRemoteStoreActivation,
 };

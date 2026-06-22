@@ -100,6 +100,7 @@ verify:
 	node tools/run_wc2026_supabase_bracket_store_offline_contract_harness.js
 	python3 tools/verify_wc2026_supabase_bracket_store_offline_contract_harness.py
 	python3 tools/verify_wc2026_supabase_sql_dashboard_apply_checklist.py
+	python3 tools/verify_wc2026_guarded_supabase_remote_smoke_path.py
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py
 
