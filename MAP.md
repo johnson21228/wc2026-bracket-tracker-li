@@ -117,3 +117,5 @@ Invariant: `pickId is truth; visual slot is projection; UI geometry may change; 
 Invariant: all board actors speak native gameboard coordinates; only the Pages View shell converts native coordinates to rendered screen coordinates.
 
 - `li/world_cup/active_bracket_store_boundary_rule.md` — keeps local and future Supabase bracket stores separate while sharing BracketDocument/R32 lock rules.
+
+- `li/repo/public_pages_release_line_guard_rule.md` — protects `main` as the public Pages-safe line while Supabase prep stays on feature branches.

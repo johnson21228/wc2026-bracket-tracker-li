@@ -32,6 +32,7 @@ verify:
 
 	python3 tools/verify_wc2026_pages_publish_snapshot.py
 	python3 tools/verify_wc2026_fail_closed_pages_publish.py
+	python3 tools/verify_wc2026_public_pages_release_line_guard.py
 	python3 tools/verify_wc2026_pub_hero_header.py
 	python3 tools/verify_wc2026_hero_banner_spelling.py
 	python3 tools/verify_wc2026_bracketeering_pub_hub_title.py
