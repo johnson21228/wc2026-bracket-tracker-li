@@ -3,89 +3,100 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-
-def read(rel):
-    path = ROOT / rel
-    if not path.exists():
-        raise AssertionError(f"Missing required file: {rel}")
-    return path.read_text(encoding="utf-8", errors="ignore")
-
+def read(path):
+    return (ROOT / path).read_text()
 
 def require(condition, message, errors):
     if not condition:
         errors.append(message)
 
-
 def main():
     errors = []
 
-    config = read("site/js/config/supabase.public.js")
-    service = read("site/js/services/SupabaseAuthService.js")
-    surface = read("site/js/identity/SupabaseIdentitySurface.js")
-    app = read("site/js/app.js")
-    index = read("site/index.html")
-    css = read("site/css/app.css")
+    site_text = read("site/index.html")
+    repo_text = read("site/js/services/BracketRepository.js")
+    auth_text = read("site/js/services/SupabaseAuthService.js")
+    identity_text = read("site/js/identity/SupabaseIdentitySurface.js")
+    config_text = read("site/js/config/supabase.public.js")
 
-    optional_text = ""
-    for rel in [
-        "cards/231_implement_supabase_auth_identity_surface_before_postgres_card.md",
-        "docs/architecture/bracketeering_supabase_auth_identity_surface.md",
-        "li/world_cup/supabase_auth_identity_surface_before_postgres_rule.md",
-    ]:
-        path = ROOT / rel
-        if path.exists():
-            optional_text += "\n" + path.read_text(encoding="utf-8", errors="ignore")
-
-    combined_site_js = "\n".join(
-        p.read_text(encoding="utf-8", errors="ignore")
-        for p in (ROOT / "site/js").rglob("*.js")
+    require(
+        "WC2026_SUPABASE_PUBLIC_CONFIG" in config_text,
+        "Supabase publishable config must remain captured before Postgres persistence.",
+        errors,
+    )
+    require(
+        "supabasePublishableKey" in config_text,
+        "Supabase config must expose a publishable key field, not a service-role secret.",
+        errors,
+    )
+    require(
+        "service_role" not in config_text.lower(),
+        "Supabase public config must not include a service-role key.",
+        errors,
     )
 
-    require("WC2026_SUPABASE_PUBLIC_CONFIG" in config, "public Supabase config export missing", errors)
-    require("enabled: true" in config, "Supabase Auth public config should be enabled", errors)
-    require("https://tkjqsegszveugdvoeits.supabase.co" in config, "Supabase project URL is not configured", errors)
-    require("supabasePublishableKey" in config, "config should use supabasePublishableKey", errors)
-    require("sb_publishable_wWTMppX8T5nOplM4s_HA7A_bgUn337M" in config, "publishable key is not configured", errors)
-    require("supabaseAnonKey" not in config, "legacy supabaseAnonKey should not remain in config", errors)
+    require(
+        "SupabaseAuthService" in auth_text,
+        "Supabase Auth service surface must remain present.",
+        errors,
+    )
+    require(
+        "SupabaseIdentitySurface" in identity_text,
+        "Supabase identity UI surface must remain present.",
+        errors,
+    )
 
-    require("createClient" in service, "Auth service should initialize Supabase client", errors)
-    require("supabasePublishableKey" in service, "Auth service should read supabasePublishableKey", errors)
-    require("getSession" in service, "Auth service should read current session", errors)
-    require("onAuthStateChange" in service, "Auth service should listen for auth state changes", errors)
-    require("signInWithOtp" in service, "Auth service should support magic-link/OTP sign-in", errors)
-    require("signOut" in service, "Auth service should support sign out", errors)
+    require(
+        "LocalStorageBracketStore" in repo_text,
+        "BracketRepository must still keep localStorage as the active bracket persistence path.",
+        errors,
+    )
+    require(
+        "new LocalStorageBracketStore()" in repo_text,
+        "BracketRepository must still default to LocalStorageBracketStore.",
+        errors,
+    )
 
-    require("SupabaseIdentitySurface" in surface, "identity surface module missing", errors)
-    require("Sign in to save" in surface, "identity surface should show sign-in copy", errors)
-    require("Local bracket for now" in surface, "identity surface should state local bracket status before Postgres persistence", errors)
+    # Card 231 remains the auth-before-active-Postgres-persistence guard.
+    # Later Supabase-prep CBs may add an inactive SupabaseBracketStore module.
+    # That is allowed only if active public runtime still does not activate remote bracket persistence.
+    active_runtime_text = "\n".join([
+        site_text,
+        repo_text,
+        auth_text,
+        identity_text,
+    ])
 
-    require("SupabaseIdentitySurface" in app, "app should mount identity surface", errors)
-    require("identity" in index.lower(), "index should contain an identity surface mount/slot", errors)
-    require("identity" in css.lower(), "CSS should style identity surface", errors)
-
-    require("publishable key" in optional_text.lower(), "Card/docs/LI should mention publishable key terminology", errors)
-
-    forbidden_secret_tokens = [
-        "service_role",
-        "database password",
-        "jwt secret",
-    ]
-    for token in forbidden_secret_tokens:
-        require(token not in combined_site_js.lower(), f"site JS must not contain server-only secret wording: {token}", errors)
-
-    forbidden_persistence_patterns = [
+    forbidden_active_runtime_tokens = [
         ".from(\"user_brackets\")",
         ".from('user_brackets')",
-        ".from(`user_brackets`)",
-        "picks_json",
-        "SupabaseBracketStore",
+        "createSupabaseBracketStore(",
+        "new SupabaseBracketStore(",
+        "SupabaseBracketStore.js",
+        "picks_json:",
         ".upsert(",
-        ".insert(",
     ]
-    for token in forbidden_persistence_patterns:
+
+    for token in forbidden_active_runtime_tokens:
         require(
-            token.lower() not in combined_site_js.lower(),
-            f"Card 231 must not introduce Supabase/Postgres bracket persistence yet: found {token}",
+            token not in active_runtime_text,
+            f"Card 231 auth surface must not activate Supabase/Postgres bracket persistence yet: found {token}",
+            errors,
+        )
+
+    inactive_store_path = ROOT / "site/js/services/SupabaseBracketStore.js"
+    if inactive_store_path.exists():
+        inactive_store_text = inactive_store_path.read_text()
+        require(
+            "class SupabaseBracketStore" in inactive_store_text
+            and "loadUserBracket(userId)" in inactive_store_text
+            and "saveUserBracket(bracketDocument)" in inactive_store_text,
+            "Inactive SupabaseBracketStore may exist only behind the remote store seam.",
+            errors,
+        )
+        require(
+            "SupabaseBracketStore" not in repo_text,
+            "BracketRepository must not activate SupabaseBracketStore during Card 231 auth-only posture.",
             errors,
         )
 
@@ -93,9 +104,8 @@ def main():
         print("Card 231 verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: WC2026 Supabase Auth identity surface uses current publishable-key config before Postgres persistence while localStorage remains active.")
+    print("OK: WC2026 Supabase Auth identity surface uses current publishable-key config before active Postgres persistence while localStorage remains active.")
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -121,3 +121,5 @@ Invariant: all board actors speak native gameboard coordinates; only the Pages V
 - `li/repo/public_pages_release_line_guard_rule.md` — protects `main` as the public Pages-safe line while Supabase prep stays on feature branches.
 
 - `li/world_cup/supabase_remote_bracket_store_contract_rule.md` — defines the future Supabase bracket store contract before implementation while preserving the active store seam.
+
+- `li/world_cup/supabase_bracket_store_inactive_seam_rule.md` — allows `SupabaseBracketStore` to exist behind the inactive remote seam while local browser mode remains active.

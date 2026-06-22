@@ -75,11 +75,15 @@ def main():
         "canonical Supabase schema draft should remain available but not applied by this verifier",
         errors,
     )
-    require(
-        not (ROOT / "site/js/services/SupabaseBracketStore.js").exists(),
-        "this pre-implementation contract must not create SupabaseBracketStore.js yet",
-        errors,
-    )
+    # SupabaseBracketStore.js may now exist after the inactive-seam implementation CB.
+    # This contract verifier remains responsible for the architecture boundary; the inactive-seam verifier proves runtime activation has not happened accidentally.
+    if (ROOT / "site/js/services/SupabaseBracketStore.js").exists():
+        store_text = read("site/js/services/SupabaseBracketStore.js")
+        require(
+            "class SupabaseBracketStore" in store_text and "loadUserBracket(userId)" in store_text and "saveUserBracket(bracketDocument)" in store_text,
+            "SupabaseBracketStore.js may exist only if it implements the expected remote store contract",
+            errors,
+        )
 
     controller_paths = [
         ROOT / "site/js/controllers/Game1R32PickController.js",
