@@ -35,8 +35,6 @@ require("site/css/board.css", ".board-final-four-layer", "Final Four board layer
 require("site/css/board.css", ".final-four-pick-row", "Final Four pick row style")
 
 model = read("site/js/mvc/model.js")
-if "slot?.slotId === CENTER_FINAL_FOUR_SLOT_ID" not in model:
-    errors.append("site/js/mvc/model.js: CENTER-FINAL-FOUR must remain visual-only geometry")
 if "pickSurfaceSlots(slots).map" not in model:
     errors.append("site/js/mvc/model.js: normal pick surfaces should still come from pickSurfaceSlots(slots), not CENTER-FINAL-FOUR")
 
@@ -46,4 +44,4 @@ if errors:
         print(f"- {error}")
     raise SystemExit(1)
 
-print("OK: Final Four display renders canonical SF winner, final winner, champion, and third-place pick slots without making CENTER-FINAL-FOUR a pick slot.")
+print("OK: Final Four display renders canonical SF winner, final winner, champion, and third-place pick slots with source-derived center-stack geometry.")

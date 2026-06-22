@@ -29,7 +29,7 @@ if GAME2.exists():
         'R16: 16',
         'QF: 8',
         'SF: 4',
-        'FINAL_FOUR: 1',
+        'SF_WINNER: 2',
     ]
     for needle in required:
         if needle not in text:

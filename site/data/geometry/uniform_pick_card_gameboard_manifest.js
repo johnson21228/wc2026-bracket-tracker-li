@@ -12,7 +12,7 @@ window.WC2026_UNIFORM_PICK_CARD_GAMEBOARD_MANIFEST = {
     "height": 1024
   },
   "boardModel": {
-    "id": "uniform_pick_card_gameboard_v1_final_four_center_card",
+    "id": "uniform_pick_card_gameboard_final_four_center_stack",
     "description": "Transparent middle-layer material-colored bracket with sampled tan pick-card fills, lightened brown linework, stronger R32 selectable-target fill, uniform pick-card geometry through semifinal, and one special twice-tall Final Four center card.",
     "standardPickCardPx": {
       "width": 140,
@@ -22,14 +22,45 @@ window.WC2026_UNIFORM_PICK_CARD_GAMEBOARD_MANIFEST = {
       "width": 210,
       "height": 168
     },
-    "expectedPickCardRecords": 61,
+    "expectedPickCardRecords": 63,
     "roundCounts": {
       "R32": 32,
       "R16": 16,
       "QF": 8,
       "SF": 4,
-      "FINAL_FOUR": 1
-    }
+      "SF_WINNER": 2,
+      "CHAMPION": 1
+    },
+    "geometryTruth": "site/assets/playfield/uniform_pick_card_gameboard.svg",
+    "manifestRole": "generated/runtime projection",
+    "finalFourCenterStackPx": {
+      "source": "site/assets/playfield/uniform_pick_card_gameboard.svg",
+      "cells": [
+        {
+          "slotId": "FINAL-LEFT",
+          "x": 663,
+          "y": 382,
+          "width": 210,
+          "height": 44
+        },
+        {
+          "slotId": "CHAMPION",
+          "x": 558,
+          "y": 468,
+          "width": 420,
+          "height": 88
+        },
+        {
+          "slotId": "FINAL-RIGHT",
+          "x": 663,
+          "y": 596,
+          "width": 210,
+          "height": 44
+        }
+      ],
+      "championCellRule": "CHAMPION is twice the width and twice the height of FINAL-LEFT and FINAL-RIGHT."
+    },
+    "legacyFinalFourCard": "CENTER-FINAL-FOUR removed as runtime pick-slot geometry; source-truth SVG uses explicit center-stack slots."
   },
   "presentationPolicy": {
     "background": "transparent",
@@ -1163,23 +1194,64 @@ window.WC2026_UNIFORM_PICK_CARD_GAMEBOARD_MANIFEST = {
       "roundIndex": 2
     },
     {
-      "slotId": "CENTER-FINAL-FOUR",
-      "round": "FINAL_FOUR",
+      "slotId": "FINAL-LEFT",
+      "round": "SF_WINNER",
       "side": "center",
       "boundsPx": {
         "x": 663,
-        "y": 428,
+        "y": 382,
         "width": 210,
-        "height": 168
+        "height": 44
       },
-      "rx": 10,
-      "ry": 10,
+      "rx": 8,
+      "ry": 8,
       "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
-      "presentationClass": "pick-card-slot slot-final-four",
+      "presentationClass": "pick-card-slot slot-final-stack slot-final-left",
       "fillOpacity": 0.34,
       "stroke": "#AA9691",
-      "specialRole": "finalFourPickCard",
-      "note": "Special center Final Four pick card; taller than standard pick cards."
+      "roundIndex": 1,
+      "specialRole": "upper-semifinal-winner",
+      "note": "Source-derived Final Four center-stack runtime geometry projection."
+    },
+    {
+      "slotId": "CHAMPION",
+      "round": "CHAMPION",
+      "side": "center",
+      "boundsPx": {
+        "x": 558,
+        "y": 468,
+        "width": 420,
+        "height": 88
+      },
+      "rx": 12,
+      "ry": 12,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-final-stack slot-champion",
+      "fillOpacity": 0.34,
+      "stroke": "#AA9691",
+      "roundIndex": 1,
+      "specialRole": "final-winner-champion",
+      "note": "Source-derived Final Four center-stack runtime geometry projection."
+    },
+    {
+      "slotId": "FINAL-RIGHT",
+      "round": "SF_WINNER",
+      "side": "center",
+      "boundsPx": {
+        "x": 663,
+        "y": 596,
+        "width": 210,
+        "height": 44
+      },
+      "rx": 8,
+      "ry": 8,
+      "source": "uniform_pick_card_gameboard.svg#pick-card-slots",
+      "presentationClass": "pick-card-slot slot-final-stack slot-final-right",
+      "fillOpacity": 0.34,
+      "stroke": "#AA9691",
+      "roundIndex": 2,
+      "specialRole": "lower-semifinal-winner",
+      "note": "Source-derived Final Four center-stack runtime geometry projection."
     }
   ]
 };

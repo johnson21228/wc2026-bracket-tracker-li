@@ -79,7 +79,7 @@ def main() -> int:
     if native.get("width") != 1536 or native.get("height") != 1024:
         fail("Geometry native size must remain 1536x1024:", ["site/data/geometry/gameboard_manifest.json"])
     rounds = {slot.get("round") for slot in geometry.get("slots", [])}
-    for required_round in ["R32", "R16", "QF", "SF", "FINAL_FOUR"]:
+    for required_round in ["R32", "R16", "QF", "SF", "SF_WINNER", "CHAMPION"]:
         if required_round not in rounds:
             fail("Geometry missing required round:", [required_round])
 

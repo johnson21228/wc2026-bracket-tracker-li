@@ -31,14 +31,10 @@
 <path class="connector-line" d="M 1165 740 H 1143 V 836 H 1165 M 1143 788 H 1118" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
 <path class="connector-line" d="M 978 212 H 956 V 404 H 978 M 956 308 H 946" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
 <path class="connector-line" d="M 978 596 H 956 V 788 H 978 M 956 692 H 946" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
-<path class="connector-line" d="M 730 308 H 760" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
-<path class="connector-line" d="M 730 692 H 760" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
-<path class="connector-line" d="M 760 308 V 692" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
-<path class="connector-line" d="M 760 512 H 663" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
-<path class="connector-line" d="M 806 308 H 776" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
-<path class="connector-line" d="M 806 692 H 776" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
-<path class="connector-line" d="M 776 308 V 692" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
-<path class="connector-line" d="M 776 512 H 873" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
+<path class="connector-line" d="M 730 308 H 768 V 382 M 806 308 H 768" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
+<path class="connector-line" d="M 768 426 V 468" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
+<path class="connector-line" d="M 768 556 V 596" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
+<path class="connector-line" d="M 730 692 H 768 V 640 M 806 692 H 768" stroke="#AA9691" stroke-opacity="0.88" stroke-width="3" fill="none" stroke-linecap="square" stroke-linejoin="miter" vector-effect="non-scaling-stroke"/>
 </g>
 <g id="pick-card-slots" data-layer="slot-outlines" data-fill-policy="material-r32-selectable-fill">
 <rect class="pick-card-slot slot-r32-selectable" data-round="R32" data-side="left" data-index="1" x="38" y="118" width="140" height="44" fill="#816A51" fill-opacity="0.52" stroke="#AA9691" stroke-opacity="0.92" stroke-width="2" rx="6" ry="6" vector-effect="non-scaling-stroke"/>
@@ -101,6 +97,8 @@
 <rect class="pick-card-slot slot-board-structure" data-round="SF" data-side="left" data-index="2" x="590" y="670" width="140" height="44" fill="#816A51" fill-opacity="0.26" stroke="#AA9691" stroke-opacity="0.92" stroke-width="2" rx="6" ry="6" vector-effect="non-scaling-stroke"/>
 <rect class="pick-card-slot slot-board-structure" data-round="SF" data-side="right" data-index="1" x="806" y="286" width="140" height="44" fill="#816A51" fill-opacity="0.26" stroke="#AA9691" stroke-opacity="0.92" stroke-width="2" rx="6" ry="6" vector-effect="non-scaling-stroke"/>
 <rect class="pick-card-slot slot-board-structure" data-round="SF" data-side="right" data-index="2" x="806" y="670" width="140" height="44" fill="#816A51" fill-opacity="0.26" stroke="#AA9691" stroke-opacity="0.92" stroke-width="2" rx="6" ry="6" vector-effect="non-scaling-stroke"/>
-<rect class="pick-card-slot slot-final-four" data-round="FINAL_FOUR" data-side="center" data-index="1" x="663" y="428" width="210" height="168" fill="#816A51" fill-opacity="0.34" stroke="#AA9691" stroke-opacity="0.92" stroke-width="2" rx="10" ry="10" vector-effect="non-scaling-stroke"/>
+<rect class="pick-card-slot slot-final-stack slot-final-left" data-slot-id="FINAL-LEFT" data-round="SF_WINNER" data-side="center" data-index="1" x="663" y="382" width="210" height="44" fill="#816A51" fill-opacity="0.34" stroke="#AA9691" stroke-opacity="0.92" stroke-width="2" rx="8" ry="8" vector-effect="non-scaling-stroke"/>
+<rect class="pick-card-slot slot-final-stack slot-champion" data-slot-id="CHAMPION" data-round="CHAMPION" data-side="center" data-index="1" x="558" y="468" width="420" height="88" fill="#816A51" fill-opacity="0.34" stroke="#AA9691" stroke-opacity="0.92" stroke-width="2" rx="12" ry="12" vector-effect="non-scaling-stroke"/>
+<rect class="pick-card-slot slot-final-stack slot-final-right" data-slot-id="FINAL-RIGHT" data-round="SF_WINNER" data-side="center" data-index="2" x="663" y="596" width="210" height="44" fill="#816A51" fill-opacity="0.34" stroke="#AA9691" stroke-opacity="0.92" stroke-width="2" rx="8" ry="8" vector-effect="non-scaling-stroke"/>
 </g>
 </svg>

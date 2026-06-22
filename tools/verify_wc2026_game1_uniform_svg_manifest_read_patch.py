@@ -42,7 +42,7 @@ for slot in slots:
             fail(f"Slot {slot.get('slotId')} missing boundsPx.{key}")
     if not (("w" in b or "width" in b) and ("h" in b or "height" in b)):
         fail(f"Slot {slot.get('slotId')} missing width/height bounds")
-expected = {"R32":32, "R16":16, "QF":8, "SF":4, "FINAL_FOUR":1}
+expected = {"R32":32, "R16":16, "QF":8, "SF":4, "SF_WINNER":2, "CHAMPION":1}
 if counts != expected:
     fail(f"Unexpected round counts: {counts}; expected {expected}")
 

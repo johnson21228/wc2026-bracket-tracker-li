@@ -1,36 +1,23 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import json
+import sys
 
-def require(text, token, label, errors):
-    if token not in text:
-        errors.append(f"missing {label}: {token}")
+errors = []
+manifest = json.loads(Path("site/data/geometry/uniform_pick_card_gameboard_manifest.json").read_text())
+slot_ids = {s.get("slotId") for s in manifest.get("slots", [])}
 
-def main():
-    errors = []
-    model = Path("site/js/mvc/model.js").read_text()
-    require(model, 'const CENTER_FINAL_FOUR_SLOT_ID = "CENTER-FINAL-FOUR";', "center final four slot constant", errors)
-    require(model, "function isVisualOnlyGeometrySlot", "visual-only geometry predicate", errors)
-    require(model, 'slot?.slotId === CENTER_FINAL_FOUR_SLOT_ID', "CENTER-FINAL-FOUR visual-only rule", errors)
-    require(model, 'slot?.round === "FINAL_FOUR"', "FINAL_FOUR round visual-only rule", errors)
-    require(model, "function pickSurfaceSlots", "pick-surface slot filter", errors)
-    require(model, "return pickSurfaceSlots(slots).map((slot) => {", "slot view models exclude visual-only geometry", errors)
-    # Card 247: Final Four canonical display may add derived final-four rows.
-    # The invariant is that CENTER-FINAL-FOUR remains visual-only geometry while
-    # summary counts come from pick-surface/canonical-pick helpers, not raw slots.
-    if "totalSlots:" not in model or (
-        "pickSurfaceSlots(slots).length" not in model
-        and "pickSurfaceSlotViewModels().length" not in model
-        and "slotViewModels.length" not in model
-        and "allPickSlots().length" not in model
-    ):
-        errors.append("missing summary excludes visual-only geometry")
+if "CENTER-FINAL-FOUR" in slot_ids:
+    errors.append("CENTER-FINAL-FOUR must not be runtime pick-slot geometry after center-stack sync")
 
-    if errors:
-        print("Center Final Four visual-only verification failed: " + "; ".join(errors))
-        return 1
+for sid in ["FINAL-LEFT", "CHAMPION", "FINAL-RIGHT"]:
+    if sid not in slot_ids:
+        errors.append(f"missing explicit center-stack geometry: {sid}")
 
-    print("OK: CENTER-FINAL-FOUR remains SVG geometry only and is not rendered as a pick-slot button.")
-    return 0
+if errors:
+    print("CENTER-FINAL-FOUR replacement verification failed:")
+    for e in errors:
+        print(f"- {e}")
+    sys.exit(1)
 
-if __name__ == "__main__":
-    raise SystemExit(main())
+print("OK: CENTER-FINAL-FOUR is replaced by explicit source-derived center-stack geometry.")
