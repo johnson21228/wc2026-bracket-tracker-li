@@ -32,7 +32,6 @@ Game 2:
 After the official Round of 32 is known, players fill the full knockout bracket through champion.
 - `site/game2/index.html` — Game 2 foundation board surface: same pub back layer and transparent geometry board layer as Game 1; picking rules intentionally deferred.
 
-
 ## Modular MVC/TDD Source Boundary
 
 - `li/world_cup/modular_mvc_tdd_source_rule.md` — current architectural rule: modular source, MVC boundaries, and TDD for behavior.
@@ -70,7 +69,6 @@ After the official Round of 32 is known, players fill the full knockout bracket 
 - `docs/backend/wc2026_supabase_shared_pick_sql_target.md` — canonical Supabase profiles/user_brackets shared-pick SQL target before dashboard execution.
 - `source/sql/wc2026_supabase_shared_pick_schema_draft.sql` — draft schema SQL for profiles and user_brackets.
 - `source/sql/wc2026_supabase_shared_pick_rls_draft.sql` — draft RLS SQL for owner-only writes and owner-or-shared reads.
-
 
 - `captures/CAPTURE_BACK_EMPTY_PICK_STATE_STORAGE_MODEL.md` — Capture Back for complete empty pick-state storage refinement.
 
@@ -122,4 +120,8 @@ Invariant: all board actors speak native gameboard coordinates; only the Pages V
 
 - `li/world_cup/supabase_remote_bracket_store_contract_rule.md` — defines the future Supabase bracket store contract before implementation while preserving the active store seam.
 
-- `li/world_cup/supabase_bracket_store_inactive_seam_rule.md` — allows `SupabaseBracketStore` to exist behind the inactive remote seam while local browser mode remains active.\n\n- `li/world_cup/remote_store_activation_guard_rule.md` — defines a fail-closed future switch point for remote bracket persistence without enabling remote mode.\n
+- `li/world_cup/supabase_bracket_store_inactive_seam_rule.md` — allows `SupabaseBracketStore` to exist behind the inactive remote seam while local browser mode remains active.
+
+- `li/world_cup/remote_store_activation_guard_rule.md` — defines a fail-closed future switch point for remote bracket persistence without enabling remote mode.
+
+- `li/world_cup/supabase_bracket_store_offline_contract_harness_rule.md` — verifies the inactive Supabase bracket store adapter against a fake offline client without activating remote mode.
