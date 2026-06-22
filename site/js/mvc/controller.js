@@ -27,30 +27,16 @@ export function createBracketController({ model, view }) {
   }
 
   function slotAllowedForActiveGame(slot) {
-    const activeGame = activeGameValue();
-    if (activeGame === "game-1") return slot.round === "R32";
-    if (activeGame === "game-2") return slot.round !== "R32";
     return true;
-  }
+}
 
   function disabledReasonForActiveGame(slot) {
-    const activeGame = activeGameValue();
-    if (activeGame === "game-1" && slot.round !== "R32") {
-      return "Game 1 uses precedent-based pick availability.";
-    }
-    if (activeGame === "game-2" && slot.round === "R32") {
-      return "Game 2 uses precedent-based pick availability.";
-    }
     return "";
-  }
+}
 
   function pickMenuNotReadyReason(slot) {
-    const activeGame = activeGameValue();
-    if (activeGame === "game-2" && slot.round !== "R32" && !slot.pickable) {
-      return "This Game 2 pick menu is not ready yet.";
-    }
     return "";
-  }
+}
 
   function reportBlockedPick(slot) {
     const activeGameReason = disabledReasonForActiveGame(slot);
@@ -124,7 +110,7 @@ export function createBracketController({ model, view }) {
     activeSlotId = null;
     view.closeMenu();
     redraw();
-    view.report(activeGame === "game-2" ? "Game 2 pick surfaces are active. Round of 32 picking is disabled." : "Game 1 Round of 32 picking is active.");
+    view.report(activeGame === "game-2" ? "Knockout Stage presentation is active." : "Group Stage presentation is active.");
   }
 
   function onClearAll() {
