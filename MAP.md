@@ -122,4 +122,4 @@ Invariant: all board actors speak native gameboard coordinates; only the Pages V
 
 - `li/world_cup/supabase_remote_bracket_store_contract_rule.md` — defines the future Supabase bracket store contract before implementation while preserving the active store seam.
 
-- `li/world_cup/supabase_bracket_store_inactive_seam_rule.md` — allows `SupabaseBracketStore` to exist behind the inactive remote seam while local browser mode remains active.
+- `li/world_cup/supabase_bracket_store_inactive_seam_rule.md` — allows `SupabaseBracketStore` to exist behind the inactive remote seam while local browser mode remains active.\n\n- `li/world_cup/remote_store_activation_guard_rule.md` — defines a fail-closed future switch point for remote bracket persistence without enabling remote mode.\n
