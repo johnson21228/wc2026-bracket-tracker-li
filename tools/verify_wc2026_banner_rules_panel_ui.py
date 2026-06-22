@@ -23,14 +23,14 @@ def main() -> int:
         "rules-panel-body",
         "How Bracketeering Hub works",
         "one continuous two-game World Cup pool",
-        "Game 1 Rules:",
+        "Group Stage Rules:",
         "Before the final round of group-stage matches begins",
         "Group Stage Finale",
         "Development preview",
-        "Dev Game View selector is present while the games are still being developed",
-        "simulated Game 2",
-        "Game 2 Preview",
-        "not from each player’s Game 1 predictions",
+        "Dev Stage selector is present while the games are still being developed",
+        "simulated Knockout Stage",
+        "Knockout Stage Preview",
+        "not from each player’s Group Stage predictions",
         "official FIFA-supplied Round of 32 field",
         "Rule status",
     ]
@@ -108,12 +108,12 @@ def main() -> int:
         errors.append("Makefile verify target must run verify_wc2026_banner_rules_panel_ui.py")
 
     if errors:
-        print("Banner rules panel UI verification failed:")
+        print("Banner lifecycle Stage rules panel UI verification failed:")
         for error in errors:
             print(f"- {error}")
         return 1
 
-    print("OK: WC2026 Rules panel is a single player-facing Pub-Hub rules display.")
+    print("OK: WC2026 Rules panel uses lifecycle-stage naming in a single player-facing Pub-Hub rules display.")
     return 0
 
 if __name__ == "__main__":

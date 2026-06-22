@@ -9,13 +9,13 @@ def read(path):
 def require(path, token):
     text = read(path)
     if token not in text:
-        raise SystemExit(f"Banner Game selector UI verification failed:\n- missing {token!r} in {path}")
+        raise SystemExit(f"Banner lifecycle Stage selector UI verification failed:\n- missing {token!r} in {path}")
 
 def forbid_segment(path, start_token, end_token, forbidden_tokens):
     text = read(path)
     if start_token not in text:
         raise SystemExit(
-            f"Banner Game selector UI verification failed:\n"
+            f"Banner lifecycle Stage selector UI verification failed:\n"
             f"- missing segment start {start_token!r} in {path}"
         )
     start = text.index(start_token)
@@ -27,7 +27,7 @@ def forbid_segment(path, start_token, end_token, forbidden_tokens):
     ]
     if errors:
         raise SystemExit(
-            "Banner Game selector UI verification failed:\n"
+            "Banner lifecycle Stage selector UI verification failed:\n"
             + "\n".join(
                 f"- active Game selector must remain presentation-only; found {token!r}"
                 for token in errors
@@ -40,8 +40,8 @@ require("site/index.html", 'data-dev-game-selector-option')
 require("site/index.html", 'value="game-1" checked')
 require("site/index.html", 'value="game-2"')
 require("site/index.html", 'Dev game view')
-require("site/index.html", '>Game 1<')
-require("site/index.html", '>Game 2<')
+require("site/index.html", '>Group Stage<')
+require("site/index.html", '>Knockout Stage<')
 
 app = read("site/js/app.js")
 require("site/js/app.js", "setupRulesPanel(root);")
@@ -70,5 +70,5 @@ forbid_segment(
 )
 
 print(
-    "OK: WC2026 banner Game selector UI defaults to Game 1 and only drives presentation-only rules/background state."
+    "OK: WC2026 banner Stage selector UI defaults to Group Stage and only drives presentation-only rules/background state."
 )

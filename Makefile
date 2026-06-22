@@ -36,6 +36,7 @@ verify:
 	python3 tools/verify_wc2026_hero_banner_spelling.py
 	python3 tools/verify_wc2026_bracketeering_pub_hub_title.py
 	python3 tools/verify_wc2026_banner_game_selector_ui.py
+	python3 tools/verify_wc2026_lifecycle_stage_nomenclature.py
 	python3 tools/verify_wc2026_dev_game_selector_next_to_zoom.py
 	python3 tools/verify_wc2026_banner_rules_panel_ui.py
 	python3 tools/verify_wc2026_rules_panel_no_developer_note.py

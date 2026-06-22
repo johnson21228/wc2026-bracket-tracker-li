@@ -56,10 +56,10 @@ export function createBracketView(root) {
   function disabledReasonForActiveGame(slot) {
     const activeGame = activeGameValue();
     if (activeGame === "game-1" && slot.round !== "R32") {
-      return "Game 1 only accepts Round of 32 picks.";
+      return "Group Stage only accepts Round of 32 picks.";
     }
     if (activeGame === "game-2" && slot.round === "R32") {
-      return "Game 2 starts after the Round of 32 field.";
+      return "Knockout Stage starts after the Round of 32 field.";
     }
     return "";
   }
@@ -158,7 +158,9 @@ export function createBracketView(root) {
       [data-rules-panel],
       [data-rules-panel-open],
       [data-game-selector],
+      [data-lifecycle-stage-selector],
       [data-game-selector-button],
+      [data-lifecycle-stage-button],
       [data-dev-game-selector],
       [data-pick-button],
       [data-pick-slot-button],

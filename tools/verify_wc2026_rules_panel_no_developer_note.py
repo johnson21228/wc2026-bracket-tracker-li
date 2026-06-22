@@ -16,8 +16,8 @@ FORBIDDEN = [
 REQUIRED = [
     "Bracketeering Rules",
     "How Bracketeering Hub works",
-    "Game 1 Rules:",
-    "Game 2 Preview",
+    "Group Stage Rules:",
+    "Knockout Stage Preview",
     "Development preview",
 ]
 
@@ -35,10 +35,10 @@ def main() -> int:
             errors.append(f"expected single Rules panel token missing: {token}")
 
     if errors:
-        print("Rules panel developer note verification failed: " + "; ".join(errors))
+        print("Rules panel lifecycle-stage nomenclature verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: WC2026 Rules panel is single-display and exposes no developer-only caveats.")
+    print("OK: WC2026 Rules panel is single-display, uses lifecycle-stage naming, and exposes no developer-only caveats.")
     return 0
 
 

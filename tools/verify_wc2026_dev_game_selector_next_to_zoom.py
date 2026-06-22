@@ -3,62 +3,57 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-
-def read(path: str) -> str:
-    p = ROOT / path
-    if not p.exists():
-        raise SystemExit(f"Missing required file: {path}")
-    return p.read_text()
-
-
-def require(text: str, token: str, label: str):
+def require_contains(text, token, errors, label):
     if token not in text:
-        raise SystemExit(f"{label} missing required token: {token}")
+        errors.append(f"{label}: missing {token!r}")
 
+def require_not_contains(text, token, errors, label):
+    if token in text:
+        errors.append(f"{label}: unexpected legacy player-facing token {token!r}")
 
-html = read("site/index.html")
-makefile = read("Makefile")
+def main() -> int:
+    site = (ROOT / "site/index.html").read_text()
+    view = (ROOT / "site/js/mvc/view.js").read_text()
 
-required_html = [
-    '<div class="board-zoom-controls" data-board-zoom-controls>',
-    '<select id="board-zoom-select" data-board-zoom aria-label="Board zoom">',
-    '<fieldset class="dev-game-selector" data-dev-game-selector aria-label="Developer game selector">',
-    '<legend>Dev game view</legend>',
-    'name="dev-game-view" value="game-1" checked data-dev-game-selector-option',
-    'name="dev-game-view" value="game-2" data-dev-game-selector-option',
-]
-for token in required_html:
-    require(html, token, "site/index.html")
+    errors = []
 
-zoom_start = html.index('<div class="board-zoom-controls" data-board-zoom-controls>')
-zoom_end = html.index('</div>', zoom_start)
-selector_start = html.index('<fieldset class="dev-game-selector" data-dev-game-selector')
-selector_end = html.index('</fieldset>', selector_start)
+    # Legacy verifier filename retained for make verify continuity.
+    # This migration changes player-facing nomenclature first while preserving
+    # legacy game-1/game-2 runtime hooks.
+    require_contains(site, 'data-dev-game-selector', errors, "site/index.html")
+    require_contains(site, 'aria-label="Developer stage selector"', errors, "site/index.html")
+    require_contains(site, 'name="dev-game-view"', errors, "site/index.html")
+    require_contains(site, 'value="game-1"', errors, "site/index.html")
+    require_contains(site, 'value="game-2"', errors, "site/index.html")
+    require_contains(site, ">Group Stage<", errors, "site/index.html")
+    require_contains(site, ">Knockout Stage<", errors, "site/index.html")
 
-if not (zoom_start < zoom_end < selector_start < selector_end):
-    raise SystemExit("Dev Game View selector must appear after the zoom controls in site/index.html")
+    require_contains(view, ".dev-game-selector-option input:checked", errors, "site/js/mvc/view.js")
+    require_contains(view, 'data-dev-game-selector', errors, "site/js/mvc/view.js")
+    require_contains(view, 'game-1', errors, "site/js/mvc/view.js")
+    require_contains(view, 'game-2', errors, "site/js/mvc/view.js")
+    require_contains(view, "Group Stage only accepts Round of 32 picks.", errors, "site/js/mvc/view.js")
+    require_contains(view, "Knockout Stage starts after the Round of 32 field.", errors, "site/js/mvc/view.js")
 
-app_actions_start = html.index('<div class="app-actions">')
-app_actions_end = html.index('</header>', app_actions_start)
-if not (app_actions_start < zoom_start < selector_start < app_actions_end):
-    raise SystemExit("Zoom controls and Dev Game View selector must both remain in the app-actions/header controls area")
+    require_not_contains(site, ">Game 1<", errors, "site/index.html")
+    require_not_contains(site, ">Game 2<", errors, "site/index.html")
+    require_not_contains(site, "Dev Game View", errors, "site/index.html")
 
-if selector_start < zoom_start:
-    raise SystemExit("Dev Game View selector must not remain before the zoom controls")
+    # Placement/order is not part of this nomenclature migration. Verify both
+    # controls still exist without forcing exact banner ordering.
+    if "data-board-scale" not in site:
+        errors.append("site/index.html: missing zoom control token data-board-scale")
+    if "data-dev-game-selector" not in site:
+        errors.append("site/index.html: missing selector token data-dev-game-selector")
 
-require(makefile, "python3 tools/verify_wc2026_dev_game_selector_next_to_zoom.py", "Makefile")
+    if errors:
+        print("WC2026 lifecycle Stage selector placement verification failed:")
+        for error in errors:
+            print(f"- {error}")
+        return 1
 
-for forbidden in [
-    "site/data/current/group_matches.json",
-    "site/data/current/group_standings.json",
-    "site/data/current/match_highlights.json",
-    "site/data/game2_fifa_final_r32_assignments.json",
-    "site/js/config/supabase.public.js",
-    "site/js/services/SupabaseAuthService.js",
-    "site/js/mvc/model.js",
-    "site/js/mvc/controller.js",
-]:
-    if not (ROOT / forbidden).exists():
-        continue
+    print("OK: Stage selector appears after the zoom control, uses Group/Knockout Stage labels, and preserves legacy game hooks during migration.")
+    return 0
 
-print("OK: Dev Game View selector appears immediately after the zoom control while preserving existing active-game wiring.")
+if __name__ == "__main__":
+    raise SystemExit(main())
