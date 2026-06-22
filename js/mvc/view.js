@@ -38,6 +38,7 @@ export function createBracketView(root) {
   const BOARD_MAX_SCALE = 1.25;
   const BOARD_WHEEL_ZOOM_STEP = 0.08;
   const BOARD_DRAG_PAN_THRESHOLD_PX = 5;
+  const BOARD_DOUBLE_CLICK_ZOOM_STEP = 0.18;
   let teardownFloatingSurfaceDismissal = null;
 
   function activeGameValue() {
@@ -242,6 +243,27 @@ export function createBracketView(root) {
     });
   }
 
+
+  function installMouseBoardDoubleClickZoom() {
+    if (!boardScroll || boardScroll.dataset.mouseDoubleClickZoomInstalled === "true") return;
+    boardScroll.dataset.mouseDoubleClickZoomInstalled = "true";
+
+    let lastBoardPointerDownType = "";
+
+    boardScroll.addEventListener("pointerdown", (event) => {
+      lastBoardPointerDownType = event.pointerType || "mouse";
+    }, { passive: true });
+
+    boardScroll.addEventListener("dblclick", (event) => {
+      if (lastBoardPointerDownType === "touch") return;
+      if (lastBoardPointerDownType && lastBoardPointerDownType !== "mouse") return;
+      if (isBoardPanInteractiveTarget(event.target)) return;
+
+      event.preventDefault();
+      zoomBoardAroundPoint(boardScale + BOARD_DOUBLE_CLICK_ZOOM_STEP, event.clientX, event.clientY);
+    }, { passive: false });
+  }
+
   function setHandlers(nextHandlers) {
     handlers = nextHandlers;
     if (!teardownFloatingSurfaceDismissal) {
@@ -266,6 +288,7 @@ export function createBracketView(root) {
       handlers.onCloseMenu?.();
     });
     installMouseBoardDragPan();
+    installMouseBoardDoubleClickZoom();
     boardScroll?.addEventListener("wheel", (event) => {
       const wantsBoardZoom = event.ctrlKey || event.metaKey;
       if (!wantsBoardZoom) return;
