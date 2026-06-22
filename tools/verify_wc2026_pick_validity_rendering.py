@@ -63,6 +63,7 @@ for token in [
 for token in [
     "Card 205: invalid pick warning rendering",
     ".pick-slot-button.has-invalid-pick",
+    "background: rgba(112, 40, 24, .82)",
     "outline: 1px solid rgba(255, 64, 64, .95)",
     ".picked-cell-warning",
     "background: rgba(180, 0, 0, .92)",

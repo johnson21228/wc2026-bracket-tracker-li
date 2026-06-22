@@ -648,6 +648,7 @@
 
 /* Card 205: invalid pick warning rendering. */
 .pick-slot-button.has-invalid-pick {
+  background: rgba(112, 40, 24, .82);
   outline: 1px solid rgba(255, 64, 64, .95);
   box-shadow:
     0 0 0 1px rgba(255, 64, 64, .30),
