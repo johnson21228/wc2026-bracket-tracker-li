@@ -4,6 +4,7 @@ import { createBracketController } from "./mvc/controller.js";
 import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
 import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js";
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
+import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js";
 
 
 function setupInfoPanel(root) {
@@ -85,6 +86,7 @@ async function main() {
   }
 
   setupInfoPanel(root);
+  setupBracketeeringWorkflowPanel(root);
   const model = await createBracketModel();
   const view = createBracketView(root);
   setupActiveGameBackground(root);

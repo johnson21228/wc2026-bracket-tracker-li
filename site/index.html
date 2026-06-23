@@ -15,7 +15,7 @@
     <section class="app-shell" aria-labelledby="app-title">
       <div class="map-board-icon-controls" data-map-board-icon-controls aria-label="Board tools">
         <button type="button" class="map-icon-button" data-board-zoom-in aria-label="Zoom in">+</button>
-        <button type="button" class="map-icon-button" data-info-panel-open data-rules-panel-open aria-haspopup="dialog" aria-controls="info-panel" aria-label="Get info">i</button>
+        <button type="button" class="map-icon-button" data-info-panel-open data-rules-panel-open aria-haspopup="dialog" aria-controls="info-panel" aria-label="Get info">i</button>\n        <button type="button" class="map-icon-button workflow-map-button" data-workflow-panel-open aria-haspopup="dialog" aria-controls="bracketeering-workflow-panel" aria-label="Open Bracketeering workflow">WB</button>
         <button type="button" class="map-icon-button" data-board-zoom-out aria-label="Zoom out">−</button>
       </div>
 
@@ -100,6 +100,19 @@
               <p>Knockout points are awarded when the team you picked wins that match. Later rounds are worth more because they are harder and more important.</p>
             </section>
           </div>
+        </div>
+      </section>
+
+      <section class="workflow-panel-backdrop" data-workflow-panel id="bracketeering-workflow-panel" hidden>
+        <div class="workflow-panel" role="dialog" aria-modal="true" aria-labelledby="workflow-panel-title">
+          <div class="workflow-panel-header">
+            <div>
+              <p class="workflow-panel-kicker">Bracketeering Workflow</p>
+              <h2 id="workflow-panel-title">Workbench Loop Behind the Game</h2>
+            </div>
+            <button type="button" class="ghost-button workflow-panel-close" data-workflow-panel-close>Close</button>
+          </div>
+          <div class="workflow-panel-body" data-workflow-panel-body tabindex="0"></div>
         </div>
       </section>
 
