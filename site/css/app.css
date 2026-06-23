@@ -1344,3 +1344,28 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+
+
+.player-standings-control {
+  position: fixed;
+  top: 76px;
+  right: 16px;
+  z-index: 86;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: auto;
+}
+
+.player-standings-control .standings-icon-button {
+  min-width: 104px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 999px;
+  background: rgba(18, 16, 12, .88);
+  color: rgba(255, 255, 255, .94);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .36);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}

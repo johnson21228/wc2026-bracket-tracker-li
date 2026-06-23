@@ -71,10 +71,17 @@ function ensureStandingsButton(root) {
   let button = root.querySelector("[data-player-standings-open]");
   if (button) return button;
 
-  const controls = root.querySelector("[data-map-board-icon-controls]") || root;
+  let controls = root.querySelector("[data-player-standings-control]");
+  if (!controls) {
+    controls = document.createElement("div");
+    controls.className = "player-standings-control";
+    controls.setAttribute("data-player-standings-control", "");
+    root.append(controls);
+  }
+
   button = document.createElement("button");
   button.type = "button";
-  button.className = "map-icon-button standings-icon-button";
+  button.className = "standings-icon-button";
   button.setAttribute("data-player-standings-open", "");
   button.setAttribute("aria-haspopup", "dialog");
   button.setAttribute("aria-controls", "player-standings-panel");
