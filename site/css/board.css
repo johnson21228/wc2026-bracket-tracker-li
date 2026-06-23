@@ -1130,26 +1130,26 @@
 }
 
 .pick-slot-button.is-champion-winner .champion-pixel-aura-flag-top-left {
-  top: calc(var(--wc2026-champion-aura-y, 26px) * .5);
-  left: calc(var(--wc2026-champion-aura-x, 40px) * .5);
+  top: calc(var(--wc2026-champion-aura-y, 26px) * .75);
+  left: calc(var(--wc2026-champion-aura-x, 40px) * .75);
   transform: translate(-50%, -50%) rotate(-10deg);
 }
 
 .pick-slot-button.is-champion-winner .champion-pixel-aura-flag-top-right {
-  top: calc(var(--wc2026-champion-aura-y, 26px) * .5);
-  right: calc(var(--wc2026-champion-aura-x, 40px) * .5);
+  top: calc(var(--wc2026-champion-aura-y, 26px) * .75);
+  right: calc(var(--wc2026-champion-aura-x, 40px) * .75);
   transform: translate(50%, -50%) rotate(9deg);
 }
 
 .pick-slot-button.is-champion-winner .champion-pixel-aura-flag-bottom-left {
-  bottom: calc(var(--wc2026-champion-aura-y, 26px) * .5);
-  left: calc(var(--wc2026-champion-aura-x, 40px) * .5);
+  bottom: calc(var(--wc2026-champion-aura-y, 26px) * .75);
+  left: calc(var(--wc2026-champion-aura-x, 40px) * .75);
   transform: translate(-50%, 50%) rotate(8deg);
 }
 
 .pick-slot-button.is-champion-winner .champion-pixel-aura-flag-bottom-right {
-  right: calc(var(--wc2026-champion-aura-x, 40px) * .5);
-  bottom: calc(var(--wc2026-champion-aura-y, 26px) * .5);
+  right: calc(var(--wc2026-champion-aura-x, 40px) * .75);
+  bottom: calc(var(--wc2026-champion-aura-y, 26px) * .75);
   transform: translate(50%, 50%) rotate(-9deg);
 }
 
