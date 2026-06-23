@@ -1,13 +1,14 @@
-# Card 278: Hide later-round pick fills during Group Stage presentation
+# Card 278: Group Stage later-round frame-only pick slots
 
 ## Goal
 
-During Group Stage presentation, do not render filled pick slots after Round of 32. This keeps the player-facing board focused on group-stage setup while preserving all stored picks.
+During Group Stage presentation, do not render filled pick-slot content after Round of 32. Later-round pick slots should remain visible as frames only.
 
 ## Acceptance criteria
 
 - R32 filled picks still render during Group Stage.
-- R16 and later filled picks do not render during Group Stage.
+- R16 and later pick slots render as frame-only during Group Stage.
+- Frame-only slots do not show fill, flag/code, slot label, or `Choose Winner`.
 - R16 and later filled picks render again during Knockout Stage.
 - The change is rendering-only.
 - No stored picks are deleted.
