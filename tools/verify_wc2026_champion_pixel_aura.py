@@ -31,6 +31,10 @@ for token in [
     "champion-pixel-aura-flag-bottom-left",
     "champion-pixel-aura-flag-bottom-right",
     "content: none;",
+    "calc(var(--wc2026-champion-aura-x, 40px) * .5)",
+    "calc(var(--wc2026-champion-aura-y, 26px) * .5)",
+    "translate(-50%, -50%)",
+    "translate(50%, 50%)",
     "drop-shadow",
     "pointer-events: none",
 ]:
