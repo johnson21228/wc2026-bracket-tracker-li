@@ -7,6 +7,7 @@ import { SupabaseBracketStore } from "./services/SupabaseBracketStore.js";
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
 import { createAccountSaveActionSurface } from "./identity/AccountSaveActionSurface.js";
 import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js";
+import { createPlayerStandingsSurface } from "./standings/PlayerStandingsSurface.js";
 
 
 function setupInfoPanel(root) {
@@ -121,6 +122,8 @@ async function main() {
   const profileStore = createSupabaseProfileStore();
   const identitySurface = createSupabaseIdentitySurface({ root, authService, profileStore });
   identitySurface.start();
+  const standingsSurface = createPlayerStandingsSurface({ root, authService });
+  standingsSurface.start();
   createAccountSaveActionSurface({
     root,
     authService,

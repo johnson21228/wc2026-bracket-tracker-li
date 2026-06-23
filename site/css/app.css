@@ -1230,4 +1230,117 @@ body {
     display: none;
   }
 }
+.standings-icon-button {
+  width: auto;
+  min-width: 84px;
+  padding-inline: 10px;
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.player-standings-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: start center;
+  padding: 88px 16px 24px;
+  background: rgba(0, 0, 0, .18);
+  pointer-events: auto;
+}
+
+.player-standings-panel[hidden] {
+  display: none;
+}
+
+.player-standings-card {
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(620px, calc(100vh - 120px));
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 18px;
+  background: rgba(18, 16, 12, .94);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, .48);
+  color: rgba(255, 255, 255, .94);
+  backdrop-filter: blur(10px);
+}
+
+.player-standings-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, .14);
+}
+
+.player-standings-kicker {
+  margin: 0 0 3px;
+  color: rgba(255, 255, 255, .62);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.player-standings-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.player-standings-close {
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .09);
+  color: inherit;
+  width: 34px;
+  height: 34px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.player-standings-body {
+  padding: 16px 20px 20px;
+}
+
+.player-standings-status {
+  margin: 0;
+  color: rgba(255, 255, 255, .72);
+}
+
+.player-standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.player-standings-table th,
+.player-standings-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.player-standings-table th {
+  color: rgba(255, 255, 255, .62);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.player-standings-rank,
+.player-standings-total {
+  font-weight: 800;
+}
+
+.player-standings-player {
+  min-width: 180px;
+  white-space: normal;
+}
+
+.player-standings-ko-tb {
+  font-variant-numeric: tabular-nums;
+}
 
