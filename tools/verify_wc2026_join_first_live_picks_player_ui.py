@@ -31,7 +31,6 @@ required_runtime_tokens = [
     ("live_picks", "Use saved picks"),
     ("live_picks", "Keep this board"),
     ("live_picks", "Saving…"),
-    ("live_picks", "Picks saved"),
     ("live_picks", "Could not save — retrying"),
     ("standings", "Join to enter standings."),
     ("standings", "syncStandingsButtonState"),
@@ -70,4 +69,8 @@ if "python3 tools/verify_wc2026_join_first_live_picks_player_ui.py" not in paths
 if errors:
     raise SystemExit("WC2026 Join-first live picks verification failed: " + "; ".join(errors))
 
-print("OK: WC2026 Join-first player UI is implemented with Join, Standings, Profile, live autosave, and no Save/Load player flow.")
+print("OK: WC2026 Join-first player UI uses Join, Standings, Profile, live autosave, quiet success, and no Save/Load player flow.")
+
+
+if "Picks saved" in paths["live_picks"]:
+    errors.append("Successful autosave must be quiet and must not persistently show Picks saved.")
