@@ -1,3 +1,5 @@
+import { SupabaseBracketStore } from "../services/SupabaseBracketStore.js";
+
 const ACCOUNT_SAVE_STATE_ATTRIBUTE = "data-account-save-state";
 
 function ensureAccountSaveElement(root) {
@@ -18,7 +20,7 @@ function ensureAccountSaveElement(root) {
   return element;
 }
 
-function accountSavePresentation({ signedIn = false, remoteActive = false } = {}) {
+function accountSavePresentation({ signedIn = false, remoteActive = false, state = "idle" } = {}) {
   if (remoteActive) {
     return {
       state: "remote-test",
@@ -37,11 +39,38 @@ function accountSavePresentation({ signedIn = false, remoteActive = false } = {}
     };
   }
 
+  if (state === "saving") {
+    return {
+      state: "saving",
+      buttonText: "Saving…",
+      statusText: "Saving to account",
+      disabled: true,
+    };
+  }
+
+  if (state === "saved") {
+    return {
+      state: "saved",
+      buttonText: "Save Picks",
+      statusText: "Saved to account",
+      disabled: false,
+    };
+  }
+
+  if (state === "error") {
+    return {
+      state: "error",
+      buttonText: "Try Save Again",
+      statusText: "Save failed; local picks remain safe",
+      disabled: false,
+    };
+  }
+
   return {
     state: "ready",
     buttonText: "Save Picks",
-    statusText: "Account save target",
-    disabled: true,
+    statusText: "Save to account",
+    disabled: false,
   };
 }
 
@@ -56,21 +85,58 @@ function renderAccountSaveAction(root, presentation) {
   status.textContent = presentation.statusText;
 }
 
-function createAccountSaveActionSurface({ root, authService, remoteActive = false } = {}) {
+function createAccountSaveActionSurface({
+  root,
+  authService,
+  model,
+  remoteActive = false,
+  bracketStore = new SupabaseBracketStore(),
+} = {}) {
   if (!root) throw new Error("AccountSaveActionSurface requires a root element.");
+  if (!model?.getAccountSaveBracketDocument) {
+    throw new Error("AccountSaveActionSurface requires model.getAccountSaveBracketDocument.");
+  }
+
+  const element = ensureAccountSaveElement(root);
+  const button = element.querySelector("[data-account-save-button]");
+  let signedIn = false;
+  let accountUserId = "";
+  let saveState = "idle";
+
+  async function refresh(nextSaveState = saveState) {
+    saveState = nextSaveState;
+    const state = await authService?.currentState?.();
+    signedIn = state?.status === "signed-in" || Boolean(state?.user?.id);
+    accountUserId = state?.user?.id || "";
+    renderAccountSaveAction(root, accountSavePresentation({ signedIn, remoteActive, state: saveState }));
+  }
+
+  async function savePicksToAccount() {
+    if (remoteActive || !signedIn) return;
+
+    await refresh("saving");
+    try {
+      const bracketDocument = model.getAccountSaveBracketDocument({ userId: accountUserId });
+      await bracketStore.saveUserBracket(bracketDocument);
+      await refresh("saved");
+    } catch (error) {
+      console.error("[AccountSaveActionSurface] Save Picks failed", error);
+      await refresh("error");
+    }
+  }
 
   async function start() {
-    let signedIn = false;
+    await refresh("idle");
 
-    try {
-      const state = await authService?.currentState?.();
+    authService?.subscribe?.((state) => {
       signedIn = state?.status === "signed-in" || Boolean(state?.user?.id);
-    } catch {
-      signedIn = false;
-    }
-
-    renderAccountSaveAction(root, accountSavePresentation({ signedIn, remoteActive }));
+      accountUserId = state?.user?.id || "";
+      saveState = signedIn ? saveState : "idle";
+      renderAccountSaveAction(root, accountSavePresentation({ signedIn, remoteActive, state: saveState }));
+    });
   }
+
+  button.addEventListener("click", savePicksToAccount);
 
   return { start };
 }

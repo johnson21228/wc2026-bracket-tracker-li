@@ -933,6 +933,17 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     });
   }
 
+  function getAccountSaveBracketDocument({ userId: accountUserId = userId } = {}) {
+    const bracketDocument = buildRemoteBracketDocument("account-save-button");
+    return {
+      ...bracketDocument,
+      userId: accountUserId || bracketDocument.userId || userId,
+      status: bracketDocument.status || "draft",
+      visibility: bracketDocument.visibility || "private",
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
   function getSummary() {
     const picked = Object.keys(picks).length;
     const pickable = [
@@ -949,6 +960,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
 
   return {
     nativeSize,
+    getAccountSaveBracketDocument,
     getGroupRail,
     getFinalFourViewModel,
     getSlotViewModels,

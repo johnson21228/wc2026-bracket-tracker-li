@@ -18,6 +18,6 @@ Normal gameplay is local-first. The player makes picks immediately in browser-lo
 - Hidden dev Supabase bracket store mode remains available for technical testing.
 - View and Controller do not call Supabase bracket persistence directly.
 
-## Next step
+## Persistence wiring
 
-Wire the enabled `Save Picks` action to a single explicit Supabase upsert through the existing BracketStore/BracketDocument seam.
+The `Save Picks` action now saves the current local-first BracketDocument snapshot through the existing SupabaseBracketStore seam. This is a single explicit account save. It does not enable automatic remote writes, dual-write, local-to-remote migration, or remote load/overwrite behavior.

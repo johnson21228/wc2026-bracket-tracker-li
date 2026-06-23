@@ -124,6 +124,7 @@ async function main() {
   createAccountSaveActionSurface({
     root,
     authService,
+    model,
     remoteActive: bracketStoreOptions.remoteActive === true,
   }).start();
   controller.start();

@@ -20,12 +20,13 @@ Gameplay remains local-first:
 - Remove the persistent local storage status pill.
 - Add a compact account save action target near the login/account chrome.
 - Show `Save Picks` as the product affordance.
-- Keep the action disabled until the persistence wiring card.
+- Wire the action to one explicit Supabase `saveUserBracket` call for signed-in users.
 - Preserve hidden dev Supabase remote test mode.
 - Keep View and Controller free of Supabase bracket persistence calls.
 
 ## Verification
 
 - `tools/verify_wc2026_account_save_action_target.py`
+- Save Picks performs one explicit account save and does not load/overwrite local picks.
 - full `make verify`
 - `make pack`
