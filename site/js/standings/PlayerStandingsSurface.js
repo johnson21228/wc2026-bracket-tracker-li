@@ -44,11 +44,15 @@ export function sortPlayerStandingsRows(rows = []) {
     ));
 }
 
-function publicNameFromAuthState(authState) {
-  return authState?.profile?.publicPlayerName
+function publicNameFromAuthState(authState, profileState = null) {
+  return profileState?.display_name
+    || profileState?.publicPlayerName
+    || authState?.profile?.display_name
+    || authState?.profile?.publicPlayerName
     || authState?.publicPlayerName
     || authState?.user?.publicPlayerName
     || authState?.user?.user_metadata?.public_player_name
+    || authState?.user?.label
     || "Player";
 }
 
@@ -56,10 +60,22 @@ function isSignedIn(authState) {
   return authState?.status === "signed-in" || Boolean(authState?.user?.id);
 }
 
-function fallbackParticipationRows(authState) {
+async function resolveCurrentProfile({ authState, profileStore }) {
+  const userId = authState?.user?.id;
+  if (!userId || !profileStore?.getProfile) return null;
+
+  const { profile, error } = await profileStore.getProfile(userId);
+  if (error) {
+    console.warn("[PlayerStandingsSurface] profile unavailable", error);
+    return null;
+  }
+  return profile || null;
+}
+
+function fallbackParticipationRows(authState, profileState = null) {
   if (!isSignedIn(authState)) return [];
   return [{
-    publicPlayerName: publicNameFromAuthState(authState),
+    publicPlayerName: publicNameFromAuthState(authState, profileState),
     groupPoints: 0,
     knockoutPoints: 0,
     tiebreakerScore: 0,
@@ -160,8 +176,10 @@ export function createPlayerStandingsSurface({
   root,
   authService,
   standingsStore,
+  profileStore,
 } = {}) {
   let currentAuthState = authService?.currentState?.() || null;
+  let currentProfileState = null;
   let lastOpenButton = null;
 
   const button = ensureStandingsButton(root);
@@ -178,9 +196,10 @@ export function createPlayerStandingsSurface({
 
     try {
       const storeRows = await standingsStore?.listPlayerStandings?.();
+      currentProfileState = await resolveCurrentProfile({ authState: currentAuthState, profileStore });
       const rows = Array.isArray(storeRows) && storeRows.length
         ? storeRows
-        : fallbackParticipationRows(currentAuthState);
+        : fallbackParticipationRows(currentAuthState, currentProfileState);
 
       if (!rows.length && !isSignedIn(currentAuthState)) {
         renderStatus("Sign in to join the standings");
@@ -223,6 +242,7 @@ export function createPlayerStandingsSurface({
 
     authService?.subscribe?.((state) => {
       currentAuthState = state;
+      currentProfileState = null;
       if (!panel.hidden) loadStandingsRows();
     });
   }

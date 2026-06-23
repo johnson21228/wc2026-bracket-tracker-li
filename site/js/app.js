@@ -122,7 +122,7 @@ async function main() {
   const profileStore = createSupabaseProfileStore();
   const identitySurface = createSupabaseIdentitySurface({ root, authService, profileStore });
   identitySurface.start();
-  const standingsSurface = createPlayerStandingsSurface({ root, authService });
+  const standingsSurface = createPlayerStandingsSurface({ root, authService, profileStore });
   standingsSurface.start();
   createAccountSaveActionSurface({
     root,
