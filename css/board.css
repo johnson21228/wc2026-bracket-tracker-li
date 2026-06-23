@@ -1158,3 +1158,16 @@
   position: relative;
   z-index: 3;
 }
+
+
+.pick-slot-button.is-pick-fill-suppressed {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.pick-slot-button.is-pick-fill-suppressed::before,
+.pick-slot-button.is-pick-fill-suppressed::after {
+  content: none;
+}
+
