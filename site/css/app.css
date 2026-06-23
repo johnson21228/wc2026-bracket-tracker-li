@@ -956,10 +956,6 @@ body {
 
 /* Card 1004: Bracketeering workflow easter egg panel.
    This is browser chrome, not board-plane content. */
-.map-board-icon-controls {
-  grid-template-columns: repeat(4, 34px);
-}
-
 .map-icon-button.workflow-map-button {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 11px;
@@ -1082,10 +1078,6 @@ body {
 }
 
 @media (max-width: 760px) {
-  .map-board-icon-controls {
-    grid-template-columns: repeat(4, 32px);
-  }
-
   .workflow-panel-backdrop {
     padding: 12px;
   }
@@ -1098,4 +1090,39 @@ body {
   .workflow-panel-body {
     padding: 14px;
   }
+}
+
+
+/* Card 1004 refinement: lower-right small Workbench easter egg control. */
+.workflow-floating-button {
+  position: fixed;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 56;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(134, 239, 172, .46);
+  background: rgba(11, 17, 31, .78);
+  color: #bbf7d0;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: .02em;
+  text-transform: lowercase;
+  box-shadow: 0 10px 24px rgba(0,0,0,.38);
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(6px);
+}
+
+.workflow-floating-button:hover,
+.workflow-floating-button:focus-visible {
+  background: rgba(20, 83, 45, .88);
+  color: #f0fdf4;
+  outline: 2px solid rgba(187, 247, 208, .72);
+  outline-offset: 2px;
 }

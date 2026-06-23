@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -32,15 +33,24 @@ def main():
     require(jpeg.exists(), "JPEG infographic must exist at the durable Pages asset path.", errors)
     require(jpeg.exists() and jpeg.stat().st_size > 100_000, "JPEG infographic should be a real image asset, not an empty placeholder.", errors)
     require("data-workflow-panel-open" in index, "Visible workflow panel open control must exist in index.", errors)
-    require(">WB</button>" in index, "Workflow easter egg button should be visible as WB.", errors)
-    require("data-info-panel-open" in index and index.find("data-info-panel-open") < index.find("data-workflow-panel-open"), "Workflow button should be adjacent after the info button.", errors)
+    require(">wb</button>" in index, "Workflow easter egg button should be visible as small lowercase wb.", errors)
+    require("workflow-floating-button" in index, "Workflow easter egg control must be the lower-right floating button.", errors)
+    rail_match = re.search(r'<div class="map-board-icon-controls"[^>]*>.*?</div>', index, re.DOTALL)
+    require(rail_match is not None, "Map icon controls rail must exist.", errors)
+    if rail_match is not None:
+        rail = rail_match.group(0)
+        require("data-board-zoom-in" in rail, "Upper-left map controls must keep + zoom.", errors)
+        require("data-info-panel-open" in rail, "Upper-left map controls must keep i info.", errors)
+        require("data-board-zoom-out" in rail, "Upper-left map controls must keep − zoom.", errors)
+        require("data-workflow-panel-open" not in rail, "Upper-left map controls must not contain the workflow easter egg.", errors)
+        require("workflow-map-button" not in rail, "Upper-left map controls must not contain the old workflow map button.", errors)
     require("data-workflow-panel" in index, "Workflow panel backdrop must exist.", errors)
     require("data-workflow-panel-body" in index, "Workflow panel must have a hydratable scroll body.", errors)
     require("setupBracketeeringWorkflowPanel(root);" in app, "App must wire workflow panel setup.", errors)
     require("WORKFLOW_PANEL_CORE_SENTENCE" in workflow and core in workflow, "Workflow panel must include the core sentence.", errors)
     require("bracketeering_workflow_infographic.jpeg" in workflow, "Workflow panel must render the JPEG infographic asset.", errors)
     require("overflow-y: auto" in css and ".workflow-panel-body" in css, "Workflow panel body must be scrollable.", errors)
-    require("grid-template-columns: repeat(4, 34px)" in css, "Map icon controls should make room for the adjacent WB button.", errors)
+    require(".workflow-floating-button" in css and "position: fixed" in css and "bottom:" in css and "right:" in css, "Workflow easter egg button must be fixed in the lower-right corner.", errors)
     require("Download / Apply Pattern" in card and core in card, "Card must capture Download/Apply and the core sentence.", errors)
     require("python3 tools/verify_wc2026_bracketeering_workflow_easter_egg_panel.py" in makefile, "Makefile verify must run workflow easter egg verifier.", errors)
 

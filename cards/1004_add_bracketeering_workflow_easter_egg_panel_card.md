@@ -2,7 +2,7 @@
 
 ## Intent
 
-Add a visible easter egg control adjacent to the existing map-style `i` info button.
+Add a visible lower-right easter egg control for the Bracketeering Workflow panel.
 
 The control opens a scrollable Bracketeering Workflow panel that presents:
 
@@ -31,7 +31,7 @@ The implementation must not proceed unless the JPEG exists locally.
 After the JPEG is in place, apply the site changes:
 
 - add the workflow panel module
-- add the `WB` button beside the existing Info button
+- add the small lower-right `wb` button
 - add panel styling
 - wire the panel from `site/js/app.js`
 - add verifier coverage
@@ -50,13 +50,13 @@ The easter egg panel should expose that story for curious visitors without inter
 
 ## UX target
 
-Add a compact visible button next to the existing `i` button.
+Add a compact visible lower-right button.
 
-Preferred button label: `WB`
+Preferred button label: `wb`
 
 Behavior:
 
-- button is visible beside the Info button
+- button is visible in the lower-right corner
 - clicking opens a modal-style overlay panel
 - panel is scrollable
 - panel displays the JPEG infographic
@@ -117,7 +117,7 @@ Remote bracket persistence remains blocked until the dedicated SupabaseBracketSt
 Add a verifier that checks:
 
 - JPEG infographic exists at `site/assets/visuals/bracketeering_workflow/bracketeering_workflow_infographic.jpeg`
-- visible `WB` control exists adjacent to the Info button
+- visible lower-right `wb` control exists
 - workflow panel module exists
 - panel includes the core sentence
 - panel references the JPEG asset
@@ -129,8 +129,8 @@ Add a verifier that checks:
 
 - `make verify` passes
 - `make pack` passes
-- local browser test shows the `WB` button beside the `i` button
-- clicking `WB` opens a scrollable panel
+- local browser test shows the small `wb` button in the lower-right corner
+- clicking `wb` opens a scrollable panel
 - panel displays the JPEG infographic
 - panel displays the pitch copy
 - closing the panel returns to the game board
