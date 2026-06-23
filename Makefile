@@ -90,6 +90,7 @@ verify:
 	python3 tools/verify_wc2026_empty_pick_state_storage_li.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
 	python3 tools/verify_wc2026_supabase_sql_rls_finalization.py
+	python3 tools/verify_wc2026_supabase_profiles_and_bracket_saving_target.py
 	python3 tools/verify_wc2026_supabase_identity_ui_surface.py
 	python3 tools/verify_wc2026_supabase_auth_identity_surface_before_postgres.py
 	python3 tools/verify_wc2026_signed_in_identity_ui_polish.py
