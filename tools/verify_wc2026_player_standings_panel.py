@@ -34,8 +34,16 @@ def main():
     require('email' not in surface.lower(),
             "Standings surface must not expose email fields or labels.", errors)
 
-    require('KO ${row.knockoutPoints} · TB ${row.tiebreakerScore}' in surface,
-            "Tiebreaker score must be displayed next to knockout points.", errors)
+    require('<th scope="col">Group</th>' in surface,
+            "Standings table must display a Group column.", errors)
+    require('<th scope="col">Knockout</th>' in surface,
+            "Standings table must display a Knockout column.", errors)
+    require('<th scope="col">Total</th>' not in surface,
+            "Standings table must not display Total column.", errors)
+    require('<th scope="col">Picks</th>' not in surface,
+            "Standings table must not display Picks column.", errors)
+    require('Knockout · TB' not in surface,
+            "Standings table must not display combined Knockout/TB label.", errors)
     require('b.total - a.total' in surface
             and 'b.knockoutPoints - a.knockoutPoints' in surface
             and 'b.tiebreakerScore - a.tiebreakerScore' in surface
