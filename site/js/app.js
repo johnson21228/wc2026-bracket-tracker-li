@@ -5,7 +5,7 @@ import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
 import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js";
 import { SupabaseBracketStore } from "./services/SupabaseBracketStore.js";
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
-import { createStorageModeSurface } from "./identity/StorageModeSurface.js";
+import { createAccountSaveActionSurface } from "./identity/AccountSaveActionSurface.js";
 import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js";
 
 
@@ -121,7 +121,7 @@ async function main() {
   const profileStore = createSupabaseProfileStore();
   const identitySurface = createSupabaseIdentitySurface({ root, authService, profileStore });
   identitySurface.start();
-  createStorageModeSurface({
+  createAccountSaveActionSurface({
     root,
     authService,
     remoteActive: bracketStoreOptions.remoteActive === true,

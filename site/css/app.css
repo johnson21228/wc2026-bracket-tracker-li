@@ -1162,7 +1162,7 @@ body {
   opacity: 1;
 }
 
-.storage-mode-status {
+.account-save-action {
   position: fixed;
   top: max(12px, env(safe-area-inset-top));
   right: calc(max(12px, env(safe-area-inset-right)) + min(340px, 42vw) + 12px);
@@ -1171,9 +1171,9 @@ body {
   z-index: 19880;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   max-width: min(320px, 36vw);
-  padding: 10px 12px;
+  padding: 8px 10px;
   border: 1px solid rgba(255, 255, 255, .18);
   border-radius: 999px;
   background: rgba(10, 15, 18, .76);
@@ -1181,57 +1181,41 @@ body {
   color: rgba(255, 255, 255, .94);
   font-size: 12px;
   line-height: 1.2;
-  pointer-events: none;
   backdrop-filter: blur(10px);
 }
 
-.storage-mode-status-dot {
-  width: 9px;
-  height: 9px;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background: rgba(136, 220, 153, .95);
-  box-shadow: 0 0 0 4px rgba(136, 220, 153, .14);
+.account-save-action-button {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .12);
+  color: rgba(255, 255, 255, .94);
+  font: inherit;
+  font-weight: 850;
+  padding: 6px 10px;
 }
 
-.storage-mode-status[data-storage-mode="remote-test"] .storage-mode-status-dot {
-  background: rgba(93, 196, 255, .95);
-  box-shadow: 0 0 0 4px rgba(93, 196, 255, .14);
+.account-save-action-button:disabled {
+  opacity: .72;
 }
 
-.storage-mode-status-copy {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-
-.storage-mode-status-copy strong,
-.storage-mode-status-copy small {
+.account-save-action-status {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.storage-mode-status-copy strong {
-  font-weight: 850;
-  letter-spacing: .01em;
-}
-
-.storage-mode-status-copy small {
   color: rgba(255, 255, 255, .72);
 }
 
 @media (max-width: 900px) {
-  .storage-mode-status {
+  .account-save-action {
     top: calc(max(12px, env(safe-area-inset-top)) + 54px);
     right: max(12px, env(safe-area-inset-right));
-    left: auto;
-    bottom: auto;
     max-width: min(320px, calc(100vw - 24px));
     border-radius: 18px;
   }
 
-  .storage-mode-status-copy small {
+  .account-save-action-status {
     display: none;
   }
 }
+
