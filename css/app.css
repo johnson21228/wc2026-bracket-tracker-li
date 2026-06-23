@@ -1348,9 +1348,9 @@ body {
 
 .player-standings-control {
   position: fixed;
-  top: 76px;
-  right: 16px;
-  z-index: 86;
+  top: max(12px, env(safe-area-inset-top));
+  right: calc(max(12px, env(safe-area-inset-right)) + 292px);
+  z-index: calc(var(--wc-z-identity-surface, 19900) - 1);
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -1421,4 +1421,12 @@ body {
 .standings-icon-button:disabled {
   opacity: .52;
   cursor: not-allowed;
+}
+
+
+@media (max-width: 560px) {
+  .player-standings-control {
+    top: calc(max(12px, env(safe-area-inset-top)) + 54px);
+    right: max(12px, env(safe-area-inset-right));
+  }
 }

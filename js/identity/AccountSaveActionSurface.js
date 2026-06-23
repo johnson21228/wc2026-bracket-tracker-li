@@ -123,7 +123,7 @@ function createAccountSaveActionSurface({
       const saved = await bracketStore.saveUserBracket(bracketDocument);
       loadedJoinedBracket = saved || bracketDocument;
       lastJoinedPickFingerprint = pickFingerprintFromDocument(loadedJoinedBracket);
-      renderStatus(root, "saved", "Picks saved");
+      renderStatus(root, "saved", "");
     } catch (error) {
       console.error("[JoinLivePicks] autosave failed", error);
       renderStatus(root, "retrying", "Could not save — retrying");
@@ -155,7 +155,7 @@ function createAccountSaveActionSurface({
       if (!result?.ok) throw new Error(result?.reason || "Saved picks could not be used.");
 
       lastJoinedPickFingerprint = pickFingerprintFromDocument(loadedJoinedBracket);
-      renderStatus(root, "saved", "Picks saved");
+      renderStatus(root, "saved", "");
       dispatchLoadedPicks({ automatic: false, imported: result.imported || 0 });
     } catch (error) {
       console.error("[JoinLivePicks] use saved picks failed", error);
@@ -206,7 +206,7 @@ function createAccountSaveActionSurface({
       if (localPickCount() === 0) {
         const result = model.importAccountBracketDocument(loadedJoinedBracket);
         if (!result?.ok) throw new Error(result?.reason || "Joined picks could not be loaded.");
-        renderStatus(root, "saved", "Picks saved");
+        renderStatus(root, "saved", "");
         dispatchLoadedPicks({ automatic, imported: result.imported || 0 });
         return;
       }
@@ -217,7 +217,7 @@ function createAccountSaveActionSurface({
         return;
       }
 
-      renderStatus(root, "saved", "Picks saved");
+      renderStatus(root, "saved", "");
     } catch (error) {
       console.error("[JoinLivePicks] join reconcile failed", error);
       renderStatus(root, "retrying", "Could not save — retrying");
