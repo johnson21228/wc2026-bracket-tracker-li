@@ -601,7 +601,11 @@
       "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
       "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
       "timeConfidence": "high",
-      "espnMatchId": "66457042"
+      "espnMatchId": "66457042",
+      "homeTeamEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "homeFlagEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "homeFlag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "homeEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
     },
     {
       "matchId": "66457030",
@@ -1247,7 +1251,11 @@
       "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
       "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
       "timeConfidence": "high",
-      "espnMatchId": "66457046"
+      "espnMatchId": "66457046",
+      "homeTeamEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "homeFlagEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "homeFlag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "homeEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
     },
     {
       "matchId": "GS-2026-06-23-L4",
@@ -1836,7 +1844,11 @@
       "timeSource": "ESPN FIFA World Cup schedule page, normalized to Eastern Time",
       "timeSourceUrl": "https://www.espn.com/soccer/schedule/_/league/fifa.world",
       "timeConfidence": "high",
-      "espnMatchId": "66457050"
+      "espnMatchId": "66457050",
+      "awayTeamEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "awayFlagEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "awayFlag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "awayEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
     },
     {
       "matchId": "GS-2026-06-27-L6",

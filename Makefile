@@ -80,6 +80,7 @@ verify:
 	python3 tools/verify_wc2026_map_icon_controls.py
 	python3 tools/verify_wc2026_later_round_choose_winner_labels.py
 	python3 tools/verify_wc2026_scotland_flag_emoji_data.py
+	python3 tools/verify_wc2026_england_flag_emoji_data.py
 	python3 tools/verify_wc2026_pages_owned_board_zoom_out_scale.py
 	python3 tools/verify_wc2026_pages_owned_board_zoom_out_runtime.py
 	python3 tools/verify_wc2026_pages_owned_board_wheel_pinch_zoom.py

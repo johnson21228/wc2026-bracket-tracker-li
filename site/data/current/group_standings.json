@@ -855,7 +855,11 @@
           "points": 3,
           "rank": 1,
           "qualificationContext": "group-winner",
-          "rankStatus": "provisional"
+          "rankStatus": "provisional",
+          "emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "flagEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "teamEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
         },
         {
           "teamId": "GHA",
