@@ -16,6 +16,7 @@ function publicUserSummary(session) {
   return {
     id: user.id,
     label: safeDisplayLabel(user),
+    email: user.email || "",
   };
 }
 

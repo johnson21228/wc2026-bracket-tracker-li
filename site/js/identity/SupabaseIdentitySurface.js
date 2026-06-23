@@ -40,7 +40,7 @@ export function createSupabaseIdentitySurface({ root, authService }) {
   }
 
   function statusLabel(state) {
-    if (state.status === "signed-in") return state.user?.label || "Signed in";
+    if (state.status === "signed-in") return "Signed in";
     if (state.status === "checking") return "Checking sign-in";
     if (state.status === "sending") return "Sending link";
     if (state.status === "link-sent") return "Check email";
@@ -55,7 +55,14 @@ export function createSupabaseIdentitySurface({ root, authService }) {
   }
 
   function panelMessage(state) {
+    if (state.status === "signed-in") {
+      return "This email is used for login. It is not your public player name.";
+    }
     return state.message || "Sign in is identity-only for now. Bracket picks remain saved locally in this browser.";
+  }
+
+  function accountEmail(state) {
+    return state.user?.email || "";
   }
 
   function render(state = latestState) {
@@ -119,6 +126,16 @@ export function createSupabaseIdentitySurface({ root, authService }) {
     }
 
     if (isSignedIn) {
+      const signedInDetails = document.createElement("div");
+      signedInDetails.className = "identity-panel-signed-in-details";
+      signedInDetails.innerHTML = `
+        <p><strong>Account:</strong> ${escapeHtml(accountEmail(state) || "Signed-in Supabase user")}</p>
+        <p>This email is used for login. It is private account identity, not your public player name.</p>
+        <p>Your public player name will be added later through a Supabase-backed profile.</p>
+        <p><strong>Bracket saving:</strong> not enabled yet. This browser is still using local play.</p>
+      `;
+      actions.append(signedInDetails);
+
       const signOutButton = document.createElement("button");
       signOutButton.type = "button";
       signOutButton.className = "identity-panel-primary-button";
