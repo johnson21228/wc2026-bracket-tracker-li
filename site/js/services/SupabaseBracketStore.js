@@ -1,5 +1,5 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import { WC2026_SUPABASE_PUBLIC_CONFIG } from "../config/supabase.public.js";
+import { requireSharedSupabaseClient } from "./SupabaseClient.js";
 import { normalizeBracketDocument } from "../model/UserBracketModel.js";
 import { BracketStorageAdapter } from "./BracketStorageAdapter.js";
 import { isSupabaseAuthConfigured } from "./SupabaseAuthService.js";
@@ -119,13 +119,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
     }
 
     if (!this.client) {
-      this.client = createClient(this.config.supabaseUrl, this.config.supabasePublishableKey, {
-        auth: {
-          persistSession: true,
-          autoRefreshToken: true,
-          detectSessionInUrl: true,
-        },
-      });
+      this.client = requireSharedSupabaseClient(this.config);
     }
 
     return this.client;

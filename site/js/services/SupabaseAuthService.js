@@ -1,5 +1,5 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import { WC2026_SUPABASE_PUBLIC_CONFIG } from "../config/supabase.public.js";
+import { getSharedSupabaseClient, isSupabasePublicConfigReady } from "./SupabaseClient.js";
 
 const CONFIG_PLACEHOLDER_PATTERN = /YOUR_PROJECT_REF|YOUR_PUBLISHABLE_KEY/i;
 
@@ -21,11 +21,7 @@ function publicUserSummary(session) {
 }
 
 export function isSupabaseAuthConfigured(config = WC2026_SUPABASE_PUBLIC_CONFIG) {
-  if (!config?.enabled) return false;
-  if (!config.supabaseUrl || !config.supabasePublishableKey) return false;
-  if (CONFIG_PLACEHOLDER_PATTERN.test(config.supabaseUrl)) return false;
-  if (CONFIG_PLACEHOLDER_PATTERN.test(config.supabasePublishableKey)) return false;
-  return true;
+  return isSupabasePublicConfigReady(config);
 }
 
 export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONFIG } = {}) {
@@ -58,13 +54,7 @@ export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONF
   function ensureClient() {
     if (!isSupabaseAuthConfigured(config)) return null;
     if (!client) {
-      client = createClient(config.supabaseUrl, config.supabasePublishableKey, {
-        auth: {
-          persistSession: true,
-          autoRefreshToken: true,
-          detectSessionInUrl: true,
-        },
-      });
+      client = getSharedSupabaseClient(config);
     }
     return client;
   }

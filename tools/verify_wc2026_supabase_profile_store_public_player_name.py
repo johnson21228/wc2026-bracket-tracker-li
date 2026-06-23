@@ -79,8 +79,9 @@ def main():
 
 
     require(
-        "config.supabaseUrl" in profile_text and "config.supabasePublishableKey" in profile_text,
-        "SupabaseProfileStore must use canonical supabaseUrl/supabasePublishableKey config names.",
+        ("config.supabaseUrl" in profile_text and "config.supabasePublishableKey" in profile_text)
+        or "requireSharedSupabaseClient(config)" in profile_text,
+        "SupabaseProfileStore must use the canonical shared Supabase config/client boundary.",
         errors,
     )
     require(

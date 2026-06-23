@@ -1,4 +1,5 @@
 import { WC2026_SUPABASE_PUBLIC_CONFIG } from "../config/supabase.public.js";
+import { requireSharedSupabaseClient } from "./SupabaseClient.js";
 import { isSupabaseAuthConfigured } from "./SupabaseAuthService.js";
 
 function normalizeDisplayName(displayName) {
@@ -24,7 +25,7 @@ export function createSupabaseProfileStore({ config = WC2026_SUPABASE_PUBLIC_CON
       throw new Error("Supabase browser client is not loaded.");
     }
     if (!client) {
-      client = window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey);
+      client = requireSharedSupabaseClient(config);
     }
     return client;
   }

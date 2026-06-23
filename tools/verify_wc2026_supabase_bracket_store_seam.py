@@ -26,7 +26,7 @@ def main():
 
     require("class SupabaseBracketStore extends BracketStorageAdapter" in store, "SupabaseBracketStore must implement the BracketStorageAdapter seam.", errors)
     require("createSupabaseBracketStore" in store, "SupabaseBracketStore factory must be exported.", errors)
-    require("config.supabaseUrl" in store and "config.supabasePublishableKey" in store, "SupabaseBracketStore must use canonical Supabase config names.", errors)
+    require(("config.supabaseUrl" in store and "config.supabasePublishableKey" in store) or "requireSharedSupabaseClient(this.config)" in store, "SupabaseBracketStore must use the canonical shared Supabase config/client boundary.", errors)
     require("supabase.auth.getUser()" in store, "SupabaseBracketStore must require the authenticated Supabase user.", errors)
     require("throw new Error(\"SupabaseBracketStore requires a signed-in Supabase user.\")" in store, "SupabaseBracketStore must fail closed when signed out.", errors)
     require('const TABLE_NAME = "user_brackets"' in store and ".from(TABLE_NAME)" in store, "SupabaseBracketStore must be the only user_brackets table access point.", errors)
