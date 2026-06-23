@@ -23,9 +23,17 @@ function normalizeStandingsRow(row) {
   const total = Number.isFinite(Number(row?.total))
     ? numericScore(row.total)
     : groupPoints + knockoutPoints;
+  const picksBySlot = row?.picksBySlot && typeof row.picksBySlot === "object" && !Array.isArray(row.picksBySlot)
+    ? row.picksBySlot
+    : {};
+  const picksCount = Number.isFinite(Number(row?.picksCount))
+    ? numericScore(row.picksCount)
+    : Object.keys(picksBySlot).length;
 
   return {
     publicPlayerName: safePublicPlayerName(row),
+    picksBySlot,
+    picksCount,
     groupPoints,
     knockoutPoints,
     tiebreakerScore,
@@ -150,6 +158,7 @@ function renderStandingsRows(panel, rows) {
     <tr>
       <td class="player-standings-rank">${index + 1}</td>
       <td class="player-standings-player">${row.publicPlayerName}</td>
+      <td>${row.picksCount}</td>
       <td>${row.groupPoints}</td>
       <td class="player-standings-ko-tb">KO ${row.knockoutPoints} · TB ${row.tiebreakerScore}</td>
       <td class="player-standings-total">${row.total}</td>
@@ -162,6 +171,7 @@ function renderStandingsRows(panel, rows) {
         <tr>
           <th scope="col">Rank</th>
           <th scope="col">Player</th>
+          <th scope="col">Picks</th>
           <th scope="col">Group</th>
           <th scope="col">Knockout · TB</th>
           <th scope="col">Total</th>
