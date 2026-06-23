@@ -102,6 +102,7 @@ verify:
 	python3 tools/verify_wc2026_shared_supabase_browser_client.py
 	python3 tools/verify_wc2026_dev_active_supabase_bracket_store.py
 	python3 tools/verify_wc2026_account_save_action_target.py
+	python3 tools/verify_wc2026_join_first_live_picks_player_ui.py
 	python3 tools/verify_wc2026_player_standings_panel.py
 	python3 tools/verify_wc2026_storage_backed_player_standings.py
 	python3 tools/verify_wc2026_bracketeering_workflow_easter_egg_panel.py
