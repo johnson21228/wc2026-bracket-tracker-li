@@ -18,3 +18,8 @@ Add a visible storage mode status surface before enabling account-backed bracket
 - No local-to-remote migration.
 - No dual-write.
 - View and Controller do not know about Supabase bracket persistence.
+
+
+## Placement
+
+The storage status surface belongs in the upper-right account chrome, visually to the left of the login/status surface. It should not sit inside the board plane and should not block picks.

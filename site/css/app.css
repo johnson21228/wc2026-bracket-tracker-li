@@ -1164,13 +1164,15 @@ body {
 
 .storage-mode-status {
   position: fixed;
-  left: 18px;
-  bottom: 18px;
-  z-index: 950;
+  top: max(12px, env(safe-area-inset-top));
+  right: calc(max(12px, env(safe-area-inset-right)) + min(340px, 42vw) + 12px);
+  left: auto;
+  bottom: auto;
+  z-index: 19880;
   display: flex;
   align-items: center;
   gap: 10px;
-  max-width: min(360px, calc(100vw - 36px));
+  max-width: min(320px, 36vw);
   padding: 10px 12px;
   border: 1px solid rgba(255, 255, 255, .18);
   border-radius: 999px;
@@ -1219,11 +1221,17 @@ body {
   color: rgba(255, 255, 255, .72);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .storage-mode-status {
-    left: 12px;
-    bottom: 12px;
-    max-width: calc(100vw - 24px);
+    top: calc(max(12px, env(safe-area-inset-top)) + 54px);
+    right: max(12px, env(safe-area-inset-right));
+    left: auto;
+    bottom: auto;
+    max-width: min(320px, calc(100vw - 24px));
     border-radius: 18px;
+  }
+
+  .storage-mode-status-copy small {
+    display: none;
   }
 }

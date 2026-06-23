@@ -44,6 +44,10 @@ def main():
 
     require(".storage-mode-status" in css and "pointer-events: none" in css,
             "Storage mode status must be visible but non-interactive browser chrome.", errors)
+    require("top: max(12px, env(safe-area-inset-top));" in css and "right: calc(max(12px, env(safe-area-inset-right)) + min(340px, 42vw) + 12px);" in css,
+            "Storage mode status must live in the upper-right account chrome, left of login info.", errors)
+    require("left: auto;" in css and "bottom: auto;" in css,
+            "Storage mode status must no longer be anchored to the lower-left corner.", errors)
     require('python3 tools/verify_wc2026_storage_mode_status_surface.py' in makefile,
             "Makefile verify must include storage mode status verifier.", errors)
 

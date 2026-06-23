@@ -6,7 +6,7 @@ Players need a visible truth surface that says where their picks are being saved
 
 ## Scope
 
-Add a small browser-chrome storage mode indicator:
+Add a small browser-chrome storage mode indicator in the upper-right account chrome, to the left of the login/status button:
 
 - `Playing locally` for normal public gameplay.
 - `Playing locally` for signed-in users on the normal URL.
