@@ -19,6 +19,7 @@ def main():
     rule = read("li/world_cup/game1_game2_state_separation_no_r16_preselect_highlight_rule.md")
     card = read("cards/281_game1_game2_state_separation_no_r16_preselect_highlight_card.md")
     makefile = read("Makefile")
+    css = read("site/css/board.css")
 
     combined = "\n".join([capture, doc, rule, card])
 
@@ -45,6 +46,16 @@ def main():
             "LI rule must block lifecycle-stage highlight ownership.", errors)
     require("Game 2 resolved bracket truth" in rule,
             "LI rule must block Game 2 truth from driving Game 1 highlight.", errors)
+
+
+    require('.pick-slot-button.is-pickable[data-round="R32"]' in css,
+            "Runtime CSS must scope pickable preselect background to R32 only.", errors)
+    require('.pick-slot-button.is-pickable[data-round="R32"]:hover' in css,
+            "Runtime CSS must scope hover preselect highlight to R32 only.", errors)
+    require('.pick-slot-button.is-pickable:hover' not in css,
+            "Runtime CSS must not apply generic hover preselect highlight to R16+ pickable cells.", errors)
+    require('background: rgba(126, 84, 52, .34);' in css,
+            "Runtime CSS must preserve the R32 pickable background token.", errors)
 
     require("python3 tools/verify_wc2026_game1_game2_state_separation_no_r16_preselect_highlight.py" in makefile,
             "Makefile verify must include the Game 1 / Game 2 state-separation verifier.", errors)

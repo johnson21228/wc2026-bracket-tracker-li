@@ -67,11 +67,14 @@
 
 .pick-slot-button.is-pickable {
   cursor: pointer;
+}
+
+.pick-slot-button.is-pickable[data-round="R32"] {
   background: rgba(126, 84, 52, .34);
 }
 
-.pick-slot-button.is-pickable:hover,
-.pick-slot-button.is-pickable:focus-visible {
+.pick-slot-button.is-pickable[data-round="R32"]:hover,
+.pick-slot-button.is-pickable[data-round="R32"]:focus-visible {
   outline: 2px solid rgba(255, 229, 159, .86);
   outline-offset: 2px;
   background: rgba(164, 100, 45, .56);
