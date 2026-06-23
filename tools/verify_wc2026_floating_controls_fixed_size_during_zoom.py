@@ -20,8 +20,8 @@ require(app_css, "transform: none !important;", "fixed controls transform reset"
 require(app_css, "zoom: 1 !important;", "fixed controls zoom reset")
 require(app_css, "position: fixed !important;", "fixed viewport positioning")
 require(app_css, "contain: layout style;", "fixed control containment")
-require(app_css, "inline-size: 34px;", "desktop fixed button inline size")
-require(app_css, "block-size: 34px;", "desktop fixed button block size")
+require(app_css, "inline-size: 52px;", "desktop fixed button inline size")
+require(app_css, "block-size: 52px;", "desktop fixed button block size")
 
 require(board_css, ".pixel-native-board-plane", "board plane selector")
 require(board_css, "transform: scale(var(--board-render-scale));", "board-plane zoom transform")

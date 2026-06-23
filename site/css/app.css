@@ -551,23 +551,23 @@ body {
 }
 
 /* Card 261: upper-left map icon controls.
-   Keep the board-only shell, restore only the login control at upper right, and add compact
-   map-style icon controls at upper left for zoom in, zoom out, and temporary info/rules. */
+   Keep the board-only shell, restore only the login control at upper right, and add
+   touch-friendly map-style icon controls in one top row: +, −, info. */
 .map-board-icon-controls {
   position: fixed;
   top: max(12px, env(safe-area-inset-top));
   left: max(12px, env(safe-area-inset-left));
   z-index: 46;
-  display: grid;
-  grid-template-columns: 34px 34px;
-  grid-auto-rows: 34px;
-  gap: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   pointer-events: auto;
 }
 
 .map-icon-button {
-  width: 34px;
-  height: 34px;
+  width: 52px;
+  height: 52px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -577,16 +577,17 @@ body {
   color: #fff8ef;
   box-shadow: 0 10px 28px rgba(0,0,0,.34);
   backdrop-filter: blur(10px);
-  font: 700 19px/1 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font: 800 24px/1 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   cursor: pointer;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
 .map-icon-button[data-rules-panel-open] {
   font-family: Georgia, "Times New Roman", serif;
   font-style: italic;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
 }
 
 .map-icon-button:hover,
@@ -600,15 +601,13 @@ body {
   .map-board-icon-controls {
     top: max(10px, env(safe-area-inset-top));
     left: max(10px, env(safe-area-inset-left));
-    grid-template-columns: 32px 32px;
-    grid-auto-rows: 32px;
-    gap: 7px;
+    gap: 9px;
   }
 
   .map-icon-button {
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
+    width: 48px;
+    height: 48px;
+    font-size: 23px;
   }
 }
 
@@ -646,12 +645,12 @@ body {
 
 .map-icon-button {
   flex: 0 0 auto;
-  inline-size: 34px;
-  block-size: 34px;
-  min-inline-size: 34px;
-  min-block-size: 34px;
-  max-inline-size: 34px;
-  max-block-size: 34px;
+  inline-size: 52px;
+  block-size: 52px;
+  min-inline-size: 52px;
+  min-block-size: 52px;
+  max-inline-size: 52px;
+  max-block-size: 52px;
 }
 
 @media (max-width: 760px) {
