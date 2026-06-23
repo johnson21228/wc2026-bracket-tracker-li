@@ -1,3 +1,4 @@
+import { teamPickValue } from "../model/PickValue.js";
 const STORAGE_KEY = "wc2026.game1.cleanMvcPicks.v1";
 const PICK_SNAPSHOT_APP_ID = "wc2026.braketeeringPub.picks";
 const ROUND_ORDER = ["R32", "R16", "QF", "SF", "SF_WINNER", "CHAMPION", "FINAL_FOUR"];
@@ -213,7 +214,25 @@ function saveToStorage(picks) {
   }
 }
 
-export async function createBracketModel() {
+function legacyPicksFromRemoteBracketDocument(bracket) {
+  const picksBySlot = bracket?.picksBySlot && typeof bracket.picksBySlot === "object" ? bracket.picksBySlot : {};
+  const result = {};
+
+  for (const [slotId, record] of Object.entries(picksBySlot)) {
+    const teamId = record?.pick?.kind === "team"
+      ? record.pick.teamId
+      : record?.teamId;
+    if (teamId) result[slotId] = teamId;
+  }
+
+  return result;
+}
+
+export async function createBracketModel({
+  bracketStore = null,
+  userId = "local-player",
+  persistenceMode = "local",
+} = {}) {
   const [
     geometry,
     r32Bridge,
@@ -285,7 +304,26 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       source: "canonical-bracket-document-runtime",
     },
   ]));
-  let picks = pickFromStorage();
+  const remotePersistenceActive = persistenceMode === "supabase" && bracketStore;
+  let remoteBracketDocument = null;
+  let remoteSavePromise = Promise.resolve();
+  let picks = {};
+
+  if (remotePersistenceActive) {
+    try {
+      remoteBracketDocument = await bracketStore.loadUserBracket(userId);
+      picks = legacyPicksFromRemoteBracketDocument(remoteBracketDocument);
+      console.info("[WC2026 SupabaseBracketStore] loaded remote bracket picks", {
+        userId,
+        pickCount: Object.keys(picks).length,
+      });
+    } catch (error) {
+      console.error("[WC2026 SupabaseBracketStore] remote bracket load failed", error);
+      picks = {};
+    }
+  } else {
+    picks = pickFromStorage();
+  }
 
   function getTeam(teamId) {
     return teamById.get(teamId) || null;
@@ -319,6 +357,71 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
 
   function allPickSlots() {
     return [...pickSurfaceSlots(slots), ...finalFourSlotsById.values()];
+  }
+
+  function pickRecordForRemoteSlot(slot, teamId) {
+    const normalizedTeamId = String(teamId || "").trim();
+    return {
+      slotId: slot.slotId,
+      kind: slot.kind || "winner",
+      round: slot.round || "UNKNOWN",
+      pick: normalizedTeamId ? teamPickValue(normalizedTeamId) : null,
+      source: normalizedTeamId ? "user" : "empty",
+    };
+  }
+
+  function buildRemoteBracketDocument(reason = "autosave") {
+    const now = new Date().toISOString();
+    const previous = remoteBracketDocument || {};
+    const picksBySlot = Object.fromEntries(
+      allPickSlots().map((slot) => [slot.slotId, pickRecordForRemoteSlot(slot, picks[slot.slotId])])
+    );
+
+    return {
+      ...previous,
+      schemaVersion: Number(previous.schemaVersion || 1),
+      userId,
+      tournamentId: previous.tournamentId || "wc2026",
+      gameId: previous.gameId || "game1",
+      status: previous.status || "draft",
+      lifecycleState: {
+        ...(previous.lifecycleState || {}),
+        stage: "group",
+        source: "dev-active-supabase-bracket-store",
+        lastSaveReason: reason,
+      },
+      phaseLocks: previous.phaseLocks || { r32LockedAt: null },
+      picksBySlot,
+      createdAt: previous.createdAt || now,
+      updatedAt: now,
+      submittedAt: previous.submittedAt || null,
+      lockedAt: previous.lockedAt || null,
+      visibility: previous.visibility || "private",
+    };
+  }
+
+  function persistPicks(reason = "autosave") {
+    if (!remotePersistenceActive) {
+      saveToStorage(picks);
+      return;
+    }
+
+    const bracketDocument = buildRemoteBracketDocument(reason);
+    remoteBracketDocument = bracketDocument;
+    remoteSavePromise = remoteSavePromise
+      .catch(() => null)
+      .then(() => bracketStore.saveUserBracket(bracketDocument))
+      .then((saved) => {
+        remoteBracketDocument = saved || bracketDocument;
+        console.info("[WC2026 SupabaseBracketStore] saved remote bracket picks", {
+          userId,
+          pickCount: Object.keys(picks).length,
+          reason,
+        });
+      })
+      .catch((error) => {
+        console.error("[WC2026 SupabaseBracketStore] remote bracket save failed", error);
+      });
   }
 
   function teamsFromSlotIds(slotIds) {
@@ -504,7 +607,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     }
     if (teamId) picks[slotId] = teamId;
     else delete picks[slotId];
-    saveToStorage(picks);
+    persistPicks("setPick");
     const team = selectedTeam(slotId);
     return { ok: true, cleared: [], pickValidity: pickValidityForSlot(slot, team) };
   }
@@ -515,7 +618,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
 
   function clearAll() {
     picks = {};
-    saveToStorage(picks);
+    persistPicks("clearAll");
     return { ok: true, cleared: allPickSlots().map((slot) => slot.slotId) };
   }
 
@@ -552,7 +655,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     }
 
     const cleared = cascadeClearInvalidDescendants();
-    saveToStorage(picks);
+    persistPicks("import");
     return {
       ok: true,
       imported: Object.keys(picks).length,
@@ -840,7 +943,9 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   }
 
   // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.
-  saveToStorage(picks);
+  if (!remotePersistenceActive) {
+    saveToStorage(picks);
+  }
 
   return {
     nativeSize,

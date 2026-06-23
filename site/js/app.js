@@ -3,6 +3,7 @@ import { createBracketView } from "./mvc/view.js";
 import { createBracketController } from "./mvc/controller.js";
 import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
 import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js";
+import { SupabaseBracketStore } from "./services/SupabaseBracketStore.js";
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
 import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js";
 
@@ -65,6 +66,29 @@ function syncActiveGameBackground(root) {
   }
 }
 
+function shouldUseDevSupabaseBracketStore(locationSearch = window.location.search) {
+  return new URLSearchParams(locationSearch).get("devSupabaseBracketStore") === "1";
+}
+
+async function devSupabaseBracketStoreOptions(authService) {
+  if (!shouldUseDevSupabaseBracketStore()) return {};
+
+  const state = await authService.start();
+  const userId = state?.user?.id || "";
+  if (!userId) {
+    console.warn("[WC2026 SupabaseBracketStore] dev remote store requested but no signed-in user is available. Local storage remains active.");
+    return {};
+  }
+
+  console.info("[WC2026 SupabaseBracketStore] dev remote bracket store enabled", { userId });
+  return {
+    bracketStore: new SupabaseBracketStore(),
+    userId,
+    persistenceMode: "supabase",
+  };
+}
+
+
 function setupActiveGameBackground(root) {
   syncActiveGameBackground(root);
 
@@ -78,7 +102,6 @@ function setupActiveGameBackground(root) {
   });
 }
 
-
 async function main() {
   const root = document.querySelector("[data-wc2026-app]");
   if (!root) {
@@ -87,11 +110,11 @@ async function main() {
 
   setupInfoPanel(root);
   setupBracketeeringWorkflowPanel(root);
-  const model = await createBracketModel();
+  const authService = createSupabaseAuthService();
+  const model = await createBracketModel(await devSupabaseBracketStoreOptions(authService));
   const view = createBracketView(root);
   setupActiveGameBackground(root);
   const controller = createBracketController({ model, view });
-  const authService = createSupabaseAuthService();
   const profileStore = createSupabaseProfileStore();
   const identitySurface = createSupabaseIdentitySurface({ root, authService, profileStore });
   identitySurface.start();

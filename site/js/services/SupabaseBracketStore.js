@@ -41,6 +41,15 @@ function canonicalSlotsFromPicksBySlot(picksBySlot, gameId) {
   })).filter((slot) => slot.slotId);
 }
 
+function teamsByIdFromPicksBySlot(picksBySlot) {
+  const teamsById = {};
+  for (const record of Object.values(picksBySlot || {})) {
+    const teamId = record?.pick?.kind === "team" ? record.pick.teamId : record?.teamId;
+    if (teamId) teamsById[teamId] = { id: teamId };
+  }
+  return teamsById;
+}
+
 function normalizeVisibility(value) {
   return value === "public" ? "public" : DEFAULT_VISIBILITY;
 }
@@ -69,7 +78,7 @@ function normalizeRemoteBracketDocument({ bracket, userId }) {
     bracketSlots: {
       canonicalPickSlots: canonicalSlotsFromPicksBySlot(bracket.picksBySlot, gameId),
     },
-    teamsById: {},
+    teamsById: teamsByIdFromPicksBySlot(bracket.picksBySlot),
     userId,
     gameId,
   });

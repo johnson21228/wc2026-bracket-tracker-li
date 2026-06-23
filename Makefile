@@ -99,6 +99,7 @@ verify:
 	python3 tools/verify_wc2026_supabase_bracket_store_seam.py
 	python3 tools/verify_wc2026_supabase_bracket_store_smoke_test.py
 	python3 tools/verify_wc2026_shared_supabase_browser_client.py
+	python3 tools/verify_wc2026_dev_active_supabase_bracket_store.py
 	python3 tools/verify_wc2026_bracketeering_workflow_easter_egg_panel.py
 	python3 tools/verify_wc2026_full_canonical_bracket_document_runtime.py
 	python3 tools/verify_wc2026_bracketdocument_save_seam_before_supabase.py

@@ -50,6 +50,7 @@ function buildSmokeBracketDocument(userId) {
     picksBySlot: {
       "SMOKE-R32-1": {
         slotId: "SMOKE-R32-1",
+        pick: { kind: "team", teamId: "FRA" },
         teamId: "FRA",
         teamName: "France",
         teamAbbr: "FRA",
@@ -89,7 +90,12 @@ function verifyRoundTrip({ userId, saved, loaded }) {
 
   assert(savedPick, "saved smoke pick is missing");
   assert(loadedPick, "loaded smoke pick is missing");
-  assert(savedPick.teamId === loadedPick.teamId, "round-trip picksBySlot teamId mismatch");
+  const savedTeamId = savedPick.pick?.teamId || savedPick.teamId;
+  const loadedTeamId = loadedPick.pick?.teamId || loadedPick.teamId;
+
+  assert(savedTeamId === "FRA", "saved smoke pick teamId mismatch");
+  assert(loadedTeamId === "FRA", "loaded smoke pick teamId mismatch");
+  assert(savedTeamId === loadedTeamId, "round-trip picksBySlot teamId mismatch");
   assert(savedPick.slotId === loadedPick.slotId, "round-trip picksBySlot slotId mismatch");
 }
 
