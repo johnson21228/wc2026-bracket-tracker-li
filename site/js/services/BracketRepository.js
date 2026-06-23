@@ -1,6 +1,7 @@
 import { indexTeamsById } from "../model/TeamModel.js";
 import { createEmptyUserBracket, normalizeUserBracket } from "../model/UserBracketModel.js";
 import { LocalStorageBracketStore } from "./LocalStorageBracketStore.js";
+import { SupabaseBracketStore } from "./SupabaseBracketStore.js";
 import { StaticJsonModelSource } from "./StaticJsonModelSource.js";
 
 function usersById(usersModel) {
@@ -81,7 +82,16 @@ function createStaticBracketRepository() {
   });
 }
 
+
+function createSupabaseBracketRepository(options = {}) {
+  return new BracketRepository({
+    modelSource: new StaticJsonModelSource(),
+    bracketStore: new SupabaseBracketStore(options),
+  });
+}
+
 export {
   BracketRepository,
   createStaticBracketRepository,
+  createSupabaseBracketRepository,
 };

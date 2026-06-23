@@ -3,81 +3,49 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-
 def read(rel):
     path = ROOT / rel
     if not path.exists():
         raise AssertionError(f"Missing required file: {rel}")
     return path.read_text(encoding="utf-8", errors="ignore")
 
-
 def require(condition, message, errors):
     if not condition:
         errors.append(message)
 
-
 def main():
     errors = []
 
-    site_js_files = sorted((ROOT / "site/js").rglob("*.js"))
-    combined_site_js = "\n".join(
-        p.read_text(encoding="utf-8", errors="ignore")
-        for p in site_js_files
-    )
+    bracket_repo = read("site/js/services/BracketRepository.js")
+    local_store = read("site/js/services/LocalStorageBracketStore.js")
+    supabase_store_path = ROOT / "site/js/services/SupabaseBracketStore.js"
 
-    bracket_repo_path = ROOT / "site/js/services/BracketRepository.js"
-    local_store_path = ROOT / "site/js/services/LocalStorageBracketStore.js"
+    require("LocalStorageBracketStore" in bracket_repo, "BracketRepository must preserve the local store seam.", errors)
+    require("bracketStore = new LocalStorageBracketStore()" in bracket_repo, "Static/default repository must remain local-only for anonymous play.", errors)
+    require("localStorage" in local_store, "LocalStorageBracketStore must remain the local anonymous persistence path.", errors)
 
-    require(bracket_repo_path.exists(), "BracketRepository seam file must remain present.", errors)
-    require(local_store_path.exists(), "LocalStorageBracketStore must remain present before remote bracket persistence.", errors)
+    require(supabase_store_path.exists(), "SupabaseBracketStore is now the intentional remote bracket persistence boundary.", errors)
+    if supabase_store_path.exists():
+        supabase_store = supabase_store_path.read_text(encoding="utf-8", errors="ignore")
+        require('.from(TABLE_NAME)' in supabase_store and 'const TABLE_NAME = "user_brackets"' in supabase_store, "SupabaseBracketStore must own user_brackets access.", errors)
+        require("bracket_json" in supabase_store, "SupabaseBracketStore must write canonical bracket_json.", errors)
 
-    if bracket_repo_path.exists():
-        bracket_repo = bracket_repo_path.read_text(encoding="utf-8", errors="ignore")
-        require(
-            "create" in bracket_repo.lower() or "repository" in bracket_repo.lower() or "save" in bracket_repo.lower(),
-            "BracketRepository should remain an active save/repository seam.",
-            errors,
-        )
-
-    if local_store_path.exists():
-        local_store = local_store_path.read_text(encoding="utf-8", errors="ignore")
-        require(
-            "localStorage" in local_store or "localstorage" in local_store.lower(),
-            "LocalStorageBracketStore should remain the active local bracket persistence path.",
-            errors,
-        )
-
-    # Public profile persistence is allowed after Supabase profile SQL application.
-    profile_store_path = ROOT / "site/js/services/SupabaseProfileStore.js"
-    if profile_store_path.exists():
-        profile_store = profile_store_path.read_text(encoding="utf-8", errors="ignore")
-        require('.from("profiles")' in profile_store, "SupabaseProfileStore should own public profile persistence.", errors)
-        require(".upsert(" in profile_store, "SupabaseProfileStore should upsert public player names.", errors)
-        require("display_name" in profile_store, "SupabaseProfileStore should persist display_name.", errors)
-
-    # Remote bracket persistence is still intentionally blocked until SupabaseBracketStore.
-    forbidden_bracket_tokens = [
-        '.from("user_brackets")',
-        ".from('user_brackets')",
-        ".from(`user_brackets`)",
-        "SupabaseBracketStore",
-        "bracket_json",
-        "picks_json",
-    ]
-    for token in forbidden_bracket_tokens:
-        require(
-            token.lower() not in combined_site_js.lower(),
-            f"site/js must not introduce remote bracket persistence before SupabaseBracketStore: found {token}",
-            errors,
-        )
+    app = read("site/js/app.js")
+    view = read("site/js/mvc/view.js")
+    controller = read("site/js/mvc/controller.js")
+    for rel, text in {
+        "site/js/app.js": app,
+        "site/js/mvc/view.js": view,
+        "site/js/mvc/controller.js": controller,
+    }.items():
+        require(".from(\"user_brackets\")" not in text and ".from('user_brackets')" not in text, f"{rel} must not make direct Supabase bracket writes.", errors)
 
     if errors:
-        print("BracketDocument save seam before Supabase verification failed: " + "; ".join(errors))
+        print("BracketDocument save seam verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: bracket save seam remains local-only while SupabaseProfileStore may persist public player names.")
+    print("OK: bracket save seam now has local anonymous persistence plus an explicit SupabaseBracketStore remote boundary.")
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())
