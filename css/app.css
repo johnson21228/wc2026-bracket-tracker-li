@@ -1369,3 +1369,56 @@ body {
   backdrop-filter: blur(8px);
   cursor: pointer;
 }
+
+
+.join-live-picks-status {
+  position: fixed;
+  top: 118px;
+  right: 16px;
+  z-index: 87;
+  max-width: min(280px, calc(100vw - 32px));
+  color: rgba(255, 255, 255, .86);
+  font-size: .74rem;
+  line-height: 1.25;
+  text-align: right;
+  pointer-events: auto;
+}
+
+.join-live-picks-status-text:empty {
+  display: none;
+}
+
+.join-live-picks-conflict {
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid rgba(255, 214, 102, .5);
+  border-radius: 12px;
+  background: rgba(22, 18, 12, .92);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .36);
+  text-align: left;
+}
+
+.join-live-picks-conflict p {
+  margin: 0 0 8px;
+}
+
+.join-live-picks-conflict-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.join-live-picks-conflict-actions button {
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .10);
+  color: rgba(255, 255, 255, .94);
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.standings-icon-button.is-join-required,
+.standings-icon-button:disabled {
+  opacity: .52;
+  cursor: not-allowed;
+}

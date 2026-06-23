@@ -2,6 +2,7 @@ import { SupabaseBracketStore } from "../services/SupabaseBracketStore.js";
 
 const ACCOUNT_SAVE_STATE_ATTRIBUTE = "data-account-save-state";
 const ACCOUNT_PICKS_LOADED_EVENT = "wc2026:account-picks-loaded";
+const AUTOSAVE_DELAY_MS = 650;
 
 function pickFingerprintFromDocument(bracketDocument) {
   const picksBySlot = bracketDocument?.picksBySlot || {};
@@ -14,199 +15,50 @@ function pickFingerprintFromDocument(bracketDocument) {
     .sort(([left], [right]) => left.localeCompare(right)));
 }
 
-function syncStateClass(state) {
-  if (state === "saved" || state === "loaded" || state === "synced") return "is-saved";
-  if (state === "dirty" || state === "error") return "is-unsaved";
-  return "";
-}
-
-function ensureAccountSaveElement(root) {
-  let element = root.querySelector("[data-account-save-action]");
+function ensureJoinLivePicksElement(root) {
+  let element = root.querySelector("[data-join-live-picks]");
   if (element) return element;
 
   element = document.createElement("aside");
-  element.className = "account-save-action";
-  element.setAttribute("data-account-save-action", "");
+  element.className = "join-live-picks-status";
+  element.setAttribute("data-join-live-picks", "");
+  element.setAttribute(ACCOUNT_SAVE_STATE_ATTRIBUTE, "not-joined");
   element.setAttribute("aria-live", "polite");
   element.innerHTML = `
-    <button class="account-save-action-button" type="button" data-account-save-button disabled>
-      Save Picks
-    </button>
-    <button class="account-save-action-button" type="button" data-account-load-button hidden>
-      Load Saved
-    </button>
-    <span class="account-save-action-status" data-account-save-status></span>
+    <span class="join-live-picks-status-text" data-join-live-picks-status></span>
+    <div class="join-live-picks-conflict" data-join-live-picks-conflict hidden></div>
   `;
   root.appendChild(element);
   return element;
 }
 
-function accountSavePresentation({
-  signedIn = false,
-  remoteActive = false,
-  state = "idle",
-  hasSavedAccountPicks = false,
-} = {}) {
-  if (remoteActive) {
-    return {
-      state: "remote-test",
-      saveText: "Remote Test Active",
-      loadText: "Load Saved",
-      statusText: "Dev Supabase mode",
-      saveDisabled: true,
-      loadHidden: true,
-      loadDisabled: true,
-    };
-  }
-
-  if (!signedIn) {
-    return {
-      state: "signed-out",
-      saveText: "Save Picks",
-      loadText: "Load Saved",
-      statusText: "Sign in to save and load picks",
-      saveDisabled: true,
-      loadHidden: true,
-      loadDisabled: true,
-    };
-  }
-
-  if (state === "checking") {
-    return {
-      state: "checking",
-      saveText: "Save Picks",
-      loadText: "Load Saved",
-      statusText: "Checking account picks…",
-      saveDisabled: true,
-      loadHidden: true,
-      loadDisabled: true,
-    };
-  }
-
-  if (state === "loading") {
-    return {
-      state: "loading",
-      saveText: "Save Picks",
-      loadText: "Loading…",
-      statusText: "Loading saved picks",
-      saveDisabled: true,
-      loadHidden: false,
-      loadDisabled: true,
-    };
-  }
-
-  if (state === "loaded") {
-    return {
-      state: "loaded",
-      saveText: "Save Picks",
-      loadText: "Load Saved",
-      statusText: "Loaded saved account picks",
-      saveDisabled: false,
-      loadHidden: true,
-      loadDisabled: true,
-    };
-  }
-
-  if (state === "remote-found") {
-    return {
-      state: "remote-found",
-      saveText: "Save Picks",
-      loadText: "Load Saved",
-      statusText: "Saved account picks found",
-      saveDisabled: false,
-      loadHidden: false,
-      loadDisabled: false,
-    };
-  }
-
-  if (state === "saving") {
-    return {
-      state: "saving",
-      saveText: "Saving…",
-      loadText: "Load Saved",
-      statusText: "Saving to account",
-      saveDisabled: true,
-      loadHidden: !hasSavedAccountPicks,
-      loadDisabled: true,
-    };
-  }
-
-  if (state === "saved") {
-    return {
-      state: "saved",
-      saveText: "Save Picks",
-      loadText: "Load Saved",
-      statusText: "Saved to account",
-      saveDisabled: false,
-      loadHidden: true,
-      loadDisabled: true,
-    };
-  }
-
-  if (state === "dirty") {
-    return {
-      state: "dirty",
-      saveText: "Save Picks",
-      loadText: "Load Saved",
-      statusText: "Unsaved changes",
-      saveDisabled: false,
-      loadHidden: !hasSavedAccountPicks,
-      loadDisabled: !hasSavedAccountPicks,
-    };
-  }
-
-  if (state === "synced") {
-    return {
-      state: "synced",
-      saveText: "Save Picks",
-      loadText: "Load Saved",
-      statusText: "Current picks saved",
-      saveDisabled: false,
-      loadHidden: true,
-      loadDisabled: true,
-    };
-  }
-
-  if (state === "error") {
-    return {
-      state: "error",
-      saveText: "Try Save Again",
-      loadText: "Load Saved",
-      statusText: "Account persistence failed; local picks remain safe",
-      saveDisabled: false,
-      loadHidden: !hasSavedAccountPicks,
-      loadDisabled: !hasSavedAccountPicks,
-    };
-  }
-
-  return {
-    state: "ready",
-    saveText: "Save Picks",
-    loadText: "Load Saved",
-    statusText: hasSavedAccountPicks ? "Saved account picks available" : "Account persistence ready",
-    saveDisabled: false,
-    loadHidden: !hasSavedAccountPicks,
-    loadDisabled: !hasSavedAccountPicks,
-  };
+function renderStatus(root, state, message) {
+  const element = ensureJoinLivePicksElement(root);
+  const status = element.querySelector("[data-join-live-picks-status]");
+  element.setAttribute(ACCOUNT_SAVE_STATE_ATTRIBUTE, state);
+  status.textContent = message || "";
 }
 
-function renderAccountSaveAction(root, presentation) {
-  const element = ensureAccountSaveElement(root);
-  const saveButton = element.querySelector("[data-account-save-button]");
-  const loadButton = element.querySelector("[data-account-load-button]");
-  const status = element.querySelector("[data-account-save-status]");
+function renderConflict(root, { onUseSaved, onKeepBoard }) {
+  const element = ensureJoinLivePicksElement(root);
+  const conflict = element.querySelector("[data-join-live-picks-conflict]");
+  element.setAttribute(ACCOUNT_SAVE_STATE_ATTRIBUTE, "conflict");
+  conflict.hidden = false;
+  conflict.innerHTML = `
+    <p>You already have picks saved. Use saved picks or keep this board?</p>
+    <div class="join-live-picks-conflict-actions">
+      <button type="button" data-use-saved-picks>Use saved picks</button>
+      <button type="button" data-keep-board-picks>Keep this board</button>
+    </div>
+  `;
+  conflict.querySelector("[data-use-saved-picks]")?.addEventListener("click", onUseSaved);
+  conflict.querySelector("[data-keep-board-picks]")?.addEventListener("click", onKeepBoard);
+}
 
-  element.setAttribute(ACCOUNT_SAVE_STATE_ATTRIBUTE, presentation.state);
-  saveButton.classList.remove("is-saved", "is-unsaved", "is-error");
-  const syncClass = syncStateClass(presentation.state);
-  if (syncClass) saveButton.classList.add(syncClass);
-  if (presentation.state === "error") saveButton.classList.add("is-error");
-  saveButton.textContent = presentation.saveText;
-  saveButton.disabled = presentation.saveDisabled;
-  loadButton.textContent = presentation.loadText;
-  loadButton.hidden = presentation.loadHidden;
-  loadButton.disabled = presentation.loadDisabled;
-  status.textContent = presentation.statusText;
+function clearConflict(root) {
+  const conflict = ensureJoinLivePicksElement(root).querySelector("[data-join-live-picks-conflict]");
+  conflict.hidden = true;
+  conflict.innerHTML = "";
 }
 
 function createAccountSaveActionSurface({
@@ -218,161 +70,178 @@ function createAccountSaveActionSurface({
 } = {}) {
   if (!root) throw new Error("AccountSaveActionSurface requires a root element.");
   if (!model?.getAccountSaveBracketDocument || !model?.importAccountBracketDocument) {
-    throw new Error("AccountSaveActionSurface requires account save/load model methods.");
+    throw new Error("AccountSaveActionSurface requires canonical account bracket document methods.");
   }
 
-  const element = ensureAccountSaveElement(root);
-  const saveButton = element.querySelector("[data-account-save-button]");
-  const loadButton = element.querySelector("[data-account-load-button]");
-  let signedIn = false;
-  let accountUserId = "";
-  let saveState = "idle";
-  let savedAccountBracket = null;
-  let hasSavedAccountPicks = false;
-  let lastAccountPickFingerprint = "";
+  ensureJoinLivePicksElement(root);
 
-  function currentPickFingerprint() {
-    return pickFingerprintFromDocument(model.getAccountSaveBracketDocument({ userId: accountUserId || "local-player" }));
-  }
+  let joined = false;
+  let playerUserId = "";
+  let autosaveTimer = null;
+  let retryTimer = null;
+  let conflictActive = false;
+  let loadedJoinedBracket = null;
+  let lastJoinedPickFingerprint = "";
 
-  function markDirtyIfNeeded() {
-    if (!signedIn || remoteActive || !lastAccountPickFingerprint) return;
-    if (currentPickFingerprint() !== lastAccountPickFingerprint) {
-      render("dirty");
-    }
+  async function refreshJoinState() {
+    const state = await authService?.currentState?.();
+    joined = state?.status === "signed-in" || Boolean(state?.user?.id);
+    playerUserId = state?.user?.id || "";
+    return state;
   }
 
   function localPickCount() {
     return Number(model.getSummary?.().picked || 0);
   }
 
-  function render(nextSaveState = saveState) {
-    saveState = nextSaveState;
-    renderAccountSaveAction(root, accountSavePresentation({
-      signedIn,
-      remoteActive,
-      state: saveState,
-      hasSavedAccountPicks,
+  function currentDocument() {
+    return model.getAccountSaveBracketDocument({ userId: playerUserId || "local-player" });
+  }
+
+  function currentFingerprint() {
+    return pickFingerprintFromDocument(currentDocument());
+  }
+
+  function dispatchLoadedPicks({ automatic = false, imported = 0 } = {}) {
+    window.dispatchEvent(new CustomEvent(ACCOUNT_PICKS_LOADED_EVENT, {
+      detail: { automatic, imported },
     }));
   }
 
-  async function refreshAuthState() {
-    const state = await authService?.currentState?.();
-    signedIn = state?.status === "signed-in" || Boolean(state?.user?.id);
-    accountUserId = state?.user?.id || "";
-    return state;
-  }
+  async function writeJoinedPicks({ retryOnFailure = true } = {}) {
+    if (remoteActive || !joined || !playerUserId || conflictActive) return;
 
-  async function loadSavedPicksFromAccount({ automatic = false } = {}) {
-    if (remoteActive || !signedIn || !savedAccountBracket) return;
+    if (retryTimer) {
+      clearTimeout(retryTimer);
+      retryTimer = null;
+    }
 
-    render("loading");
+    renderStatus(root, "saving", "Saving…");
+
     try {
-      const result = model.importAccountBracketDocument(savedAccountBracket);
-      if (!result?.ok) {
-        throw new Error(result?.reason || "Saved account picks could not be loaded.");
-      }
-
-      hasSavedAccountPicks = true;
-      lastAccountPickFingerprint = pickFingerprintFromDocument(savedAccountBracket);
-      render("loaded");
-      window.dispatchEvent(new CustomEvent(ACCOUNT_PICKS_LOADED_EVENT, {
-        detail: { automatic, imported: result.imported || 0 },
-      }));
+      const bracketDocument = currentDocument();
+      const saved = await bracketStore.saveUserBracket(bracketDocument);
+      loadedJoinedBracket = saved || bracketDocument;
+      lastJoinedPickFingerprint = pickFingerprintFromDocument(loadedJoinedBracket);
+      renderStatus(root, "saved", "Picks saved");
     } catch (error) {
-      console.error("[AccountSaveActionSurface] Load Saved Picks failed", error);
-      render("error");
+      console.error("[JoinLivePicks] autosave failed", error);
+      renderStatus(root, "retrying", "Could not save — retrying");
+      if (retryOnFailure) {
+        retryTimer = window.setTimeout(() => writeJoinedPicks({ retryOnFailure: true }), 2500);
+      }
     }
   }
 
-  async function checkSavedAccountPicks({ automatic = false } = {}) {
-    await refreshAuthState();
+  function scheduleAutosave() {
+    if (remoteActive || !joined || !playerUserId || conflictActive) return;
+
+    if (autosaveTimer) clearTimeout(autosaveTimer);
+    autosaveTimer = window.setTimeout(() => {
+      autosaveTimer = null;
+      if (currentFingerprint() !== lastJoinedPickFingerprint) {
+        writeJoinedPicks();
+      }
+    }, AUTOSAVE_DELAY_MS);
+  }
+
+  async function useSavedPicks() {
+    if (!loadedJoinedBracket) return;
+    conflictActive = false;
+    clearConflict(root);
+
+    try {
+      const result = model.importAccountBracketDocument(loadedJoinedBracket);
+      if (!result?.ok) throw new Error(result?.reason || "Saved picks could not be used.");
+
+      lastJoinedPickFingerprint = pickFingerprintFromDocument(loadedJoinedBracket);
+      renderStatus(root, "saved", "Picks saved");
+      dispatchLoadedPicks({ automatic: false, imported: result.imported || 0 });
+    } catch (error) {
+      console.error("[JoinLivePicks] use saved picks failed", error);
+      renderStatus(root, "retrying", "Could not save — retrying");
+    }
+  }
+
+  async function keepThisBoard() {
+    conflictActive = false;
+    clearConflict(root);
+    await writeJoinedPicks();
+  }
+
+  async function reconcileJoinedPicks({ automatic = false } = {}) {
+    await refreshJoinState();
 
     if (remoteActive) {
-      render("remote-test");
+      renderStatus(root, "joined", "Joined");
       return;
     }
 
-    if (!signedIn) {
-      savedAccountBracket = null;
-      hasSavedAccountPicks = false;
-      lastAccountPickFingerprint = "";
-      render("signed-out");
+    if (!joined) {
+      loadedJoinedBracket = null;
+      lastJoinedPickFingerprint = "";
+      conflictActive = false;
+      clearConflict(root);
+      renderStatus(root, "not-joined", "");
       return;
     }
 
-    render("checking");
+    renderStatus(root, "joining", "Joining…");
 
     try {
-      savedAccountBracket = await bracketStore.loadUserBracket(accountUserId);
-      hasSavedAccountPicks = Boolean(savedAccountBracket?.picksBySlot && Object.keys(savedAccountBracket.picksBySlot).length);
-      lastAccountPickFingerprint = hasSavedAccountPicks ? pickFingerprintFromDocument(savedAccountBracket) : "";
+      loadedJoinedBracket = await bracketStore.loadUserBracket(playerUserId);
+      const hasJoinedPicks = Boolean(
+        loadedJoinedBracket?.picksBySlot && Object.keys(loadedJoinedBracket.picksBySlot).length
+      );
 
-      if (hasSavedAccountPicks && localPickCount() === 0) {
-        await loadSavedPicksFromAccount({ automatic });
+      if (!hasJoinedPicks) {
+        lastJoinedPickFingerprint = "";
+        renderStatus(root, "joined", "Joined");
+        if (localPickCount() > 0) scheduleAutosave();
         return;
       }
 
-      if (hasSavedAccountPicks) {
-        render("remote-found");
+      lastJoinedPickFingerprint = pickFingerprintFromDocument(loadedJoinedBracket);
+
+      if (localPickCount() === 0) {
+        const result = model.importAccountBracketDocument(loadedJoinedBracket);
+        if (!result?.ok) throw new Error(result?.reason || "Joined picks could not be loaded.");
+        renderStatus(root, "saved", "Picks saved");
+        dispatchLoadedPicks({ automatic, imported: result.imported || 0 });
         return;
       }
 
-      render("ready");
+      if (currentFingerprint() !== lastJoinedPickFingerprint) {
+        conflictActive = true;
+        renderConflict(root, { onUseSaved: useSavedPicks, onKeepBoard: keepThisBoard });
+        return;
+      }
+
+      renderStatus(root, "saved", "Picks saved");
     } catch (error) {
-      console.error("[AccountSaveActionSurface] Account persistence check failed", error);
-      render("error");
-    }
-  }
-
-  async function savePicksToAccount() {
-    if (remoteActive) return;
-
-    await refreshAuthState();
-    if (!signedIn) {
-      render("signed-out");
-      return;
-    }
-
-    render("saving");
-    try {
-      const bracketDocument = model.getAccountSaveBracketDocument({ userId: accountUserId });
-      savedAccountBracket = await bracketStore.saveUserBracket(bracketDocument);
-      hasSavedAccountPicks = true;
-      lastAccountPickFingerprint = pickFingerprintFromDocument(savedAccountBracket || bracketDocument);
-      render("saved");
-    } catch (error) {
-      console.error("[AccountSaveActionSurface] Save Picks failed", error);
-      render("error");
+      console.error("[JoinLivePicks] join reconcile failed", error);
+      renderStatus(root, "retrying", "Could not save — retrying");
     }
   }
 
   async function start() {
-    await checkSavedAccountPicks({ automatic: true });
+    await reconcileJoinedPicks({ automatic: true });
 
-    window.addEventListener("wc2026:picks-changed", markDirtyIfNeeded);
+    window.addEventListener("wc2026:picks-changed", scheduleAutosave);
 
     authService?.subscribe?.((state) => {
-      signedIn = state?.status === "signed-in" || Boolean(state?.user?.id);
-      accountUserId = state?.user?.id || "";
-      if (!signedIn) {
-        savedAccountBracket = null;
-        hasSavedAccountPicks = false;
-        render("signed-out");
-        return;
-      }
-      checkSavedAccountPicks({ automatic: true });
+      joined = state?.status === "signed-in" || Boolean(state?.user?.id);
+      playerUserId = state?.user?.id || "";
+      reconcileJoinedPicks({ automatic: true });
     });
   }
-
-  saveButton.addEventListener("click", savePicksToAccount);
-  loadButton.addEventListener("click", () => loadSavedPicksFromAccount({ automatic: false }));
 
   return { start };
 }
 
 export {
   ACCOUNT_PICKS_LOADED_EVENT,
-  accountSavePresentation,
+  AUTOSAVE_DELAY_MS,
   createAccountSaveActionSurface,
+  pickFingerprintFromDocument,
 };

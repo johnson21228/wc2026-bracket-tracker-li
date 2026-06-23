@@ -11,7 +11,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
     configured: false,
     status: "not-configured",
     user: null,
-    message: "Supabase Auth is not configured yet.",
+    message: "Join is not available yet.",
   };
   let cooldownUntil = 0;
   let cooldownTimer = null;
@@ -42,24 +42,24 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
   }
 
   function statusLabel(state) {
-    if (state.status === "signed-in") return "Signed in";
-    if (state.status === "checking") return "Checking sign-in";
-    if (state.status === "sending") return "Sending link";
+    if (state.status === "signed-in") return "Joined";
+    if (state.status === "checking") return "Checking join";
+    if (state.status === "sending") return "Joining…";
     if (state.status === "link-sent") return "Check email";
-    if (state.status === "error") return "Sign-in needs attention";
-    return "Sign in to save";
+    if (state.status === "error") return "Join needs attention";
+    return "Join";
   }
 
   function persistenceLabel(state) {
-    if (state.status === "not-configured") return "Local bracket · Supabase Auth not configured";
-    return "Local bracket for now";
+    if (state.status === "not-configured") return "Join unavailable";
+    return state.status === "signed-in" ? `Joined as ${profileDisplayName() || "Player"}` : "Join to enter standings.";
   }
 
   function panelMessage(state) {
     if (state.status === "signed-in") {
-      return "This email is used for login. It is not your public player name.";
+      return "Edit the public player name shown in standings.";
     }
-    return state.message || "Sign in is identity-only for now. Bracket picks remain saved locally in this browser.";
+    return state.message || "Join the game to keep picks live and enter standings.";
   }
 
   function accountEmail(state) {
@@ -73,7 +73,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
 
     const publicName = profileDisplayName();
     const fallback = accountEmail(state) || "signed-in player";
-    return `Signed in as: ${publicName || fallback}`;
+    return "Profile";
   }
 
   function signedInUserId(state) {
@@ -86,7 +86,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
 
   function profileMessageHtml() {
     if (!profileStore) {
-      return `<p>Your public player name will be stored in a Supabase-backed profile.</p>`;
+      return `<p>Your public player name is shown in standings.</p>`;
     }
     if (profileState.status === "loading") {
       return `<p>Loading your public player name…</p>`;
@@ -151,13 +151,13 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
         <section class="identity-panel" id="${panelId}" role="dialog" aria-modal="true" aria-labelledby="supabase-identity-panel-title">
           <div class="identity-panel-header">
             <div>
-              <p class="identity-kicker">Bracketeering identity</p>
-              <h2 id="supabase-identity-panel-title">Sign in to Bracketeering Hub</h2>
+              <p class="identity-kicker">Bracketeering player</p>
+              <h2 id="supabase-identity-panel-title">${isSignedIn ? "Profile" : "Join Bracketeering Hub"}</h2>
             </div>
-            <button type="button" class="identity-panel-close" data-identity-panel-close aria-label="Close sign-in panel">×</button>
+            <button type="button" class="identity-panel-close" data-identity-panel-close aria-label="Close player panel">×</button>
           </div>
-          <p class="identity-panel-intro">Play locally without signing in, or sign in to test identity before online bracket saving is enabled.</p>
-          <p class="identity-local-note"><strong>Bracket persistence:</strong> local browser storage remains active. Supabase bracket writes are not enabled yet.</p>
+          <p class="identity-panel-intro">${isSignedIn ? "Edit your public player name." : "Join to keep picks live and enter standings. You can still explore the board before joining."}</p>
+          <p class="identity-local-note">${isSignedIn ? "Your picks are live." : "Before joining, this board is temporary browser play."}</p>
           <div class="identity-panel-state" data-auth-state="${escapeHtml(state.status)}">
             <strong>${escapeHtml(statusLabel(state))}</strong>
             <span>${escapeHtml(panelMessage(state))}</span>
@@ -195,8 +195,8 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
       const signedInDetails = document.createElement("div");
       signedInDetails.className = "identity-panel-signed-in-details";
       signedInDetails.innerHTML = `
-        <p><strong>Account:</strong> ${escapeHtml(accountEmail(state) || "Signed-in Supabase user")}</p>
-        <p>This email is used for login. It is private account identity, not your public player name.</p>
+        <p><strong>Joined status:</strong> Joined</p>
+        <p>Your public player name is what other players see.</p>
         <div class="identity-panel-profile">
           <label for="identity-public-player-name"><strong>Public player name</strong></label>
           <input
@@ -209,11 +209,11 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
             ${profileState.status === "loading" || profileState.status === "saving" ? "disabled" : ""}
           />
           <button type="button" class="identity-panel-primary-button" data-profile-save ${profileState.status === "loading" || profileState.status === "saving" ? "disabled" : ""}>
-            Save player name
+            Update player name
           </button>
           ${profileMessageHtml()}
         </div>
-        <p><strong>Bracket saving:</strong> not enabled yet. This browser is still using local play.</p>
+        <p><strong>Picks:</strong> live after joining.</p>
       `;
       actions.append(signedInDetails);
 
@@ -222,19 +222,19 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
         const displayName = actions.querySelector("#identity-public-player-name")?.value || "";
 
         if (!profileStore) {
-          profileState = { status: "error", profile: null, message: "Supabase profile store is not wired yet." };
+          profileState = { status: "error", profile: null, message: "Player profile is not available yet." };
           render(latestState);
           return;
         }
 
-        profileState = { ...profileState, status: "saving", message: "Saving public player name…" };
+        profileState = { ...profileState, status: "saving", message: "Updating public player name…" };
         render(latestState);
 
         const { profile, error } = await profileStore.saveProfile({ userId, displayName });
         if (error) {
-          profileState = { status: "error", profile: profileState.profile, message: `Public player name save failed: ${error.message || String(error)}` };
+          profileState = { status: "error", profile: profileState.profile, message: `Player name update failed: ${error.message || String(error)}` };
         } else {
-          profileState = { status: "saved", profile, message: "Public player name saved." };
+          profileState = { status: "saved", profile, message: "Player name updated." };
         }
         render(latestState);
       });
@@ -242,7 +242,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
       const signOutButton = document.createElement("button");
       signOutButton.type = "button";
       signOutButton.className = "identity-panel-primary-button";
-      signOutButton.textContent = "Sign out";
+      signOutButton.textContent = "Leave joined session";
       signOutButton.addEventListener("click", () => authService.signOut());
       actions.append(signOutButton);
 
@@ -256,7 +256,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
     form.innerHTML = `
       <label for="supabase-auth-email-panel">Email address</label>
       <input id="supabase-auth-email-panel" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" value="${escapeHtml(emailDraft)}" ${canAttemptSignIn ? "" : "disabled"}>
-      <button type="submit" class="identity-panel-primary-button" ${canSubmit ? "" : "disabled"}>${cooldownSeconds > 0 ? `Wait ${cooldownSeconds}s` : "Email magic link"}</button>
+      <button type="submit" class="identity-panel-primary-button" ${canSubmit ? "" : "disabled"}>${cooldownSeconds > 0 ? `Wait ${cooldownSeconds}s` : "Join"}</button>
     `;
     form.querySelector("input")?.addEventListener("input", (event) => {
       emailDraft = event.target.value;
@@ -268,7 +268,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
       if (!canSubmit) return;
       cooldownUntil = Date.now() + 20000;
       authSignIn.call(authService, email);
-      render({ ...latestState, status: "sending", message: "Sending Supabase magic link…" });
+      render({ ...latestState, status: "sending", message: "Sending join link…" });
     });
     actions.append(form);
     scheduleCooldownTick();
