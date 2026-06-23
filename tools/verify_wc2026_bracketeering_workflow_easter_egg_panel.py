@@ -67,6 +67,23 @@ def main():
     for token in forbidden_runtime_tokens:
         require(token.lower() not in combined_runtime.lower(), f"Workflow panel must not introduce remote bracket persistence: {token}", errors)
 
+    require("width: 76px" in css and "height: 76px" in css, "Workflow easter egg button must use a larger invisible pointer hit target.", errors)
+    require(".workflow-floating-button::before" in css and "width: 34px" in css and "height: 34px" in css, "Workflow easter egg button must render the small visible wb affordance inside the larger hit target.", errors)
+
+    require(
+        ".workflow-floating-button::after" in css
+        and 'content: "wb"' in css
+        and "display: inline-flex" in css
+        and "align-items: center" in css
+        and "justify-content: center" in css,
+        "Workflow easter egg wb glyph must be centered by the 34px visual affordance pseudo-element.",
+        errors,
+    )
+    require(
+        ".workflow-floating-button-label" not in css,
+        "Workflow easter egg centering must not depend on an unused runtime label wrapper.",
+        errors,
+    )
     if errors:
         print("Bracketeering workflow easter egg panel verification failed: " + "; ".join(errors))
         return 1

@@ -1100,27 +1100,62 @@ body {
 }
 
 
-/* Card 1004 refinement: lower-right small Workbench easter egg control. */
+/* Card 1004 refinement: lower-right small Workbench easter egg control.
+   The button is intentionally invisible at rest, but uses a larger hit target so
+   the small wb affordance tracks/preselects under a nearby desktop pointer. */
 .workflow-floating-button {
   position: fixed;
-  right: 18px;
-  bottom: 18px;
+  right: max(8px, env(safe-area-inset-right));
+  bottom: max(8px, env(safe-area-inset-bottom));
   z-index: 70;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, .35);
-  background: rgba(16, 24, 38, .72);
-  color: rgba(255, 255, 255, .78);
+  width: 76px;
+  height: 76px;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: transparent;
   font-size: .62rem;
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: lowercase;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, .34);
   opacity: 0;
   transition: opacity .16s ease;
   pointer-events: auto;
+}
+
+
+.workflow-floating-button::before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .35);
+  background: rgba(16, 24, 38, .72);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .34);
+  z-index: -1;
+}
+
+
+.workflow-floating-button::after {
+  content: "wb";
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, .78);
+  line-height: 1;
+  text-align: center;
+  z-index: 1;
 }
 
 .workflow-floating-button:hover,

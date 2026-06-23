@@ -24,7 +24,7 @@ export function createSupabaseProfileStore({ config = WC2026_SUPABASE_PUBLIC_CON
       throw new Error("Supabase browser client is not loaded.");
     }
     if (!client) {
-      client = window.supabase.createClient(config.url, config.publishableKey);
+      client = window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey);
     }
     return client;
   }

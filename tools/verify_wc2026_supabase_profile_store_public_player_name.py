@@ -20,6 +20,7 @@ def main():
     errors = []
 
     store = read("site/js/services/SupabaseProfileStore.js")
+    profile_text = store
     identity = read("site/js/identity/SupabaseIdentitySurface.js")
     app = read("site/js/app.js")
     makefile = read("Makefile")
@@ -73,6 +74,18 @@ def main():
     require(
         "profileDisplayName()" in identity_text and "accountEmail(state)" in identity_text,
         "Signed-in chip must prefer public player name and fall back to account email.",
+        errors,
+    )
+
+
+    require(
+        "config.supabaseUrl" in profile_text and "config.supabasePublishableKey" in profile_text,
+        "SupabaseProfileStore must use canonical supabaseUrl/supabasePublishableKey config names.",
+        errors,
+    )
+    require(
+        "config.url" not in profile_text and "config.publishableKey" not in profile_text,
+        "SupabaseProfileStore must not use stale url/publishableKey aliases.",
         errors,
     )
 
