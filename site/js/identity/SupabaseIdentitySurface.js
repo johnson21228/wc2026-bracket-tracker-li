@@ -66,6 +66,16 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
     return state.user?.email || "";
   }
 
+  function compactIdentityTitle(state) {
+    if (state.status !== "signed-in") {
+      return statusLabel(state);
+    }
+
+    const publicName = profileDisplayName();
+    const fallback = accountEmail(state) || "signed-in player";
+    return `Signed in as: ${publicName || fallback}`;
+  }
+
   function signedInUserId(state) {
     return state.user?.id || "";
   }
@@ -133,7 +143,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
     surface.innerHTML = `
       <div class="identity-card identity-compact-card" data-auth-state="${escapeHtml(state.status)}">
         <button type="button" class="identity-status-button" data-identity-panel-open aria-haspopup="dialog" aria-controls="${panelId}" aria-expanded="${panelOpen ? "true" : "false"}">
-          <span class="identity-title">${escapeHtml(statusLabel(state))}</span>
+          <span class="identity-title">${escapeHtml(compactIdentityTitle(state))}</span>
           <span class="identity-detail">${escapeHtml(persistenceLabel(state))}</span>
         </button>
       </div>

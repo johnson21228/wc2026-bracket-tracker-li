@@ -51,6 +51,8 @@ def main():
     require("bracketeering_workflow_infographic.jpeg" in workflow, "Workflow panel must render the JPEG infographic asset.", errors)
     require("overflow-y: auto" in css and ".workflow-panel-body" in css, "Workflow panel body must be scrollable.", errors)
     require(".workflow-floating-button" in css and "position: fixed" in css and "bottom:" in css and "right:" in css, "Workflow easter egg button must be fixed in the lower-right corner.", errors)
+    require("opacity: 0" in css and "pointer-events: auto" in css, "Workflow easter egg button must be invisible by default but still tappable.", errors)
+    require(".workflow-floating-button:hover" in css and ".workflow-floating-button:focus-visible" in css and "opacity: 1" in css, "Workflow easter egg button must become visible on mouse hover or keyboard focus.", errors)
     require("Download / Apply Pattern" in card and core in card, "Card must capture Download/Apply and the core sentence.", errors)
     require("python3 tools/verify_wc2026_bracketeering_workflow_easter_egg_panel.py" in makefile, "Makefile verify must run workflow easter egg verifier.", errors)
 

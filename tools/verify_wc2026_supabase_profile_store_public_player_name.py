@@ -57,6 +57,25 @@ def main():
         errors,
     )
 
+
+    identity_text = Path("site/js/identity/SupabaseIdentitySurface.js").read_text()
+
+    require(
+        "function compactIdentityTitle(state)" in identity_text,
+        "Supabase identity surface must compute a compact signed-in display label for the upper-right chip.",
+        errors,
+    )
+    require(
+        "Signed in as:" in identity_text,
+        "Supabase identity chip must expose the player-facing 'Signed in as:' label.",
+        errors,
+    )
+    require(
+        "profileDisplayName()" in identity_text and "accountEmail(state)" in identity_text,
+        "Signed-in chip must prefer public player name and fall back to account email.",
+        errors,
+    )
+
     if errors:
         print("Supabase profile store public player name verification failed: " + "; ".join(errors))
         return 1

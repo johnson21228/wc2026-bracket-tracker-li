@@ -687,6 +687,7 @@ body {
   display: grid;
   gap: 2px;
   min-width: 92px;
+  max-width: min(340px, 42vw);
   border: 0;
   border-radius: inherit;
   background: transparent;
@@ -694,6 +695,12 @@ body {
   padding: 8px 12px;
   text-align: left;
   cursor: pointer;
+}
+
+.identity-status-button .identity-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .identity-status-button:hover,
@@ -1096,33 +1103,27 @@ body {
 /* Card 1004 refinement: lower-right small Workbench easter egg control. */
 .workflow-floating-button {
   position: fixed;
-  right: max(14px, env(safe-area-inset-right));
-  bottom: max(14px, env(safe-area-inset-bottom));
-  z-index: 56;
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
+  right: 18px;
+  bottom: 18px;
+  z-index: 70;
+  width: 34px;
+  height: 34px;
   border-radius: 999px;
-  border: 1px solid rgba(134, 239, 172, .46);
-  background: rgba(11, 17, 31, .78);
-  color: #bbf7d0;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 10px;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: .02em;
+  border: 1px solid rgba(255, 255, 255, .35);
+  background: rgba(16, 24, 38, .72);
+  color: rgba(255, 255, 255, .78);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .08em;
   text-transform: lowercase;
-  box-shadow: 0 10px 24px rgba(0,0,0,.38);
   cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .34);
+  opacity: 0;
+  transition: opacity .16s ease;
   pointer-events: auto;
-  backdrop-filter: blur(6px);
 }
 
 .workflow-floating-button:hover,
 .workflow-floating-button:focus-visible {
-  background: rgba(20, 83, 45, .88);
-  color: #f0fdf4;
-  outline: 2px solid rgba(187, 247, 208, .72);
-  outline-offset: 2px;
+  opacity: 1;
 }
