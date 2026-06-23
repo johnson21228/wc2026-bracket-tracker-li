@@ -551,23 +551,23 @@ body {
 }
 
 /* Card 261: upper-left map icon controls.
-   Keep the board-only shell, restore only the login control at upper right, and add compact
-   map-style icon controls at upper left for zoom in, zoom out, and temporary info/rules. */
+   Keep the board-only shell, restore only the login control at upper right, and add
+   touch-friendly map-style icon controls in one top row: +, −, info. */
 .map-board-icon-controls {
   position: fixed;
   top: max(12px, env(safe-area-inset-top));
   left: max(12px, env(safe-area-inset-left));
   z-index: 46;
-  display: grid;
-  grid-template-columns: 34px 34px;
-  grid-auto-rows: 34px;
-  gap: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   pointer-events: auto;
 }
 
 .map-icon-button {
-  width: 34px;
-  height: 34px;
+  width: 52px;
+  height: 52px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -577,16 +577,17 @@ body {
   color: #fff8ef;
   box-shadow: 0 10px 28px rgba(0,0,0,.34);
   backdrop-filter: blur(10px);
-  font: 700 19px/1 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font: 800 24px/1 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   cursor: pointer;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
 .map-icon-button[data-rules-panel-open] {
   font-family: Georgia, "Times New Roman", serif;
   font-style: italic;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
 }
 
 .map-icon-button:hover,
@@ -600,15 +601,13 @@ body {
   .map-board-icon-controls {
     top: max(10px, env(safe-area-inset-top));
     left: max(10px, env(safe-area-inset-left));
-    grid-template-columns: 32px 32px;
-    grid-auto-rows: 32px;
-    gap: 7px;
+    gap: 9px;
   }
 
   .map-icon-button {
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
+    width: 48px;
+    height: 48px;
+    font-size: 23px;
   }
 }
 
@@ -646,12 +645,12 @@ body {
 
 .map-icon-button {
   flex: 0 0 auto;
-  inline-size: 34px;
-  block-size: 34px;
-  min-inline-size: 34px;
-  min-block-size: 34px;
-  max-inline-size: 34px;
-  max-block-size: 34px;
+  inline-size: 52px;
+  block-size: 52px;
+  min-inline-size: 52px;
+  min-block-size: 52px;
+  max-inline-size: 52px;
+  max-block-size: 52px;
 }
 
 @media (max-width: 760px) {
@@ -665,3 +664,708 @@ body {
   }
 }
 
+
+
+/* Card 276: roomy Supabase identity panel.
+   Header chrome stays compact; the email input lives in a full-size panel.
+   This is identity-only and does not activate Supabase bracket persistence. */
+.supabase-identity-surface {
+  z-index: 76;
+  pointer-events: auto;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+}
+
+.identity-compact-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.identity-status-button {
+  display: grid;
+  gap: 2px;
+  min-width: 92px;
+  max-width: min(340px, 42vw);
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.identity-status-button .identity-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.identity-status-button:hover,
+.identity-status-button:focus-visible {
+  background: rgba(255,255,255,.10);
+  outline: none;
+}
+
+.identity-panel-backdrop[hidden] {
+  display: none !important;
+}
+
+.identity-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 92;
+  display: grid;
+  place-items: start center;
+  padding: max(72px, env(safe-area-inset-top)) 16px 16px;
+  background: rgba(0,0,0,.42);
+  backdrop-filter: blur(6px);
+}
+
+.identity-panel {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100vh - 96px);
+  overflow: auto;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 24px;
+  background: rgba(18, 15, 16, .94);
+  color: #f8f2ec;
+  box-shadow: 0 24px 80px rgba(0,0,0,.45);
+  padding: 20px;
+}
+
+.identity-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.identity-panel-header h2 {
+  margin: 2px 0 0;
+  font-size: clamp(22px, 4vw, 32px);
+  line-height: 1.05;
+}
+
+.identity-panel-close {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 999px;
+  background: rgba(255,255,255,.10);
+  color: inherit;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.identity-panel-intro,
+.identity-local-note,
+.identity-panel-state {
+  color: #e6d7c8;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.identity-local-note {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  background: rgba(255,255,255,.06);
+}
+
+.identity-panel-state {
+  display: grid;
+  gap: 4px;
+  margin: 12px 0 16px;
+}
+
+.identity-panel-state[data-auth-state="error"] span {
+  color: #ffd3c7;
+}
+
+.identity-panel-form {
+  display: grid;
+  gap: 10px;
+}
+
+.identity-panel-form label {
+  color: #f8f2ec;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.identity-panel-form input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid rgba(255,255,255,.30);
+  border-radius: 14px;
+  background: rgba(255,255,255,.10);
+  color: inherit;
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.identity-panel-form input::placeholder {
+  color: rgba(248,242,236,.58);
+}
+
+.identity-panel-primary-button {
+  justify-self: start;
+  border: 1px solid rgba(255,255,255,.34);
+  border-radius: 999px;
+  background: rgba(255,255,255,.16);
+  color: inherit;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.identity-panel-primary-button:disabled,
+.identity-panel-form input:disabled {
+  cursor: not-allowed;
+  opacity: .58;
+}
+
+@media (max-width: 760px) {
+  .supabase-identity-surface {
+    display: block;
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+  }
+
+  .identity-panel-backdrop {
+    padding-top: max(64px, env(safe-area-inset-top));
+  }
+
+  .identity-panel {
+    width: min(100%, calc(100vw - 24px));
+    padding: 16px;
+  }
+}
+
+
+/* Card 277: sign-in panel is topmost browser chrome over the game board.
+   The identity dialog/backdrop must outrank board pick menus, group panels, zoom controls,
+   and all board-scaled surfaces while remaining outside board geometry. */
+:root {
+  --wc-z-identity-panel: 20000;
+  --wc-z-identity-surface: 19900;
+}
+
+.supabase-identity-surface {
+  z-index: var(--wc-z-identity-surface) !important;
+  position: fixed !important;
+  pointer-events: auto;
+}
+
+.identity-panel-backdrop {
+  z-index: var(--wc-z-identity-panel) !important;
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+.identity-panel {
+  position: relative;
+  z-index: calc(var(--wc-z-identity-panel) + 1);
+}
+
+
+/* Card 277 refinement: open the sign-in panel below the sign-in button,
+   right-aligned so the panel grows leftward and remains fully on screen. */
+.supabase-identity-surface .identity-panel-backdrop {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  padding-top: 58px !important;
+  padding-right: max(12px, env(safe-area-inset-right)) !important;
+  padding-left: max(12px, env(safe-area-inset-left)) !important;
+  padding-bottom: max(12px, env(safe-area-inset-bottom)) !important;
+  box-sizing: border-box !important;
+}
+
+.supabase-identity-surface .identity-panel {
+  width: min(430px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  max-height: calc(100vh - 76px) !important;
+  overflow: auto !important;
+  margin: 0 !important;
+}
+
+
+/* Card 277 visibility repair: keep the sign-in button visible as fixed browser chrome. */
+.supabase-identity-surface {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  top: max(12px, env(safe-area-inset-top)) !important;
+  right: max(12px, env(safe-area-inset-right)) !important;
+  left: auto !important;
+  bottom: auto !important;
+}
+
+
+/* Card 277 runtime repair: readable sign-in panel anchored right, extending left.
+   The backdrop covers the full viewport so tapping empty space closes the panel. */
+.supabase-identity-surface {
+  contain: none !important;
+}
+
+.supabase-identity-surface .identity-panel-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  padding-top: max(72px, calc(env(safe-area-inset-top) + 64px)) !important;
+  padding-right: max(16px, env(safe-area-inset-right)) !important;
+  padding-left: max(16px, env(safe-area-inset-left)) !important;
+  padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+  box-sizing: border-box !important;
+}
+
+.supabase-identity-surface .identity-panel-backdrop[hidden] {
+  display: none !important;
+}
+
+.supabase-identity-surface .identity-panel {
+  width: min(440px, calc(100vw - 32px)) !important;
+  min-width: min(360px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px) !important;
+  max-height: calc(100vh - 88px) !important;
+  overflow: auto !important;
+  margin: 0 !important;
+}
+
+.supabase-identity-surface .identity-panel-header h2 {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+.supabase-identity-surface .identity-panel-intro,
+.supabase-identity-surface .identity-local-note,
+.supabase-identity-surface .identity-panel-state {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+
+/* Card 1004: Bracketeering workflow easter egg panel.
+   This is browser chrome, not board-plane content. */
+.map-icon-button.workflow-map-button {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: .02em;
+  color: #dcfce7;
+  border-color: rgba(134, 239, 172, .44);
+}
+
+.workflow-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 51;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0,0,0,.62);
+  backdrop-filter: blur(7px);
+}
+
+.workflow-panel-backdrop[hidden] {
+  display: none;
+}
+
+.workflow-panel {
+  width: min(1120px, 100%);
+  max-height: min(820px, calc(100vh - 48px));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 24px;
+  background: rgba(11, 17, 31, .98);
+  color: #f8fafc;
+  box-shadow: 0 28px 90px rgba(0,0,0,.58);
+  overflow: hidden;
+}
+
+.workflow-panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+.workflow-panel-kicker {
+  margin: 0;
+  color: #86efac;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.workflow-panel h2 {
+  margin: 2px 0 4px;
+  font-size: clamp(24px, 3vw, 40px);
+}
+
+.workflow-panel-body {
+  overflow-y: auto;
+  padding: 20px;
+  color: #e5eefb;
+  line-height: 1.55;
+}
+
+.workflow-panel-section {
+  max-width: 940px;
+}
+
+.workflow-panel-hero {
+  margin: 0 0 18px;
+}
+
+.workflow-panel-core {
+  margin: 8px 0 0;
+  color: #bbf7d0;
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 800;
+}
+
+.workflow-panel-figure {
+  margin: 18px 0 24px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 20px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.workflow-panel-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.workflow-panel-figure figcaption {
+  padding: 10px 14px 12px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.workflow-panel-copy h3 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: 24px;
+}
+
+.workflow-panel-copy p {
+  margin: 0 0 14px;
+  color: #dbeafe;
+}
+
+.workflow-panel-backdrop,
+.workflow-panel,
+.workflow-panel-body {
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+@media (max-width: 760px) {
+  .workflow-panel-backdrop {
+    padding: 12px;
+  }
+
+  .workflow-panel {
+    max-height: calc(100vh - 24px);
+    border-radius: 18px;
+  }
+
+  .workflow-panel-body {
+    padding: 14px;
+  }
+}
+
+
+/* Card 1004 refinement: lower-right small Workbench easter egg control.
+   The button is intentionally invisible at rest, but uses a larger hit target so
+   the small wb affordance tracks/preselects under a nearby desktop pointer. */
+.workflow-floating-button {
+  position: fixed;
+  right: max(8px, env(safe-area-inset-right));
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 70;
+  width: 76px;
+  height: 76px;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: transparent;
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: lowercase;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .16s ease;
+  pointer-events: auto;
+}
+
+
+.workflow-floating-button::before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .35);
+  background: rgba(16, 24, 38, .72);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .34);
+  z-index: -1;
+}
+
+
+.workflow-floating-button::after {
+  content: "wb";
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, .78);
+  line-height: 1;
+  text-align: center;
+  z-index: 1;
+}
+
+.workflow-floating-button:hover,
+.workflow-floating-button:focus-visible {
+  opacity: 1;
+}
+
+.account-save-action {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  right: calc(max(12px, env(safe-area-inset-right)) + min(340px, 42vw) + 12px);
+  left: auto;
+  bottom: auto;
+  z-index: 19880;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: min(320px, 36vw);
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 999px;
+  background: rgba(10, 15, 18, .76);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .28);
+  color: rgba(255, 255, 255, .94);
+  font-size: 12px;
+  line-height: 1.2;
+  backdrop-filter: blur(10px);
+}
+
+.account-save-action-button {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .12);
+  color: rgba(255, 255, 255, .94);
+  font: inherit;
+  font-weight: 850;
+  padding: 6px 10px;
+}
+
+
+.account-save-action-button.is-saved {
+  outline: 1px solid rgba(76, 255, 130, .88);
+  box-shadow: 0 0 0 2px rgba(76, 255, 130, .12);
+}
+
+.account-save-action-button.is-unsaved,
+.account-save-action-button.is-error {
+  outline: 1px solid rgba(255, 64, 64, .95);
+  box-shadow: 0 0 0 2px rgba(255, 64, 64, .14);
+}
+
+.account-save-action-button:disabled {
+  opacity: .72;
+}
+
+.account-save-action-status {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, .72);
+}
+
+@media (max-width: 900px) {
+  .account-save-action {
+    top: calc(max(12px, env(safe-area-inset-top)) + 54px);
+    right: max(12px, env(safe-area-inset-right));
+    max-width: min(320px, calc(100vw - 24px));
+    border-radius: 18px;
+  }
+
+  .account-save-action-status {
+    display: none;
+  }
+}
+.standings-icon-button {
+  width: auto;
+  min-width: 84px;
+  padding-inline: 10px;
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.player-standings-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: start center;
+  padding: 88px 16px 24px;
+  background: rgba(0, 0, 0, .18);
+  pointer-events: auto;
+}
+
+.player-standings-panel[hidden] {
+  display: none;
+}
+
+.player-standings-card {
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(620px, calc(100vh - 120px));
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 18px;
+  background: rgba(18, 16, 12, .94);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, .48);
+  color: rgba(255, 255, 255, .94);
+  backdrop-filter: blur(10px);
+}
+
+.player-standings-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, .14);
+}
+
+.player-standings-kicker {
+  margin: 0 0 3px;
+  color: rgba(255, 255, 255, .62);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.player-standings-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.player-standings-close {
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .09);
+  color: inherit;
+  width: 34px;
+  height: 34px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.player-standings-body {
+  padding: 16px 20px 20px;
+}
+
+.player-standings-status {
+  margin: 0;
+  color: rgba(255, 255, 255, .72);
+}
+
+.player-standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.player-standings-table th,
+.player-standings-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.player-standings-table th {
+  color: rgba(255, 255, 255, .62);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.player-standings-rank,
+.player-standings-total {
+  font-weight: 800;
+}
+
+.player-standings-player {
+  min-width: 180px;
+  white-space: normal;
+}
+
+.player-standings-ko-tb {
+  font-variant-numeric: tabular-nums;
+}
+
+
+
+.player-standings-control {
+  position: fixed;
+  top: 76px;
+  right: 16px;
+  z-index: 86;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: auto;
+}
+
+.player-standings-control .standings-icon-button {
+  min-width: 104px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 999px;
+  background: rgba(18, 16, 12, .88);
+  color: rgba(255, 255, 255, .94);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .36);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}

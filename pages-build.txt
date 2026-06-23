@@ -1,7 +1,7 @@
 published-from-site
-publishedAt=2026-06-22T16:29:38Z
-sourceCommit=c996d452543e9269280afd44b539189a53f47557
+publishedAt=2026-06-23T18:24:58Z
+sourceCommit=9d580065e1d3a8920ac7ede670548eae28b08fc9
 criticalJsonSha256:
-  data/current/group_matches.json=606d073bc9411877327c8f8599a26fcdf663cddb6abf0db8389edfa791375d37
-  data/current/group_standings.json=7eaa66a30866401cbabb7e37135bec0556b13a1178cb37f88e1377cf1b3d3d04
-  data/current/match_highlights.json=7bf06b0e0ad9e4b211e58ff0dd2eddbe2d28f6e127c5ca48a588c0806436b219
+  data/current/group_matches.json=ae6cc957ccde592ad230111240312910d0f0d9dd3642cd183b102a0f487cb7e5
+  data/current/group_standings.json=a9a009a5b4226665b02bb20acc1a75c8069d01a6205ab702b6cfa2b90e66c451
+  data/current/match_highlights.json=e585b68c27a6d3f314dbf15106442e51fe7efac93badced2f3ec57beb47a5382

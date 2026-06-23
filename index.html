@@ -15,8 +15,8 @@
     <section class="app-shell" aria-labelledby="app-title">
       <div class="map-board-icon-controls" data-map-board-icon-controls aria-label="Board tools">
         <button type="button" class="map-icon-button" data-board-zoom-in aria-label="Zoom in">+</button>
-        <button type="button" class="map-icon-button" data-info-panel-open data-rules-panel-open aria-haspopup="dialog" aria-controls="info-panel" aria-label="Get info">i</button>
         <button type="button" class="map-icon-button" data-board-zoom-out aria-label="Zoom out">−</button>
+        <button type="button" class="map-icon-button" data-info-panel-open data-rules-panel-open aria-haspopup="dialog" aria-controls="info-panel" aria-label="Get info">i</button>
       </div>
 
       <header class="app-header">
@@ -27,8 +27,8 @@
           <div class="identity-card" data-auth-state="initializing">
             <div class="identity-summary">
               <span class="identity-kicker">Player</span>
-              <strong class="identity-title">Local bracket active</strong>
-              <span class="identity-detail">Sign-in paused</span>
+              <strong class="identity-title">Sign in</strong>
+              <span class="identity-detail">Local bracket active</span>
             </div>
           </div>
         </div>
@@ -103,6 +103,21 @@
         </div>
       </section>
 
+      <button type="button" class="workflow-floating-button" data-workflow-panel-open aria-haspopup="dialog" aria-controls="bracketeering-workflow-panel" aria-label="Open Bracketeering workflow">wb</button>
+
+      <section class="workflow-panel-backdrop" data-workflow-panel id="bracketeering-workflow-panel" hidden>
+        <div class="workflow-panel" role="dialog" aria-modal="true" aria-labelledby="workflow-panel-title">
+          <div class="workflow-panel-header">
+            <div>
+              <p class="workflow-panel-kicker">Bracketeering Workflow</p>
+              <h2 id="workflow-panel-title">Workbench Loop Behind the Game</h2>
+            </div>
+            <button type="button" class="ghost-button workflow-panel-close" data-workflow-panel-close>Close</button>
+          </div>
+          <div class="workflow-panel-body" data-workflow-panel-body tabindex="0"></div>
+        </div>
+      </section>
+
 <div class="board-scroll" data-board-scroll>
         <div class="board-scale-frame" data-board-scale-frame>
           <section class="pixel-native-board-plane" data-board-plane aria-label="World Cup bracket board"></section>
@@ -111,6 +126,7 @@
       <section class="status-panel" data-status-panel aria-live="polite"></section>
     </section>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="module" src="js/app.js?v=final-four-scope-fix-1300269"></script>
 </body>
 </html>

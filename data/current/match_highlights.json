@@ -339,6 +339,38 @@
       "verifiedAt": "2026-06-21",
       "matchEvidence": "Belgium 0-0 IR Iran",
       "verificationMode": "user-provided-url"
+    },
+    "66457010": {
+      "provider": "YouTube",
+      "title": "France 3-0 Iraq highlights",
+      "url": "https://youtu.be/Mo7aY61WF9I",
+      "verifiedAt": "2026-06-23",
+      "matchEvidence": "France 3-0 Iraq",
+      "verificationMode": "user-provided-url-and-score-interview"
+    },
+    "66457012": {
+      "provider": "YouTube",
+      "title": "Norway 3-2 Senegal highlights",
+      "url": "https://youtu.be/vcgzGgM4uJg",
+      "verifiedAt": "2026-06-23",
+      "matchEvidence": "Norway 3-2 Senegal",
+      "verificationMode": "user-provided-url-and-score-interview"
+    },
+    "66457022": {
+      "provider": "YouTube",
+      "title": "Argentina 2-0 Austria highlights",
+      "url": "https://youtu.be/JakdhltyECE",
+      "verifiedAt": "2026-06-23",
+      "matchEvidence": "Argentina 2-0 Austria",
+      "verificationMode": "user-provided-url-and-score-interview"
+    },
+    "66457024": {
+      "provider": "YouTube",
+      "title": "Jordan 1-2 Algeria highlights",
+      "url": "https://youtu.be/qq3eMBEUbzY",
+      "verifiedAt": "2026-06-23",
+      "matchEvidence": "Jordan 1-2 Algeria",
+      "verificationMode": "user-provided-url-and-score-interview"
     }
   }
 }

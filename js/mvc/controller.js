@@ -11,6 +11,10 @@ export function createBracketController({ model, view }) {
     };
   }
 
+  function announcePicksChanged() {
+    window.dispatchEvent(new CustomEvent("wc2026:picks-changed"));
+  }
+
   function redraw() {
     view.render(currentState());
   }
@@ -82,6 +86,7 @@ export function createBracketController({ model, view }) {
       view.report(result.reason || "Pick was not accepted.");
       return;
     }
+    announcePicksChanged();
     activeSlotId = null;
     redraw();
     if (result.cleared?.length) {
@@ -91,6 +96,7 @@ export function createBracketController({ model, view }) {
 
   function onClearPick(slotId) {
     const result = model.clearPick(slotId);
+    announcePicksChanged();
     activeSlotId = slotId;
     redraw();
     if (result.cleared?.length) {
@@ -115,6 +121,7 @@ export function createBracketController({ model, view }) {
 
   function onClearAll() {
     model.clearAll();
+    announcePicksChanged();
     activeSlotId = null;
     view.closeMenu();
     redraw();
@@ -150,6 +157,7 @@ export function createBracketController({ model, view }) {
       view.report(result.reason || "Import failed.");
       return;
     }
+    announcePicksChanged();
     activeSlotId = null;
     view.closeMenu();
     redraw();
@@ -160,6 +168,12 @@ export function createBracketController({ model, view }) {
   function start() {
     view.renderBoardShell(model.nativeSize);
     view.setHandlers({ onSlotClick, onFinalFourSlotClick: onSlotClick, onTeamPick, onClearPick, onClearAll, onExportPicks, onImportPicks, onCloseMenu, onGroupPanelOpen, onActiveGameChange });
+    window.addEventListener("wc2026:account-picks-loaded", () => {
+      activeSlotId = null;
+      view.closeMenu();
+      redraw();
+      view.report("Loaded saved account picks.");
+    });
     redraw();
   }
 

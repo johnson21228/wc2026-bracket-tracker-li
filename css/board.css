@@ -648,6 +648,7 @@
 
 /* Card 205: invalid pick warning rendering. */
 .pick-slot-button.has-invalid-pick {
+  background: rgba(112, 40, 24, .82);
   outline: 1px solid rgba(255, 64, 64, .95);
   box-shadow:
     0 0 0 1px rgba(255, 64, 64, .30),
@@ -1024,9 +1025,13 @@
 /* Champion Pixel Aura: visual-only winner flair for the filled CHAMPION slot.
    Uses four faint flag emoji instances in a soft 2x2 glow grid. */
 .pick-slot-button.is-champion-winner {
+  position: relative;
   overflow: visible;
   isolation: isolate;
   z-index: 6;
+  box-shadow:
+    0 0 10px rgba(255, 232, 150, .44),
+    0 0 24px rgba(255, 184, 56, .26);
 }
 
 .pick-slot-button.is-champion-winner::before,
@@ -1064,12 +1069,12 @@
   place-items: center;
   white-space: pre;
   text-align: center;
-  font-size: calc(var(--wc2026-champion-aura-y, 22px) * 1.55);
+  font-size: calc(var(--wc2026-champion-aura-y, 22px) * 1.75);
   letter-spacing: .06em;
   line-height: .94;
-  opacity: .18;
+  opacity: .30;
   filter:
-    blur(.65px)
+    blur(.45px)
     saturate(1.2)
     drop-shadow(0 0 8px rgba(255, 232, 150, .52))
     drop-shadow(0 0 20px rgba(255, 184, 56, .30));
@@ -1083,3 +1088,73 @@
   z-index: 2;
 }
 
+
+
+/* Champion Pixel Aura DOM underlay: explicit child span, not pseudo-only. */
+.pick-slot-button.is-champion-winner {
+  position: absolute;
+  overflow: visible;
+  isolation: isolate;
+  z-index: 8;
+  box-shadow:
+    0 0 14px rgba(255, 232, 150, .58),
+    0 0 34px rgba(255, 184, 56, .36),
+    0 0 54px rgba(255, 255, 255, .16);
+}
+
+.pick-slot-button.is-champion-winner::after {
+  content: none;
+}
+
+.pick-slot-button.is-champion-winner .champion-pixel-aura {
+  position: absolute;
+  inset:
+    calc(-1 * var(--wc2026-champion-aura-y, 26px))
+    calc(-1 * var(--wc2026-champion-aura-x, 40px));
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.pick-slot-button.is-champion-winner .champion-pixel-aura-flag {
+  position: absolute;
+  display: block;
+  font-size: calc(var(--wc2026-champion-aura-y, 26px) * 1.42);
+  line-height: 1;
+  opacity: .46;
+  filter:
+    blur(.25px)
+    saturate(1.24)
+    drop-shadow(0 0 10px rgba(255, 232, 150, .64))
+    drop-shadow(0 0 26px rgba(255, 184, 56, .44));
+}
+
+.pick-slot-button.is-champion-winner .champion-pixel-aura-flag-top-left {
+  top: calc(var(--wc2026-champion-aura-y, 26px) * -.25);
+  left: calc(var(--wc2026-champion-aura-x, 40px) * -.25);
+  transform: translate(-50%, -50%) rotate(-10deg);
+}
+
+.pick-slot-button.is-champion-winner .champion-pixel-aura-flag-top-right {
+  top: calc(var(--wc2026-champion-aura-y, 26px) * -.25);
+  right: calc(var(--wc2026-champion-aura-x, 40px) * -.25);
+  transform: translate(50%, -50%) rotate(9deg);
+}
+
+.pick-slot-button.is-champion-winner .champion-pixel-aura-flag-bottom-left {
+  bottom: calc(var(--wc2026-champion-aura-y, 26px) * -.25);
+  left: calc(var(--wc2026-champion-aura-x, 40px) * -.25);
+  transform: translate(-50%, 50%) rotate(8deg);
+}
+
+.pick-slot-button.is-champion-winner .champion-pixel-aura-flag-bottom-right {
+  right: calc(var(--wc2026-champion-aura-x, 40px) * -.25);
+  bottom: calc(var(--wc2026-champion-aura-y, 26px) * -.25);
+  transform: translate(50%, 50%) rotate(-9deg);
+}
+
+.pick-slot-button.is-champion-winner .pick-slot-label,
+.pick-slot-button.is-champion-winner .pick-slot-value {
+  position: relative;
+  z-index: 3;
+}
