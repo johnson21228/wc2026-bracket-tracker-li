@@ -172,7 +172,7 @@ export function createBracketController({ model, view }) {
       activeSlotId = null;
       view.closeMenu();
       redraw();
-      view.report("Loaded saved account picks.");
+      view.report("Loaded your joined picks.");
     });
     redraw();
   }

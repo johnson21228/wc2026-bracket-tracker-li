@@ -192,6 +192,14 @@ export function createPlayerStandingsSurface({
   const panel = ensureStandingsPanel(root);
   const closeButton = panel.querySelector("[data-player-standings-close]");
 
+  function syncStandingsButtonState() {
+    const joined = isSignedIn(currentAuthState);
+    button.disabled = !joined;
+    button.classList.toggle("is-join-required", !joined);
+    button.title = joined ? "Open Standings" : "Join to enter standings.";
+    button.setAttribute("aria-label", joined ? "Open Standings" : "Join to enter standings.");
+  }
+
   function renderStatus(message) {
     const body = panel.querySelector("[data-player-standings-body]");
     body.innerHTML = `<p class="player-standings-status">${message}</p>`;
@@ -208,7 +216,7 @@ export function createPlayerStandingsSurface({
         : fallbackParticipationRows(currentAuthState, currentProfileState);
 
       if (!rows.length && !isSignedIn(currentAuthState)) {
-        renderStatus("Sign in to join the standings");
+        renderStatus("Join to enter standings.");
         return;
       }
 
@@ -235,6 +243,7 @@ export function createPlayerStandingsSurface({
   }
 
   function start() {
+    syncStandingsButtonState();
     button.addEventListener("click", openPanel);
     closeButton?.addEventListener("click", closePanel);
 
@@ -249,6 +258,7 @@ export function createPlayerStandingsSurface({
     authService?.subscribe?.((state) => {
       currentAuthState = state;
       currentProfileState = null;
+      syncStandingsButtonState();
       if (!panel.hidden) loadStandingsRows();
     });
   }

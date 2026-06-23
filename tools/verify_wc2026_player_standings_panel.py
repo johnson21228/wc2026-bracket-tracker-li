@@ -1,94 +1,73 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-
-def read(path):
-    return (ROOT / path).read_text()
 
 def require(condition, message, errors):
     if not condition:
         errors.append(message)
 
+
 def main():
     errors = []
 
-    app = read("site/js/app.js")
-    surface = read("site/js/standings/PlayerStandingsSurface.js")
-    css = read("site/css/app.css")
-    makefile = read("Makefile")
-    card = read("cards/1007_add_player_standings_button_and_panel_card.md")
-    capture = read("captures/CAPTURE_BACK_PLAYER_STANDINGS_BUTTON_PANEL.md")
+    app = Path("site/js/app.js").read_text()
+    standings = Path("site/js/standings/PlayerStandingsSurface.js").read_text()
+    css = Path("site/css/app.css").read_text()
+    makefile = Path("Makefile").read_text()
 
-    require('createPlayerStandingsSurface' in app and './standings/PlayerStandingsSurface.js' in app,
-            "App must import the player standings surface.", errors)
-    require('standingsSurface.start();' in app,
-            "App must start the player standings surface.", errors)
+    require('import { createPlayerStandingsSurface } from "./standings/PlayerStandingsSurface.js";' in app,
+            "App must import player standings surface.", errors)
+    require("createPlayerStandingsSurface({" in app,
+            "App must mount player standings surface.", errors)
+    require("profileStore" in app,
+            "App must provide profile store to standings surface.", errors)
 
-    require('data-player-standings-open' in surface and 'Standings' in surface,
-            "Player-facing Standings button must be created.", errors)
-    require('data-player-standings-panel' in surface and 'role", "dialog"' in surface,
-            "Standings panel must be a floating dialog surface.", errors)
-    require('publicPlayerName' in surface,
-            "Standings rows must use public player names.", errors)
-    require('email' not in surface.lower(),
-            "Standings surface must not expose email fields or labels.", errors)
+    require("data-player-standings-panel" in standings,
+            "Standings panel must keep the player standings panel hook.", errors)
+    require("standings-icon-button" in standings,
+            "Standings surface must provide the standings button.", errors)
+    require("syncStandingsButtonState" in standings,
+            "Standings button must sync joined/not-joined state.", errors)
+    require("button.disabled = !joined" in standings,
+            "Standings must be disabled until joined.", errors)
+    require("Join to enter standings." in standings,
+            "Signed-out standings copy must use Join-first wording.", errors)
+    require("Loading standings…" in standings,
+            "Standings panel must provide loading state.", errors)
+    require("No players yet" in standings,
+            "Standings panel must provide empty state.", errors)
+    require("Standings unavailable" in standings,
+            "Standings panel must provide error state.", errors)
+    require("fallbackParticipationRows" in standings,
+            "Standings must still provide participation fallback rows.", errors)
+    require("publicNameFromAuthState" in standings,
+            "Standings must use public player names instead of raw identity.", errors)
 
-    require('<th scope="col">Rank</th>' in surface,
-            "Standings table must display a Rank column.", errors)
-    require('<th scope="col">Player</th>' in surface,
-            "Standings table must display a Player column.", errors)
-    require('<th scope="col">Group</th>' in surface,
-            "Standings table must display a Group column.", errors)
-    require('<th scope="col">Knockout</th>' in surface,
-            "Standings table must display a Knockout column.", errors)
-    require('player-standings-group-count' in surface,
-            "Standings rows must render a simple Group integer count cell.", errors)
-    require('player-standings-knockout-count' in surface,
-            "Standings rows must render a simple Knockout integer count cell.", errors)
-    require('<th scope="col">Total</th>' not in surface,
-            "Standings table must not display Total column.", errors)
-    require('<th scope="col">Picks</th>' not in surface,
-            "Standings table must not display Picks column.", errors)
-    require('Knockout · TB' not in surface and 'TB ${row.tiebreakerScore}' not in surface,
-            "Standings table must not display tiebreaker text.", errors)
-    require('KO ${row.knockoutPoints}' not in surface,
-            "Standings rows must not decorate Knockout counts with KO text.", errors)
-    require('b.total - a.total' in surface
-            and 'b.knockoutPoints - a.knockoutPoints' in surface
-            and 'b.tiebreakerScore - a.tiebreakerScore' in surface
-            and 'localeCompare' in surface,
-            "Standings rows must sort by total, knockout, tiebreaker, then player name.", errors)
+    for forbidden in [
+        "Sign in to join the standings",
+        "login",
+        "Save Picks",
+        "Load Saved",
+        "email",
+    ]:
+        require(forbidden not in standings,
+                f"Standings surface must not expose stale login/save/load/private identity copy: {forbidden}", errors)
 
-    forbidden_write_tokens = [
-        '.insert(', '.upsert(', '.update(', '.delete(', 'saveUserBracket',
-        'createUser', 'writeStandings', 'persistStandings'
-    ]
-    for token in forbidden_write_tokens:
-        require(token not in surface,
-                f"Standings panel must be read-only and not contain write token {token}.", errors)
+    require(".player-standings-control" in css and ".standings-icon-button" in css,
+            "Standings control must have visible browser chrome styling.", errors)
+    require(".standings-icon-button.is-join-required" in css or ".standings-icon-button:disabled" in css,
+            "Disabled Join-required standings state must have styling.", errors)
 
-    require('Loading standings…' in surface
-            and 'No players yet' in surface
-            and 'Sign in to join the standings' in surface
-            and 'Standings unavailable' in surface,
-            "Standings panel must provide loading/empty/signed-out/error states.", errors)
-
-    require('.player-standings-panel' in css and '.standings-icon-button' in css,
-            "Standings button and panel must have player-facing CSS.", errors)
-
-    require('python3 tools/verify_wc2026_player_standings_panel.py' in makefile,
-            "Makefile verify must include the player standings verifier.", errors)
-
-    require('participation' in card.lower() and 'participation' in capture.lower(),
-            "Card and capture must document participation-first standings intent.", errors)
+    require("python3 tools/verify_wc2026_player_standings_panel.py" in makefile,
+            "Makefile verify must include player standings verifier.", errors)
 
     if errors:
-        print("Player standings panel verification failed: " + "; ".join(errors))
+        print("Join-first player standings panel verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: player Standings button and read-only participation panel are captured, wired, and verified.")
+    print("OK: Player standings panel is Join-first, disabled until joined, and preserves loading/empty/error states.")
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

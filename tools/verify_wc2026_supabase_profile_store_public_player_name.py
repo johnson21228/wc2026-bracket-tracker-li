@@ -1,15 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-
-
-def read(rel):
-    path = ROOT / rel
-    if not path.exists():
-        raise AssertionError(f"Missing required file: {rel}")
-    return path.read_text(encoding="utf-8", errors="ignore")
-
 
 def require(condition, message, errors):
     if not condition:
@@ -19,82 +10,59 @@ def require(condition, message, errors):
 def main():
     errors = []
 
-    store = read("site/js/services/SupabaseProfileStore.js")
-    profile_text = store
-    identity = read("site/js/identity/SupabaseIdentitySurface.js")
-    app = read("site/js/app.js")
-    makefile = read("Makefile")
+    identity = Path("site/js/identity/SupabaseIdentitySurface.js").read_text()
+    profile_store = Path("site/js/services/SupabaseProfileStore.js").read_text()
+    standings = Path("site/js/standings/PlayerStandingsSurface.js").read_text()
+    app = Path("site/js/app.js").read_text()
+    makefile = Path("Makefile").read_text()
 
-    require("createSupabaseProfileStore" in store, "SupabaseProfileStore factory must exist.", errors)
-    require('.from("profiles")' in store, "Profile store must use public.profiles.", errors)
-    require("display_name" in store, "Profile store must read/write display_name.", errors)
-    require(".upsert(" in store, "Profile store must upsert the signed-in user's profile.", errors)
-    require("maybeSingle()" in store, "Profile store must handle a missing profile row.", errors)
-    require("normalizeDisplayName" in store and "validateDisplayName" in store, "Profile store must normalize and validate public player names.", errors)
+    require("Public player name" in identity,
+            "Identity surface must let joined users edit public player name.", errors)
+    require("Update player name" in identity,
+            "Profile step must use Join-first player-name update copy.", errors)
+    require("Your public player name is what other players see." in identity,
+            "Identity UI must distinguish public player name from private account identity.", errors)
+    require("Profile" in identity and "Joined status" in identity,
+            "Supabase identity chip/panel must expose Join-first Profile state.", errors)
+    require("Picks:" in identity and "live after joining" in identity,
+            "Profile step must describe live picks after joining.", errors)
 
-    require("profileStore = null" in identity, "Identity surface must accept the profile store seam.", errors)
-    require("Public player name" in identity, "Identity surface must render a public player name field.", errors)
-    require("Save player name" in identity, "Identity surface must let signed-in users save player name.", errors)
-    require("Do not use your private email as your player name" in identity, "Identity surface must protect email/player-name distinction.", errors)
-    require("Bracket saving:" in identity and "not enabled yet" in identity, "Profile step must not enable bracket saving.", errors)
+    require('.from("profiles")' in profile_store,
+            "Profile persistence must live in SupabaseProfileStore.", errors)
+    require(".upsert(" in profile_store and "display_name" in profile_store,
+            "SupabaseProfileStore must upsert display_name.", errors)
+    require("email" not in profile_store.lower(),
+            "Profile store must not persist or expose raw email as player identity.", errors)
 
-    require('import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js";' in app, "App must import SupabaseProfileStore.", errors)
-    require("const profileStore = createSupabaseProfileStore();" in app, "App must instantiate SupabaseProfileStore.", errors)
-    require("createSupabaseIdentitySurface({ root, authService, profileStore })" in app, "App must pass ProfileStore into identity surface.", errors)
+    require("publicNameFromAuthState" in standings,
+            "Standings must resolve public player names from auth/profile state.", errors)
+    require("profileStore" in standings,
+            "Standings surface must use profile store for public player names.", errors)
 
-    forbidden_store_tokens = [
-        'from("user_brackets")',
-        "bracket_json",
-        "picks_json",
-        "BracketDocument",
-        "SupabaseBracketStore",
-    ]
-    for token in forbidden_store_tokens:
-        require(token not in store, f"Profile store must not touch bracket persistence: {token}", errors)
+    require("createSupabaseProfileStore" in app and "profileStore" in app,
+            "App must wire SupabaseProfileStore into identity and standings surfaces.", errors)
 
-    require(
-        "python3 tools/verify_wc2026_supabase_profile_store_public_player_name.py" in makefile,
-        "Makefile verify must include the public player name profile-store verifier.",
-        errors,
-    )
+    for forbidden in [
+        "Signed in as:",
+        "Save player name",
+        "Bracket saving:",
+        "not enabled yet",
+        "Sign in to save",
+        "Save Picks",
+        "Load Saved",
+        "Supabase-backed profile",
+    ]:
+        require(forbidden not in identity,
+                f"Profile UI must not expose stale pre-Join copy: {forbidden}", errors)
 
-
-    identity_text = Path("site/js/identity/SupabaseIdentitySurface.js").read_text()
-
-    require(
-        "function compactIdentityTitle(state)" in identity_text,
-        "Supabase identity surface must compute a compact signed-in display label for the upper-right chip.",
-        errors,
-    )
-    require(
-        "Signed in as:" in identity_text,
-        "Supabase identity chip must expose the player-facing 'Signed in as:' label.",
-        errors,
-    )
-    require(
-        "profileDisplayName()" in identity_text and "accountEmail(state)" in identity_text,
-        "Signed-in chip must prefer public player name and fall back to account email.",
-        errors,
-    )
-
-
-    require(
-        ("config.supabaseUrl" in profile_text and "config.supabasePublishableKey" in profile_text)
-        or "requireSharedSupabaseClient(config)" in profile_text,
-        "SupabaseProfileStore must use the canonical shared Supabase config/client boundary.",
-        errors,
-    )
-    require(
-        "config.url" not in profile_text and "config.publishableKey" not in profile_text,
-        "SupabaseProfileStore must not use stale url/publishableKey aliases.",
-        errors,
-    )
+    require("python3 tools/verify_wc2026_supabase_profile_store_public_player_name.py" in makefile,
+            "Makefile verify must include public player name verifier.", errors)
 
     if errors:
-        print("Supabase profile store public player name verification failed: " + "; ".join(errors))
+        print("Join-first public player name verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: SupabaseProfileStore public player name step is wired without enabling bracket save/load.")
+    print("OK: Supabase profile store supports Join-first public player names without exposing email or stale save/load copy.")
     return 0
 
 

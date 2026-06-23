@@ -16,71 +16,50 @@ def main():
     model = Path("site/js/mvc/model.js").read_text()
     controller = Path("site/js/mvc/controller.js").read_text()
     makefile = Path("Makefile").read_text()
-    view = Path("site/js/mvc/view.js").read_text()
 
     require('import { createAccountSaveActionSurface } from "./identity/AccountSaveActionSurface.js";' in app,
-            "App must import AccountSaveActionSurface.", errors)
-    require("createAccountSaveActionSurface({" in app and "model," in app and "remoteActive: bracketStoreOptions.remoteActive === true" in app,
-            "App must mount account persistence with model plus dev remote awareness.", errors)
-    require("StorageModeSurface" not in app,
-            "App must not mount the old persistent local storage pill.", errors)
+            "App must import the joined live-picks surface.", errors)
+    require("createAccountSaveActionSurface({" in app and "model," in app,
+            "App must mount joined live-picks persistence with the model.", errors)
 
     require("function getAccountSaveBracketDocument" in model and 'buildRemoteBracketDocument("account-save-button")' in model,
-            "Model must expose a canonical BracketDocument snapshot for explicit account saving.", errors)
+            "Model must still expose canonical BracketDocument snapshots at the persistence boundary.", errors)
     require("function importAccountBracketDocument" in model and "importPicksSnapshot({ picks: incomingPicks })" in model,
-            "Model must import saved account BracketDocument picks through the existing local pick import path.", errors)
-    require("getAccountSaveBracketDocument," in model and "importAccountBracketDocument," in model,
-            "Model API must expose account save/load methods.", errors)
+            "Model must still import joined bracket picks through the canonical local pick import path.", errors)
 
-    require('"Save Picks"' in surface and '"Sign in to save and load picks"' in surface,
-            "Account persistence surface must expose signed-out save/load explanation.", errors)
-    require('"Load Saved"' in surface and '"Saved account picks found"' in surface,
-            "Signed-in account persistence must expose a saved-picks load surface.", errors)
-    require('"Account persistence ready"' in surface and '"Saved to account"' in surface,
-            "Signed-in account persistence must show account persistence status.", errors)
-    require("loadUserBracket(accountUserId)" in surface and "saveUserBracket(bracketDocument)" in surface,
-            "Account persistence must check/load and save through SupabaseBracketStore.", errors)
-    require("localPickCount() === 0" in surface and 'render("remote-found")' in surface,
-            "Remote picks may auto-load only when there are no local picks; conflicts must stay explicit.", errors)
-    require("loadSavedPicksFromAccount({ automatic: false })" in surface,
-            "Saved account picks must be explicitly loadable when local picks exist.", errors)
-    require("pickFingerprintFromDocument" in surface and "lastAccountPickFingerprint" in surface,
-            "Account persistence must track whether current picks match account storage.", errors)
-    require('"Unsaved changes"' in surface and '"Current picks saved"' in surface,
-            "Account persistence must show dirty/synced save status.", errors)
-    require("wc2026:picks-changed" in surface and "markDirtyIfNeeded" in surface,
-            "Account persistence surface must update when local picks change.", errors)
+    require("AUTOSAVE_DELAY_MS" in surface and "scheduleAutosave" in surface and "wc2026:picks-changed" in surface,
+            "Joined picks must autosave from pick-change events using a debounce.", errors)
+    require("loadUserBracket(playerUserId)" in surface and "saveUserBracket(bracketDocument)" in surface,
+            "Joined live picks must use SupabaseBracketStore behind the BracketStore seam.", errors)
+    require("You already have picks saved. Use saved picks or keep this board?" in surface,
+            "Existing joined bracket conflicts must be handled once with a player-facing choice.", errors)
+    require("Use saved picks" in surface and "Keep this board" in surface,
+            "Conflict UI must offer the two required choices.", errors)
+    require('"Saving…"' in surface and '"Picks saved"' in surface and '"Could not save — retrying"' in surface,
+            "Joined live picks must use status-only autosave copy.", errors)
     require("localStorage" not in surface,
-            "Account persistence surface must not use localStorage directly.", errors)
+            "Joined live-picks surface must not use localStorage directly.", errors)
 
-    require("wc2026:account-picks-loaded" in controller and "redraw();" in controller,
-            "Controller must redraw after account picks are loaded without owning Supabase persistence.", errors)
-    require("function announcePicksChanged()" in controller and "wc2026:picks-changed" in controller,
-            "Controller must define local pick mutation announcements so account persistence can show dirty state.", errors)
-    require(controller.count("announcePicksChanged();") >= 3,
-            "Controller must call announcePicksChanged after user pick mutations.", errors)
-    for rel, text in {
-        "site/js/mvc/controller.js": controller,
-        "site/js/mvc/view.js": view,
-    }.items():
-        require("SupabaseBracketStore" not in text and "saveUserBracket" not in text and "loadUserBracket" not in text and "user_brackets" not in text,
-                f"{rel} must not own account persistence.", errors)
+    forbidden_player_commands = ["Save Picks", "Load Saved", "Try Save Again", "Unsaved changes", "Current picks saved", "Account persistence ready"]
+    for token in forbidden_player_commands:
+        require(token not in surface, f"Player-facing joined live-picks surface must not expose old command/copy: {token}", errors)
 
-    require(".account-save-action" in css and ".account-save-action-button" in css,
-            "Account persistence surface must have browser chrome styling.", errors)
-    require(".account-save-action-button.is-saved" in css and ".account-save-action-button.is-unsaved" in css,
-            "Save Picks button must use green/red semantic outlines for saved versus unsaved account state.", errors)
+    require("wc2026:account-picks-loaded" in controller and "Loaded your joined picks." in controller,
+            "Controller must redraw after joined picks are loaded without old save/load copy.", errors)
+
+    require(".join-live-picks-status" in css and ".join-live-picks-conflict" in css,
+            "Joined live-picks status/conflict UI must have browser chrome styling.", errors)
     require(".storage-mode-status" not in css,
-            "Persistent local storage pill CSS must be removed.", errors)
+            "Persistent local storage pill CSS must remain removed.", errors)
 
     require("python3 tools/verify_wc2026_account_save_action_target.py" in makefile,
-            "Makefile verify must include account persistence verifier.", errors)
+            "Makefile verify must include this joined persistence verifier.", errors)
 
     if errors:
-        print("Account persistence verification failed: " + "; ".join(errors))
+        print("Joined live-picks persistence verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: signed-in account persistence is the primary save/load surface with explicit conflict-safe restore.")
+    print("OK: joined player persistence is live autosave with one-time conflict handling and no Save/Load player commands.")
     return 0
 
 

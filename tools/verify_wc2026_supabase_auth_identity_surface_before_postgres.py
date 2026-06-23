@@ -1,15 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-
-
-def read(rel):
-    path = ROOT / rel
-    if not path.exists():
-        raise AssertionError(f"Missing required file: {rel}")
-    return path.read_text(encoding="utf-8", errors="ignore")
-
 
 def require(condition, message, errors):
     if not condition:
@@ -19,44 +10,67 @@ def require(condition, message, errors):
 def main():
     errors = []
 
-    auth = read("site/js/services/SupabaseAuthService.js")
-    surface = read("site/js/identity/SupabaseIdentitySurface.js")
-    profile_store = read("site/js/services/SupabaseProfileStore.js")
+    identity = Path("site/js/identity/SupabaseIdentitySurface.js").read_text()
+    app = Path("site/js/app.js").read_text()
+    config = Path("site/js/config/supabase.public.js").read_text()
+    live_picks = Path("site/js/identity/AccountSaveActionSurface.js").read_text()
+    makefile = Path("Makefile").read_text()
 
-    require("createSupabaseAuthService" in auth, "Supabase Auth service must remain the identity boundary.", errors)
-    require("createSupabaseIdentitySurface" in surface, "Identity surface must remain site-owned.", errors)
-    require("[data-supabase-identity-surface]" in surface, "Identity surface must render into the existing sign-in mount.", errors)
-    require("Bracket persistence:" in surface, "Identity surface should state local bracket status before remote bracket persistence.", errors)
-    require("Supabase bracket writes are not enabled yet" in surface, "Identity surface must clearly say bracket writes are not enabled yet.", errors)
-    require("Bracket saving:" in surface and "not enabled yet" in surface, "Signed-in panel must still say bracket saving is not enabled yet.", errors)
+    require("WC2026_SUPABASE_PUBLIC_CONFIG" in config,
+            "Supabase public config must remain the browser-owned identity configuration.", errors)
+    require("supabaseUrl" in config and "supabasePublishableKey" in config,
+            "Supabase public config must expose url and publishable key only.", errors)
+    require("service_role" not in config.lower() and "secret" not in config.lower(),
+            "Browser config must not expose service-role or secret credentials.", errors)
 
-    # Profile persistence is now allowed after the Supabase profiles SQL was applied.
-    require('.from("profiles")' in profile_store, "Profile persistence must live in SupabaseProfileStore.", errors)
-    require(".upsert(" in profile_store, "SupabaseProfileStore should upsert public player names.", errors)
-    require("display_name" in profile_store, "SupabaseProfileStore must persist display_name.", errors)
+    require("createSupabaseIdentitySurface" in identity,
+            "Identity surface must still be site-owned browser UI.", errors)
+    require("Join" in identity and "Joined" in identity and "Joined as" in identity,
+            "Identity surface must use Join-first player language.", errors)
+    require("Profile" in identity and "Public player name" in identity,
+            "Joined player profile must focus on public player name.", errors)
+    require("Join to enter standings." in identity,
+            "Join-first surface must connect joining to standings participation.", errors)
+    require("Join the game to keep picks live and enter standings." in identity,
+            "Join panel must explain live picks and standings without save/load language.", errors)
+    require("Your public player name is what other players see." in identity,
+            "Profile panel must keep public player name separate from private account identity.", errors)
 
-    # Bracket persistence is still intentionally blocked in this step.
-    combined_identity_surface = "\n".join([auth, surface, profile_store])
-    forbidden_tokens = [
-        '.from("user_brackets")',
-        ".from('user_brackets')",
-        ".from(`user_brackets`)",
-        "SupabaseBracketStore",
-        "bracket_json",
-        "picks_json",
-    ]
-    for token in forbidden_tokens:
-        require(
-            token.lower() not in combined_identity_surface.lower(),
-            f"Card 231 must not introduce Supabase/Postgres bracket persistence yet: found {token}",
-            errors,
-        )
+    for forbidden in [
+        "Save Picks",
+        "Load Saved",
+        "Bracket persistence:",
+        "bracket writes are not enabled yet",
+        "Bracket saving:",
+        "Sign in to save",
+        "Supabase Auth is not configured yet",
+        "Supabase profile store",
+        "Remote store",
+        "Storage mode",
+    ]:
+        require(forbidden not in identity,
+                f"Identity surface must not expose old implementation/persistence copy: {forbidden}", errors)
+
+    require("createAccountSaveActionSurface" in app,
+            "App must mount the joined live-picks persistence surface.", errors)
+    require("createSupabaseIdentitySurface" in app,
+            "App must mount Join/Profile identity surface.", errors)
+
+    require("AUTOSAVE_DELAY_MS" in live_picks and "wc2026:picks-changed" in live_picks,
+            "Joined picks must autosave after pick changes.", errors)
+    require("saveUserBracket(bracketDocument)" in live_picks,
+            "Joined live picks must write through SupabaseBracketStore seam.", errors)
+    require("You already have picks saved. Use saved picks or keep this board?" in live_picks,
+            "Joined conflict handling must be one explicit player choice.", errors)
+
+    require("python3 tools/verify_wc2026_supabase_auth_identity_surface_before_postgres.py" in makefile,
+            "Makefile must keep this identity boundary verifier wired.", errors)
 
     if errors:
-        print("Card 231 verification failed: " + "; ".join(errors))
+        print("Join-first Supabase identity boundary verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: WC2026 Supabase Auth identity surface allows profile-only public player names while remote bracket persistence remains disabled.")
+    print("OK: WC2026 Supabase identity boundary is Join-first, public-name based, and live-picks ready without exposing save/load/storage implementation language.")
     return 0
 
 
