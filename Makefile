@@ -45,6 +45,7 @@ verify:
 	python3 tools/verify_wc2026_lifecycle_background_softening.py
 	python3 tools/verify_wc2026_active_game_pick_gating.py
 	python3 tools/verify_wc2026_active_game_pick_rules_pipeline.py
+	python3 tools/verify_wc2026_group_stage_hides_later_round_pick_fills.py
 	python3 tools/verify_wc2026_game2_fifa_final_r32_source_with_game1_fallback.py
 	python3 tools/verify_wc2026_game2_resolved_r32_field.py
 	python3 tools/verify_wc2026_game2_r32_readonly_rendering.py

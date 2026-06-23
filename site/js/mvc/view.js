@@ -373,9 +373,23 @@ export function createBracketView(root) {
   }
 
 
+  function isGroupStagePresentationActive() {
+    return activeGameValue() === "game-1";
+  }
+
+  function shouldSuppressPickFillForSlot(slot) {
+    const slotId = String(slot?.slotId || "").toUpperCase();
+    return isGroupStagePresentationActive()
+      && slot?.round !== "R32"
+      && !slotId.startsWith("R32");
+  }
+
   function displayTeamForSlot(slot) {
     if (activeGameValue() === "game-2" && slot.round === "R32" && slot.game2ResolvedTeam) {
       return slot.game2ResolvedTeam;
+    }
+    if (shouldSuppressPickFillForSlot(slot)) {
+      return null;
     }
     return slot.selectedTeam;
   }
