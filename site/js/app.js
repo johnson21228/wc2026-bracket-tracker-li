@@ -105,3 +105,15 @@ main().catch((error) => {
     root.innerHTML = `<main class="app-error"><h1>Site failed to start</h1><pre>${String(error?.message || error)}</pre></main>`;
   }
 });
+
+
+if (new URLSearchParams(window.location.search).get("devSupabaseBracketSmoke") === "1") {
+  const smokeModuleUrl = new URL("js/dev/SupabaseBracketStoreSmokeTest.js", document.baseURI).href;
+  import(smokeModuleUrl)
+    .then(({ installSupabaseBracketStoreSmokeTest }) => {
+      installSupabaseBracketStoreSmokeTest();
+    })
+    .catch((error) => {
+      console.error("[SupabaseBracketStoreSmokeTest] module load failed", error);
+    });
+}
