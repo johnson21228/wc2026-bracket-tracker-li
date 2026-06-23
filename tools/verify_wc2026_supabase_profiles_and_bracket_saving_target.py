@@ -29,6 +29,8 @@ def main():
     require("create table if not exists public.user_brackets" in sql, "SQL target must define public.user_brackets.", errors)
     require("bracket_json jsonb not null" in sql, "user_brackets must store canonical BracketDocument JSON.", errors)
     require("bracket_json ? 'picksBySlot'" in sql, "SQL target must preserve picksBySlot shape validation.", errors)
+    require("bracket_json ->> 'tournamentId' = tournament_id" in sql, "SQL target must require bracket_json.tournamentId to match row tournament_id.", errors)
+    require("bracket_json ->> 'gameId' = game_id" in sql, "SQL target must require bracket_json.gameId to match row game_id.", errors)
     require("unique (user_id, tournament_id, game_id)" in sql, "user_brackets must be one row per user/tournament/game.", errors)
     require("alter table public.profiles enable row level security" in sql, "profiles must enable RLS.", errors)
     require("alter table public.user_brackets enable row level security" in sql, "user_brackets must enable RLS.", errors)

@@ -66,6 +66,8 @@ create table if not exists public.user_brackets (
       and bracket_json ? 'gameId'
       and bracket_json ? 'picksBySlot'
       and jsonb_typeof(bracket_json -> 'picksBySlot') = 'object'
+      and bracket_json ->> 'tournamentId' = tournament_id
+      and bracket_json ->> 'gameId' = game_id
     )
 );
 
