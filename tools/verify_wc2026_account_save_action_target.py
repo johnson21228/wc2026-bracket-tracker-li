@@ -44,11 +44,21 @@ def main():
             "Remote picks may auto-load only when there are no local picks; conflicts must stay explicit.", errors)
     require("loadSavedPicksFromAccount({ automatic: false })" in surface,
             "Saved account picks must be explicitly loadable when local picks exist.", errors)
+    require("pickFingerprintFromDocument" in surface and "lastAccountPickFingerprint" in surface,
+            "Account persistence must track whether current picks match account storage.", errors)
+    require('"Unsaved changes"' in surface and '"Current picks saved"' in surface,
+            "Account persistence must show dirty/synced save status.", errors)
+    require("wc2026:picks-changed" in surface and "markDirtyIfNeeded" in surface,
+            "Account persistence surface must update when local picks change.", errors)
     require("localStorage" not in surface,
             "Account persistence surface must not use localStorage directly.", errors)
 
     require("wc2026:account-picks-loaded" in controller and "redraw();" in controller,
             "Controller must redraw after account picks are loaded without owning Supabase persistence.", errors)
+    require("function announcePicksChanged()" in controller and "wc2026:picks-changed" in controller,
+            "Controller must define local pick mutation announcements so account persistence can show dirty state.", errors)
+    require(controller.count("announcePicksChanged();") >= 3,
+            "Controller must call announcePicksChanged after user pick mutations.", errors)
     for rel, text in {
         "site/js/mvc/controller.js": controller,
         "site/js/mvc/view.js": view,
@@ -58,6 +68,8 @@ def main():
 
     require(".account-save-action" in css and ".account-save-action-button" in css,
             "Account persistence surface must have browser chrome styling.", errors)
+    require(".account-save-action-button.is-saved" in css and ".account-save-action-button.is-unsaved" in css,
+            "Save Picks button must use green/red semantic outlines for saved versus unsaved account state.", errors)
     require(".storage-mode-status" not in css,
             "Persistent local storage pill CSS must be removed.", errors)
 

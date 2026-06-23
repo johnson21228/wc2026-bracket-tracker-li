@@ -30,3 +30,12 @@ Once a player is signed in, account persistence is the normal visible persistenc
 If saved account picks exist and the device has no local picks, the account picks may load automatically. If both account picks and device-local picks exist, the UI exposes an explicit `Load Saved` action rather than silently overwriting local play.
 
 Signed-out play remains local-only.
+
+## Save-state feedback
+
+The signed-in account persistence surface tracks whether the current local picks match the last known saved account snapshot. The Save Picks button uses the site semantic hues:
+
+- green outline: current visible picks match account storage
+- red outline: local picks have diverged from account storage or save failed
+- neutral: signed out, checking, or no account snapshot yet
+

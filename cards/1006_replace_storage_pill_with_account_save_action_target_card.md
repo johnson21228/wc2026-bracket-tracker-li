@@ -42,3 +42,13 @@ Make signed-in account persistence the primary save/load surface:
 - if local picks exist too, the UI shows explicit `Load Saved`
 - no silent overwrite of local picks
 - Save Picks remains an explicit account write
+
+## Save-state feedback refinement
+
+The Save Picks button now communicates whether the visible local picks match account storage:
+
+- green outline means current picks are saved/synced to account storage
+- red outline means current picks have unsaved changes or the last save failed
+- neutral state remains for signed-out/checking states
+- dirty tracking is based on a stable pick fingerprint, not just signed-in status
+

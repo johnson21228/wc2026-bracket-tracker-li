@@ -1195,6 +1195,18 @@ body {
   padding: 6px 10px;
 }
 
+
+.account-save-action-button.is-saved {
+  outline: 1px solid rgba(76, 255, 130, .88);
+  box-shadow: 0 0 0 2px rgba(76, 255, 130, .12);
+}
+
+.account-save-action-button.is-unsaved,
+.account-save-action-button.is-error {
+  outline: 1px solid rgba(255, 64, 64, .95);
+  box-shadow: 0 0 0 2px rgba(255, 64, 64, .14);
+}
+
 .account-save-action-button:disabled {
   opacity: .72;
 }

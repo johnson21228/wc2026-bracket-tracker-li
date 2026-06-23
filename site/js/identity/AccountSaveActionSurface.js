@@ -3,6 +3,23 @@ import { SupabaseBracketStore } from "../services/SupabaseBracketStore.js";
 const ACCOUNT_SAVE_STATE_ATTRIBUTE = "data-account-save-state";
 const ACCOUNT_PICKS_LOADED_EVENT = "wc2026:account-picks-loaded";
 
+function pickFingerprintFromDocument(bracketDocument) {
+  const picksBySlot = bracketDocument?.picksBySlot || {};
+  return JSON.stringify(Object.entries(picksBySlot)
+    .map(([slotId, record]) => {
+      const teamId = record?.pick?.kind === "team" ? record.pick.teamId : record?.teamId;
+      return [slotId, teamId || ""];
+    })
+    .filter(([, teamId]) => teamId)
+    .sort(([left], [right]) => left.localeCompare(right)));
+}
+
+function syncStateClass(state) {
+  if (state === "saved" || state === "loaded" || state === "synced") return "is-saved";
+  if (state === "dirty" || state === "error") return "is-unsaved";
+  return "";
+}
+
 function ensureAccountSaveElement(root) {
   let element = root.querySelector("[data-account-save-action]");
   if (element) return element;
@@ -126,6 +143,30 @@ function accountSavePresentation({
     };
   }
 
+  if (state === "dirty") {
+    return {
+      state: "dirty",
+      saveText: "Save Picks",
+      loadText: "Load Saved",
+      statusText: "Unsaved changes",
+      saveDisabled: false,
+      loadHidden: !hasSavedAccountPicks,
+      loadDisabled: !hasSavedAccountPicks,
+    };
+  }
+
+  if (state === "synced") {
+    return {
+      state: "synced",
+      saveText: "Save Picks",
+      loadText: "Load Saved",
+      statusText: "Current picks saved",
+      saveDisabled: false,
+      loadHidden: true,
+      loadDisabled: true,
+    };
+  }
+
   if (state === "error") {
     return {
       state: "error",
@@ -156,6 +197,10 @@ function renderAccountSaveAction(root, presentation) {
   const status = element.querySelector("[data-account-save-status]");
 
   element.setAttribute(ACCOUNT_SAVE_STATE_ATTRIBUTE, presentation.state);
+  saveButton.classList.remove("is-saved", "is-unsaved", "is-error");
+  const syncClass = syncStateClass(presentation.state);
+  if (syncClass) saveButton.classList.add(syncClass);
+  if (presentation.state === "error") saveButton.classList.add("is-error");
   saveButton.textContent = presentation.saveText;
   saveButton.disabled = presentation.saveDisabled;
   loadButton.textContent = presentation.loadText;
@@ -184,6 +229,18 @@ function createAccountSaveActionSurface({
   let saveState = "idle";
   let savedAccountBracket = null;
   let hasSavedAccountPicks = false;
+  let lastAccountPickFingerprint = "";
+
+  function currentPickFingerprint() {
+    return pickFingerprintFromDocument(model.getAccountSaveBracketDocument({ userId: accountUserId || "local-player" }));
+  }
+
+  function markDirtyIfNeeded() {
+    if (!signedIn || remoteActive || !lastAccountPickFingerprint) return;
+    if (currentPickFingerprint() !== lastAccountPickFingerprint) {
+      render("dirty");
+    }
+  }
 
   function localPickCount() {
     return Number(model.getSummary?.().picked || 0);
@@ -217,6 +274,7 @@ function createAccountSaveActionSurface({
       }
 
       hasSavedAccountPicks = true;
+      lastAccountPickFingerprint = pickFingerprintFromDocument(savedAccountBracket);
       render("loaded");
       window.dispatchEvent(new CustomEvent(ACCOUNT_PICKS_LOADED_EVENT, {
         detail: { automatic, imported: result.imported || 0 },
@@ -238,6 +296,7 @@ function createAccountSaveActionSurface({
     if (!signedIn) {
       savedAccountBracket = null;
       hasSavedAccountPicks = false;
+      lastAccountPickFingerprint = "";
       render("signed-out");
       return;
     }
@@ -247,6 +306,7 @@ function createAccountSaveActionSurface({
     try {
       savedAccountBracket = await bracketStore.loadUserBracket(accountUserId);
       hasSavedAccountPicks = Boolean(savedAccountBracket?.picksBySlot && Object.keys(savedAccountBracket.picksBySlot).length);
+      lastAccountPickFingerprint = hasSavedAccountPicks ? pickFingerprintFromDocument(savedAccountBracket) : "";
 
       if (hasSavedAccountPicks && localPickCount() === 0) {
         await loadSavedPicksFromAccount({ automatic });
@@ -279,6 +339,7 @@ function createAccountSaveActionSurface({
       const bracketDocument = model.getAccountSaveBracketDocument({ userId: accountUserId });
       savedAccountBracket = await bracketStore.saveUserBracket(bracketDocument);
       hasSavedAccountPicks = true;
+      lastAccountPickFingerprint = pickFingerprintFromDocument(savedAccountBracket || bracketDocument);
       render("saved");
     } catch (error) {
       console.error("[AccountSaveActionSurface] Save Picks failed", error);
@@ -288,6 +349,8 @@ function createAccountSaveActionSurface({
 
   async function start() {
     await checkSavedAccountPicks({ automatic: true });
+
+    window.addEventListener("wc2026:picks-changed", markDirtyIfNeeded);
 
     authService?.subscribe?.((state) => {
       signedIn = state?.status === "signed-in" || Boolean(state?.user?.id);
