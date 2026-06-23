@@ -1109,8 +1109,8 @@
 .pick-slot-button.is-champion-winner .champion-pixel-aura {
   position: absolute;
   inset:
-    calc(-1 * var(--wc2026-champion-aura-y, 26px))
-    calc(-1 * var(--wc2026-champion-aura-x, 40px));
+    calc(-.5 * var(--wc2026-champion-aura-y, 26px))
+    calc(-.5 * var(--wc2026-champion-aura-x, 40px));
   pointer-events: none;
   user-select: none;
   z-index: 1;

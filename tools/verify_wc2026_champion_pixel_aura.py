@@ -31,6 +31,8 @@ for token in [
     "champion-pixel-aura-flag-bottom-left",
     "champion-pixel-aura-flag-bottom-right",
     "content: none;",
+    "calc(-.5 * var(--wc2026-champion-aura-x, 40px))",
+    "calc(-.5 * var(--wc2026-champion-aura-y, 26px))",
     "calc(var(--wc2026-champion-aura-x, 40px) * -.25)",
     "calc(var(--wc2026-champion-aura-y, 26px) * -.25)",
     "translate(-50%, -50%)",
