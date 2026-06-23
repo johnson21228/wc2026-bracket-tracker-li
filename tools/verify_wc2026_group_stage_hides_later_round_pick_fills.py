@@ -4,6 +4,21 @@ from pathlib import Path
 view = Path("site/js/mvc/view.js").read_text()
 errors = []
 
+css = Path("site/css/board.css").read_text()
+
+for token in [
+    ".pick-slot-button.is-pick-fill-suppressed",
+    "background: transparent;",
+    "box-shadow: none;",
+    "backdrop-filter: none;",
+    ".pick-slot-button.is-pick-fill-suppressed::before",
+    ".pick-slot-button.is-pick-fill-suppressed::after",
+    "content: none;",
+]:
+    if token not in css:
+        errors.append(f"missing token in board.css: {token}")
+
+
 required_tokens = [
     "function isGroupStagePresentationActive()",
     'return activeGameValue() === "game-1";',
