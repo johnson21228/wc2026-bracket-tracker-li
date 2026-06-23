@@ -5,6 +5,7 @@ import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
 import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js";
 import { SupabaseBracketStore } from "./services/SupabaseBracketStore.js";
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
+import { createStorageModeSurface } from "./identity/StorageModeSurface.js";
 import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js";
 
 
@@ -71,13 +72,13 @@ function shouldUseDevSupabaseBracketStore(locationSearch = window.location.searc
 }
 
 async function devSupabaseBracketStoreOptions(authService) {
-  if (!shouldUseDevSupabaseBracketStore()) return {};
+  if (!shouldUseDevSupabaseBracketStore()) return { remoteActive: false };
 
   const state = await authService.start();
   const userId = state?.user?.id || "";
   if (!userId) {
     console.warn("[WC2026 SupabaseBracketStore] dev remote store requested but no signed-in user is available. Local storage remains active.");
-    return {};
+    return { remoteActive: false };
   }
 
   console.info("[WC2026 SupabaseBracketStore] dev remote bracket store enabled", { userId });
@@ -85,6 +86,7 @@ async function devSupabaseBracketStoreOptions(authService) {
     bracketStore: new SupabaseBracketStore(),
     userId,
     persistenceMode: "supabase",
+    remoteActive: true,
   };
 }
 
@@ -111,13 +113,19 @@ async function main() {
   setupInfoPanel(root);
   setupBracketeeringWorkflowPanel(root);
   const authService = createSupabaseAuthService();
-  const model = await createBracketModel(await devSupabaseBracketStoreOptions(authService));
+  const bracketStoreOptions = await devSupabaseBracketStoreOptions(authService);
+  const model = await createBracketModel(bracketStoreOptions);
   const view = createBracketView(root);
   setupActiveGameBackground(root);
   const controller = createBracketController({ model, view });
   const profileStore = createSupabaseProfileStore();
   const identitySurface = createSupabaseIdentitySurface({ root, authService, profileStore });
   identitySurface.start();
+  createStorageModeSurface({
+    root,
+    authService,
+    remoteActive: bracketStoreOptions.remoteActive === true,
+  }).start();
   controller.start();
 }
 

@@ -1161,3 +1161,69 @@ body {
 .workflow-floating-button:focus-visible {
   opacity: 1;
 }
+
+.storage-mode-status {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 950;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(360px, calc(100vw - 36px));
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 999px;
+  background: rgba(10, 15, 18, .76);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .28);
+  color: rgba(255, 255, 255, .94);
+  font-size: 12px;
+  line-height: 1.2;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+}
+
+.storage-mode-status-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: rgba(136, 220, 153, .95);
+  box-shadow: 0 0 0 4px rgba(136, 220, 153, .14);
+}
+
+.storage-mode-status[data-storage-mode="remote-test"] .storage-mode-status-dot {
+  background: rgba(93, 196, 255, .95);
+  box-shadow: 0 0 0 4px rgba(93, 196, 255, .14);
+}
+
+.storage-mode-status-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.storage-mode-status-copy strong,
+.storage-mode-status-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.storage-mode-status-copy strong {
+  font-weight: 850;
+  letter-spacing: .01em;
+}
+
+.storage-mode-status-copy small {
+  color: rgba(255, 255, 255, .72);
+}
+
+@media (max-width: 700px) {
+  .storage-mode-status {
+    left: 12px;
+    bottom: 12px;
+    max-width: calc(100vw - 24px);
+    border-radius: 18px;
+  }
+}

@@ -22,7 +22,15 @@ def main():
     require('"devSupabaseBracketStore"' in app, "App must expose a dev-only Supabase bracket store query flag.", errors)
     require("new SupabaseBracketStore()" in app, "App must instantiate SupabaseBracketStore only from the dev store selector.", errors)
     require('persistenceMode: "supabase"' in app, "App must pass explicit supabase persistence mode to the model.", errors)
-    require("createBracketModel(await devSupabaseBracketStoreOptions(authService))" in app, "Model creation must receive dev-selected store options.", errors)
+    require(
+        "createBracketModel(await devSupabaseBracketStoreOptions(authService))" in app
+        or (
+            "const bracketStoreOptions = await devSupabaseBracketStoreOptions(authService);" in app
+            and "createBracketModel(bracketStoreOptions)" in app
+        ),
+        "Model creation must receive dev-selected store options.",
+        errors,
+    )
 
     require("bracketStore = null" in model and 'persistenceMode = "local"' in model, "Model must default to local persistence.", errors)
     require('remotePersistenceActive = persistenceMode === "supabase" && bracketStore' in model, "Model must gate remote persistence behind explicit supabase mode and a store.", errors)
