@@ -160,6 +160,12 @@ export function createBracketController({ model, view }) {
   function start() {
     view.renderBoardShell(model.nativeSize);
     view.setHandlers({ onSlotClick, onFinalFourSlotClick: onSlotClick, onTeamPick, onClearPick, onClearAll, onExportPicks, onImportPicks, onCloseMenu, onGroupPanelOpen, onActiveGameChange });
+    window.addEventListener("wc2026:account-picks-loaded", () => {
+      activeSlotId = null;
+      view.closeMenu();
+      redraw();
+      view.report("Loaded saved account picks.");
+    });
     redraw();
   }
 

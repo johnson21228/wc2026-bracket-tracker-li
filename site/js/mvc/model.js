@@ -933,6 +933,18 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     });
   }
 
+  function importAccountBracketDocument(bracketDocument) {
+    const picksBySlot = bracketDocument?.picksBySlot || {};
+    const incomingPicks = {};
+
+    for (const [slotId, record] of Object.entries(picksBySlot)) {
+      const teamId = record?.pick?.kind === "team" ? record.pick.teamId : record?.teamId;
+      if (teamId) incomingPicks[slotId] = teamId;
+    }
+
+    return importPicksSnapshot({ picks: incomingPicks });
+  }
+
   function getAccountSaveBracketDocument({ userId: accountUserId = userId } = {}) {
     const bracketDocument = buildRemoteBracketDocument("account-save-button");
     return {
@@ -961,6 +973,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   return {
     nativeSize,
     getAccountSaveBracketDocument,
+    importAccountBracketDocument,
     getGroupRail,
     getFinalFourViewModel,
     getSlotViewModels,

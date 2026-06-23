@@ -30,3 +30,15 @@ Gameplay remains local-first:
 - Save Picks performs one explicit account save and does not load/overwrite local picks.
 - full `make verify`
 - `make pack`
+
+
+## Signed-in persistence refinement
+
+Make signed-in account persistence the primary save/load surface:
+
+- signed out remains local-only until login
+- signed in checks for saved account picks
+- if no local picks exist, saved account picks may load automatically
+- if local picks exist too, the UI shows explicit `Load Saved`
+- no silent overwrite of local picks
+- Save Picks remains an explicit account write
