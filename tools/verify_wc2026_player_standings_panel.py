@@ -55,6 +55,12 @@ def main():
 
     require(".player-standings-control" in css and ".standings-icon-button" in css,
             "Standings control must have visible browser chrome styling.", errors)
+    require("right: calc(max(12px, env(safe-area-inset-right)) + 292px);" in css,
+            "Standings button must sit left of the Join/Profile identity chip.", errors)
+    require("z-index: calc(var(--wc-z-identity-surface, 19900) - 1);" in css,
+            "Standings button must share the top identity chrome layer without covering the identity chip.", errors)
+    require("@media (max-width: 560px)" in css,
+            "Standings button must stack safely on narrow screens.", errors)
     require(".standings-icon-button.is-join-required" in css or ".standings-icon-button:disabled" in css,
             "Disabled Join-required standings state must have styling.", errors)
 
