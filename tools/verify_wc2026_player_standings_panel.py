@@ -34,16 +34,26 @@ def main():
     require('email' not in surface.lower(),
             "Standings surface must not expose email fields or labels.", errors)
 
+    require('<th scope="col">Rank</th>' in surface,
+            "Standings table must display a Rank column.", errors)
+    require('<th scope="col">Player</th>' in surface,
+            "Standings table must display a Player column.", errors)
     require('<th scope="col">Group</th>' in surface,
             "Standings table must display a Group column.", errors)
     require('<th scope="col">Knockout</th>' in surface,
             "Standings table must display a Knockout column.", errors)
+    require('player-standings-group-count' in surface,
+            "Standings rows must render a simple Group integer count cell.", errors)
+    require('player-standings-knockout-count' in surface,
+            "Standings rows must render a simple Knockout integer count cell.", errors)
     require('<th scope="col">Total</th>' not in surface,
             "Standings table must not display Total column.", errors)
     require('<th scope="col">Picks</th>' not in surface,
             "Standings table must not display Picks column.", errors)
-    require('Knockout · TB' not in surface,
-            "Standings table must not display combined Knockout/TB label.", errors)
+    require('Knockout · TB' not in surface and 'TB ${row.tiebreakerScore}' not in surface,
+            "Standings table must not display tiebreaker text.", errors)
+    require('KO ${row.knockoutPoints}' not in surface,
+            "Standings rows must not decorate Knockout counts with KO text.", errors)
     require('b.total - a.total' in surface
             and 'b.knockoutPoints - a.knockoutPoints' in surface
             and 'b.tiebreakerScore - a.tiebreakerScore' in surface

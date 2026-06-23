@@ -158,8 +158,8 @@ function renderStandingsRows(panel, rows) {
     <tr>
       <td class="player-standings-rank">${index + 1}</td>
       <td class="player-standings-player">${row.publicPlayerName}</td>
-      <td>${row.groupPoints}</td>
-      <td>${row.knockoutPoints}</td>
+      <td class="player-standings-group-count">${row.groupPoints}</td>
+      <td class="player-standings-knockout-count">${row.knockoutPoints}</td>
     </tr>
   `).join("");
 
