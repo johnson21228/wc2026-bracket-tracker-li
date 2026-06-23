@@ -2,6 +2,7 @@ import { createBracketModel } from "./mvc/model.js?v=final-four-scope-fix-130026
 import { createBracketView } from "./mvc/view.js";
 import { createBracketController } from "./mvc/controller.js";
 import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
+import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js";
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
 
 
@@ -89,7 +90,8 @@ async function main() {
   setupActiveGameBackground(root);
   const controller = createBracketController({ model, view });
   const authService = createSupabaseAuthService();
-  const identitySurface = createSupabaseIdentitySurface({ root, authService });
+  const profileStore = createSupabaseProfileStore();
+  const identitySurface = createSupabaseIdentitySurface({ root, authService, profileStore });
   identitySurface.start();
   controller.start();
 }

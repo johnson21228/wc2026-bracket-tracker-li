@@ -1,6 +1,6 @@
-export function createSupabaseIdentitySurface({ root, authService }) {
-  const surface = root.querySelector("[data-supabase-identity-surface]");
-  if (!surface) {
+export function createSupabaseIdentitySurface({ root, authService, profileStore = null }) {
+  const surface = root?.querySelector?.("[data-supabase-identity-surface]");
+  if (!surface || !authService) {
     return { start() {} };
   }
 
@@ -15,6 +15,8 @@ export function createSupabaseIdentitySurface({ root, authService }) {
   };
   let cooldownUntil = 0;
   let cooldownTimer = null;
+  let profileState = { status: "idle", profile: null, message: "" };
+  let profileLoadUserId = "";
 
   function escapeHtml(value) {
     return String(value || "")
@@ -49,7 +51,6 @@ export function createSupabaseIdentitySurface({ root, authService }) {
   }
 
   function persistenceLabel(state) {
-    if (state.status === "signed-in") return "Local bracket for now";
     if (state.status === "not-configured") return "Local bracket · Supabase Auth not configured";
     return "Local bracket for now";
   }
@@ -63,6 +64,61 @@ export function createSupabaseIdentitySurface({ root, authService }) {
 
   function accountEmail(state) {
     return state.user?.email || "";
+  }
+
+  function signedInUserId(state) {
+    return state.user?.id || "";
+  }
+
+  function profileDisplayName() {
+    return profileState.profile?.display_name || "";
+  }
+
+  function profileMessageHtml() {
+    if (!profileStore) {
+      return `<p>Your public player name will be stored in a Supabase-backed profile.</p>`;
+    }
+    if (profileState.status === "loading") {
+      return `<p>Loading your public player name…</p>`;
+    }
+    if (profileState.status === "saving") {
+      return `<p>Saving public player name…</p>`;
+    }
+    if (profileState.status === "error") {
+      return `<p class="identity-panel-error">${escapeHtml(profileState.message || "Could not load public player name.")}</p>`;
+    }
+    if (profileState.status === "saved") {
+      return `<p>${escapeHtml(profileState.message || "Public player name saved.")}</p>`;
+    }
+    if (profileDisplayName()) {
+      return `<p>This is the public player name other players may see later.</p>`;
+    }
+    return `<p>Choose a public player name. Do not use your private email as your player name.</p>`;
+  }
+
+  async function loadProfileForState(state) {
+    const userId = signedInUserId(state);
+    if (!profileStore || state?.status !== "signed-in" || !userId) {
+      profileLoadUserId = "";
+      profileState = { status: "idle", profile: null, message: "" };
+      return;
+    }
+
+    if (profileLoadUserId === userId && profileState.status !== "idle") return;
+
+    profileLoadUserId = userId;
+    profileState = { status: "loading", profile: null, message: "" };
+    render(latestState);
+
+    const { profile, error } = await profileStore.getProfile(userId);
+    if (signedInUserId(latestState) !== userId) return;
+
+    if (error) {
+      profileState = { status: "error", profile: null, message: `Public player name load failed: ${error.message || String(error)}` };
+    } else {
+      profileState = { status: "ready", profile, message: "" };
+    }
+    render(latestState);
   }
 
   function render(state = latestState) {
@@ -131,10 +187,47 @@ export function createSupabaseIdentitySurface({ root, authService }) {
       signedInDetails.innerHTML = `
         <p><strong>Account:</strong> ${escapeHtml(accountEmail(state) || "Signed-in Supabase user")}</p>
         <p>This email is used for login. It is private account identity, not your public player name.</p>
-        <p>Your public player name will be added later through a Supabase-backed profile.</p>
+        <div class="identity-panel-profile">
+          <label for="identity-public-player-name"><strong>Public player name</strong></label>
+          <input
+            id="identity-public-player-name"
+            type="text"
+            maxlength="40"
+            autocomplete="nickname"
+            placeholder="Example: Steve"
+            value="${escapeHtml(profileDisplayName())}"
+            ${profileState.status === "loading" || profileState.status === "saving" ? "disabled" : ""}
+          />
+          <button type="button" class="identity-panel-primary-button" data-profile-save ${profileState.status === "loading" || profileState.status === "saving" ? "disabled" : ""}>
+            Save player name
+          </button>
+          ${profileMessageHtml()}
+        </div>
         <p><strong>Bracket saving:</strong> not enabled yet. This browser is still using local play.</p>
       `;
       actions.append(signedInDetails);
+
+      actions.querySelector("[data-profile-save]")?.addEventListener("click", async () => {
+        const userId = signedInUserId(latestState);
+        const displayName = actions.querySelector("#identity-public-player-name")?.value || "";
+
+        if (!profileStore) {
+          profileState = { status: "error", profile: null, message: "Supabase profile store is not wired yet." };
+          render(latestState);
+          return;
+        }
+
+        profileState = { ...profileState, status: "saving", message: "Saving public player name…" };
+        render(latestState);
+
+        const { profile, error } = await profileStore.saveProfile({ userId, displayName });
+        if (error) {
+          profileState = { status: "error", profile: profileState.profile, message: `Public player name save failed: ${error.message || String(error)}` };
+        } else {
+          profileState = { status: "saved", profile, message: "Public player name saved." };
+        }
+        render(latestState);
+      });
 
       const signOutButton = document.createElement("button");
       signOutButton.type = "button";
@@ -142,7 +235,9 @@ export function createSupabaseIdentitySurface({ root, authService }) {
       signOutButton.textContent = "Sign out";
       signOutButton.addEventListener("click", () => authService.signOut());
       actions.append(signOutButton);
+
       scheduleCooldownTick();
+      loadProfileForState(latestState);
       return;
     }
 
@@ -180,6 +275,7 @@ export function createSupabaseIdentitySurface({ root, authService }) {
     window.addEventListener("keydown", onKeydown);
     authService.subscribe(render);
     authService.start();
+    render(latestState);
   }
 
   return { start };

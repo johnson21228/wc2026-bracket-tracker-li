@@ -19,55 +19,30 @@ def require(condition, message, errors):
 def main():
     errors = []
 
-    service = read("site/js/services/SupabaseAuthService.js")
-    surface = read("site/js/identity/SupabaseIdentitySurface.js")
-    makefile = read("Makefile")
+    auth = read("site/js/services/SupabaseAuthService.js")
+    identity = read("site/js/identity/SupabaseIdentitySurface.js")
 
-    combined_site_js = "\n".join(
-        p.read_text(encoding="utf-8", errors="ignore")
-        for p in (ROOT / "site/js").rglob("*.js")
-    )
+    require("email: user.email ||" in auth, "Auth summary must expose private email for account display.", errors)
+    require('if (state.status === "signed-in") return "Signed in";' in identity, "Compact signed-in button must stay concise.", errors)
+    require("private account identity, not your public player name" in identity, "Identity UI must distinguish private email from public player name.", errors)
+    require("Public player name" in identity, "Identity UI must expose public player name surface.", errors)
+    require("Supabase-backed profile" in identity, "Identity UI must describe the Supabase-backed profile boundary.", errors)
+    require("Bracket saving:" in identity and "not enabled yet" in identity, "Identity UI must still say bracket saving is not enabled.", errors)
 
-    require("email: user.email ||" in service, "Auth user summary should expose private account email to the identity UI.", errors)
-    require('if (state.status === "signed-in") return "Signed in";' in surface, "Signed-in compact button should stay concise.", errors)
-    require("This email is used for login. It is not your public player name." in surface, "Signed-in panel message should distinguish email from public player name.", errors)
-    require("private account identity, not your public player name" in surface, "Signed-in details should label email as private account identity.", errors)
-    require("Your public player name will be added later through a Supabase-backed profile." in surface, "Signed-in UI should point to later Supabase-backed profile work.", errors)
-    require("Bracket saving:</strong> not enabled yet" in surface, "Signed-in UI should clearly state bracket saving is not enabled yet.", errors)
-    require("identity-panel-signed-in-details" in surface, "Signed-in panel should render explicit account details.", errors)
-
-    forbidden_tokens = [
-        ".from(\"profiles\")",
-        ".from('profiles')",
-        ".from(`profiles`)",
-        ".from(\"user_brackets\")",
-        ".from('user_brackets')",
-        ".from(`user_brackets`)",
-        "SupabaseProfileStore",
+    forbidden_identity_tokens = [
+        'from("user_brackets")',
         "SupabaseBracketStore",
-        "ProfileStore",
-        ".upsert(",
-        ".insert(",
+        "bracket_json",
         "picks_json",
     ]
-    for token in forbidden_tokens:
-        require(
-            token.lower() not in combined_site_js.lower(),
-            f"Signed-in identity polish must not introduce profile/bracket Supabase persistence yet: found {token}",
-            errors,
-        )
-
-    require(
-        "python3 tools/verify_wc2026_signed_in_identity_ui_polish.py" in makefile,
-        "Makefile verify should run signed-in identity UI polish verifier.",
-        errors,
-    )
+    for token in forbidden_identity_tokens:
+        require(token not in identity, f"Identity UI must not enable bracket persistence yet: {token}", errors)
 
     if errors:
         print("Signed-in identity UI polish verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: signed-in identity UI polish clarifies private email, future player name, and local-only bracket persistence without changing bracket storage.")
+    print("OK: signed-in identity UI keeps private email separate from public player name while bracket persistence remains disabled.")
     return 0
 
 

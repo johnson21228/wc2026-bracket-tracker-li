@@ -94,6 +94,7 @@ verify:
 	python3 tools/verify_wc2026_supabase_identity_ui_surface.py
 	python3 tools/verify_wc2026_supabase_auth_identity_surface_before_postgres.py
 	python3 tools/verify_wc2026_signed_in_identity_ui_polish.py
+	python3 tools/verify_wc2026_supabase_profile_store_public_player_name.py
 	python3 tools/verify_wc2026_full_canonical_bracket_document_runtime.py
 	python3 tools/verify_wc2026_bracketdocument_save_seam_before_supabase.py
 clean-hygiene:

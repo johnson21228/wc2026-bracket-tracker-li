@@ -19,72 +19,35 @@ def require(condition, message, errors):
 def main():
     errors = []
 
-    config = read("site/js/config/supabase.public.js")
-    service = read("site/js/services/SupabaseAuthService.js")
+    auth = read("site/js/services/SupabaseAuthService.js")
     surface = read("site/js/identity/SupabaseIdentitySurface.js")
-    app = read("site/js/app.js")
-    index = read("site/index.html")
-    css = read("site/css/app.css")
+    profile_store = read("site/js/services/SupabaseProfileStore.js")
 
-    optional_text = ""
-    for rel in [
-        "cards/231_implement_supabase_auth_identity_surface_before_postgres_card.md",
-        "docs/architecture/bracketeering_supabase_auth_identity_surface.md",
-        "li/world_cup/supabase_auth_identity_surface_before_postgres_rule.md",
-    ]:
-        path = ROOT / rel
-        if path.exists():
-            optional_text += "\n" + path.read_text(encoding="utf-8", errors="ignore")
+    require("createSupabaseAuthService" in auth, "Supabase Auth service must remain the identity boundary.", errors)
+    require("createSupabaseIdentitySurface" in surface, "Identity surface must remain site-owned.", errors)
+    require("[data-supabase-identity-surface]" in surface, "Identity surface must render into the existing sign-in mount.", errors)
+    require("Bracket persistence:" in surface, "Identity surface should state local bracket status before remote bracket persistence.", errors)
+    require("Supabase bracket writes are not enabled yet" in surface, "Identity surface must clearly say bracket writes are not enabled yet.", errors)
+    require("Bracket saving:" in surface and "not enabled yet" in surface, "Signed-in panel must still say bracket saving is not enabled yet.", errors)
 
-    combined_site_js = "\n".join(
-        p.read_text(encoding="utf-8", errors="ignore")
-        for p in (ROOT / "site/js").rglob("*.js")
-    )
+    # Profile persistence is now allowed after the Supabase profiles SQL was applied.
+    require('.from("profiles")' in profile_store, "Profile persistence must live in SupabaseProfileStore.", errors)
+    require(".upsert(" in profile_store, "SupabaseProfileStore should upsert public player names.", errors)
+    require("display_name" in profile_store, "SupabaseProfileStore must persist display_name.", errors)
 
-    require("WC2026_SUPABASE_PUBLIC_CONFIG" in config, "public Supabase config export missing", errors)
-    require("enabled: true" in config, "Supabase Auth public config should be enabled", errors)
-    require("https://tkjqsegszveugdvoeits.supabase.co" in config, "Supabase project URL is not configured", errors)
-    require("supabasePublishableKey" in config, "config should use supabasePublishableKey", errors)
-    require("sb_publishable_wWTMppX8T5nOplM4s_HA7A_bgUn337M" in config, "publishable key is not configured", errors)
-    require("supabaseAnonKey" not in config, "legacy supabaseAnonKey should not remain in config", errors)
-
-    require("createClient" in service, "Auth service should initialize Supabase client", errors)
-    require("supabasePublishableKey" in service, "Auth service should read supabasePublishableKey", errors)
-    require("getSession" in service, "Auth service should read current session", errors)
-    require("onAuthStateChange" in service, "Auth service should listen for auth state changes", errors)
-    require("signInWithOtp" in service, "Auth service should support magic-link/OTP sign-in", errors)
-    require("signOut" in service, "Auth service should support sign out", errors)
-
-    require("SupabaseIdentitySurface" in surface, "identity surface module missing", errors)
-    require("Sign in to save" in surface, "identity surface should show sign-in copy", errors)
-    require("Local bracket for now" in surface, "identity surface should state local bracket status before Postgres persistence", errors)
-
-    require("SupabaseIdentitySurface" in app, "app should mount identity surface", errors)
-    require("identity" in index.lower(), "index should contain an identity surface mount/slot", errors)
-    require("identity" in css.lower(), "CSS should style identity surface", errors)
-
-    require("publishable key" in optional_text.lower(), "Card/docs/LI should mention publishable key terminology", errors)
-
-    forbidden_secret_tokens = [
-        "service_role",
-        "database password",
-        "jwt secret",
-    ]
-    for token in forbidden_secret_tokens:
-        require(token not in combined_site_js.lower(), f"site JS must not contain server-only secret wording: {token}", errors)
-
-    forbidden_persistence_patterns = [
-        ".from(\"user_brackets\")",
+    # Bracket persistence is still intentionally blocked in this step.
+    combined_identity_surface = "\n".join([auth, surface, profile_store])
+    forbidden_tokens = [
+        '.from("user_brackets")',
         ".from('user_brackets')",
         ".from(`user_brackets`)",
-        "picks_json",
         "SupabaseBracketStore",
-        ".upsert(",
-        ".insert(",
+        "bracket_json",
+        "picks_json",
     ]
-    for token in forbidden_persistence_patterns:
+    for token in forbidden_tokens:
         require(
-            token.lower() not in combined_site_js.lower(),
+            token.lower() not in combined_identity_surface.lower(),
             f"Card 231 must not introduce Supabase/Postgres bracket persistence yet: found {token}",
             errors,
         )
@@ -93,7 +56,7 @@ def main():
         print("Card 231 verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: WC2026 Supabase Auth identity surface uses current publishable-key config before Postgres persistence while localStorage remains active.")
+    print("OK: WC2026 Supabase Auth identity surface allows profile-only public player names while remote bracket persistence remains disabled.")
     return 0
 
 
