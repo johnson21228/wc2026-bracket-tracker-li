@@ -13,7 +13,9 @@ for token in [
     'button.dataset.winnerFlag = winnerFlag',
     'const aura = document.createElement("span")',
     'aura.className = "champion-pixel-aura"',
-    'aura.textContent = `${winnerFlag} ${winnerFlag}\\n${winnerFlag} ${winnerFlag}`',
+    'for (const corner of ["top-left", "top-right", "bottom-left", "bottom-right"])',
+    'auraFlag.className = `champion-pixel-aura-flag champion-pixel-aura-flag-${corner}`',
+    'aura.append(auraFlag)',
     'button.prepend(aura)',
 ]:
     if token not in view:
@@ -24,8 +26,11 @@ for token in [
     ".pick-slot-button.is-champion-winner",
     "position: absolute;",
     ".champion-pixel-aura",
-    "white-space: pre;",
-    "opacity: .42;",
+    "champion-pixel-aura-flag-top-left",
+    "champion-pixel-aura-flag-top-right",
+    "champion-pixel-aura-flag-bottom-left",
+    "champion-pixel-aura-flag-bottom-right",
+    "content: none;",
     "drop-shadow",
     "pointer-events: none",
 ]:

@@ -467,7 +467,14 @@ export function createBracketView(root) {
         const aura = document.createElement("span");
         aura.className = "champion-pixel-aura";
         aura.setAttribute("aria-hidden", "true");
-        aura.textContent = `${winnerFlag} ${winnerFlag}\n${winnerFlag} ${winnerFlag}`;
+
+        for (const corner of ["top-left", "top-right", "bottom-left", "bottom-right"]) {
+          const auraFlag = document.createElement("span");
+          auraFlag.className = `champion-pixel-aura-flag champion-pixel-aura-flag-${corner}`;
+          auraFlag.textContent = winnerFlag;
+          aura.append(auraFlag);
+        }
+
         button.prepend(aura);
       }
 
