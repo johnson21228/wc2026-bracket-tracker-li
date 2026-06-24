@@ -651,11 +651,11 @@
 
 /* R32 picked validity hue rendering. */
 .pick-slot-button.has-valid-pick {
-  background: rgba(24, 96, 52, .82);
-  outline: 1px solid rgba(64, 220, 128, .92);
+  background: rgba(22, 70, 42, .48);
+  outline: 1px solid rgba(96, 190, 132, .58);
   box-shadow:
-    0 0 0 1px rgba(64, 220, 128, .28),
-    inset 0 0 0 1px rgba(64, 220, 128, .20),
+    0 0 0 1px rgba(96, 190, 132, .16),
+    inset 0 0 0 1px rgba(96, 190, 132, .12),
     0 5px 12px rgba(0, 0, 0, .30);
 }
 
@@ -1222,9 +1222,9 @@
 
 /* R32 validity hue must fill the picked cell, not only outline it. */
 .pick-slot-button.has-pick.has-valid-pick:not(.is-pick-fill-suppressed) {
-  background: rgba(24, 96, 52, .82) !important;
-  background-color: rgba(24, 96, 52, .82) !important;
-  outline: 1px solid rgba(64, 220, 128, .92);
+  background: rgba(22, 70, 42, .48) !important;
+  background-color: rgba(22, 70, 42, .48) !important;
+  outline: 1px solid rgba(96, 190, 132, .58);
 }
 
 .pick-slot-button.has-pick.has-invalid-pick:not(.is-pick-fill-suppressed),

@@ -23,3 +23,6 @@ The validity hue must be visible in the picked cell fill, not just the outline. 
 
 
 The fill color is required for R32 validity hue rendering.
+
+
+The valid green fill should be subdued: visible as confirmation, but quieter than invalid red.

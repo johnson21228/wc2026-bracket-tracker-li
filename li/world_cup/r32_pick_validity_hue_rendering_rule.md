@@ -12,3 +12,5 @@ Required behavior:
 - this rule must not restore R16+ fill during Group Stage
 
 - The validity hue must color the filled cell background, not only the outline.
+
+- Valid green should be subdued: enough to confirm validity, not bright enough to dominate the bracket.
