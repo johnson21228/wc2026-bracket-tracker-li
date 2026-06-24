@@ -41,3 +41,14 @@ Additional protected loop lines:
 - The point is that it was built in a new way.
 
 The Easter egg panel is text-only; it must not render bracketeering_workflow_infographic.jpeg.
+
+Workbench tab protected copy:
+- Story
+- Workbench
+- Workbench is the memory
+- Workbench is for any workflow where AI can help produce, revise, verify, and preserve artifacts
+- The Workbench is the memory.
+- Prompts are the interface.
+- Continuity is the product.
+- Capture Back is the protocol.
+- Language Infrastructure is the compounding business win.

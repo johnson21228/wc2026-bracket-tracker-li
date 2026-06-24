@@ -1,15 +1,10 @@
 const WORKFLOW_PANEL_TITLE = "Built with Workbench";
 
-const WORKFLOW_PANEL_LEAD_SENTENCE =
-  "This site was built in a new way.";
-
-const WORKFLOW_PANEL_CLOSING_LINE =
-  "The Bracketeering site is the product. The Workbench is the factory.";
-
-const WORKFLOW_SECTIONS = Object.freeze([
+const STORY_SECTIONS = Object.freeze([
   {
     heading: "The old way",
     paragraphs: [
+      "This site was built in a new way.",
       "Bracketeering could have been built the old way. A contractor, a senior full-stack developer, or a small product team could have taken the idea, written a specification, turned it into tickets, built the app, tested it, and deployed it. That path works, but it costs time, money, and coordination.",
     ],
   },
@@ -51,20 +46,42 @@ const WORKFLOW_SECTIONS = Object.freeze([
   },
 ]);
 
+const WORKBENCH_PARAGRAPHS = Object.freeze([
+  "Most AI tools are optimized for immediate output. They answer, draft, summarize, and generate.",
+  "But much valuable human work does not begin as a clean prompt or end as a clean answer.",
+  "It begins as a half-seen pattern, a fragment, a drawing, a sentence, a source excerpt, a question, or a recurring intuition.",
+  "The Workbench preserves the middle: the movement from source to observation to mark to phrase to question to reflection to judgment.",
+  "That makes Workbench larger than coding.",
+  "Workbench is for any workflow where AI can help produce, revise, verify, and preserve artifacts: software, documents, designs, plans, research, operating procedures, business systems, learning materials, or creative work.",
+  "AI is a companion, not the authority.",
+  "The human stays in the role of owner, architect, tester, and judge. The AI helps execute. The Workbench keeps the system from drifting.",
+  "A founder building with AI does not only need faster generation.",
+  "They need continuity.",
+  "The Workbench turns valuable language into durable infrastructure: customer insight, product judgment, source evidence, decision history, pitch language, implementation rules, and next action.",
+  "The app implementation is not the memory.",
+  "The Workbench is the memory.",
+]);
+
+const WORKBENCH_CLOSING_LINES = Object.freeze([
+  "Prompts are the interface.",
+  "Continuity is the product.",
+  "Capture Back is the protocol.",
+  "Language Infrastructure is the compounding business win.",
+]);
+
+const STORY_CLOSING_LINE =
+  "The Bracketeering site is the product. The Workbench is the factory.";
+
 function paragraphsHtml(paragraphs = []) {
   return paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("");
 }
 
 function stepsHtml(steps = []) {
   if (!steps.length) return "";
-  return `
-    <ol class="workflow-panel-copy-list">
-      ${steps.map((step) => `<li>${step}</li>`).join("")}
-    </ol>
-  `;
+  return `<ol class="workflow-panel-copy-list">${steps.map((step) => `<li>${step}</li>`).join("")}</ol>`;
 }
 
-function sectionHtml(section) {
+function storySectionHtml(section) {
   return `
     <section class="workflow-panel-section workflow-panel-copy">
       <h3 class="workflow-panel-subheading">${section.heading}</h3>
@@ -72,6 +89,20 @@ function sectionHtml(section) {
       ${stepsHtml(section.steps)}
       ${paragraphsHtml(section.after)}
     </section>
+  `;
+}
+
+function tabButtonHtml({ id, label, selected }) {
+  return `
+    <button
+      type="button"
+      class="workflow-panel-tab"
+      role="tab"
+      id="workflow-tab-${id}"
+      aria-selected="${selected ? "true" : "false"}"
+      aria-controls="workflow-tabpanel-${id}"
+      data-workflow-tab="${id}"
+    >${label}</button>
   `;
 }
 
@@ -90,14 +121,73 @@ export function setupBracketeeringWorkflowPanel(root) {
       <section class="workflow-panel-section workflow-panel-hero">
         <p class="workflow-panel-kicker">Workbench Easter Egg</p>
         <h2>${WORKFLOW_PANEL_TITLE}</h2>
-        <p class="workflow-panel-core">${WORKFLOW_PANEL_LEAD_SENTENCE}</p>
       </section>
-      ${WORKFLOW_SECTIONS.map(sectionHtml).join("")}
-      <section class="workflow-panel-section workflow-panel-copy">
-        <p class="workflow-panel-closing">${WORKFLOW_PANEL_CLOSING_LINE}</p>
+
+      <div class="workflow-panel-tabs" role="tablist" aria-label="Workbench Easter egg tabs">
+        ${tabButtonHtml({ id: "story", label: "Story", selected: true })}
+        ${tabButtonHtml({ id: "workbench", label: "Workbench", selected: false })}
+      </div>
+
+      <section
+        class="workflow-panel-tabpanel"
+        role="tabpanel"
+        id="workflow-tabpanel-story"
+        aria-labelledby="workflow-tab-story"
+        data-workflow-tabpanel="story"
+      >
+        ${STORY_SECTIONS.map(storySectionHtml).join("")}
+        <section class="workflow-panel-section workflow-panel-copy">
+          <p class="workflow-panel-closing">${STORY_CLOSING_LINE}</p>
+        </section>
+      </section>
+
+      <section
+        class="workflow-panel-tabpanel"
+        role="tabpanel"
+        id="workflow-tabpanel-workbench"
+        aria-labelledby="workflow-tab-workbench"
+        data-workflow-tabpanel="workbench"
+        hidden
+      >
+        <section class="workflow-panel-section workflow-panel-copy">
+          <h3 class="workflow-panel-subheading">Workbench is the memory</h3>
+          ${paragraphsHtml(WORKBENCH_PARAGRAPHS)}
+          <p class="workflow-panel-closing">${WORKBENCH_CLOSING_LINES.join("<br>")}</p>
+        </section>
       </section>
     `;
   }
+
+  const tabButtons = Array.from(panel.querySelectorAll("[data-workflow-tab]"));
+  const tabPanels = Array.from(panel.querySelectorAll("[data-workflow-tabpanel]"));
+
+  function activateTab(tabId) {
+    tabButtons.forEach((button) => {
+      const selected = button.dataset.workflowTab === tabId;
+      button.setAttribute("aria-selected", selected ? "true" : "false");
+      button.tabIndex = selected ? 0 : -1;
+    });
+    tabPanels.forEach((tabPanel) => {
+      tabPanel.hidden = tabPanel.dataset.workflowTabpanel !== tabId;
+    });
+  }
+
+  tabButtons.forEach((button, index) => {
+    button.addEventListener("click", () => activateTab(button.dataset.workflowTab));
+    button.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      const lastIndex = tabButtons.length - 1;
+      let nextIndex = index;
+      if (event.key === "ArrowLeft") nextIndex = index === 0 ? lastIndex : index - 1;
+      if (event.key === "ArrowRight") nextIndex = index === lastIndex ? 0 : index + 1;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = lastIndex;
+      const nextButton = tabButtons[nextIndex];
+      activateTab(nextButton.dataset.workflowTab);
+      nextButton.focus();
+    });
+  });
 
   function openWorkflowPanel(event) {
     if (event?.currentTarget instanceof HTMLElement) {

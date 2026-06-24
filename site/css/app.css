@@ -1706,3 +1706,39 @@ body {
   font-size: clamp(18px, 2vw, 24px);
   font-weight: 900;
 }
+
+
+.workflow-panel-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 0 0 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+  margin-bottom: 16px;
+}
+
+.workflow-panel-tab {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  color: rgba(255, 255, 255, .78);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+  padding: 8px 14px;
+}
+
+.workflow-panel-tab[aria-selected="true"] {
+  background: rgba(191, 226, 255, .20);
+  border-color: rgba(191, 226, 255, .68);
+  color: #ffffff;
+}
+
+.workflow-panel-tab:focus-visible {
+  outline: 2px solid rgba(191, 226, 255, .78);
+  outline-offset: 3px;
+}
+
+.workflow-panel-tabpanel[hidden] {
+  display: none;
+}
