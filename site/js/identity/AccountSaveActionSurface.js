@@ -65,7 +65,6 @@ function createAccountSaveActionSurface({
   root,
   authService,
   model,
-  remoteActive = false,
   bracketStore = new SupabaseBracketStore(),
 } = {}) {
   if (!root) throw new Error("AccountSaveActionSurface requires a root element.");
@@ -109,7 +108,7 @@ function createAccountSaveActionSurface({
   }
 
   async function writeJoinedPicks({ retryOnFailure = true } = {}) {
-    if (remoteActive || !joined || !playerUserId || conflictActive) return;
+    if (!joined || !playerUserId || conflictActive) return;
 
     if (retryTimer) {
       clearTimeout(retryTimer);
@@ -134,7 +133,7 @@ function createAccountSaveActionSurface({
   }
 
   function scheduleAutosave() {
-    if (remoteActive || !joined || !playerUserId || conflictActive) return;
+    if (!joined || !playerUserId || conflictActive) return;
 
     if (autosaveTimer) clearTimeout(autosaveTimer);
     autosaveTimer = window.setTimeout(() => {
@@ -172,10 +171,6 @@ function createAccountSaveActionSurface({
   async function reconcileJoinedPicks({ automatic = false } = {}) {
     await refreshJoinState();
 
-    if (remoteActive) {
-      renderStatus(root, "joined", "Joined");
-      return;
-    }
 
     if (!joined) {
       loadedJoinedBracket = null;
