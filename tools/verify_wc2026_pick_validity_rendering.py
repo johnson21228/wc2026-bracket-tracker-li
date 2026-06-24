@@ -26,6 +26,16 @@ for path, tokens in {
     ],
     "cards/205_preserve_picks_render_invalid_warnings_card.md": ["Card 205", "thin red outline", "red `!` marker"],
     "capture_back/CAPTURE_BACK_PICK_VALIDITY_RENDERING.md": ["thin red outline", "red `!` marker"],
+    "li/world_cup/r32_pick_validity_hue_rendering_rule.md": [
+        "R32 Pick Validity Hue Rendering",
+        "valid picked R32 cells render with a green hue",
+        "frame-only suppressed cells must not show red/green validity fill",
+    ],
+    "docs/features/r32_pick_validity_hue_rendering.md": [
+        "Valid picked R32 cells use a green filled-cell hue",
+        "Invalid picked R32 cells use a red filled-cell hue",
+        "frame-only suppressed during Group Stage",
+    ],
 }.items():
     for token in tokens:
         require(path, token)
@@ -51,17 +61,25 @@ set_pick_block = model[model.find("function setPick") : model.find("function cle
 if "if (!validation.valid)" in set_pick_block or "cascadeClearInvalidDescendants()" in set_pick_block:
     raise SystemExit("setPick must preserve picks instead of blocking/clearing invalid picks")
 
-# View/CSS must render invalid warning state.
+# View/CSS must render invalid/valid warning state.
 for token in [
     "picked-cell-warning",
     "has-invalid-pick",
+    "has-valid-pick",
     "slot.pickValidity?.state === \"invalid\"",
+    "slot.pickValidity?.state === \"valid\"",
+    "!pickFillSuppressed && displayTeam && slot.pickValidity?.state === \"invalid\"",
+    "!pickFillSuppressed && displayTeam && slot.pickValidity?.state === \"valid\"",
     "slot.pickValidity.reason || \"Invalid pick\"",
 ]:
     require("site/js/mvc/view.js", token)
 
 for token in [
     "Card 205: invalid pick warning rendering",
+    ".pick-slot-button.has-valid-pick",
+    "background: rgba(24, 96, 52, .82)",
+    "outline: 1px solid rgba(64, 220, 128, .92)",
+    ".pick-slot-button.has-invalid-pick.has-valid-pick",
     ".pick-slot-button.has-invalid-pick",
     "background: rgba(112, 40, 24, .82)",
     "outline: 1px solid rgba(255, 64, 64, .95)",
@@ -71,4 +89,4 @@ for token in [
     require("site/css/board.css", token)
 
 require("Makefile", "tools/verify_wc2026_pick_validity_rendering.py")
-print("OK: WC2026 pick validity rendering preserves invalid picks and renders red warnings.")
+print("OK: WC2026 pick validity rendering preserves picks and renders R32 valid/invalid hue warnings while frame-only cells stay quiet.")

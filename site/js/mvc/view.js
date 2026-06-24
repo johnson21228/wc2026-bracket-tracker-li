@@ -520,7 +520,10 @@ export function createBracketView(root) {
         button.setAttribute("data-game2-resolved-r32-source", slot.game2ResolvedSource || "unknown");
       }
       if (!displayTeam) button.classList.add("is-unpicked");
-      if (slot.pickValidity?.state === "invalid") {
+      if (!pickFillSuppressed && displayTeam && slot.pickValidity?.state === "valid") {
+        button.classList.add("has-valid-pick");
+      }
+      if (!pickFillSuppressed && displayTeam && slot.pickValidity?.state === "invalid") {
         button.classList.add("has-invalid-pick");
         button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
         button.setAttribute("aria-label", `${slot.label}: invalid pick. ${button.title}`);
