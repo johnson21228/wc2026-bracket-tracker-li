@@ -97,7 +97,7 @@ function normalizeRemoteBracketDocument({ bracket, userId }) {
     updatedAt: now,
     submittedAt: bracket.submittedAt || null,
     lockedAt: bracket.lockedAt || null,
-    visibility: normalizeVisibility(bracket.visibility),
+    visibility: normalizeVisibility(gameId === "game1" ? "public" : bracket.visibility),
   };
 
   for (const key of REQUIRED_BRACKET_DOCUMENT_KEYS) {
