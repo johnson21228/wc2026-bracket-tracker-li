@@ -96,13 +96,6 @@ export function setupBracketeeringWorkflowPanel(root) {
       <section class="workflow-panel-section workflow-panel-copy">
         <p class="workflow-panel-closing">${WORKFLOW_PANEL_CLOSING_LINE}</p>
       </section>
-      <figure class="workflow-panel-figure">
-        <img
-          src="assets/visuals/bracketeering_workflow/bracketeering_workflow_infographic.jpeg"
-          alt="Bracketeering workflow infographic showing one chat, two roles, terminal verification, and durable product memory."
-        />
-        <figcaption>One ChatGPT conversation, two roles, one Bracketeering Workbench loop.</figcaption>
-      </figure>
     `;
   }
 
