@@ -5,12 +5,21 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED_FILES = [
+    "site/js/services/SupabaseAuthService.js",
+    "site/js/identity/SupabaseIdentitySurface.js",
     "captures/CAPTURE_BACK_PLAYER_JOIN_EXPERIENCE.md",
     "docs/features/player_join_experience.md",
     "li/world_cup/player_join_experience_rule.md",
 ]
 
 REQUIRED_TOKENS = [
+    'Play locally on this browser',
+    'Email me a sign-in link',
+    'Continue with Google',
+    'redirectTo = `${window.location.origin}${window.location.pathname}`',
+    'provider: "google"',
+    'signInWithOAuth',
+    'signInWithGoogle',
     "Continue with Google",
     "Email me a sign-in link",
     "Play locally on this browser",
