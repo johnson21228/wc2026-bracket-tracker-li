@@ -88,6 +88,7 @@ verify:
 	python3 tools/verify_wc2026_remove_player_storage_ui.py
 	python3 tools/verify_wc2026_map_style_full_window_board_shell.py
 	python3 tools/verify_wc2026_map_icon_controls.py
+	python3 tools/verify_wc2026_map_control_icon_centering.py
 	python3 tools/verify_wc2026_later_round_choose_winner_labels.py
 	python3 tools/verify_wc2026_scotland_flag_emoji_data.py
 	python3 tools/verify_wc2026_england_flag_emoji_data.py
