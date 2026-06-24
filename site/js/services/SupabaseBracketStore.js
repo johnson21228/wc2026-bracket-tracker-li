@@ -159,14 +159,34 @@ class SupabaseBracketStore extends BracketStorageAdapter {
     const supabase = this.ensureClient();
     const { data, error } = await supabase
       .from(TABLE_NAME)
-      .select("bracket_json")
+      .select("bracket_json, bracket_kind")
       .eq("user_id", user.id)
       .eq("tournament_id", tournamentId)
       .eq("game_id", gameId)
       .maybeSingle();
 
     if (error) throw error;
-    return data?.bracket_json || null;
+    return data?.bracket_json
+      ? { ...data.bracket_json, bracketKind: data.bracket_kind || data.bracket_json.bracketKind || "player" }
+      : null;
+  }
+
+  async loadOfficialBracket({ tournamentId = this.tournamentId, gameId = this.gameId } = {}) {
+    await this.requireSignedInUser();
+
+    const supabase = this.ensureClient();
+    const { data, error } = await supabase
+      .from(TABLE_NAME)
+      .select("bracket_json, bracket_kind")
+      .eq("tournament_id", tournamentId)
+      .eq("game_id", gameId)
+      .eq("bracket_kind", "official")
+      .maybeSingle();
+
+    if (error) throw error;
+    return data?.bracket_json
+      ? { ...data.bracket_json, bracketKind: data.bracket_kind || "official" }
+      : null;
   }
 
   async saveUserBracket(bracket) {
@@ -197,6 +217,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
           game_id: canonicalBracketDocument.gameId,
           status: canonicalBracketDocument.status,
           visibility: canonicalBracketDocument.visibility,
+          bracket_kind: canonicalBracketDocument.bracketKind === "official" ? "official" : "player",
           bracket_json: canonicalBracketDocument,
         },
         { onConflict: "user_id,tournament_id,game_id" },

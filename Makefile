@@ -1,6 +1,7 @@
 .PHONY: verify pack clean-hygiene open-site publish-pages publish-pages-force check-pages
 
 verify:
+	python3 tools/verify_wc2026_official_truth_bracket_hidden_player.py
 	python3 tools/verify_wc2026_joined_game1_brackets_public_visibility.py
 	python3 tools/verify_wc2026_paste_back_terminal_output_contract.py
 	python3 tools/verify_capture_back_governance.py

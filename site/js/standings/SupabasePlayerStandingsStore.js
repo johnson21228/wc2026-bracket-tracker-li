@@ -39,6 +39,7 @@ function normalizeBracketRow(row, profileByUserId) {
     total: 0,
     status: row?.status || bracketJson?.status || "draft",
     visibility: row?.visibility || bracketJson?.visibility || "private",
+    bracketKind: row?.bracket_kind || bracketJson?.bracketKind || "player",
     updatedAt: row?.updated_at || bracketJson?.updatedAt || "",
   };
 }
@@ -81,9 +82,10 @@ export function createSupabasePlayerStandingsStore({
 
     const { data, error } = await supabaseClient
       .from(USER_BRACKETS_TABLE)
-      .select("user_id, tournament_id, game_id, status, visibility, bracket_json, updated_at")
+      .select("user_id, tournament_id, game_id, status, visibility, bracket_kind, bracket_json, updated_at")
       .eq("tournament_id", tournamentId)
       .eq("game_id", gameId)
+      .eq("bracket_kind", "player")
       .order("updated_at", { ascending: false });
 
     if (error) throw error;
