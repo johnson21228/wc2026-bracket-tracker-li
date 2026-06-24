@@ -1196,3 +1196,10 @@
   justify-self: stretch;
 }
 
+
+
+.pick-slot-button.is-pick-interaction-suppressed,
+.final-four-pick-row.is-pick-interaction-suppressed {
+  cursor: default !important;
+  pointer-events: none;
+}

@@ -20,6 +20,7 @@ def main():
 
     view = read("site/js/mvc/view.js")
     controller = read("site/js/mvc/controller.js")
+    board_css = read("site/css/board.css")
 
     require("R16+ pick-menu interaction" in capture,
             "Capture must name the R16+ pick-menu interaction defect.", errors)
@@ -51,6 +52,11 @@ def main():
             "Controller backstop must allow only R32 slots during Group Stage.", errors)
     require("Later-round picks open when Knockout Stage presentation is active." in controller,
             "Controller must report a player-facing reason when Group Stage blocks R16+ picks.", errors)
+    require(".pick-slot-button.is-pick-interaction-suppressed" in board_css
+            and ".final-four-pick-row.is-pick-interaction-suppressed" in board_css
+            and "cursor: default !important" in board_css
+            and "pointer-events: none" in board_css,
+            "Suppressed Group Stage R16+ cells must override pointer cursor and pointer events.", errors)
 
     if errors:
         print("Group Stage R16+ interaction gate capture verification failed: " + "; ".join(errors))
