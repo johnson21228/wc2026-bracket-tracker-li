@@ -3,7 +3,6 @@ import { createBracketView } from "./mvc/view.js";
 import { createBracketController } from "./mvc/controller.js";
 import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
 import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js";
-import { SupabaseBracketStore } from "./services/SupabaseBracketStore.js";
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
 import { createAccountSaveActionSurface } from "./identity/AccountSaveActionSurface.js";
 import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js";
@@ -69,29 +68,6 @@ function syncActiveGameBackground(root) {
   }
 }
 
-function shouldUseDevSupabaseBracketStore(locationSearch = window.location.search) {
-  return new URLSearchParams(locationSearch).get("devSupabaseBracketStore") === "1";
-}
-
-async function devSupabaseBracketStoreOptions(authService) {
-  if (!shouldUseDevSupabaseBracketStore()) return { remoteActive: false };
-
-  const state = await authService.start();
-  const userId = state?.user?.id || "";
-  if (!userId) {
-    console.warn("[WC2026 SupabaseBracketStore] dev remote store requested but no signed-in user is available. Local storage remains active.");
-    return { remoteActive: false };
-  }
-
-  console.info("[WC2026 SupabaseBracketStore] dev remote bracket store enabled", { userId });
-  return {
-    bracketStore: new SupabaseBracketStore(),
-    userId,
-    persistenceMode: "supabase",
-    remoteActive: true,
-  };
-}
-
 
 function setupActiveGameBackground(root) {
   syncActiveGameBackground(root);
@@ -115,8 +91,7 @@ async function main() {
   setupInfoPanel(root);
   setupBracketeeringWorkflowPanel(root);
   const authService = createSupabaseAuthService();
-  const bracketStoreOptions = await devSupabaseBracketStoreOptions(authService);
-  const model = await createBracketModel(bracketStoreOptions);
+  const model = await createBracketModel();
   const view = createBracketView(root);
   setupActiveGameBackground(root);
   const controller = createBracketController({ model, view });
@@ -130,7 +105,6 @@ async function main() {
     root,
     authService,
     model,
-    remoteActive: bracketStoreOptions.remoteActive === true,
   }).start();
   controller.start();
 }
