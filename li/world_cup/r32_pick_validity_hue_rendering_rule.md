@@ -10,3 +10,5 @@ Required behavior:
 - Group Stage frame-only suppressed cells must not show red/green validity fill
 - this rule must not affect pick validity computation or saved picks
 - this rule must not restore R16+ fill during Group Stage
+
+- The validity hue must color the filled cell background, not only the outline.

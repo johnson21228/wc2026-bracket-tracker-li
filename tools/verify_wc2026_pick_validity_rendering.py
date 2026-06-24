@@ -30,11 +30,13 @@ for path, tokens in {
         "R32 Pick Validity Hue Rendering",
         "valid picked R32 cells render with a green hue",
         "frame-only suppressed cells must not show red/green validity fill",
+        "The validity hue must color the filled cell background, not only the outline.",
     ],
     "docs/features/r32_pick_validity_hue_rendering.md": [
         "Valid picked R32 cells use a green filled-cell hue",
         "Invalid picked R32 cells use a red filled-cell hue",
         "frame-only suppressed during Group Stage",
+        "The fill color is required",
     ],
 }.items():
     for token in tokens:
@@ -77,6 +79,13 @@ for token in [
 for token in [
     "Card 205: invalid pick warning rendering",
     ".pick-slot-button.has-valid-pick",
+    "R32 validity hue must fill the picked cell",
+    ".pick-slot-button.has-pick.has-valid-pick:not(.is-pick-fill-suppressed)",
+    "background: rgba(24, 96, 52, .82) !important",
+    "background-color: rgba(24, 96, 52, .82) !important",
+    ".pick-slot-button.has-pick.has-invalid-pick:not(.is-pick-fill-suppressed)",
+    "background: rgba(112, 40, 24, .82) !important",
+    "background-color: rgba(112, 40, 24, .82) !important",
     "background: rgba(24, 96, 52, .82)",
     "outline: 1px solid rgba(64, 220, 128, .92)",
     ".pick-slot-button.has-invalid-pick.has-valid-pick",

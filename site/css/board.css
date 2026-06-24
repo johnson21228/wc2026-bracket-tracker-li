@@ -1218,3 +1218,18 @@
   cursor: default !important;
   pointer-events: none;
 }
+
+
+/* R32 validity hue must fill the picked cell, not only outline it. */
+.pick-slot-button.has-pick.has-valid-pick:not(.is-pick-fill-suppressed) {
+  background: rgba(24, 96, 52, .82) !important;
+  background-color: rgba(24, 96, 52, .82) !important;
+  outline: 1px solid rgba(64, 220, 128, .92);
+}
+
+.pick-slot-button.has-pick.has-invalid-pick:not(.is-pick-fill-suppressed),
+.pick-slot-button.has-pick.has-invalid-pick.has-valid-pick:not(.is-pick-fill-suppressed) {
+  background: rgba(112, 40, 24, .82) !important;
+  background-color: rgba(112, 40, 24, .82) !important;
+  outline: 1px solid rgba(255, 64, 64, .95);
+}
