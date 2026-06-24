@@ -186,6 +186,8 @@ export function createPlayerStandingsSurface({
 } = {}) {
   let currentAuthState = authService?.currentState?.() || null;
   let currentProfileState = null;
+  let storageReady = false;
+  let storageReadyChecked = false;
   let lastOpenButton = null;
 
   const button = ensureStandingsButton(root);
@@ -194,10 +196,17 @@ export function createPlayerStandingsSurface({
 
   function syncStandingsButtonState() {
     const joined = isSignedIn(currentAuthState);
-    button.disabled = !joined;
+    const canOpen = joined && storageReady;
+    button.hidden = !canOpen;
+    button.disabled = !canOpen;
     button.classList.toggle("is-join-required", !joined);
-    button.title = joined ? "Open Standings" : "Join to enter standings.";
-    button.setAttribute("aria-label", joined ? "Open Standings" : "Join to enter standings.");
+    button.classList.toggle("is-storage-unavailable", joined && storageReadyChecked && !storageReady);
+    button.title = !joined
+      ? "Join to enter standings."
+      : storageReady
+        ? "Open Standings"
+        : "Standings unavailable until stored picks can be read.";
+    button.setAttribute("aria-label", button.title);
   }
 
   function renderStatus(message) {
@@ -205,8 +214,33 @@ export function createPlayerStandingsSurface({
     body.innerHTML = `<p class="player-standings-status">${message}</p>`;
   }
 
+  async function refreshStorageReady() {
+    if (!isSignedIn(currentAuthState)) {
+      storageReady = false;
+      storageReadyChecked = true;
+      syncStandingsButtonState();
+      return false;
+    }
+
+    try {
+      storageReady = await standingsStore?.canReadStoredPicks?.() === true;
+    } catch (error) {
+      console.warn("[PlayerStandingsSurface] stored picks preflight failed", error);
+      storageReady = false;
+    }
+
+    storageReadyChecked = true;
+    syncStandingsButtonState();
+    return storageReady;
+  }
+
   async function loadStandingsRows() {
     renderStatus("Loading standings…");
+
+    if (!await refreshStorageReady()) {
+      renderStatus("Standings unavailable until stored picks can be read.");
+      return;
+    }
 
     try {
       const storeRows = await standingsStore?.listPlayerStandings?.();
@@ -231,6 +265,7 @@ export function createPlayerStandingsSurface({
     if (event?.currentTarget instanceof HTMLElement) {
       lastOpenButton = event.currentTarget;
     }
+    if (!await refreshStorageReady()) return;
     panel.hidden = false;
     window.dispatchEvent(new CustomEvent(STANDINGS_PANEL_OPEN_EVENT));
     await loadStandingsRows();
@@ -244,6 +279,7 @@ export function createPlayerStandingsSurface({
 
   function start() {
     syncStandingsButtonState();
+    refreshStorageReady();
     button.addEventListener("click", openPanel);
     closeButton?.addEventListener("click", closePanel);
 
@@ -258,8 +294,13 @@ export function createPlayerStandingsSurface({
     authService?.subscribe?.((state) => {
       currentAuthState = state;
       currentProfileState = null;
+      storageReady = false;
+      storageReadyChecked = false;
       syncStandingsButtonState();
-      if (!panel.hidden) loadStandingsRows();
+      refreshStorageReady().then((ready) => {
+        if (ready && !panel.hidden) loadStandingsRows();
+        if (!ready) panel.hidden = true;
+      });
     });
   }
 

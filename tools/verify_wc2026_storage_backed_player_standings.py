@@ -24,6 +24,7 @@ require('display_name' in store, "Standings store must read public display_name.
 require('bracket_json' in store, "Standings store must read bracket_json.")
 require('picksBySlot' in store, "Standings store must read picksBySlot.")
 require('getSharedSupabaseClient' in store, "Standings store must use the shared Supabase browser client boundary.")
+require('canReadStoredPicks' in store and 'head: true' in store and 'count: "exact"' in store, "Standings store must expose a read-only stored-picks preflight.")
 
 for forbidden in ['email', 'insert(', 'upsert(', 'update(', 'delete(', 'saveUserBracket']:
     require(forbidden not in store, f"Standings store must not expose/write via {forbidden}.")
@@ -35,6 +36,8 @@ require('createPlayerStandingsSurface({ root, authService, profileStore, standin
 
 require('standingsStore?.listPlayerStandings?.()' in surface,
         "PlayerStandingsSurface must read rows through standingsStore.")
+require('standingsStore?.canReadStoredPicks?.()' in surface and 'button.hidden = !canOpen' in surface,
+        "PlayerStandingsSurface must hide standings when stored picks cannot be read.")
 require('fallbackParticipationRows' in surface,
         "PlayerStandingsSurface may keep fallback participation rows only after storage read.")
 require('picksCount' in surface,

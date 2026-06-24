@@ -64,6 +64,18 @@ export function createSupabasePlayerStandingsStore({
   tournamentId = "wc2026",
   gameId = "game1",
 } = {}) {
+  async function canReadStoredPicks() {
+    if (!supabaseClient) return false;
+
+    const { error } = await supabaseClient
+      .from(USER_BRACKETS_TABLE)
+      .select("user_id", { count: "exact", head: true })
+      .eq("tournament_id", tournamentId)
+      .eq("game_id", gameId);
+
+    return !error;
+  }
+
   async function listPlayerStandings() {
     if (!supabaseClient) return [];
 
@@ -88,5 +100,5 @@ export function createSupabasePlayerStandingsStore({
     return bracketRows.map((row) => normalizeBracketRow(row, profileByUserId));
   }
 
-  return { listPlayerStandings };
+  return { listPlayerStandings, canReadStoredPicks };
 }

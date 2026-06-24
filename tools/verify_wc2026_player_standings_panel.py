@@ -28,8 +28,8 @@ def main():
             "Standings surface must provide the standings button.", errors)
     require("syncStandingsButtonState" in standings,
             "Standings button must sync joined/not-joined state.", errors)
-    require("button.disabled = !joined" in standings,
-            "Standings must be disabled until joined.", errors)
+    require("button.hidden = !canOpen" in standings and "button.disabled = !canOpen" in standings,
+            "Standings must be hidden/disabled until joined and stored picks are readable.", errors)
     require("Join to enter standings." in standings,
             "Signed-out standings copy must use Join-first wording.", errors)
     require("Loading standings…" in standings,
@@ -38,6 +38,8 @@ def main():
             "Standings panel must provide empty state.", errors)
     require("Standings unavailable" in standings,
             "Standings panel must provide error state.", errors)
+    require("refreshStorageReady" in standings and "stored picks can be read" in standings,
+            "Standings must run a stored-picks read preflight before showing/opening.", errors)
     require("fallbackParticipationRows" in standings,
             "Standings must still provide participation fallback rows.", errors)
     require("publicNameFromAuthState" in standings,
