@@ -230,6 +230,7 @@ function legacyPicksFromRemoteBracketDocument(bracket) {
 
 export async function createBracketModel({
   bracketStore = null,
+  officialBracketStore = bracketStore,
   userId = "local-player",
   persistenceMode = "local",
 } = {}) {
@@ -306,8 +307,10 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   ]));
   const remotePersistenceActive = persistenceMode === "supabase" && bracketStore;
   let remoteBracketDocument = null;
+  let officialBracketDocument = null;
   let remoteSavePromise = Promise.resolve();
   let picks = {};
+  let officialPicks = {};
 
   if (remotePersistenceActive) {
     try {
@@ -315,6 +318,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       picks = legacyPicksFromRemoteBracketDocument(remoteBracketDocument);
       console.info("[WC2026 SupabaseBracketStore] loaded remote bracket picks", {
         userId,
+        bracketKind: remoteBracketDocument?.bracketKind || "player",
         pickCount: Object.keys(picks).length,
       });
     } catch (error) {
@@ -325,12 +329,43 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     picks = pickFromStorage();
   }
 
+  if (officialBracketStore?.loadOfficialBracket) {
+    try {
+      officialBracketDocument = await officialBracketStore.loadOfficialBracket();
+      officialPicks = legacyPicksFromRemoteBracketDocument(officialBracketDocument);
+      console.info("[WC2026 OfficialResults] loaded official truth bracket picks", {
+        pickCount: Object.keys(officialPicks).length,
+      });
+    } catch (error) {
+      console.warn("[WC2026 OfficialResults] official truth bracket unavailable", error);
+      officialBracketDocument = null;
+      officialPicks = {};
+    }
+  }
+
   function getTeam(teamId) {
     return teamById.get(teamId) || null;
   }
 
   function selectedTeam(slotId) {
     return getTeam(picks[slotId]);
+  }
+
+  function officialTeam(slotId) {
+    return getTeam(officialPicks[slotId]);
+  }
+
+  function officialPickComparisonForSlot(slotId, userTeam) {
+    const truthTeam = officialTeam(slotId);
+    if (!truthTeam) return null;
+    return {
+      state: userTeam && userTeam.id === truthTeam.id ? "correct" : "incorrect",
+      officialTeam: truthTeam,
+    };
+  }
+
+  function isEditingOfficialResults() {
+    return remoteBracketDocument?.bracketKind === "official";
   }
 
   function fifaFinalR32Team(slotId) {
@@ -397,6 +432,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       submittedAt: previous.submittedAt || null,
       lockedAt: previous.lockedAt || null,
       visibility: previous.visibility || "private",
+      bracketKind: previous.bracketKind || "player",
     };
   }
 
@@ -876,6 +912,8 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       choices,
       selectedTeam: team,
       pickValidity: pickValidityForSlot(slot, team),
+      officialPickComparison: officialPickComparisonForSlot(slotId, team),
+      officialTruthTeam: officialTeam(slotId),
       feederSlotIds: [...(slot.sourceSlotIds || [])],
       label: slot.displayLabel || slotId,
       finalFourRole: slotId,
@@ -927,6 +965,8 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
         game2ResolvedTeam,
         game2ResolvedSource: game2ResolvedTeam?.game2R32Source || null,
         pickValidity: pickValidityForSlot(slot, team),
+        officialPickComparison: officialPickComparisonForSlot(slot.slotId, team),
+        officialTruthTeam: officialTeam(slot.slotId),
         feederSlotIds: dependencyMap.get(slot.slotId) || [],
         label: logic?.fifaLabel || slot.slotId,
       };
@@ -952,6 +992,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       userId: accountUserId || bracketDocument.userId || userId,
       status: bracketDocument.status || "draft",
       visibility: bracketDocument.visibility || "private",
+      bracketKind: bracketDocument.bracketKind || "player",
       updatedAt: new Date().toISOString(),
     };
   }
@@ -962,7 +1003,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       ...getSlotViewModels(),
       ...(getFinalFourViewModel()?.picks || []),
     ].filter((slot) => slot.pickable).length;
-    return { picked, pickable, totalSlots: allPickSlots().length };
+    return { picked, pickable, totalSlots: allPickSlots().length, bracketKind: remoteBracketDocument?.bracketKind || "player", editingOfficialResults: isEditingOfficialResults() };
   }
 
   // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.

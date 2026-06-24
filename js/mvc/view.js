@@ -405,6 +405,28 @@ export function createBracketView(root) {
     return activeGameValue() === "game-2" && slot.round === "R32" && Boolean(displayTeam) && Boolean(slot.game2ResolvedTeam);
   }
 
+  function syncOfficialResultsBanner(summary) {
+    let banner = root.querySelector("[data-official-results-banner]");
+    if (!summary?.editingOfficialResults) {
+      banner?.remove();
+      return;
+    }
+
+    if (!banner) {
+      banner = document.createElement("aside");
+      banner.className = "official-results-banner";
+      banner.setAttribute("data-official-results-banner", "");
+      banner.setAttribute("role", "status");
+      banner.textContent = "Editing Official Results";
+      root.prepend(banner);
+    }
+  }
+
+  function officialTruthLabel(team) {
+    if (!team) return "";
+    return `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id || ""}`.trim();
+  }
+
   function renderSlots(slotModels) {
     const layer = boardPlane.querySelector("[data-pick-layer]");
     layer.innerHTML = "";
@@ -475,7 +497,14 @@ export function createBracketView(root) {
             warning.setAttribute("aria-label", slot.pickValidity.reason || "Invalid pick");
             identity.append(warning);
           }
-          value.append(identity);
+          if (slot.officialPickComparison?.state === "incorrect" && slot.officialTruthTeam) {
+            const correct = document.createElement("span");
+            correct.className = "picked-cell-official-truth";
+            correct.textContent = `Correct: ${officialTruthLabel(slot.officialTruthTeam)}`;
+            value.append(identity, correct);
+          } else {
+            value.append(identity);
+          }
         } else {
           const unpickedLabel = document.createElement("span");
           unpickedLabel.className = "unpicked-cell-label";
@@ -520,6 +549,18 @@ export function createBracketView(root) {
         button.setAttribute("data-game2-resolved-r32-source", slot.game2ResolvedSource || "unknown");
       }
       if (!displayTeam) button.classList.add("is-unpicked");
+      if (slot.officialPickComparison?.state === "correct") {
+        button.classList.add("has-official-correct-pick");
+        button.setAttribute("data-official-pick-state", "correct");
+      }
+      if (slot.officialPickComparison?.state === "incorrect") {
+        button.classList.add("has-official-incorrect-pick");
+        button.setAttribute("data-official-pick-state", "incorrect");
+        if (slot.officialTruthTeam) {
+          button.title = `Official result: ${fullTeamLabel(slot.officialTruthTeam)}`;
+        }
+      }
+
       if (!pickFillSuppressed && displayTeam && slot.pickValidity?.state === "valid") {
         button.classList.add("has-valid-pick");
       }
@@ -1044,6 +1085,7 @@ export function createBracketView(root) {
   }
 
   function render(state) {
+    syncOfficialResultsBanner(state.summary);
     renderSlots(state.slotModels);
     renderFinalFourPanel(state.finalFour);
     renderGroupRail(state.groupRail);
