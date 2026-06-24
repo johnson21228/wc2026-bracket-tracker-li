@@ -17,6 +17,7 @@ def main():
     errors = []
 
     standings_store = read("site/js/standings/SupabasePlayerStandingsStore.js")
+    standings_surface = read("site/js/standings/PlayerStandingsSurface.js")
     supabase_store = read("site/js/services/SupabaseBracketStore.js")
     model = read("site/js/mvc/model.js")
     view = read("site/js/mvc/view.js")
@@ -32,6 +33,9 @@ def main():
     ])
 
     require('.eq("bracket_kind", "player")' in standings_store, "Standings store must read only player brackets.", errors)
+    require("OFFICIAL_RESULTS_PLAYER_NAMES" in standings_surface, "Standings surface must reserve official player names.", errors)
+    require("isOfficialStandingsRow" in standings_surface, "Standings surface must hard-filter official rows.", errors)
+    require("Admin_" in standings_surface, "Standings surface must hide the current Admin_ official player.", errors)
     require("bracket_kind" in standings_store, "Standings store must select bracket_kind.", errors)
     require("loadOfficialBracket" in supabase_store, "Supabase bracket store must expose official bracket loader.", errors)
     require('.eq("bracket_kind", "official")' in supabase_store, "Official loader must query bracket_kind official.", errors)

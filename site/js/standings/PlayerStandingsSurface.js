@@ -1,4 +1,17 @@
 const STANDINGS_PANEL_OPEN_EVENT = "wc2026:standings-panel-opened";
+const OFFICIAL_RESULTS_PLAYER_NAMES = new Set(["Admin_", "Official Results"]);
+
+function isOfficialStandingsRow(row) {
+  const bracketKind = String(row?.bracketKind || row?.bracket_kind || "").toLowerCase();
+  const publicName = String(
+    row?.publicPlayerName
+      || row?.playerName
+      || row?.displayName
+      || ""
+  ).trim();
+
+  return bracketKind === "official" || OFFICIAL_RESULTS_PLAYER_NAMES.has(publicName);
+}
 const BOARD_VIEWER_GEOMETRY_URL = "data/geometry/gameboard_manifest.json";
 const BOARD_VIEWER_TEAMS_URL = "data/model/teams.json";
 const BOARD_VIEWER_LINEWORK_URL = "assets/playfield/uniform_pick_card_gameboard.svg";
@@ -54,11 +67,13 @@ function normalizeStandingsRow(row) {
     knockoutPoints,
     tiebreakerScore,
     total,
+    bracketKind: row?.bracketKind || row?.bracket_kind || "player",
   };
 }
 
 export function sortPlayerStandingsRows(rows = []) {
   return rows
+    .filter((row) => !isOfficialStandingsRow(row))
     .map(normalizeStandingsRow)
     .sort((a, b) => (
       (b.total - a.total)
@@ -98,8 +113,10 @@ async function resolveCurrentProfile({ authState, profileStore }) {
 
 function fallbackParticipationRows(authState, profileState = null) {
   if (!isSignedIn(authState)) return [];
+  const publicPlayerName = publicNameFromAuthState(authState, profileState);
+  if (OFFICIAL_RESULTS_PLAYER_NAMES.has(String(publicPlayerName).trim())) return [];
   return [{
-    publicPlayerName: publicNameFromAuthState(authState, profileState),
+    publicPlayerName,
     picksBySlot: {},
     picksCount: 0,
     groupPoints: 0,
@@ -481,8 +498,12 @@ export function createPlayerStandingsSurface({
     try {
       const storeRows = await standingsStore?.listPlayerStandings?.();
       currentProfileState = await resolveCurrentProfile({ authState: currentAuthState, profileStore });
-      const rows = Array.isArray(storeRows) && storeRows.length
-        ? storeRows
+      const playerRows = Array.isArray(storeRows)
+        ? storeRows.filter((row) => !isOfficialStandingsRow(row))
+        : [];
+
+      const rows = playerRows.length
+        ? playerRows
         : fallbackParticipationRows(currentAuthState, currentProfileState);
 
       if (!rows.length && !isSignedIn(currentAuthState)) {
