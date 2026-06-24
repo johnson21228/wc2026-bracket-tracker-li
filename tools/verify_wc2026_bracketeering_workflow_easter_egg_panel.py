@@ -49,15 +49,18 @@ def main():
     card = read("cards/284_workbench_story_easter_egg_copy_card.md")
     makefile = read("Makefile")
 
-    jpeg = ROOT / "site/assets/visuals/bracketeering_workflow/bracketeering_workflow_infographic.jpeg"
-
-    require(jpeg.exists(), "Workflow infographic JPEG must exist.", errors)
     require("data-workflow-panel-open" in index, "Workflow panel open control must exist.", errors)
     require("data-workflow-panel" in index, "Workflow panel backdrop must exist.", errors)
     require("setupBracketeeringWorkflowPanel(root);" in app, "App must wire workflow panel setup.", errors)
     require("workflow-panel-subheading" in css, "Visible section heading styling must exist.", errors)
     require("workflow-panel-copy-list" in css, "Workflow loop list styling must exist.", errors)
     require("workflow-panel-closing" in css, "Closing line styling must exist.", errors)
+
+    require(
+        "bracketeering_workflow_infographic.jpeg" not in workflow and "bracketeering_workflow_infographic.jpeg" not in index,
+        "Workbench Easter egg panel must not render the old workflow infographic.",
+        errors,
+    )
 
     for token in REQUIRED_TOKENS:
         require(token in workflow, f"Workflow panel missing protected copy: {token}", errors)

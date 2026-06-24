@@ -35,3 +35,5 @@ Additional protected loop lines:
 - The card changes the artifact.
 - The artifact is verified.
 - The point is that it was built in a new way.
+
+The Easter egg panel is text-only; it must not render bracketeering_workflow_infographic.jpeg.
