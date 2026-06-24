@@ -118,6 +118,33 @@ export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONF
     return currentState;
   }
 
+  async function signInWithGoogle() {
+    const supabase = ensureClient();
+    if (!supabase) {
+      emit({
+        configured: false,
+        status: "not-configured",
+        user: null,
+        message: "Supabase Auth is not configured yet. Add project URL and publishable key before Google sign-in.",
+      });
+      return currentState;
+    }
+
+    emit({ ...currentState, status: "sending", message: "Opening Google sign-in…" });
+    try {
+      const redirectTo = `${window.location.origin}${window.location.pathname}`;
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo },
+      });
+      if (error) throw error;
+    } catch (error) {
+      emit({ ...currentState, status: "error", message: `Google sign-in failed: ${error?.message || String(error)}` });
+    }
+    return currentState;
+  }
+
+
   async function signOut() {
     const supabase = ensureClient();
     if (!supabase) return currentState;
@@ -137,5 +164,5 @@ export function createSupabaseAuthService({ config = WC2026_SUPABASE_PUBLIC_CONF
     return () => listeners.delete(listener);
   }
 
-  return { start, subscribe, signInWithEmail, signOut, currentState: () => currentState };
+  return { start, subscribe, signInWithEmail, signInWithGoogle, signOut, currentState: () => currentState };
 }

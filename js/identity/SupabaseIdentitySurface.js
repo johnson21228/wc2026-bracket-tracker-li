@@ -5,6 +5,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
   }
 
   const authSignIn = authService?.signInWithMagicLink || authService?.signInWithEmail;
+  const authGoogleSignIn = authService?.signInWithGoogle;
   let panelOpen = false;
   let emailDraft = "";
   let latestState = authService?.currentState?.() || {
@@ -137,6 +138,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
     const isBusy = state.status === "checking" || state.status === "sending";
     const cooldownSeconds = cooldownRemainingSeconds();
     const canAttemptSignIn = Boolean(state.configured && !isSignedIn && authSignIn);
+    const canAttemptGoogleSignIn = Boolean(state.configured && !isSignedIn && authGoogleSignIn);
     const canSubmit = canAttemptSignIn && !isBusy && cooldownSeconds === 0;
     const panelId = "supabase-identity-panel";
 
@@ -156,8 +158,8 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
             </div>
             <button type="button" class="identity-panel-close" data-identity-panel-close aria-label="Close player panel">×</button>
           </div>
-          <p class="identity-panel-intro">${isSignedIn ? "Edit your public player name." : "Join to keep picks live and enter standings. You can still explore the board before joining."}</p>
-          <p class="identity-local-note">${isSignedIn ? "Your picks are live." : "Before joining, this board is temporary browser play."}</p>
+          <p class="identity-panel-intro">${isSignedIn ? "Edit your public player name." : "Join to keep picks live and enter standings. You can still explore the board before joining. Continue with Google, email yourself a sign-in link, or keep playing locally on this browser."}</p>
+          <p class="identity-local-note">${isSignedIn ? "Your picks are live." : "Before joining, this board is temporary browser play. No account needed for local play. Your picks are saved only on this browser until you join."}</p>
           <div class="identity-panel-state" data-auth-state="${escapeHtml(state.status)}">
             <strong>${escapeHtml(statusLabel(state))}</strong>
             <span>${escapeHtml(panelMessage(state))}</span>
@@ -251,12 +253,30 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
       return;
     }
 
+
+    const googleButton = document.createElement("button");
+    googleButton.type = "button";
+    googleButton.className = "identity-panel-primary-button";
+    googleButton.textContent = "Continue with Google";
+    googleButton.disabled = !canAttemptGoogleSignIn || isBusy;
+    googleButton.dataset.googleSignIn = "true";
+    googleButton.addEventListener("click", () => {
+      if (!canAttemptGoogleSignIn || isBusy) return;
+      authGoogleSignIn.call(authService);
+    });
+    actions.append(googleButton);
+
+    const emailDivider = document.createElement("p");
+    emailDivider.className = "identity-panel-divider";
+    emailDivider.textContent = "or";
+    actions.append(emailDivider);
+
     const form = document.createElement("form");
     form.className = "identity-panel-form";
     form.innerHTML = `
       <label for="supabase-auth-email-panel">Email address</label>
       <input id="supabase-auth-email-panel" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" value="${escapeHtml(emailDraft)}" ${canAttemptSignIn ? "" : "disabled"}>
-      <button type="submit" class="identity-panel-primary-button" ${canSubmit ? "" : "disabled"}>${cooldownSeconds > 0 ? `Wait ${cooldownSeconds}s` : "Join"}</button>
+      <button type="submit" class="identity-panel-primary-button" ${canSubmit ? "" : "disabled"}>${cooldownSeconds > 0 ? `Wait ${cooldownSeconds}s` : "Email me a sign-in link"}</button>
     `;
     form.querySelector("input")?.addEventListener("input", (event) => {
       emailDraft = event.target.value;

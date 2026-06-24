@@ -1174,3 +1174,25 @@
   content: none;
 }
 
+/* Card 282: pick-slot button labels must remain visually centered. */
+.pick-slot-button .pick-slot-label,
+.pick-slot-button .pick-slot-value,
+.pick-slot-button .unpicked-cell-label {
+  text-align: center;
+  justify-self: center;
+}
+
+.pick-slot-button .pick-slot-value,
+.pick-slot-button.has-pick .pick-slot-value,
+.pick-slot-button.is-unpicked .pick-slot-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pick-slot-button.has-pick .pick-slot-value {
+  align-self: stretch;
+  justify-self: stretch;
+}
+
