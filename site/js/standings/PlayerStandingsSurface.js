@@ -16,6 +16,113 @@ function safePublicPlayerName(row) {
   return name || "Player";
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+const PICK_ROUND_GROUPS = [
+  { key: "r32", label: "Round of 32" },
+  { key: "r16", label: "Round of 16" },
+  { key: "qf", label: "Quarterfinal" },
+  { key: "sf", label: "Semifinal" },
+  { key: "final", label: "Final" },
+  { key: "special", label: "Champion / Third place" },
+];
+
+function pickRoundKey(slotId, record = {}) {
+  const id = String(slotId || record?.slotId || "").toUpperCase();
+  const round = String(record?.round || "").toUpperCase();
+
+  if (id.includes("CHAMPION") || id.includes("THIRD") || round.includes("CHAMPION") || round.includes("THIRD")) return "special";
+  if (id.includes("FINAL") || round === "SF_WINNER") return "final";
+  if (id.includes("SF") || round === "QF_WINNER") return "sf";
+  if (id.includes("QF") || round === "R16_WINNER") return "qf";
+  if (id.includes("R16") || round === "R32_WINNER") return "r16";
+  if (id.includes("R32") || round === "R32_ENTRANT") return "r32";
+  return "special";
+}
+
+function slotSortKey(slotId) {
+  const id = String(slotId || "").toUpperCase();
+  const side = id.startsWith("L-") ? "0" : id.startsWith("R-") ? "1" : "2";
+  const number = Number(id.match(/(\d+)$/)?.[1] || 0);
+  return `${side}-${String(number).padStart(3, "0")}-${id}`;
+}
+
+function labelForPickRecord(record = {}) {
+  const pick = record?.pick;
+  if (!pick || pick.kind === "unpicked" || record?.kind === "unpicked") return "Unpicked";
+  if (pick.kind === "team") {
+    return pick.teamName
+      || pick.name
+      || pick.label
+      || pick.abbr
+      || pick.teamId
+      || "Unpicked";
+  }
+  return pick.label || pick.value || "Unpicked";
+}
+
+function groupedPickEntries(picksBySlot = {}) {
+  const grouped = Object.fromEntries(PICK_ROUND_GROUPS.map((group) => [group.key, []]));
+
+  for (const [slotId, record] of Object.entries(picksBySlot || {})) {
+    const key = pickRoundKey(slotId, record);
+    grouped[key] ||= [];
+    grouped[key].push({
+      slotId: String(record?.slotId || slotId),
+      pickLabel: labelForPickRecord(record),
+      sortKey: slotSortKey(record?.slotId || slotId),
+    });
+  }
+
+  for (const entries of Object.values(grouped)) {
+    entries.sort((a, b) => a.sortKey.localeCompare(b.sortKey));
+  }
+
+  return grouped;
+}
+
+function renderPlayerPicksViewer(row) {
+  const groups = groupedPickEntries(row?.picksBySlot || {});
+  const sections = PICK_ROUND_GROUPS.map((group) => {
+    const entries = groups[group.key] || [];
+    const rows = entries.length
+      ? entries.map((entry) => `
+        <li class="player-picks-item">
+          <span class="player-picks-slot">${escapeHtml(entry.slotId)}</span>
+          <span class="player-picks-value">${escapeHtml(entry.pickLabel)}</span>
+        </li>
+      `).join("")
+      : `<li class="player-picks-item is-empty"><span class="player-picks-value">Unpicked</span></li>`;
+
+    return `
+      <section class="player-picks-round" aria-label="${escapeHtml(group.label)} picks">
+        <h4>${escapeHtml(group.label)}</h4>
+        <ul>${rows}</ul>
+      </section>
+    `;
+  }).join("");
+
+  return `
+    <section class="player-picks-viewer" data-player-picks-viewer role="region" aria-labelledby="player-picks-viewer-title" tabindex="-1">
+      <header class="player-picks-viewer-header">
+        <div>
+          <p class="player-standings-kicker">Read-only bracket</p>
+          <h3 id="player-picks-viewer-title">${escapeHtml(row.publicPlayerName)} picks</h3>
+        </div>
+        <button type="button" class="player-picks-close" data-player-picks-close aria-label="Close player picks">×</button>
+      </header>
+      <div class="player-picks-rounds">${sections}</div>
+    </section>
+  `;
+}
+
 function normalizeStandingsRow(row) {
   const groupPoints = numericScore(row?.groupPoints);
   const knockoutPoints = numericScore(row?.knockoutPoints);
@@ -151,19 +258,24 @@ function renderStandingsRows(panel, rows) {
 
   if (!sortedRows.length) {
     body.innerHTML = `<p class="player-standings-status">No players yet</p>`;
-    return;
+    return [];
   }
 
   const rowMarkup = sortedRows.map((row, index) => `
     <tr>
       <td class="player-standings-rank">${index + 1}</td>
-      <td class="player-standings-player">${row.publicPlayerName}</td>
+      <td class="player-standings-player">
+        <button type="button" class="player-standings-player-button" data-player-picks-open data-player-picks-row="${index}" aria-haspopup="region" aria-expanded="false" aria-label="View ${escapeHtml(row.publicPlayerName)} picks">
+          ${escapeHtml(row.publicPlayerName)}
+        </button>
+      </td>
       <td class="player-standings-group-count">${row.groupPoints}</td>
       <td class="player-standings-knockout-count">${row.knockoutPoints}</td>
     </tr>
   `).join("");
 
   body.innerHTML = `
+    <div class="player-picks-viewer-slot" data-player-picks-viewer-slot></div>
     <table class="player-standings-table" aria-label="Player standings">
       <thead>
         <tr>
@@ -176,6 +288,7 @@ function renderStandingsRows(panel, rows) {
       <tbody>${rowMarkup}</tbody>
     </table>
   `;
+  return sortedRows;
 }
 
 export function createPlayerStandingsSurface({
@@ -189,6 +302,8 @@ export function createPlayerStandingsSurface({
   let storageReady = false;
   let storageReadyChecked = false;
   let lastOpenButton = null;
+  let currentStandingsRows = [];
+  let lastPlayerPicksButton = null;
 
   const button = ensureStandingsButton(root);
   const panel = ensureStandingsPanel(root);
@@ -254,7 +369,7 @@ export function createPlayerStandingsSurface({
         return;
       }
 
-      renderStandingsRows(panel, rows);
+      currentStandingsRows = renderStandingsRows(panel, rows);
     } catch (error) {
       console.error("[PlayerStandingsSurface] standings unavailable", error);
       renderStatus("Standings unavailable");
@@ -272,7 +387,31 @@ export function createPlayerStandingsSurface({
     closeButton?.focus();
   }
 
+  function closePlayerPicksViewer({ restoreFocus = true } = {}) {
+    const slot = panel.querySelector("[data-player-picks-viewer-slot]");
+    if (slot) slot.innerHTML = "";
+    panel.querySelectorAll("[data-player-picks-open]").forEach((buttonNode) => {
+      buttonNode.setAttribute("aria-expanded", "false");
+    });
+    if (restoreFocus) lastPlayerPicksButton?.focus();
+  }
+
+  function openPlayerPicksViewer(buttonNode) {
+    const rowIndex = Number(buttonNode?.getAttribute("data-player-picks-row"));
+    const row = Number.isInteger(rowIndex) ? currentStandingsRows[rowIndex] : null;
+    const slot = panel.querySelector("[data-player-picks-viewer-slot]");
+    if (!row || !slot) return;
+
+    lastPlayerPicksButton = buttonNode;
+    panel.querySelectorAll("[data-player-picks-open]").forEach((candidate) => {
+      candidate.setAttribute("aria-expanded", candidate === buttonNode ? "true" : "false");
+    });
+    slot.innerHTML = renderPlayerPicksViewer(row);
+    slot.querySelector("[data-player-picks-viewer]")?.focus();
+  }
+
   function closePanel() {
+    closePlayerPicksViewer({ restoreFocus: false });
     panel.hidden = true;
     lastOpenButton?.focus();
   }
@@ -284,6 +423,17 @@ export function createPlayerStandingsSurface({
     closeButton?.addEventListener("click", closePanel);
 
     panel.addEventListener("click", (event) => {
+      const picksButton = event.target.closest?.("[data-player-picks-open]");
+      if (picksButton) {
+        openPlayerPicksViewer(picksButton);
+        return;
+      }
+
+      if (event.target.closest?.("[data-player-picks-close]")) {
+        closePlayerPicksViewer();
+        return;
+      }
+
       if (event.target === panel) closePanel();
     });
 
