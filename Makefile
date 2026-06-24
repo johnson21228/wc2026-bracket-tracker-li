@@ -1,6 +1,7 @@
 .PHONY: verify pack clean-hygiene open-site publish-pages publish-pages-force check-pages
 
 verify:
+	python3 tools/verify_wc2026_paste_back_terminal_output_contract.py
 	python3 tools/verify_capture_back_governance.py
 	python3 tools/verify_wc2026_raw_pick_id_truth_model.py
 	python3 tools/verify_wc2026_pick_conflicts_warn_not_block.py
