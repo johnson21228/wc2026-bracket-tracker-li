@@ -30,13 +30,20 @@ export function createBracketController({ model, view }) {
     return view.activeGameValue?.() || "game-1";
   }
 
+  function slotIsR32(slot) {
+    const slotId = String(slot?.slotId || "").toUpperCase();
+    return slot?.round === "R32" || slotId.startsWith("R32");
+  }
+
   function slotAllowedForActiveGame(slot) {
-    return true;
-}
+    if (activeGameValue() !== "game-1") return true;
+    return slotIsR32(slot);
+  }
 
   function disabledReasonForActiveGame(slot) {
-    return "";
-}
+    if (slotAllowedForActiveGame(slot)) return "";
+    return "Later-round picks open when Knockout Stage presentation is active.";
+  }
 
   function pickMenuNotReadyReason(slot) {
     return "";

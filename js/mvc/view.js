@@ -384,6 +384,13 @@ export function createBracketView(root) {
       && !slotId.startsWith("R32");
   }
 
+  function shouldSuppressPickInteractionForSlot(slot) {
+    const slotId = String(slot?.slotId || "").toUpperCase();
+    return isGroupStagePresentationActive()
+      && slot?.round !== "R32"
+      && !slotId.startsWith("R32");
+  }
+
   function displayTeamForSlot(slot) {
     if (activeGameValue() === "game-2" && slot.round === "R32" && slot.game2ResolvedTeam) {
       return slot.game2ResolvedTeam;
@@ -411,10 +418,11 @@ export function createBracketView(root) {
       const precedentUnavailableReason = disabledReasonForActiveGame(slot);
       const displayTeam = displayTeamForSlot(slot);
       const pickFillSuppressed = shouldSuppressPickFillForSlot(slot);
+      const pickInteractionSuppressed = shouldSuppressPickInteractionForSlot(slot);
       const game2ResolvedR32Display = isGame2ResolvedR32Display(slot, displayTeam);
       const readOnlyGame2R32Display = game2ResolvedR32Display;
       const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display;
-      button.disabled = disabledByPickability;
+      button.disabled = disabledByPickability || pickInteractionSuppressed;
       button.dataset.pickDisabledByPrecedent = enabledByPrecedent ? "false" : "true";
       if (displayTeam && String(slot.slotId || "").toUpperCase() === "CHAMPION") {
         button.classList.add("is-champion-winner");
@@ -498,6 +506,10 @@ export function createBracketView(root) {
       }
 
       if (pickFillSuppressed) button.classList.add("is-pick-fill-suppressed");
+      if (pickInteractionSuppressed) {
+        button.classList.add("is-pick-interaction-suppressed");
+        button.dataset.pickInteractionSuppressed = "true";
+      }
       if (displayTeam) button.classList.add("has-pick");
       if (game2ResolvedR32Display) {
         button.classList.add("has-game2-resolved-r32");
@@ -513,12 +525,14 @@ export function createBracketView(root) {
         button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
         button.setAttribute("aria-label", `${slot.label}: invalid pick. ${button.title}`);
       }
-      if (slot.pickable) button.classList.add("is-pickable");
+      if (slot.pickable && !pickInteractionSuppressed) button.classList.add("is-pickable");
       if (!enabledByPrecedent) {
         button.classList.add("is-waiting-for-precedent");
         button.title = precedentUnavailableReason;
       }
-      button.addEventListener("click", () => handlers.onSlotClick?.(slot.slotId));
+      if (!pickInteractionSuppressed) {
+        button.addEventListener("click", () => handlers.onSlotClick?.(slot.slotId));
+      }
       layer.append(button);
     }
   }
@@ -557,13 +571,20 @@ export function createBracketView(root) {
 
     for (const pick of finalFourModel.picks || []) {
       const enabledByPrecedent = slotEnabledByPrecedent(pick);
+      const pickInteractionSuppressed = shouldSuppressPickInteractionForSlot(pick);
       const button = document.createElement("button");
       button.type = "button";
       button.className = "final-four-pick-row";
       button.dataset.slotId = pick.slotId;
       button.dataset.round = pick.round;
-      button.disabled = !pick.pickable;
-      button.addEventListener("click", () => handlers.onFinalFourSlotClick?.(pick.slotId));
+      button.disabled = !pick.pickable || pickInteractionSuppressed;
+      if (pickInteractionSuppressed) {
+        button.classList.add("is-pick-interaction-suppressed");
+        button.dataset.pickInteractionSuppressed = "true";
+      }
+      if (!pickInteractionSuppressed) {
+        button.addEventListener("click", () => handlers.onFinalFourSlotClick?.(pick.slotId));
+      }
 
       const label = document.createElement("span");
       label.className = "final-four-pick-label";
