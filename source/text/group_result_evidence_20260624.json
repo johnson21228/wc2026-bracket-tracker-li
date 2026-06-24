@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-06-24T08:55:00-04:00",
+  "purpose": "Capture June 23 played matches that were still scheduled/missing scores in the uploaded pack.",
+  "results": [
+    {
+      "matchId": "GS-2026-06-23-K3",
+      "groupId": "K",
+      "score": "Portugal 5-0 Uzbekistan",
+      "homeTeamId": "POR",
+      "awayTeamId": "UZB",
+      "homeScore": 5,
+      "awayScore": 0,
+      "evidenceUrls": [
+        "https://www.espn.com/soccer/scoreboard",
+        "https://www.espn.com/soccer/match/_/gameId/760461/uzbekistan-portugal",
+        "https://www.reuters.com/sports/soccer/record-breaker-ronaldo-guides-portugal-5-0-win-over-uzbekistan-2026-06-23/",
+        "https://www.theguardian.com/football/live/2026/jun/23/portugal-v-uzbekistan-world-cup-2026-live"
+      ]
+    },
+    {
+      "matchId": "GS-2026-06-23-L3",
+      "groupId": "L",
+      "score": "England 0-0 Ghana",
+      "homeTeamId": "ENG",
+      "awayTeamId": "GHA",
+      "homeScore": 0,
+      "awayScore": 0,
+      "evidenceUrls": [
+        "https://www.espn.com/soccer/scoreboard",
+        "https://www.espn.com/soccer/match/_/gameId/760458/ghana-england",
+        "https://nypost.com/2026/06/23/sports/no-4-england-cant-solve-ghana-in-stunning-world-cup-draw/"
+      ]
+    },
+    {
+      "matchId": "GS-2026-06-23-L4",
+      "groupId": "L",
+      "score": "Panama 0-1 Croatia",
+      "homeTeamId": "PAN",
+      "awayTeamId": "CRO",
+      "homeScore": 0,
+      "awayScore": 1,
+      "evidenceUrls": [
+        "https://www.espn.com/soccer/report/_/gameId/760460",
+        "https://www.reuters.com/sports/soccer/budimir-gives-croatia-1-0-win-eliminate-panama-group-l-2026-06-24/"
+      ]
+    },
+    {
+      "matchId": "GS-2026-06-23-K4",
+      "groupId": "K",
+      "score": "Colombia 1-0 Congo DR",
+      "homeTeamId": "COL",
+      "awayTeamId": "COD",
+      "homeScore": 1,
+      "awayScore": 0,
+      "evidenceUrls": [
+        "https://www.espn.com/soccer/report/_/gameId/760459",
+        "https://www.reuters.com/sports/soccer/colombia-qualify-with-dr-congo-win-lorenzo-praises-attacking-variety-2026-06-24/",
+        "https://www.theguardian.com/football/2026/jun/24/colombia-dr-congo-world-cup-group-k-match-report"
+      ]
+    }
+  ],
+  "notes": [
+    "The checked-in espnMatchId fields were preserved; current ESPN evidence game IDs are recorded as currentEvidenceMatchId on patched match rows.",
+    "No highlight URLs were added because this pass captures scores only."
+  ]
+}
