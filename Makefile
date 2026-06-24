@@ -70,6 +70,7 @@ verify:
 	python3 tools/verify_wc2026_belgium_iran_result_and_highlight.py
 	python3 tools/verify_wc2026_june_22_group_i_j_results_and_highlights.py
 	python3 tools/verify_wc2026_june_23_group_k_l_results.py
+	python3 tools/verify_wc2026_group_b_complete_results.py
 	python3 tools/verify_wc2026_current_group_order_rendering.py
 	python3 tools/verify_wc2026_pick_validity_rendering.py
 	python3 tools/verify_wc2026_pick_validity_no_current_rank_block.py

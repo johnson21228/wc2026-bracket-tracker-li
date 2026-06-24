@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-06-24T16:15:00-04:00",
+  "purpose": "Capture completed Group B June 24 results and refresh Group B / third-place standings in the uploaded pack.",
+  "results": [
+    {
+      "matchId": "GS-2026-06-24-B5",
+      "groupId": "B",
+      "score": "Switzerland 2-1 Canada",
+      "homeTeamId": "SUI",
+      "awayTeamId": "CAN",
+      "homeScore": 2,
+      "awayScore": 1,
+      "evidenceUrls": [
+        "https://www.espn.com/soccer/scoreboard/_/date/20260624"
+      ]
+    },
+    {
+      "matchId": "GS-2026-06-24-B6",
+      "groupId": "B",
+      "score": "Bosnia-Herzegovina 3-1 Qatar",
+      "homeTeamId": "BIH",
+      "awayTeamId": "QAT",
+      "homeScore": 3,
+      "awayScore": 1,
+      "evidenceUrls": [
+        "https://www.espn.com/soccer/scoreboard/_/date/20260624"
+      ]
+    }
+  ],
+  "standingsNote": "Group B is now complete in the checked-in current data: Switzerland 7 pts, Canada 4 pts, Bosnia and Herzegovina 4 pts, Qatar 1 pt. Canada remains ahead of Bosnia and Herzegovina on goal difference after their head-to-head draw.",
+  "notes": [
+    "No YouTube highlight URLs were added in this pass.",
+    "The checked-in espnMatchId fields were preserved; current ESPN evidence IDs are recorded as currentEvidenceMatchId on patched match rows."
+  ]
+}
