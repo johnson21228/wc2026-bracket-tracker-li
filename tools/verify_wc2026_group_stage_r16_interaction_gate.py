@@ -32,8 +32,25 @@ def main():
 
     require("shouldSuppressPickFillForSlot" in view,
             "Existing Group Stage visual suppression gate must remain present.", errors)
-    require("slotAllowedForActiveGame" in controller,
+    require("function shouldSuppressPickInteractionForSlot(slot)" in view,
+            "View must expose a Group Stage R16+ interaction suppression gate.", errors)
+    require("const pickInteractionSuppressed = shouldSuppressPickInteractionForSlot(slot);" in view,
+            "View must compute R16+ pick interaction suppression for board slots.", errors)
+    require("button.disabled = disabledByPickability || pickInteractionSuppressed;" in view,
+            "Suppressed Group Stage R16+ cells must be disabled as pick targets.", errors)
+    require("if (slot.pickable && !pickInteractionSuppressed) button.classList.add(\"is-pickable\");" in view,
+            "Suppressed Group Stage R16+ cells must not receive pickable cursor styling.", errors)
+    require("button.addEventListener(\"click\", () => handlers.onSlotClick?.(slot.slotId));" in view
+            and "if (!pickInteractionSuppressed)" in view,
+            "Suppressed Group Stage R16+ cells must not invoke slot-click handlers.", errors)
+    require("button.disabled = !pick.pickable || pickInteractionSuppressed;" in view,
+            "Final Four pick rows must also honor Group Stage interaction suppression.", errors)
+    require("function slotAllowedForActiveGame(slot)" in controller,
             "Controller active-game slot gate must remain present for the implementation backstop.", errors)
+    require("function slotIsR32(slot)" in controller and "return slotIsR32(slot);" in controller,
+            "Controller backstop must allow only R32 slots during Group Stage.", errors)
+    require("Later-round picks open when Knockout Stage presentation is active." in controller,
+            "Controller must report a player-facing reason when Group Stage blocks R16+ picks.", errors)
 
     if errors:
         print("Group Stage R16+ interaction gate capture verification failed: " + "; ".join(errors))
