@@ -15,4 +15,5 @@ Refresh the Bracketeering info panel copy so it reads like a friendly player inv
 - Info panel tells email joiners to check spam/junk.
 - Info panel explains Group Stage Picks and Knockout Round Picks.
 - Info panel explains Group Stage Picks are optional and used as a tiebreaker.
+- Info panel explains Knockout Round Picks happen after the Round of 32 is determined.
 - Existing info-panel verifiers pass.

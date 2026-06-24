@@ -23,8 +23,8 @@ for token in [
     "How to play",
     "Navigate the game board like Google Maps",
     "Press the join button to play the game with others",
-    "The winner gets $50 from me",
-    "Group Stage is used as the tiebreaker",
+    "The winner gets $50",
+    "Group Stage points are used as the Bracketeering tiebreaker",
     "Knockout Stage picks are locked when the first knockout match begins",
     "16 points for correctly picking the World Cup champion",
 ]:
