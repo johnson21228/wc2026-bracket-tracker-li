@@ -28,7 +28,8 @@ for token in [
     "Please, just have fun making picks",
     "Press the join button to play the game with others",
     "The game has two parts",
-    "Group Stage points are used as the Bracketeering tiebreaker",
+    "Part one results are used as a tiebreaker",
+    "Group Stage Picks lock at 11:59 PM ET",
     "Knockout Stage picks are locked when the first knockout match begins",
     "16 points for correctly picking the World Cup champion",
 ]:

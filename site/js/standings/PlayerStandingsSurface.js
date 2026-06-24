@@ -1,3 +1,5 @@
+import { areGroupStagePicksLocked, GROUP_STAGE_PICKS_LOCK_AT_MS, GROUP_STAGE_PICKS_LOCK_TIMER_MAX_MS, playerResultsHiddenUntilLockMessage } from "../config/gameLocks.js";
+
 const STANDINGS_PANEL_OPEN_EVENT = "wc2026:standings-panel-opened";
 const OFFICIAL_RESULTS_PLAYER_NAMES = new Set(["Admin_", "Official Results"]);
 
@@ -430,6 +432,7 @@ export function createPlayerStandingsSurface({
   let currentStandingsRows = [];
   let lastPlayerBoardViewerButton = null;
   let boardViewerAssetsPromise = null;
+  let groupStagePicksLockTimer = null;
 
   const button = ensureStandingsButton(root);
   const panel = ensureStandingsPanel(root);
@@ -439,16 +442,20 @@ export function createPlayerStandingsSurface({
 
   function syncStandingsButtonState() {
     const joined = isSignedIn(currentAuthState);
-    const canOpen = joined && storageReady;
+    const resultsVisible = areGroupStagePicksLocked();
+    const canOpen = joined && storageReady && resultsVisible;
     button.hidden = !canOpen;
     button.disabled = !canOpen;
     button.classList.toggle("is-join-required", !joined);
-    button.classList.toggle("is-storage-unavailable", joined && storageReadyChecked && !storageReady);
+    button.classList.toggle("is-results-locked", joined && !resultsVisible);
+    button.classList.toggle("is-storage-unavailable", joined && resultsVisible && storageReadyChecked && !storageReady);
     button.title = !joined
       ? "Join to enter standings."
-      : storageReady
-        ? "Open Standings"
-        : "Standings unavailable until stored picks can be read.";
+      : !resultsVisible
+        ? playerResultsHiddenUntilLockMessage()
+        : storageReady
+          ? "Open Standings"
+          : "Standings unavailable until stored picks can be read.";
     button.setAttribute("aria-label", button.title);
   }
 
@@ -459,6 +466,13 @@ export function createPlayerStandingsSurface({
 
   async function refreshStorageReady() {
     if (!isSignedIn(currentAuthState)) {
+      storageReady = false;
+      storageReadyChecked = true;
+      syncStandingsButtonState();
+      return false;
+    }
+
+    if (!areGroupStagePicksLocked()) {
       storageReady = false;
       storageReadyChecked = true;
       syncStandingsButtonState();
@@ -477,6 +491,25 @@ export function createPlayerStandingsSurface({
     return storageReady;
   }
 
+  function scheduleGroupStagePicksLockRefresh() {
+    if (groupStagePicksLockTimer) {
+      window.clearTimeout(groupStagePicksLockTimer);
+      groupStagePicksLockTimer = null;
+    }
+
+    const msUntilLock = GROUP_STAGE_PICKS_LOCK_AT_MS - Date.now();
+    if (
+      Number.isFinite(msUntilLock)
+      && msUntilLock > 0
+      && msUntilLock < GROUP_STAGE_PICKS_LOCK_TIMER_MAX_MS
+    ) {
+      groupStagePicksLockTimer = window.setTimeout(() => {
+        syncStandingsButtonState();
+        refreshStorageReady();
+      }, msUntilLock + 1000);
+    }
+  }
+
   function loadBoardViewerAssets() {
     if (!boardViewerAssetsPromise) {
       boardViewerAssetsPromise = Promise.all([
@@ -489,6 +522,11 @@ export function createPlayerStandingsSurface({
 
   async function loadStandingsRows() {
     renderStatus("Loading standings…");
+
+    if (!areGroupStagePicksLocked()) {
+      renderStatus(playerResultsHiddenUntilLockMessage());
+      return;
+    }
 
     if (!await refreshStorageReady()) {
       renderStatus("Standings unavailable until stored picks can be read.");
@@ -521,6 +559,10 @@ export function createPlayerStandingsSurface({
   async function openPanel(event) {
     if (event?.currentTarget instanceof HTMLElement) {
       lastOpenButton = event.currentTarget;
+    }
+    if (!areGroupStagePicksLocked()) {
+      syncStandingsButtonState();
+      return;
     }
     if (!await refreshStorageReady()) return;
     panel.hidden = false;
@@ -567,6 +609,7 @@ export function createPlayerStandingsSurface({
   function start() {
     syncStandingsButtonState();
     refreshStorageReady();
+    scheduleGroupStagePicksLockRefresh();
     installBoardViewerDragPan(boardViewerPanel.querySelector("[data-player-board-viewer-scroll]"));
     button.addEventListener("click", openPanel);
     closeButton?.addEventListener("click", closePanel);
@@ -610,6 +653,7 @@ export function createPlayerStandingsSurface({
       storageReady = false;
       storageReadyChecked = false;
       syncStandingsButtonState();
+      scheduleGroupStagePicksLockRefresh();
       refreshStorageReady().then((ready) => {
         if (ready && !panel.hidden) loadStandingsRows();
         if (!ready) {

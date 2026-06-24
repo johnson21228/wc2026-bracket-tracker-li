@@ -113,6 +113,7 @@ verify:
 	python3 tools/verify_wc2026_player_standings_panel.py
 	python3 tools/verify_wc2026_storage_backed_player_standings.py
 	python3 tools/verify_wc2026_player_standings_board_viewer.py
+	python3 tools/verify_wc2026_group_stage_pick_lock_gate.py
 	python3 tools/verify_wc2026_bracketeering_workflow_easter_egg_panel.py
 	python3 tools/verify_wc2026_full_canonical_bracket_document_runtime.py
 	python3 tools/verify_wc2026_bracketdocument_save_seam_before_supabase.py

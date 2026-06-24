@@ -1,6 +1,7 @@
 import { teamPickValue, unpickedPickValue } from "../model/PickValue.js";
 import { setBracketPick } from "../model/UserBracketModel.js";
 import { createStaticBracketRepository } from "../services/BracketRepository.js";
+import { areGroupStagePicksLocked, groupStagePicksLockedMessage } from "../config/gameLocks.js";
 const GAME1_R32_PICK_STORAGE_KEY = "wc2026.game1.r32ProjectionPicks.v1";
 
 const GAME1_R32_PICKABLE_STATES = new Set([
@@ -120,6 +121,10 @@ function isPickableLifecycle(lifecycle) {
   return GAME1_R32_PICKABLE_STATES.has(state);
 }
 
+function isGroupStagePickOpen(lifecycle) {
+  return isPickableLifecycle(lifecycle) && !areGroupStagePicksLocked();
+}
+
 function titleForSlot(logicSlot) {
   if (logicSlot.qualifierKind === "group-winner") return `Pick projected Group ${logicSlot.groups[0]} winner`;
   if (logicSlot.qualifierKind === "group-runner-up") return `Pick projected Group ${logicSlot.groups[0]} runner-up`;
@@ -179,7 +184,7 @@ class Game1R32PickController {
   }
 
   get isPickable() {
-    return isPickableLifecycle(this.lifecycle);
+    return isGroupStagePickOpen(this.lifecycle);
   }
 
   readPicks() {
@@ -221,7 +226,8 @@ class Game1R32PickController {
   }
 
   disabledReasonFor({ logicSlot, geometrySlot, bounds, candidates }) {
-    if (!this.isPickable) return "Game 1 projection picking is not open.";
+    if (areGroupStagePicksLocked()) return groupStagePicksLockedMessage();
+    if (!isPickableLifecycle(this.lifecycle)) return "Game 1 projection picking is not open.";
     if (!logicSlot) return "FIFA slot logic is missing.";
     if (!geometrySlot || !bounds) return "Board geometry is missing.";
     if (!Array.isArray(candidates) || candidates.length === 0) return "No candidate teams are available for this slot.";
@@ -233,6 +239,7 @@ class Game1R32PickController {
   }
 
   validatePick({ fifaSlotId, teamId }) {
+    if (areGroupStagePicksLocked()) return { ok: false, reason: groupStagePicksLockedMessage() };
     const slot = this.findSlot(fifaSlotId);
     if (!slot) return { ok: false, reason: "R32 slot is not available." };
     if (!slot.enabled) return { ok: false, reason: slot.disabledReason };
@@ -317,6 +324,7 @@ class Game1R32PickController {
   }
 
   clearPick({ fifaSlotId }) {
+    if (areGroupStagePicksLocked()) return { ok: false, reason: groupStagePicksLockedMessage() };
     const picks = this.readPicks();
     const previous = picks[fifaSlotId] || null;
     delete picks[fifaSlotId];
