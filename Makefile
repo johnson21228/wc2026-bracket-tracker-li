@@ -101,6 +101,7 @@ verify:
 	python3 tools/verify_wc2026_mouse_double_click_zoom.py
 	python3 tools/verify_wc2026_public_multi_user_play_li.py
 	python3 tools/verify_wc2026_empty_pick_state_storage_li.py
+	python3 tools/verify_wc2026_official_r32_hydration_li.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
 	python3 tools/verify_wc2026_supabase_sql_rls_finalization.py
 	python3 tools/verify_wc2026_supabase_profiles_and_bracket_saving_target.py
