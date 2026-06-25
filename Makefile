@@ -2,6 +2,7 @@
 
 verify:
 	python3 tools/verify_wc2026_workbench_easter_egg_button_visible.py
+	python3 tools/verify_wc2026_c64_workbench_loop_easter_egg_tab.py
 	python3 tools/verify_wc2026_official_truth_bracket_hidden_player.py
 	python3 tools/verify_wc2026_joined_game1_brackets_public_visibility.py
 	python3 tools/verify_wc2026_paste_back_terminal_output_contract.py

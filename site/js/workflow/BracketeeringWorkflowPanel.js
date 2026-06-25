@@ -72,6 +72,22 @@ const WORKBENCH_CLOSING_LINES = Object.freeze([
 const STORY_CLOSING_LINE =
   "The Bracketeering site is the product. The Workbench is the factory.";
 
+const C64_WORKBENCH_LOOP_IMAGE_SRC = "./assets/workflow/c64_workbench_stage0_learning_loop.jpeg";
+const C64_WORKBENCH_LOOP_TITLE = "The C64 Workbench Loop";
+const C64_WORKBENCH_LOOP_PARAGRAPHS = Object.freeze([
+  "This picture shows the workflow behind the Commodore 64 Learning Lab. The important idea is that the project is not just a folder of code examples. It is a repeatable learning loop.",
+  "The loop starts in a conversation. The conversation is used to think through what the next small learning step should be: a C64 concept, a tiny program, an expected behavior, and a way to verify that the work was actually captured. In this project, the conversation is doing two jobs at once. It helps reason creatively about what to build next, and it also acts as a Workbench guide that keeps the project organized, durable, and re-enterable.",
+  "From there, the work moves into the local repo. This is where the conversation becomes real project material: source code, lab folders, documentation, prompts, cards, captures, and verification scripts. The repo is the durable memory of the project. The conversation can suggest a change, but the repo is where that change becomes inspectable and reusable.",
+  "Each C64 lab follows the same pattern. A lab teaches one machine idea, such as screen memory, color memory, PETSCII characters, keyboard input, sprites, or SID sound. The lab includes a small C program, an expected result, and a build target. The goal is not to make a large application all at once. The goal is to make one concept visible and runnable.",
+  "The terminal is the handoff point between the idea and the machine. make verify checks that the Workbench structure still makes sense. make lab001, make lab002, and the other lab targets build real Commodore 64 .prg files using cc65. Then VICE runs those .prg files in an emulator, giving visible evidence that the lab works.",
+  "That emulator evidence matters. It keeps the loop grounded. The project does not only say \u201cthis should work.\u201d It builds a real C64 program and runs it. The visible screen, color, sprite, sound, or interaction becomes the proof that the lesson is correct.",
+  "Capture Back is the continuity layer. When a useful step is completed, it gets captured back into the Workbench as docs, cards, prompts, and verification rules. That means the project can be resumed later without depending on memory or on a single chat thread. The repo remembers the path.",
+  "The result is a small learning system:",
+  "Conversation \u2192 repo change \u2192 verification \u2192 C64 build \u2192 emulator evidence \u2192 capture back \u2192 next lab.",
+  "That is the Workbench Loop. It lets a beginner-friendly C64 project grow one durable lesson at a time while preserving both the code and the reasoning behind it."
+]);
+
+
 function paragraphsHtml(paragraphs = []) {
   return paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("");
 }
@@ -126,6 +142,7 @@ export function setupBracketeeringWorkflowPanel(root) {
       <div class="workflow-panel-tabs" role="tablist" aria-label="Workbench Easter egg tabs">
         ${tabButtonHtml({ id: "story", label: "Story", selected: true })}
         ${tabButtonHtml({ id: "workbench", label: "Workbench", selected: false })}
+        ${tabButtonHtml({ id: "c64-loop", label: "C64 Loop", selected: false })}
       </div>
 
       <section
@@ -155,6 +172,28 @@ export function setupBracketeeringWorkflowPanel(root) {
           <p class="workflow-panel-closing">${WORKBENCH_CLOSING_LINES.join("<br>")}</p>
         </section>
       </section>
+
+      <section
+        class="workflow-panel-tabpanel"
+        role="tabpanel"
+        id="workflow-tabpanel-c64-loop"
+        aria-labelledby="workflow-tab-c64-loop"
+        data-workflow-tabpanel="c64-loop"
+        hidden
+      >
+        <section class="workflow-panel-section workflow-panel-copy workflow-panel-c64-loop">
+          <h3 class="workflow-panel-subheading">${C64_WORKBENCH_LOOP_TITLE}</h3>
+          <figure class="workflow-panel-figure">
+            <img
+              src="${C64_WORKBENCH_LOOP_IMAGE_SRC}"
+              alt="C64 Workbench Stage 0 learning loop showing conversation, terminal capture back, and VICE emulator evidence."
+              loading="lazy"
+            >
+          </figure>
+          ${paragraphsHtml(C64_WORKBENCH_LOOP_PARAGRAPHS)}
+        </section>
+      </section>
+
     `;
   }
 
