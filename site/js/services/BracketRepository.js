@@ -63,13 +63,18 @@ class BracketRepository {
 
   async loadOfficialR32Source(bundle = null) {
     const modelBundle = bundle || await this.loadModelBundle();
-    if (typeof this.bracketStore.loadOfficialR32BracketAuthority === "function") {
+
+    if (this.bracketStore && typeof this.bracketStore.loadOfficialR32BracketAuthority === "function") {
       try {
         const officialBracket = await this.bracketStore.loadOfficialR32BracketAuthority({
-          tournamentId: "wc2026",
-          gameId: "game1",
+          tournamentId: this.tournamentId,
+          gameId: this.gameId,
         });
-        if (officialBracket?.picksBySlot) {
+
+        // Important: if the Admin_/official bracket row exists, it is authoritative
+        // even when it is intentionally partial during setup/testing.
+        // Static JSON fallback is only for a missing/unavailable admin source.
+        if (officialBracket) {
           return {
             ...officialBracket,
             userId: "Admin_/official",
@@ -83,6 +88,7 @@ class BracketRepository {
         console.warn("[WC2026 Official R32] Supabase Admin_/official bracket unavailable; using static fallback", error);
       }
     }
+
     return staticOfficialR32Fallback(modelBundle);
   }
 
