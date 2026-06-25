@@ -32,7 +32,7 @@ def main():
         "li/world_cup/official_truth_bracket_as_hidden_player_rule.md",
     ])
 
-    require('.eq("bracket_kind", "player")' in standings_store, "Standings store must read only player brackets.", errors)
+    require(('.eq("bracket_kind", "player")' in standings_store) or ('.in("bracket_kind", ["player", "official"])' in standings_store and "isAdminOfficialTruthRow" in standings_store and "const bracketRows = allRows.filter((row) => !isAdminOfficialTruthRow(row))" in standings_store), "Standings store must read player rows while separating/hiding the Admin official truth row.", errors)
     require("OFFICIAL_RESULTS_PLAYER_NAMES" in standings_surface, "Standings surface must reserve official player names.", errors)
     require("isOfficialStandingsRow" in standings_surface, "Standings surface must hard-filter official rows.", errors)
     require("Admin_" in standings_surface, "Standings surface must hide the current Admin_ official player.", errors)

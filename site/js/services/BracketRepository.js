@@ -67,19 +67,19 @@ class BracketRepository {
     if (this.bracketStore && typeof this.bracketStore.loadOfficialR32BracketAuthority === "function") {
       try {
         const officialBracket = await this.bracketStore.loadOfficialR32BracketAuthority({
-          tournamentId: this.tournamentId,
-          gameId: this.gameId,
+          tournamentId: this.tournamentId || "wc2026",
+          gameId: this.gameId || "game1",
         });
 
-        // Important: if the Admin_/official bracket row exists, it is authoritative
-        // even when it is intentionally partial during setup/testing.
-        // Static JSON fallback is only for a missing/unavailable admin source.
+        // Admin_/official is authoritative when the row exists, even while partial.
+        // Static JSON only fills local/dev missing-admin-source cases.
         if (officialBracket) {
           return {
             ...officialBracket,
             userId: "Admin_/official",
             bracketKind: "official",
             officialR32AuthoritySource: "Supabase:Admin_/official",
+            officialResultsTruthSource: "Supabase:Admin_/official",
             source: "Supabase:Admin_/official",
             authority: "Admin_/official",
           };

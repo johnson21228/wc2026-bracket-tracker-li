@@ -343,6 +343,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
           userId: "Admin_/official",
           bracketKind: "official",
           officialR32AuthoritySource: "Supabase:Admin_/official",
+          officialResultsTruthSource: "Supabase:Admin_/official",
           source: "Supabase:Admin_/official",
           authority: "Admin_/official",
         };
@@ -1029,7 +1030,16 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       ...getSlotViewModels(),
       ...(getFinalFourViewModel()?.picks || []),
     ].filter((slot) => slot.pickable).length;
-    return { picked, pickable, totalSlots: allPickSlots().length, bracketKind: remoteBracketDocument?.bracketKind || "player", editingOfficialResults: isEditingOfficialResults() };
+    return {
+      picked,
+      pickable,
+      totalSlots: allPickSlots().length,
+      bracketKind: remoteBracketDocument?.bracketKind || "player",
+      editingOfficialResults: isEditingOfficialResults(),
+      officialResultsTruthSource: officialBracketDocument?.officialResultsTruthSource || officialBracketDocument?.officialR32AuthoritySource || "",
+      officialResultsTruthUserId: officialBracketDocument?.userId || "",
+      officialResultsTruthPickCount: Object.keys(officialPicks).length,
+    };
   }
 
   // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.

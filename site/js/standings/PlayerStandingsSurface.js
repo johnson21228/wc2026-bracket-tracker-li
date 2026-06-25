@@ -61,6 +61,10 @@ function normalizeStandingsRow(row) {
     ? numericScore(row.picksCount)
     : Object.keys(picksBySlot).length;
 
+  const officialTruthPicksBySlot = row?.officialTruthPicksBySlot && typeof row.officialTruthPicksBySlot === "object" && !Array.isArray(row.officialTruthPicksBySlot)
+    ? row.officialTruthPicksBySlot
+    : {};
+
   return {
     publicPlayerName: safePublicPlayerName(row),
     picksBySlot,
@@ -69,6 +73,9 @@ function normalizeStandingsRow(row) {
     knockoutPoints,
     tiebreakerScore,
     total,
+    officialTruthPicksBySlot,
+    officialResultsTruthSource: row?.officialResultsTruthSource || "",
+    officialResultsTruthUserId: row?.officialResultsTruthUserId || "",
     bracketKind: row?.bracketKind || row?.bracket_kind || "player",
   };
 }
@@ -291,6 +298,11 @@ function normalizeBoardViewerTeam(teamId, teamById) {
   };
 }
 
+function boardViewerOfficialTruthLabel(team) {
+  if (!team) return "";
+  return `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id}`.trim();
+}
+
 function playerFacingSlotLabel(slot) {
   if (slot?.displayLabel) return slot.displayLabel;
   const slotId = String(slot?.slotId || "");
@@ -393,18 +405,31 @@ function renderPlayerBoard(panel, { row, assets }) {
   const { nativeSize, teamById, slots } = assets;
   const plane = panel.querySelector("[data-player-board-viewer-plane]");
   const picksBySlot = row?.picksBySlot || {};
+  const officialTruthPicksBySlot = row?.officialTruthPicksBySlot || {};
+  const officialTruthSource = row?.officialResultsTruthSource || "";
   const nativeWidth = Number(nativeSize.width || nativeSize.w || 1536);
   const nativeHeight = Number(nativeSize.height || nativeSize.h || 1024);
   const slotMarkup = slots.map((slot) => {
     const bounds = slot.boundsPx;
     const team = normalizeBoardViewerTeam(pickTeamIdFromRecord(picksBySlot[slot.slotId]), teamById);
+    const officialTeam = normalizeBoardViewerTeam(pickTeamIdFromRecord(officialTruthPicksBySlot[slot.slotId]), teamById);
+    const officialState = officialTeam && team
+      ? (officialTeam.id === team.id ? "correct" : "incorrect")
+      : "";
     const slotLabel = playerFacingSlotLabel(slot);
     const valueLabel = team ? `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id}`.trim() : "Unpicked";
     const fullLabel = team ? `${team.flag ? `${team.flag} ` : ""}${team.name || team.abbr || team.id}`.trim() : "Unpicked";
+    const officialLabel = boardViewerOfficialTruthLabel(officialTeam);
+    const officialMarkup = officialTeam
+      ? `<span class="player-board-viewer-official-truth">Official: ${escapeHtml(officialLabel)}</span>`
+      : "";
+    const stateClass = officialState ? ` has-official-${officialState}-pick` : "";
+    const ariaOfficial = officialTeam ? ` Official result from ${officialTruthSource || "Admin_/official"}: ${officialLabel}.` : "";
     return `
-      <button type="button" class="player-board-viewer-pick ${team ? "has-pick" : "is-unpicked"}" data-player-board-viewer-slot="${escapeHtml(slot.slotId)}" disabled aria-label="${escapeHtml(`${slotLabel}: ${fullLabel}. Read-only.`)}" style="left:${Number(bounds.x)}px;top:${Number(bounds.y)}px;width:${Number(bounds.width)}px;height:${Number(bounds.height)}px;">
+      <button type="button" class="player-board-viewer-pick ${team ? "has-pick" : "is-unpicked"}${stateClass}" data-player-board-viewer-slot="${escapeHtml(slot.slotId)}" data-official-result-state="${escapeHtml(officialState)}" disabled aria-label="${escapeHtml(`${slotLabel}: ${fullLabel}. Read-only.${ariaOfficial}`)}" style="left:${Number(bounds.x)}px;top:${Number(bounds.y)}px;width:${Number(bounds.width)}px;height:${Number(bounds.height)}px;">
         <span class="player-board-viewer-pick-label">${escapeHtml(slotLabel)}</span>
         <span class="player-board-viewer-pick-value">${escapeHtml(valueLabel)}</span>
+        ${officialMarkup}
       </button>
     `;
   }).join("");

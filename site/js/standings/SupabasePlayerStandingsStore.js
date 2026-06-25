@@ -2,6 +2,8 @@ import { getSharedSupabaseClient } from "../services/SupabaseClient.js";
 
 const USER_BRACKETS_TABLE = "user_brackets";
 const PROFILES_TABLE = "profiles";
+const ADMIN_OFFICIAL_USER_ID = "Admin_/official";
+const ADMIN_OFFICIAL_TRUTH_SOURCE = "Supabase:Admin_/official";
 
 function safeText(value, fallback = "") {
   const text = String(value || "").trim().replace(/\s+/g, " ");
@@ -19,7 +21,63 @@ function picksBySlotFromBracket(bracketJson) {
     : {};
 }
 
-function normalizeBracketRow(row, profileByUserId) {
+function pickTeamIdFromRecord(record) {
+  if (typeof record === "string") return record;
+  if (!record || typeof record !== "object") return "";
+  return record?.pick?.kind === "team"
+    ? String(record.pick.teamId || "")
+    : String(record?.teamId || record?.team_id || "");
+}
+
+function isR32EntrantRecord(slotId, record) {
+  const round = String(record?.round || "").toUpperCase();
+  const kind = String(record?.kind || "").toLowerCase();
+  return round === "R32" || round === "R32_ENTRANT" || kind === "entrant" || /^L-R32-|^R-R32-/i.test(String(slotId || ""));
+}
+
+function scoreAgainstAdminOfficialTruth(playerPicksBySlot, officialTruthPicksBySlot) {
+  let knockoutPoints = 0;
+  let scoredOfficialSlots = 0;
+
+  for (const [slotId, officialRecord] of Object.entries(officialTruthPicksBySlot || {})) {
+    if (isR32EntrantRecord(slotId, officialRecord)) continue;
+    const officialTeamId = pickTeamIdFromRecord(officialRecord);
+    if (!officialTeamId) continue;
+    scoredOfficialSlots += 1;
+    const playerTeamId = pickTeamIdFromRecord(playerPicksBySlot?.[slotId]);
+    if (playerTeamId && playerTeamId === officialTeamId) knockoutPoints += 1;
+  }
+
+  return {
+    groupPoints: 0,
+    knockoutPoints,
+    scoredOfficialSlots,
+    total: knockoutPoints,
+  };
+}
+
+function isAdminOfficialTruthRow(row) {
+  const bracketJson = row?.bracket_json && typeof row.bracket_json === "object" ? row.bracket_json : {};
+  return row?.user_id === ADMIN_OFFICIAL_USER_ID
+    || row?.bracket_kind === "official"
+    || bracketJson.userId === ADMIN_OFFICIAL_USER_ID
+    || bracketJson.bracketKind === "official";
+}
+
+function normalizeAdminOfficialTruth(row) {
+  const bracketJson = row?.bracket_json && typeof row.bracket_json === "object" ? row.bracket_json : {};
+  const picksBySlot = picksBySlotFromBracket(bracketJson);
+  return {
+    userId: ADMIN_OFFICIAL_USER_ID,
+    bracketKind: "official",
+    picksBySlot,
+    source: ADMIN_OFFICIAL_TRUTH_SOURCE,
+    officialResultsTruthSource: ADMIN_OFFICIAL_TRUTH_SOURCE,
+    partialOfficialTruthAllowed: true,
+  };
+}
+
+function normalizeBracketRow(row, profileByUserId, officialTruth = null) {
   const userId = row?.user_id || "";
   const bracketJson = row?.bracket_json && typeof row.bracket_json === "object"
     ? row.bracket_json
@@ -27,16 +85,21 @@ function normalizeBracketRow(row, profileByUserId) {
   const picksBySlot = picksBySlotFromBracket(bracketJson);
   const picksCount = Object.keys(picksBySlot).length;
   const profile = profileByUserId.get(userId) || null;
+  const officialTruthPicksBySlot = officialTruth?.picksBySlot || {};
+  const score = scoreAgainstAdminOfficialTruth(picksBySlot, officialTruthPicksBySlot);
 
   return {
     userId,
     publicPlayerName: publicPlayerNameFor({ profile, userId }),
     picksBySlot,
     picksCount,
-    groupPoints: 0,
-    knockoutPoints: 0,
-    tiebreakerScore: 0,
-    total: 0,
+    groupPoints: score.groupPoints,
+    knockoutPoints: score.knockoutPoints,
+    tiebreakerScore: score.scoredOfficialSlots,
+    total: score.total,
+    officialTruthPicksBySlot,
+    officialResultsTruthSource: officialTruth?.officialResultsTruthSource || "",
+    officialResultsTruthUserId: officialTruth?.userId || "",
     status: row?.status || bracketJson?.status || "draft",
     visibility: row?.visibility || bracketJson?.visibility || "private",
     bracketKind: row?.bracket_kind || bracketJson?.bracketKind || "player",
@@ -85,12 +148,14 @@ export function createSupabasePlayerStandingsStore({
       .select("user_id, tournament_id, game_id, status, visibility, bracket_kind, bracket_json, updated_at")
       .eq("tournament_id", tournamentId)
       .eq("game_id", gameId)
-      .eq("bracket_kind", "player")
+      .in("bracket_kind", ["player", "official"])
       .order("updated_at", { ascending: false });
 
     if (error) throw error;
 
-    const bracketRows = Array.isArray(data) ? data : [];
+    const allRows = Array.isArray(data) ? data : [];
+    const officialTruth = normalizeAdminOfficialTruth(allRows.find(isAdminOfficialTruthRow) || null);
+    const bracketRows = allRows.filter((row) => !isAdminOfficialTruthRow(row));
     const userIds = Array.from(new Set(
       bracketRows
         .map((row) => row?.user_id)
@@ -99,7 +164,7 @@ export function createSupabasePlayerStandingsStore({
 
     const profileByUserId = await fetchProfilesByUserId(supabaseClient, userIds);
 
-    return bracketRows.map((row) => normalizeBracketRow(row, profileByUserId));
+    return bracketRows.map((row) => normalizeBracketRow(row, profileByUserId, officialTruth));
   }
 
   return { listPlayerStandings, canReadStoredPicks };

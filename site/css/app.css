@@ -1726,6 +1726,26 @@ body {
   white-space: nowrap;
 }
 
+.player-board-viewer-pick.has-official-correct-pick {
+  outline: 1px solid rgba(114, 255, 161, .72);
+}
+
+.player-board-viewer-pick.has-official-incorrect-pick {
+  outline: 1px solid rgba(255, 196, 87, .72);
+}
+
+.player-board-viewer-official-truth {
+  align-self: end;
+  color: rgba(255, 255, 255, .72);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .player-board-viewer-status {
   position: absolute;
   top: 24px;

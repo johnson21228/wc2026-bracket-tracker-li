@@ -104,6 +104,7 @@ verify:
 	python3 tools/verify_wc2026_official_r32_hydration_li.py
 	python3 tools/verify_wc2026_official_r32_hydration_runtime.py
 	python3 tools/verify_wc2026_supabase_admin_official_r32_source.py
+	python3 tools/verify_wc2026_admin_official_results_truth.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
 	python3 tools/verify_wc2026_supabase_sql_rls_finalization.py
 	python3 tools/verify_wc2026_supabase_profiles_and_bracket_saving_target.py
