@@ -13,6 +13,7 @@ class StaticJsonModelSource {
     bracketSlotsPath = "data/model/bracket_slots.json",
     fifaR32SlotMapPath = "data/model/fifa_r32_slot_map.json",
     userBracketsSeedPath = "data/model/user_brackets_seed.json",
+    officialRoundOf32Path = "data/official_round_of_32.json",
   } = {}) {
     this.paths = {
       teamsPath,
@@ -20,6 +21,7 @@ class StaticJsonModelSource {
       bracketSlotsPath,
       fifaR32SlotMapPath,
       userBracketsSeedPath,
+      officialRoundOf32Path,
     };
   }
 
@@ -43,13 +45,27 @@ class StaticJsonModelSource {
     return fetchJson(this.paths.userBracketsSeedPath);
   }
 
+  async loadOfficialRoundOf32Fallback() {
+    const fallback = await fetchJson(this.paths.officialRoundOf32Path);
+    return {
+      ...fallback,
+      officialR32AuthoritySource: "StaticJsonFallback:official_round_of_32",
+      fallbackOnly: true,
+    };
+  }
+
+  async loadOfficialRoundOf32() {
+    return this.loadOfficialRoundOf32Fallback();
+  }
+
   async loadModelBundle() {
-    const [teams, users, bracketSlots, fifaR32SlotMap, userBracketsSeed] = await Promise.all([
+    const [teams, users, bracketSlots, fifaR32SlotMap, userBracketsSeed, officialRoundOf32] = await Promise.all([
       this.loadTeams(),
       this.loadUsers(),
       this.loadBracketSlots(),
       this.loadFifaR32SlotMap(),
       this.loadUserBracketsSeed(),
+      this.loadOfficialRoundOf32(),
     ]);
 
     return {
@@ -58,6 +74,7 @@ class StaticJsonModelSource {
       bracketSlots,
       fifaR32SlotMap,
       userBracketsSeed,
+      officialRoundOf32,
     };
   }
 }

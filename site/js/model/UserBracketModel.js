@@ -31,6 +31,109 @@ function sitePickIdsFromSlots(bracketSlots) {
   return canonicalPickSlotsFromModel(bracketSlots).map((slot) => slot.slotId);
 }
 
+function isR32EntrantSlot(slot) {
+  return slot?.kind === "entrant" || slot?.round === "R32_ENTRANT";
+}
+
+function teamIdFromOfficialRecord(record) {
+  if (!record || typeof record !== "object") return null;
+  const direct = record.teamId || record.id || record.abbr || record.code || record.team_id;
+  const nested = record.team?.id || record.team?.teamId || record.team?.abbr || record.pick?.teamId || record.pick?.abbr;
+  const teamId = direct || nested;
+  return teamId ? String(teamId).trim().toUpperCase() : null;
+}
+
+function slotIdFromOfficialRecord(record) {
+  if (!record || typeof record !== "object") return null;
+  const slotId = record.slotId || record.sitePickId || record.geometrySlotId || record.fifaSlotId || record.r32SlotId;
+  return slotId ? String(slotId).trim() : null;
+}
+
+function officialR32AuthoritySource(officialR32 = null) {
+  if (officialR32?.officialR32AuthoritySource) return String(officialR32.officialR32AuthoritySource);
+  if (officialR32?.hydratedFrom) return String(officialR32.hydratedFrom);
+  if (officialR32?.source === "Supabase:Admin_/official") return "Supabase:Admin_/official";
+  if (officialR32?.userId === "Admin_/official" && officialR32?.bracketKind === "official") return "Supabase:Admin_/official";
+  return "StaticJsonFallback:official_round_of_32";
+}
+
+function officialR32OccupantsBySlot(officialR32 = null) {
+  const occupants = {};
+  const hydratedFrom = officialR32AuthoritySource(officialR32);
+
+  const addRecord = (slotId, record) => {
+    const normalizedSlotId = String(slotId || slotIdFromOfficialRecord(record) || "").trim();
+    const teamId = teamIdFromOfficialRecord(record);
+    if (!normalizedSlotId || !teamId) return;
+    occupants[normalizedSlotId] = {
+      slotId: normalizedSlotId,
+      teamId,
+      source: "Admin_/official",
+      hydratedFrom,
+    };
+  };
+
+  if (Array.isArray(officialR32?.slots)) {
+    for (const record of officialR32.slots) addRecord(null, record);
+  }
+
+  if (officialR32?.picksBySlot && typeof officialR32.picksBySlot === "object") {
+    for (const [slotId, record] of Object.entries(officialR32.picksBySlot)) {
+      if (record?.round === "R32_ENTRANT" || record?.kind === "entrant") addRecord(slotId, record);
+    }
+  }
+
+  if (officialR32?.r32OccupantsBySlot && typeof officialR32.r32OccupantsBySlot === "object") {
+    for (const [slotId, record] of Object.entries(officialR32.r32OccupantsBySlot)) addRecord(slotId, record);
+  }
+
+  return occupants;
+}
+
+function hasOfficialR32Occupants(officialR32 = null) {
+  return Object.keys(officialR32OccupantsBySlot(officialR32)).length > 0;
+}
+
+function officialR32SlotRecord(slot, occupant, teamsById = {}) {
+  const pickValue = validatePickValue({ kind: "team", teamId: occupant.teamId }, teamsById);
+  return {
+    slotId: slot.slotId,
+    kind: "entrant",
+    round: "R32_ENTRANT",
+    pick: pickValue.kind === "unpicked" ? null : pickValue,
+    source: "Admin_/official",
+    authority: "Admin_/official",
+    playerAuthored: false,
+    hydratedFrom: occupant.hydratedFrom || "Supabase:Admin_/official",
+  };
+}
+
+function hydrateOfficialR32Occupants({ bracket, bracketSlots, teamsById = {}, officialR32 = null } = {}) {
+  const canonicalSlots = canonicalPickSlotsFromModel(bracketSlots, bracket?.gameId || "game1");
+  const occupants = officialR32OccupantsBySlot(officialR32);
+  if (!Object.keys(occupants).length || bracket?.bracketKind === "official") return bracket;
+
+  const picksBySlot = { ...(bracket?.picksBySlot || {}) };
+  for (const slot of canonicalSlots) {
+    if (!isR32EntrantSlot(slot)) continue;
+    const occupant = occupants[slot.slotId] || occupants[slot.sitePickId];
+    if (!occupant) continue;
+    picksBySlot[slot.slotId] = officialR32SlotRecord(slot, occupant, teamsById);
+  }
+
+  return {
+    ...bracket,
+    officialR32Hydration: {
+      source: "Admin_/official",
+      appliesAt: ["creation", "load", "import", "save"],
+      playerAuthored: false,
+      hydratedFrom: officialR32AuthoritySource(officialR32),
+    },
+    picksBySlot,
+    picks: legacyPicksFromPicksBySlot(picksBySlot),
+  };
+}
+
 function roundForLegacySlot(slotId, kind) {
   if (kind === "R32") return "R32_ENTRANT";
   if (kind === "R16") return "R32_WINNER";
@@ -73,13 +176,15 @@ function createEmptyBracketDocument({
   tournamentId = "wc2026",
   gameId = "game1",
   bracketSlots,
+  teamsById = {},
+  officialR32 = null,
 } = {}) {
   const canonicalSlots = canonicalPickSlotsFromModel(bracketSlots, gameId);
   const picksBySlot = Object.fromEntries(
     canonicalSlots.map((slot) => [slot.slotId, slotRecordFromPickValue(slot, unpickedPickValue(), "empty")])
   );
 
-  return {
+  const document = {
     schemaVersion: 1,
     id: bracketId || `${userId || "user"}-${tournamentId}`,
     userId,
@@ -93,13 +198,20 @@ function createEmptyBracketDocument({
     // Transitional compatibility for existing render code. Durable authority is picksBySlot.
     picks: legacyPicksFromPicksBySlot(picksBySlot),
   };
+
+  return hydrateOfficialR32Occupants({
+    bracket: document,
+    bracketSlots,
+    teamsById,
+    officialR32,
+  });
 }
 
 function createEmptyUserBracket(args) {
   return createEmptyBracketDocument(args);
 }
 
-function normalizeBracketDocument({ bracket, bracketSlots, teamsById, userId = "", gameId = "game1" }) {
+function normalizeBracketDocument({ bracket, bracketSlots, teamsById, officialR32 = null, userId = "", gameId = "game1" }) {
   const canonicalSlots = canonicalPickSlotsFromModel(bracketSlots, bracket?.gameId || gameId);
   const incomingBySlot = bracket?.picksBySlot && typeof bracket.picksBySlot === "object" ? bracket.picksBySlot : {};
   const incomingLegacyPicks = bracket?.picks && typeof bracket.picks === "object" ? bracket.picks : {};
@@ -116,17 +228,26 @@ function normalizeBracketDocument({ bracket, bracketSlots, teamsById, userId = "
       teamsById
     );
 
-    picksBySlot[slot.slotId] = slotRecordFromPickValue(
+    const slotRecord = slotRecordFromPickValue(
       slot,
       pickValue,
       incomingRecord?.source || (pickValue.kind === "unpicked" ? "empty" : "user")
     );
+
+    if (incomingRecord?.source === "Admin_/official" || incomingRecord?.authority === "Admin_/official") {
+      slotRecord.source = "Admin_/official";
+      slotRecord.authority = "Admin_/official";
+      slotRecord.playerAuthored = false;
+      slotRecord.hydratedFrom = incomingRecord?.hydratedFrom || "Supabase:Admin_/official";
+    }
+
+    picksBySlot[slot.slotId] = slotRecord;
   }
 
   const documentUserId = String(bracket?.userId || userId || "");
   const documentTournamentId = String(bracket?.tournamentId || "wc2026");
 
-  return {
+  const document = {
     schemaVersion: Number(bracket?.schemaVersion || 1),
     id: String(bracket?.id || `${documentUserId || "user"}-${documentTournamentId}`),
     userId: documentUserId,
@@ -140,6 +261,13 @@ function normalizeBracketDocument({ bracket, bracketSlots, teamsById, userId = "
     // Transitional compatibility for existing render code. Durable authority is picksBySlot.
     picks: legacyPicksFromPicksBySlot(picksBySlot),
   };
+
+  return hydrateOfficialR32Occupants({
+    bracket: document,
+    bracketSlots,
+    teamsById,
+    officialR32,
+  });
 }
 
 function normalizeUserBracket(args) {
@@ -153,6 +281,19 @@ function setBracketPick({ bracket, sitePickId, pickValue }) {
     kind: sitePickId === "CHAMPION" || sitePickId === "THIRD-PLACE-WINNER" ? "winner" : "winner",
     round: roundForLegacySlot(sitePickId, null),
   };
+
+  if (isR32EntrantSlot(existingRecord) && bracket?.bracketKind !== "official") {
+    return {
+      ...bracket,
+      officialR32Hydration: {
+        ...(bracket?.officialR32Hydration || {}),
+        source: "Admin_/official",
+        playerAuthored: false,
+        blockedPlayerR32Authoring: true,
+      },
+    };
+  }
+
   const slot = {
     slotId: sitePickId,
     kind: existingRecord.kind || "winner",
@@ -177,6 +318,9 @@ export {
   canonicalPickSlotsFromModel,
   createEmptyBracketDocument,
   createEmptyUserBracket,
+  hasOfficialR32Occupants,
+  hydrateOfficialR32Occupants,
+  officialR32AuthoritySource,
   legacyPicksFromPicksBySlot,
   normalizeBracketDocument,
   normalizeUserBracket,

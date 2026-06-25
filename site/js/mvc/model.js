@@ -1,4 +1,5 @@
 import { teamPickValue } from "../model/PickValue.js";
+import { hydrateOfficialR32Occupants } from "../model/UserBracketModel.js";
 const STORAGE_KEY = "wc2026.game1.cleanMvcPicks.v1";
 const PICK_SNAPSHOT_APP_ID = "wc2026.braketeeringPub.picks";
 const ROUND_ORDER = ["R32", "R16", "QF", "SF", "SF_WINNER", "CHAMPION", "FINAL_FOUR"];
@@ -329,11 +330,27 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     picks = pickFromStorage();
   }
 
-  if (officialBracketStore?.loadOfficialBracket) {
+  const loadOfficialR32BracketAuthority = officialBracketStore?.loadOfficialR32BracketAuthority || officialBracketStore?.loadOfficialBracket;
+  if (loadOfficialR32BracketAuthority) {
     try {
-      officialBracketDocument = await officialBracketStore.loadOfficialBracket();
+      officialBracketDocument = await loadOfficialR32BracketAuthority.call(officialBracketStore, {
+        tournamentId: "wc2026",
+        gameId: "game1",
+      });
+      if (officialBracketDocument) {
+        officialBracketDocument = {
+          ...officialBracketDocument,
+          userId: "Admin_/official",
+          bracketKind: "official",
+          officialR32AuthoritySource: "Supabase:Admin_/official",
+          source: "Supabase:Admin_/official",
+          authority: "Admin_/official",
+        };
+      }
       officialPicks = legacyPicksFromRemoteBracketDocument(officialBracketDocument);
-      console.info("[WC2026 OfficialResults] loaded official truth bracket picks", {
+      console.info("[WC2026 OfficialResults] loaded Supabase Admin_/official truth bracket picks", {
+        source: officialBracketDocument?.officialR32AuthoritySource || "Supabase:Admin_/official",
+        userId: officialBracketDocument?.userId || "Admin_/official",
         pickCount: Object.keys(officialPicks).length,
       });
     } catch (error) {
@@ -408,11 +425,12 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   function buildRemoteBracketDocument(reason = "autosave") {
     const now = new Date().toISOString();
     const previous = remoteBracketDocument || {};
+    const canonicalPickSlots = allPickSlots();
     const picksBySlot = Object.fromEntries(
-      allPickSlots().map((slot) => [slot.slotId, pickRecordForRemoteSlot(slot, picks[slot.slotId])])
+      canonicalPickSlots.map((slot) => [slot.slotId, pickRecordForRemoteSlot(slot, picks[slot.slotId])])
     );
 
-    return {
+    const bracketDocument = {
       ...previous,
       schemaVersion: Number(previous.schemaVersion || 1),
       userId,
@@ -434,6 +452,13 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       visibility: previous.visibility || "private",
       bracketKind: previous.bracketKind || "player",
     };
+
+    return hydrateOfficialR32Occupants({
+      bracket: bracketDocument,
+      bracketSlots: { canonicalPickSlots },
+      teamsById: Object.fromEntries(teamById.entries()),
+      officialR32: officialBracketDocument,
+    });
   }
 
   function persistPicks(reason = "autosave") {
@@ -978,6 +1003,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     const incomingPicks = {};
 
     for (const [slotId, record] of Object.entries(picksBySlot)) {
+      if (record?.kind === "entrant" || record?.round === "R32_ENTRANT") continue;
       const teamId = record?.pick?.kind === "team" ? record.pick.teamId : record?.teamId;
       if (teamId) incomingPicks[slotId] = teamId;
     }
