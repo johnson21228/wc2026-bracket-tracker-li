@@ -21,7 +21,7 @@ REQUIRED = {
         "this.bracketStore.loadOfficialR32BracketAuthority",
         "officialR32AuthoritySource: \"Supabase:Admin_/official\"",
         "StaticJsonFallback:official_round_of_32",
-        "using static fallback",
+        "failing closed",
         "officialR32,",
     ],
     "site/js/services/StaticJsonModelSource.js": [
@@ -137,4 +137,4 @@ if errors:
         print(f"- {error}")
     raise SystemExit(1)
 
-print("OK: WC2026 official R32 hydration uses Supabase Admin_/official as primary authority with static JSON fallback only for local/dev.")
+print("OK: WC2026 official R32 hydration uses Supabase Admin_/official as primary authority and fails closed for public Supabase official-source misses.")

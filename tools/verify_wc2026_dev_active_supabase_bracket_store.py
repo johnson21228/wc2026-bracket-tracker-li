@@ -23,7 +23,16 @@ def main():
     require("devSupabaseBracketStore" not in app, "devSupabaseBracketStore query flag must be removed from production app wiring.", errors)
     require("devSupabaseBracketStoreOptions" not in app, "Dev-only Supabase store selector must be removed.", errors)
     require("shouldUseDevSupabaseBracketStore" not in app, "Dev-only store flag helper must be removed.", errors)
-    require("createBracketModel()" in app, "Board model should start with normal local anonymous persistence.", errors)
+    require(
+        "createBracketModel()" in app or "createBracketModel({" in app,
+        "Board model should start with normal local anonymous persistence while allowing a separate Admin_/official R32 reader.",
+        errors,
+    )
+    require(
+        "officialBracketStore" in app,
+        "Board model should receive a separate Admin_/official R32 reader without making player persistence remote.",
+        errors,
+    )
     require("createAccountSaveActionSurface({" in app, "Joined-player save surface must be wired.", errors)
     require("remoteActive" not in app, "App must not bypass joined-player Supabase persistence through remoteActive.", errors)
 

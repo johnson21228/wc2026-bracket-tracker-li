@@ -13,6 +13,22 @@ function seedBracketForUser(seedModel, userId) {
   return Object.values(brackets).find((bracket) => bracket.userId === userId) || null;
 }
 
+
+function failClosedOfficialR32Source(reason = "unavailable") {
+  return {
+    userId: "Admin_/official",
+    bracketKind: "official",
+    picksBySlot: {},
+    officialR32AuthoritySource: "Supabase:Admin_/official",
+    officialResultsTruthSource: "Supabase:Admin_/official",
+    source: "Supabase:Admin_/official",
+    authority: "Admin_/official",
+    r32TruthUnavailable: true,
+    failClosed: true,
+    reason,
+  };
+}
+
 function staticOfficialR32Fallback(bundle) {
   if (!bundle?.officialRoundOf32) return null;
   return {
@@ -85,8 +101,12 @@ class BracketRepository {
           };
         }
       } catch (error) {
-        console.warn("[WC2026 Official R32] Supabase Admin_/official bracket unavailable; using static fallback", error);
+        console.error("[WC2026 Official R32] Supabase Admin_/official bracket unavailable; failing closed", error);
+        return failClosedOfficialR32Source("load-error");
       }
+
+      console.error("[WC2026 Official R32] Supabase Admin_/official bracket missing; failing closed");
+      return failClosedOfficialR32Source("missing-admin-official-row");
     }
 
     return staticOfficialR32Fallback(modelBundle);

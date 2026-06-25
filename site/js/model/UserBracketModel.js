@@ -108,25 +108,49 @@ function officialR32SlotRecord(slot, occupant, teamsById = {}) {
   };
 }
 
+function officialR32UnsetSlotRecord(slot, officialR32 = null) {
+  return {
+    slotId: slot.slotId,
+    kind: "entrant",
+    round: "R32_ENTRANT",
+    pick: null,
+    source: "Admin_/official",
+    authority: "Admin_/official",
+    playerAuthored: false,
+    officialUnset: true,
+    hydratedFrom: officialR32AuthoritySource(officialR32),
+  };
+}
+
+function shouldReconcileR32FromOfficial(officialR32 = null) {
+  if (!officialR32) return false;
+  if (officialR32?.r32TruthUnavailable || officialR32?.failClosed) return true;
+  const source = officialR32AuthoritySource(officialR32);
+  return source === "Supabase:Admin_/official" || source === "StaticJsonFallback:official_round_of_32";
+}
+
 function hydrateOfficialR32Occupants({ bracket, bracketSlots, teamsById = {}, officialR32 = null } = {}) {
   const canonicalSlots = canonicalPickSlotsFromModel(bracketSlots, bracket?.gameId || "game1");
   const occupants = officialR32OccupantsBySlot(officialR32);
-  if (!Object.keys(occupants).length || bracket?.bracketKind === "official") return bracket;
+  if (bracket?.bracketKind === "official" || !shouldReconcileR32FromOfficial(officialR32)) return bracket;
 
   const picksBySlot = { ...(bracket?.picksBySlot || {}) };
   for (const slot of canonicalSlots) {
     if (!isR32EntrantSlot(slot)) continue;
     const occupant = occupants[slot.slotId] || occupants[slot.sitePickId];
-    if (!occupant) continue;
-    picksBySlot[slot.slotId] = officialR32SlotRecord(slot, occupant, teamsById);
+    picksBySlot[slot.slotId] = occupant
+      ? officialR32SlotRecord(slot, occupant, teamsById)
+      : officialR32UnsetSlotRecord(slot, officialR32);
   }
 
   return {
     ...bracket,
     officialR32Hydration: {
       source: "Admin_/official",
-      appliesAt: ["creation", "load", "import", "save"],
+      appliesAt: ["creation", "load", "import", "save", "render"],
       playerAuthored: false,
+      mirrorsAdminOfficialExactly: true,
+      failClosed: Boolean(officialR32?.r32TruthUnavailable || officialR32?.failClosed),
       hydratedFrom: officialR32AuthoritySource(officialR32),
     },
     picksBySlot,

@@ -229,6 +229,21 @@ function legacyPicksFromRemoteBracketDocument(bracket) {
   return result;
 }
 
+function failClosedAdminOfficialR32TruthDocument(reason = "unavailable") {
+  return {
+    userId: "Admin_/official",
+    bracketKind: "official",
+    picksBySlot: {},
+    officialR32AuthoritySource: "Supabase:Admin_/official",
+    officialResultsTruthSource: "Supabase:Admin_/official",
+    source: "Supabase:Admin_/official",
+    authority: "Admin_/official",
+    r32TruthUnavailable: true,
+    failClosed: true,
+    reason,
+  };
+}
+
 export async function createBracketModel({
   bracketStore = null,
   officialBracketStore = bracketStore,
@@ -355,17 +370,36 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
         pickCount: Object.keys(officialPicks).length,
       });
     } catch (error) {
-      console.warn("[WC2026 OfficialResults] official truth bracket unavailable", error);
-      officialBracketDocument = null;
+      console.error("[WC2026 OfficialR32] Admin_/official R32 truth unavailable; failing closed", error);
+      officialBracketDocument = failClosedAdminOfficialR32TruthDocument("load-error");
+      officialPicks = {};
+    }
+
+    if (!officialBracketDocument) {
+      console.error("[WC2026 OfficialR32] Admin_/official R32 truth missing; failing closed");
+      officialBracketDocument = failClosedAdminOfficialR32TruthDocument("missing-admin-official-row");
       officialPicks = {};
     }
   }
+
+  picks = stripR32OccupantsFromPlayerPicks(picks);
 
   function getTeam(teamId) {
     return teamById.get(teamId) || null;
   }
 
+  function isR32DisplaySlot(slotId) {
+    return slotsById.get(slotId)?.round === "R32";
+  }
+
+  function stripR32OccupantsFromPlayerPicks(sourcePicks = {}) {
+    return Object.fromEntries(
+      Object.entries(sourcePicks || {}).filter(([slotId]) => !isR32DisplaySlot(slotId))
+    );
+  }
+
   function selectedTeam(slotId) {
+    if (isR32DisplaySlot(slotId)) return officialTeam(slotId);
     return getTeam(picks[slotId]);
   }
 
@@ -426,6 +460,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   function buildRemoteBracketDocument(reason = "autosave") {
     const now = new Date().toISOString();
     const previous = remoteBracketDocument || {};
+    picks = stripR32OccupantsFromPlayerPicks(picks);
     const canonicalPickSlots = allPickSlots();
     const picksBySlot = Object.fromEntries(
       canonicalPickSlots.map((slot) => [slot.slotId, pickRecordForRemoteSlot(slot, picks[slot.slotId])])
@@ -531,6 +566,9 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   }
 
   function getR32Choices(slotId) {
+    // R32 occupant cells are Admin_/official display truth, not player-editable picks.
+    // The player site must never generate fallback R32 choices from group data.
+    if (officialBracketStore) return [];
     const logic = r32LogicByGeometryId.get(slotId);
     if (!logic) return [];
     const groups = logic.groups || [];
@@ -666,6 +704,9 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     }
     if (teamId && !teamById.has(teamId)) {
       return { ok: false, reason: "Unknown team.", cleared: [] };
+    }
+    if (isR32DisplaySlot(slotId)) {
+      return { ok: false, reason: "R32 occupants are supplied by Admin_/official and cannot be edited by players.", cleared: [] };
     }
     if (teamId) picks[slotId] = teamId;
     else delete picks[slotId];
@@ -1009,7 +1050,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       if (teamId) incomingPicks[slotId] = teamId;
     }
 
-    return importPicksSnapshot({ picks: incomingPicks });
+    return importPicksSnapshot({ picks: stripR32OccupantsFromPlayerPicks(incomingPicks) });
   }
 
   function getAccountSaveBracketDocument({ userId: accountUserId = userId } = {}) {
@@ -1039,6 +1080,9 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       officialResultsTruthSource: officialBracketDocument?.officialResultsTruthSource || officialBracketDocument?.officialR32AuthoritySource || "",
       officialResultsTruthUserId: officialBracketDocument?.userId || "",
       officialResultsTruthPickCount: Object.keys(officialPicks).length,
+      playerVisibleR32Source: officialBracketDocument?.officialR32AuthoritySource || "",
+      playerVisibleR32MatchesAdminOfficial: Boolean(officialBracketDocument),
+      adminOfficialR32FailClosed: Boolean(officialBracketDocument?.r32TruthUnavailable || officialBracketDocument?.failClosed),
     };
   }
 
