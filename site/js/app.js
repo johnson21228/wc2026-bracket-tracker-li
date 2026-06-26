@@ -92,12 +92,14 @@ async function main() {
   setupInfoPanel(root);
   setupBracketeeringWorkflowPanel(root);
   const urlParams = new URLSearchParams(window.location.search);
-  const adminOfficialR32Editor = urlParams.get("adminOfficialR32Editor") === "1" || urlParams.get("adminOfficial") === "1";
+  const adminOfficialEditor = urlParams.get("adminOfficialEditor") === "1" || urlParams.get("adminOfficial") === "1";
+  const adminOfficialR32Editor = adminOfficialEditor || urlParams.get("adminOfficialR32Editor") === "1";
   const authService = createSupabaseAuthService();
   const officialBracketStore = createSupabaseBracketStore();
   const model = await createBracketModel({
     officialBracketStore,
     adminOfficialR32Editor,
+    adminOfficialEditor,
   });
   const view = createBracketView(root);
   setupActiveGameBackground(root);

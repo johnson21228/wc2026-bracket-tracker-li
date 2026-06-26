@@ -219,8 +219,8 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       status: bracket.status || "draft",
       lifecycleState: {
         ...(bracket.lifecycleState || {}),
-        source: "admin-official-r32-editor-mode",
-        lastSaveReason: "admin-official-r32-edit",
+        source: bracket.lifecycleState?.source || "admin-official-r32-editor-mode",
+        lastSaveReason: bracket.lifecycleState?.lastSaveReason || "admin-official-r32-edit",
       },
       phaseLocks: bracket.phaseLocks || { r32LockedAt: null },
       picksBySlot: bracket.picksBySlot,
@@ -272,6 +272,17 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
       authority: "Admin_/official",
     };
+  }
+
+  async saveAdminOfficialBracketTruth(bracket, options = {}) {
+    return this.saveOfficialR32BracketAuthority({
+      ...bracket,
+      lifecycleState: {
+        ...(bracket?.lifecycleState || {}),
+        source: "admin-official-full-bracket-editor-mode",
+        lastSaveReason: bracket?.lifecycleState?.lastSaveReason || "admin-official-full-bracket-edit",
+      },
+    }, options);
   }
 
   async saveUserBracket(bracket) {

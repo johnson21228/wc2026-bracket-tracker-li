@@ -323,7 +323,18 @@ function setBracketPick({ bracket, sitePickId, pickValue }) {
     kind: existingRecord.kind || "winner",
     round: existingRecord.round || roundForLegacySlot(sitePickId, null),
   };
-  const record = slotRecordFromPickValue(slot, normalizedPick, normalizedPick.kind === "unpicked" ? "empty" : "user");
+  const officialEdit = bracket?.bracketKind === "official";
+  const record = slotRecordFromPickValue(
+    slot,
+    normalizedPick,
+    officialEdit ? "Admin_/official" : (normalizedPick.kind === "unpicked" ? "empty" : "user")
+  );
+  if (officialEdit) {
+    record.authority = "Admin_/official";
+    record.playerAuthored = false;
+    record.officialTruth = true;
+    record.hydratedFrom = "Supabase:Admin_/official";
+  }
   const picksBySlot = {
     ...(bracket.picksBySlot || {}),
     [sitePickId]: record,
