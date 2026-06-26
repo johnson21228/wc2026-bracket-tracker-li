@@ -405,21 +405,8 @@ export function createBracketView(root) {
     return activeGameValue() === "game-2" && slot.round === "R32" && Boolean(displayTeam) && Boolean(slot.game2ResolvedTeam);
   }
 
-  function syncOfficialResultsBanner(summary) {
-    let banner = root.querySelector("[data-official-results-banner]");
-    if (!summary?.editingOfficialResults) {
-      banner?.remove();
-      return;
-    }
-
-    if (!banner) {
-      banner = document.createElement("aside");
-      banner.className = "official-results-banner";
-      banner.setAttribute("data-official-results-banner", "");
-      banner.setAttribute("role", "status");
-      banner.textContent = "Editing Official Results";
-      root.prepend(banner);
-    }
+  function syncOfficialResultsBanner(_summary) {
+    root.querySelector("[data-official-results-banner]")?.remove();
   }
 
   function officialTruthLabel(team) {
