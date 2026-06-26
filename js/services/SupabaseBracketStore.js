@@ -308,31 +308,56 @@ class SupabaseBracketStore extends BracketStorageAdapter {
   async saveOfficialR32BracketAuthority(bracket, { tournamentId = this.tournamentId, gameId = canonicalGameId() } = {}) {
     const adminUser = await this.requireSignedInUser();
 
+    if (adminUser.id !== ADMIN_OFFICIAL_SUPABASE_USER_ID) {
+      throw new Error("SupabaseBracketStore can only save Admin_/official authority as the physical Admin_ Supabase user.");
+    }
+
     assertPlainObject(bracket, "SupabaseBracketStore requires an Admin_/official BracketDocument object.");
     assertPlainObject(bracket.picksBySlot, "SupabaseBracketStore requires Admin_/official picksBySlot.");
 
+    const supabase = this.ensureClient();
+    const existing = await supabase
+      .from(TABLE_NAME)
+      .select("bracket_json, bracket_kind, user_id, status, visibility, created_at")
+      .eq("user_id", ADMIN_OFFICIAL_SUPABASE_USER_ID)
+      .eq("tournament_id", tournamentId)
+      .eq("game_id", canonicalGameId())
+      .maybeSingle();
+
+    if (existing.error) throw existing.error;
+
     const now = new Date().toISOString();
+    const existingBracket = existing.data?.bracket_json || {};
+    const existingPicksBySlot = existingBracket.picksBySlot || {};
+    const mergedPicksBySlot = {
+      ...existingPicksBySlot,
+      ...bracket.picksBySlot,
+    };
     const canonicalBracketDocument = {
+      ...existingBracket,
       ...bracket,
-      schemaVersion: Number(bracket.schemaVersion || 1),
+      schemaVersion: Number(bracket.schemaVersion || existingBracket.schemaVersion || 1),
       userId: ADMIN_OFFICIAL_USER_ID,
       tournamentId,
       gameId: canonicalGameId(),
-      status: "locked",
+      status: bracket.status || existing.data?.status || existingBracket.status || "draft",
       lifecycleState: {
+        ...(existingBracket.lifecycleState || {}),
         ...(bracket.lifecycleState || {}),
-        source: bracket.lifecycleState?.source || "admin-official-r32-editor-mode",
+        source: bracket.lifecycleState?.source || existingBracket.lifecycleState?.source || "admin-official-r32-editor-mode",
         lastSaveReason: bracket.lifecycleState?.lastSaveReason || "admin-official-r32-edit",
       },
-      phaseLocks: bracket.phaseLocks || { r32LockedAt: null },
-      picksBySlot: bracket.picksBySlot,
-      createdAt: bracket.createdAt || now,
+      phaseLocks: bracket.phaseLocks || existingBracket.phaseLocks || { r32LockedAt: null },
+      picksBySlot: mergedPicksBySlot,
+      createdAt: bracket.createdAt || existingBracket.createdAt || now,
       updatedAt: now,
-      submittedAt: bracket.submittedAt || null,
-      lockedAt: bracket.lockedAt || null,
+      submittedAt: bracket.submittedAt || existingBracket.submittedAt || null,
+      lockedAt: bracket.lockedAt || existingBracket.lockedAt || null,
       visibility: "public",
       bracketKind: "official",
-      persistedByUserId: adminUser.id,
+      persistedByUserId: ADMIN_OFFICIAL_SUPABASE_USER_ID,
+      persistedBracketKind: "player",
+      officialAuthoritySourceKind: "admin-player-row",
       officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
       officialResultsTruthSource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
       source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
@@ -345,35 +370,46 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       }
     }
 
-    const supabase = this.ensureClient();
-    const { data, error } = await supabase
-      .from(TABLE_NAME)
-      .upsert(
-        {
-          user_id: adminUser.id,
-          tournament_id: canonicalBracketDocument.tournamentId,
-          game_id: canonicalGameId(),
-          status: canonicalBracketDocument.status,
-          visibility: canonicalBracketDocument.visibility,
-          bracket_kind: "official",
-          bracket_json: canonicalBracketDocument,
-        },
-        { onConflict: "user_id,tournament_id,game_id" },
-      )
-      .select("bracket_json, bracket_kind, user_id, status, visibility")
-      .single();
+    const rowPayload = {
+      user_id: ADMIN_OFFICIAL_SUPABASE_USER_ID,
+      tournament_id: canonicalBracketDocument.tournamentId,
+      game_id: canonicalGameId(),
+      status: canonicalBracketDocument.status,
+      visibility: "public",
+      bracket_kind: "player",
+      bracket_json: canonicalBracketDocument,
+    };
+
+    const { data, error } = existing.data
+      ? await supabase
+        .from(TABLE_NAME)
+        .update(rowPayload)
+        .eq("user_id", ADMIN_OFFICIAL_SUPABASE_USER_ID)
+        .eq("tournament_id", canonicalBracketDocument.tournamentId)
+        .eq("game_id", canonicalGameId())
+        .select("bracket_json, bracket_kind, user_id, status, visibility")
+        .single()
+      : await supabase
+        .from(TABLE_NAME)
+        .insert(rowPayload)
+        .select("bracket_json, bracket_kind, user_id, status, visibility")
+        .single();
 
     if (error) throw error;
 
     return {
       ...(data?.bracket_json || canonicalBracketDocument),
       userId: ADMIN_OFFICIAL_USER_ID,
-      bracketKind: data?.bracket_kind || "official",
+      bracketKind: "official",
       status: data?.status || canonicalBracketDocument.status,
       visibility: data?.visibility || "public",
       officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+      officialResultsTruthSource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
       source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
       authority: "Admin_/official",
+      persistedByUserId: data?.user_id || ADMIN_OFFICIAL_SUPABASE_USER_ID,
+      persistedBracketKind: data?.bracket_kind || "player",
+      officialAuthoritySourceKind: "admin-player-row",
     };
   }
 
