@@ -268,7 +268,11 @@ function createMenu({ layer, controller, button, slotViewModel }) {
   clear.className = "r32-pick-menu-clear";
   clear.textContent = "Clear pick";
   clear.addEventListener("click", () => {
-    controller.clearPick({ fifaSlotId: logicSlot.fifaSlotId });
+    const result = controller.clearPick({ fifaSlotId: logicSlot.fifaSlotId });
+    if (!result.ok) {
+      renderValidationMessage(popover, result);
+      return;
+    }
     renderPickText(button, null);
     closeExistingMenu(layer);
   });

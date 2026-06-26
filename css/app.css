@@ -568,26 +568,67 @@ body {
 .map-icon-button {
   width: 52px;
   height: 52px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-grid;
+  place-items: center;
   border: 1px solid rgba(255,255,255,.26);
   border-radius: 999px;
   background: rgba(18, 15, 16, .72);
   color: #fff8ef;
   box-shadow: 0 10px 28px rgba(0,0,0,.34);
   backdrop-filter: blur(10px);
-  font: 800 24px/1 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-.map-icon-button[data-rules-panel-open] {
-  font-family: Georgia, "Times New Roman", serif;
-  font-style: italic;
-  font-size: 24px;
-  font-weight: 800;
+.map-icon-glyph {
+  position: relative;
+  display: block;
+  inline-size: 28px;
+  block-size: 28px;
+  color: currentColor;
+}
+
+.map-icon-glyph::before,
+.map-icon-glyph::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.map-icon-glyph-plus::before,
+.map-icon-glyph-minus::before {
+  inline-size: 23px;
+  block-size: 5px;
+  border-radius: 999px;
+}
+
+.map-icon-glyph-plus::after {
+  inline-size: 5px;
+  block-size: 23px;
+  border-radius: 999px;
+}
+
+.map-icon-glyph-minus::after {
+  display: none;
+}
+
+.map-icon-glyph-info::before {
+  inline-size: 7px;
+  block-size: 7px;
+  top: 5px;
+  border-radius: 999px;
+}
+
+.map-icon-glyph-info::after {
+  inline-size: 7px;
+  block-size: 16px;
+  top: 18px;
+  border-radius: 999px;
 }
 
 .map-icon-button:hover,
@@ -607,7 +648,34 @@ body {
   .map-icon-button {
     width: 48px;
     height: 48px;
-    font-size: 23px;
+  }
+
+  .map-icon-glyph {
+    inline-size: 24px;
+    block-size: 24px;
+  }
+
+  .map-icon-glyph-plus::before,
+  .map-icon-glyph-minus::before {
+    inline-size: 19px;
+    block-size: 4px;
+  }
+
+  .map-icon-glyph-plus::after {
+    inline-size: 4px;
+    block-size: 19px;
+  }
+
+  .map-icon-glyph-info::before {
+    inline-size: 6px;
+    block-size: 6px;
+    top: 4px;
+  }
+
+  .map-icon-glyph-info::after {
+    inline-size: 6px;
+    block-size: 14px;
+    top: 16px;
   }
 }
 
@@ -1652,6 +1720,26 @@ body {
   align-self: center;
   font-size: 17px;
   font-weight: 900;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-board-viewer-pick.has-official-correct-pick {
+  outline: 1px solid rgba(114, 255, 161, .72);
+}
+
+.player-board-viewer-pick.has-official-incorrect-pick {
+  outline: 1px solid rgba(255, 196, 87, .72);
+}
+
+.player-board-viewer-official-truth {
+  align-self: end;
+  color: rgba(255, 255, 255, .72);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .04em;
   line-height: 1;
   overflow: hidden;
   text-overflow: ellipsis;

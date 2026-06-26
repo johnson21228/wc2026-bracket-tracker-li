@@ -1,3 +1,5 @@
+import { areGroupStagePicksLocked, GROUP_STAGE_PICKS_LOCK_AT_MS, GROUP_STAGE_PICKS_LOCK_TIMER_MAX_MS, playerResultsHiddenUntilLockMessage } from "../config/gameLocks.js";
+
 const STANDINGS_PANEL_OPEN_EVENT = "wc2026:standings-panel-opened";
 const OFFICIAL_RESULTS_PLAYER_NAMES = new Set(["Admin_", "Official Results"]);
 
@@ -59,6 +61,10 @@ function normalizeStandingsRow(row) {
     ? numericScore(row.picksCount)
     : Object.keys(picksBySlot).length;
 
+  const officialTruthPicksBySlot = row?.officialTruthPicksBySlot && typeof row.officialTruthPicksBySlot === "object" && !Array.isArray(row.officialTruthPicksBySlot)
+    ? row.officialTruthPicksBySlot
+    : {};
+
   return {
     publicPlayerName: safePublicPlayerName(row),
     picksBySlot,
@@ -67,6 +73,9 @@ function normalizeStandingsRow(row) {
     knockoutPoints,
     tiebreakerScore,
     total,
+    officialTruthPicksBySlot,
+    officialResultsTruthSource: row?.officialResultsTruthSource || "",
+    officialResultsTruthUserId: row?.officialResultsTruthUserId || "",
     bracketKind: row?.bracketKind || row?.bracket_kind || "player",
   };
 }
@@ -289,6 +298,11 @@ function normalizeBoardViewerTeam(teamId, teamById) {
   };
 }
 
+function boardViewerOfficialTruthLabel(team) {
+  if (!team) return "";
+  return `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id}`.trim();
+}
+
 function playerFacingSlotLabel(slot) {
   if (slot?.displayLabel) return slot.displayLabel;
   const slotId = String(slot?.slotId || "");
@@ -391,18 +405,31 @@ function renderPlayerBoard(panel, { row, assets }) {
   const { nativeSize, teamById, slots } = assets;
   const plane = panel.querySelector("[data-player-board-viewer-plane]");
   const picksBySlot = row?.picksBySlot || {};
+  const officialTruthPicksBySlot = row?.officialTruthPicksBySlot || {};
+  const officialTruthSource = row?.officialResultsTruthSource || "";
   const nativeWidth = Number(nativeSize.width || nativeSize.w || 1536);
   const nativeHeight = Number(nativeSize.height || nativeSize.h || 1024);
   const slotMarkup = slots.map((slot) => {
     const bounds = slot.boundsPx;
     const team = normalizeBoardViewerTeam(pickTeamIdFromRecord(picksBySlot[slot.slotId]), teamById);
+    const officialTeam = normalizeBoardViewerTeam(pickTeamIdFromRecord(officialTruthPicksBySlot[slot.slotId]), teamById);
+    const officialState = officialTeam && team
+      ? (officialTeam.id === team.id ? "correct" : "incorrect")
+      : "";
     const slotLabel = playerFacingSlotLabel(slot);
     const valueLabel = team ? `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id}`.trim() : "Unpicked";
     const fullLabel = team ? `${team.flag ? `${team.flag} ` : ""}${team.name || team.abbr || team.id}`.trim() : "Unpicked";
+    const officialLabel = boardViewerOfficialTruthLabel(officialTeam);
+    const officialMarkup = officialTeam
+      ? `<span class="player-board-viewer-official-truth">Official: ${escapeHtml(officialLabel)}</span>`
+      : "";
+    const stateClass = officialState ? ` has-official-${officialState}-pick` : "";
+    const ariaOfficial = officialTeam ? ` Official result from ${officialTruthSource || "Admin_/official"}: ${officialLabel}.` : "";
     return `
-      <button type="button" class="player-board-viewer-pick ${team ? "has-pick" : "is-unpicked"}" data-player-board-viewer-slot="${escapeHtml(slot.slotId)}" disabled aria-label="${escapeHtml(`${slotLabel}: ${fullLabel}. Read-only.`)}" style="left:${Number(bounds.x)}px;top:${Number(bounds.y)}px;width:${Number(bounds.width)}px;height:${Number(bounds.height)}px;">
+      <button type="button" class="player-board-viewer-pick ${team ? "has-pick" : "is-unpicked"}${stateClass}" data-player-board-viewer-slot="${escapeHtml(slot.slotId)}" data-official-result-state="${escapeHtml(officialState)}" disabled aria-label="${escapeHtml(`${slotLabel}: ${fullLabel}. Read-only.${ariaOfficial}`)}" style="left:${Number(bounds.x)}px;top:${Number(bounds.y)}px;width:${Number(bounds.width)}px;height:${Number(bounds.height)}px;">
         <span class="player-board-viewer-pick-label">${escapeHtml(slotLabel)}</span>
         <span class="player-board-viewer-pick-value">${escapeHtml(valueLabel)}</span>
+        ${officialMarkup}
       </button>
     `;
   }).join("");
@@ -430,6 +457,7 @@ export function createPlayerStandingsSurface({
   let currentStandingsRows = [];
   let lastPlayerBoardViewerButton = null;
   let boardViewerAssetsPromise = null;
+  let groupStagePicksLockTimer = null;
 
   const button = ensureStandingsButton(root);
   const panel = ensureStandingsPanel(root);
@@ -439,16 +467,20 @@ export function createPlayerStandingsSurface({
 
   function syncStandingsButtonState() {
     const joined = isSignedIn(currentAuthState);
-    const canOpen = joined && storageReady;
+    const resultsVisible = areGroupStagePicksLocked();
+    const canOpen = joined && storageReady && resultsVisible;
     button.hidden = !canOpen;
     button.disabled = !canOpen;
     button.classList.toggle("is-join-required", !joined);
-    button.classList.toggle("is-storage-unavailable", joined && storageReadyChecked && !storageReady);
+    button.classList.toggle("is-results-locked", joined && !resultsVisible);
+    button.classList.toggle("is-storage-unavailable", joined && resultsVisible && storageReadyChecked && !storageReady);
     button.title = !joined
       ? "Join to enter standings."
-      : storageReady
-        ? "Open Standings"
-        : "Standings unavailable until stored picks can be read.";
+      : !resultsVisible
+        ? playerResultsHiddenUntilLockMessage()
+        : storageReady
+          ? "Open Standings"
+          : "Standings unavailable until stored picks can be read.";
     button.setAttribute("aria-label", button.title);
   }
 
@@ -459,6 +491,13 @@ export function createPlayerStandingsSurface({
 
   async function refreshStorageReady() {
     if (!isSignedIn(currentAuthState)) {
+      storageReady = false;
+      storageReadyChecked = true;
+      syncStandingsButtonState();
+      return false;
+    }
+
+    if (!areGroupStagePicksLocked()) {
       storageReady = false;
       storageReadyChecked = true;
       syncStandingsButtonState();
@@ -477,6 +516,25 @@ export function createPlayerStandingsSurface({
     return storageReady;
   }
 
+  function scheduleGroupStagePicksLockRefresh() {
+    if (groupStagePicksLockTimer) {
+      window.clearTimeout(groupStagePicksLockTimer);
+      groupStagePicksLockTimer = null;
+    }
+
+    const msUntilLock = GROUP_STAGE_PICKS_LOCK_AT_MS - Date.now();
+    if (
+      Number.isFinite(msUntilLock)
+      && msUntilLock > 0
+      && msUntilLock < GROUP_STAGE_PICKS_LOCK_TIMER_MAX_MS
+    ) {
+      groupStagePicksLockTimer = window.setTimeout(() => {
+        syncStandingsButtonState();
+        refreshStorageReady();
+      }, msUntilLock + 1000);
+    }
+  }
+
   function loadBoardViewerAssets() {
     if (!boardViewerAssetsPromise) {
       boardViewerAssetsPromise = Promise.all([
@@ -489,6 +547,11 @@ export function createPlayerStandingsSurface({
 
   async function loadStandingsRows() {
     renderStatus("Loading standings…");
+
+    if (!areGroupStagePicksLocked()) {
+      renderStatus(playerResultsHiddenUntilLockMessage());
+      return;
+    }
 
     if (!await refreshStorageReady()) {
       renderStatus("Standings unavailable until stored picks can be read.");
@@ -521,6 +584,10 @@ export function createPlayerStandingsSurface({
   async function openPanel(event) {
     if (event?.currentTarget instanceof HTMLElement) {
       lastOpenButton = event.currentTarget;
+    }
+    if (!areGroupStagePicksLocked()) {
+      syncStandingsButtonState();
+      return;
     }
     if (!await refreshStorageReady()) return;
     panel.hidden = false;
@@ -567,6 +634,7 @@ export function createPlayerStandingsSurface({
   function start() {
     syncStandingsButtonState();
     refreshStorageReady();
+    scheduleGroupStagePicksLockRefresh();
     installBoardViewerDragPan(boardViewerPanel.querySelector("[data-player-board-viewer-scroll]"));
     button.addEventListener("click", openPanel);
     closeButton?.addEventListener("click", closePanel);
@@ -610,6 +678,7 @@ export function createPlayerStandingsSurface({
       storageReady = false;
       storageReadyChecked = false;
       syncStandingsButtonState();
+      scheduleGroupStagePicksLockRefresh();
       refreshStorageReady().then((ready) => {
         if (ready && !panel.hidden) loadStandingsRows();
         if (!ready) {

@@ -7,6 +7,8 @@ import { isSupabaseAuthConfigured } from "./SupabaseAuthService.js";
 const DEFAULT_TOURNAMENT_ID = "wc2026";
 const DEFAULT_GAME_ID = "game1";
 const DEFAULT_VISIBILITY = "private";
+const ADMIN_OFFICIAL_USER_ID = "Admin_/official";
+const ADMIN_OFFICIAL_AUTHORITY_SOURCE = "Supabase:Admin_/official";
 const TABLE_NAME = "user_brackets";
 
 const REQUIRED_BRACKET_DOCUMENT_KEYS = Object.freeze([
@@ -171,22 +173,116 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       : null;
   }
 
-  async loadOfficialBracket({ tournamentId = this.tournamentId, gameId = this.gameId } = {}) {
-    await this.requireSignedInUser();
-
+  async loadOfficialR32BracketAuthority({ tournamentId = this.tournamentId, gameId = this.gameId } = {}) {
     const supabase = this.ensureClient();
     const { data, error } = await supabase
       .from(TABLE_NAME)
-      .select("bracket_json, bracket_kind")
+      .select("bracket_json, bracket_kind, user_id, status, visibility")
+      .eq("user_id", ADMIN_OFFICIAL_USER_ID)
       .eq("tournament_id", tournamentId)
       .eq("game_id", gameId)
       .eq("bracket_kind", "official")
       .maybeSingle();
 
     if (error) throw error;
-    return data?.bracket_json
-      ? { ...data.bracket_json, bracketKind: data.bracket_kind || "official" }
-      : null;
+    if (!data?.bracket_json) return null;
+
+    return {
+      ...data.bracket_json,
+      userId: ADMIN_OFFICIAL_USER_ID,
+      bracketKind: data.bracket_kind || data.bracket_json.bracketKind || "official",
+      status: data.status || data.bracket_json.status || "locked",
+      visibility: data.visibility || data.bracket_json.visibility || "public",
+      officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+      source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+      authority: "Admin_/official",
+    };
+  }
+
+  async loadOfficialBracket(options = {}) {
+    return this.loadOfficialR32BracketAuthority(options);
+  }
+
+  async saveOfficialR32BracketAuthority(bracket, { tournamentId = this.tournamentId, gameId = this.gameId } = {}) {
+    await this.requireSignedInUser();
+
+    assertPlainObject(bracket, "SupabaseBracketStore requires an Admin_/official BracketDocument object.");
+    assertPlainObject(bracket.picksBySlot, "SupabaseBracketStore requires Admin_/official picksBySlot.");
+
+    const now = new Date().toISOString();
+    const canonicalBracketDocument = {
+      ...bracket,
+      schemaVersion: Number(bracket.schemaVersion || 1),
+      userId: ADMIN_OFFICIAL_USER_ID,
+      tournamentId,
+      gameId,
+      status: bracket.status || "draft",
+      lifecycleState: {
+        ...(bracket.lifecycleState || {}),
+        source: bracket.lifecycleState?.source || "admin-official-r32-editor-mode",
+        lastSaveReason: bracket.lifecycleState?.lastSaveReason || "admin-official-r32-edit",
+      },
+      phaseLocks: bracket.phaseLocks || { r32LockedAt: null },
+      picksBySlot: bracket.picksBySlot,
+      createdAt: bracket.createdAt || now,
+      updatedAt: now,
+      submittedAt: bracket.submittedAt || null,
+      lockedAt: bracket.lockedAt || null,
+      visibility: "public",
+      bracketKind: "official",
+      officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+      officialResultsTruthSource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+      source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+      authority: "Admin_/official",
+    };
+
+    for (const key of REQUIRED_BRACKET_DOCUMENT_KEYS) {
+      if (!(key in canonicalBracketDocument)) {
+        throw new Error(`SupabaseBracketStore refused to save incomplete Admin_/official BracketDocument; missing ${key}.`);
+      }
+    }
+
+    const supabase = this.ensureClient();
+    const { data, error } = await supabase
+      .from(TABLE_NAME)
+      .upsert(
+        {
+          user_id: ADMIN_OFFICIAL_USER_ID,
+          tournament_id: canonicalBracketDocument.tournamentId,
+          game_id: canonicalBracketDocument.gameId,
+          status: canonicalBracketDocument.status,
+          visibility: canonicalBracketDocument.visibility,
+          bracket_kind: "official",
+          bracket_json: canonicalBracketDocument,
+        },
+        { onConflict: "user_id,tournament_id,game_id" },
+      )
+      .select("bracket_json, bracket_kind, user_id, status, visibility")
+      .single();
+
+    if (error) throw error;
+
+    return {
+      ...(data?.bracket_json || canonicalBracketDocument),
+      userId: ADMIN_OFFICIAL_USER_ID,
+      bracketKind: data?.bracket_kind || "official",
+      status: data?.status || canonicalBracketDocument.status,
+      visibility: data?.visibility || "public",
+      officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+      source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+      authority: "Admin_/official",
+    };
+  }
+
+  async saveAdminOfficialBracketTruth(bracket, options = {}) {
+    return this.saveOfficialR32BracketAuthority({
+      ...bracket,
+      lifecycleState: {
+        ...(bracket?.lifecycleState || {}),
+        source: "admin-official-full-bracket-editor-mode",
+        lastSaveReason: bracket?.lifecycleState?.lastSaveReason || "admin-official-full-bracket-edit",
+      },
+    }, options);
   }
 
   async saveUserBracket(bracket) {
@@ -240,6 +336,8 @@ function createSupabaseBracketStore(options = {}) {
 }
 
 export {
+  ADMIN_OFFICIAL_USER_ID,
+  ADMIN_OFFICIAL_AUTHORITY_SOURCE,
   SupabaseBracketStore,
   createSupabaseBracketStore,
 };

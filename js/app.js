@@ -8,6 +8,7 @@ import { createAccountSaveActionSurface } from "./identity/AccountSaveActionSurf
 import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js";
 import { createPlayerStandingsSurface } from "./standings/PlayerStandingsSurface.js";
 import { createSupabasePlayerStandingsStore } from "./standings/SupabasePlayerStandingsStore.js";
+import { createSupabaseBracketStore } from "./services/SupabaseBracketStore.js";
 
 
 function setupInfoPanel(root) {
@@ -90,8 +91,16 @@ async function main() {
 
   setupInfoPanel(root);
   setupBracketeeringWorkflowPanel(root);
+  const urlParams = new URLSearchParams(window.location.search);
+  const adminOfficialEditor = urlParams.get("adminOfficialEditor") === "1" || urlParams.get("adminOfficial") === "1";
+  const adminOfficialR32Editor = adminOfficialEditor || urlParams.get("adminOfficialR32Editor") === "1";
   const authService = createSupabaseAuthService();
-  const model = await createBracketModel();
+  const officialBracketStore = createSupabaseBracketStore();
+  const model = await createBracketModel({
+    officialBracketStore,
+    adminOfficialR32Editor,
+    adminOfficialEditor,
+  });
   const view = createBracketView(root);
   setupActiveGameBackground(root);
   const controller = createBracketController({ model, view });
