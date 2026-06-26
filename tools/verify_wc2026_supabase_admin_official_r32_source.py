@@ -10,7 +10,7 @@ REQUIRED = {
         "const ADMIN_OFFICIAL_USER_ID = \"Admin_/official\"",
         "const ADMIN_OFFICIAL_AUTHORITY_SOURCE = \"Supabase:Admin_/official\"",
         "async loadOfficialR32BracketAuthority",
-        ".eq(\"user_id\", ADMIN_OFFICIAL_USER_ID)",
+        "persistedByUserId",
         ".eq(\"tournament_id\", tournamentId)",
         ".eq(\"game_id\", gameId)",
         "officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE",
