@@ -1915,3 +1915,30 @@ body.admin-official-editor-active .profile-surface,
 body.admin-official-editor-active .join-surface {
   z-index: 10060;
 }
+
+
+/* Compact lifecycle/status banner: never full-width, never over Join/Profile. */
+.lifecycle-status-surface,
+.game1-lifecycle-status-surface,
+.stage-status-surface,
+.group-stage-pick-lock-banner,
+.pick-lock-banner,
+.status-banner,
+.notice-banner {
+  left: 10px !important;
+  right: auto !important;
+  top: 10px;
+  width: auto !important;
+  max-width: min(460px, calc(100vw - 260px)) !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px 9px !important;
+  font-size: 12px !important;
+  line-height: 1.15 !important;
+  white-space: normal;
+  pointer-events: none;
+}
