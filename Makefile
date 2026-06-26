@@ -103,6 +103,7 @@ verify:
 	python3 tools/verify_wc2026_empty_pick_state_storage_li.py
 	python3 tools/verify_wc2026_official_r32_hydration_li.py
 	python3 tools/verify_wc2026_official_r32_hydration_runtime.py
+	python3 tools/verify_wc2026_official_r32_as_player_feeder_teams.py
 	python3 tools/verify_wc2026_supabase_admin_official_r32_source.py
 	python3 tools/verify_wc2026_force_player_r32_matches_admin_official.py
 	python3 tools/verify_wc2026_admin_official_r32_editor_mode.py
