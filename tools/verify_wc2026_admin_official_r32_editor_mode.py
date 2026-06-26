@@ -42,6 +42,8 @@ require("persistedByUserId" in store, "store must preserve physical Supabase use
 require(".eq(\"user_id\", ADMIN_OFFICIAL_USER_ID)" not in store, "store must not query fake semantic Admin_/official user id")
 
 require("saveOfficialR32BracketAuthority" in store, "store must keep Admin_/official save boundary")
+require('bracket_kind: "player"' in store, "Admin_/official R32 save must persist through the physical Admin_ player row")
+require('bracket_kind: "official"' not in store, "Admin_/official R32 save must not write a physical official row")
 require("const adminUser = await this.requireSignedInUser();" in store, "official save must use signed-in physical Supabase user")
 require("bracket_kind: \"official\"" in store or "bracketKind: \"official\"" in store, "projected/saved Admin document must keep official semantic bracket kind")
 

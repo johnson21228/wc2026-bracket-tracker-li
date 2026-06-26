@@ -548,31 +548,22 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     const slot = slotsById.get(slotId);
 
     if (slot?.round === "R32") {
-      return officialTeam(slotId)
-        || teamObjectFromDocumentPick(officialBracketDocument, slotId)
-        || getTeam(picks[slotId])
-        || teamObjectFromDocumentPick(remoteBracketDocument, slotId);
+      return officialTeam(slotId) || persistedPlayerTeam(slotId);
     }
 
     if (adminOfficialEditorActive) {
-      return officialTeam(slotId)
-        || teamObjectFromDocumentPick(officialBracketDocument, slotId)
-        || getTeam(picks[slotId])
-        || teamObjectFromDocumentPick(remoteBracketDocument, slotId);
+      return persistedPlayerTeam(slotId) || officialTeam(slotId);
     }
 
     if (adminOfficialR32EditorActive && isR32DisplaySlot(slotId)) {
-      return officialTeam(slotId)
-        || teamObjectFromDocumentPick(officialBracketDocument, slotId)
-        || getTeam(picks[slotId])
-        || teamObjectFromDocumentPick(remoteBracketDocument, slotId);
+      return officialTeam(slotId) || persistedPlayerTeam(slotId);
     }
 
-    return getTeam(picks[slotId]) || teamObjectFromDocumentPick(remoteBracketDocument, slotId);
+    return persistedPlayerTeam(slotId);
   }
 
   function officialTeam(slotId) {
-    return getTeam(officialPicks[slotId]) || teamObjectFromDocumentPick(officialBracketDocument, slotId);
+    return persistedOfficialTeam(slotId);
   }
 
   function officialPickComparisonForSlot(slotId, userTeam) {

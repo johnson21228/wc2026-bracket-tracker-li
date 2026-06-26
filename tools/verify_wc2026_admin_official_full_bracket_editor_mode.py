@@ -56,7 +56,13 @@ require("if (adminOfficialEditorActive()) return \"\";" in controller, "Admin_/o
 
 require("saveOfficialR32BracketAuthority" in store, "store must keep Admin_/official save boundary")
 require("await this.requireSignedInUser()" in store, "save boundary must require signed-in Supabase session")
-require("bracketKind: \"official\"" in store or "bracket_kind: \"official\"" in store, "projected Admin_/official document must retain semantic official bracket kind")
+require("adminUser.id !== ADMIN_OFFICIAL_SUPABASE_USER_ID" in store, "save boundary must require the physical Admin_ Supabase user")
+require(".update(rowPayload)" in store, "Admin_/official save must update the existing physical Admin_ row when present")
+require(".insert(rowPayload)" in store, "Admin_/official save may insert only the physical Admin_ row when missing")
+require('bracket_kind: "player"' in store, "Admin_/official durable save must keep the physical row bracket_kind as player")
+require('bracket_kind: "official"' not in store, "Admin_/official durable save must not write a physical official row")
+require('bracketKind: "official"' in store, "projected Admin_/official document must retain semantic official bracket kind")
+require('persistedBracketKind: "player"' in store, "projected Admin_/official document must remember physical player row kind")
 
 if errors:
     print("WC2026 Admin_/official full bracket editor mode verification failed:")
