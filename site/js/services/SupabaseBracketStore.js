@@ -178,10 +178,13 @@ class SupabaseBracketStore extends BracketStorageAdapter {
     const { data, error } = await supabase
       .from(TABLE_NAME)
       .select("bracket_json, bracket_kind, user_id, status, visibility")
-      .eq("user_id", ADMIN_OFFICIAL_USER_ID)
       .eq("tournament_id", tournamentId)
       .eq("game_id", gameId)
       .eq("bracket_kind", "official")
+      .eq("visibility", "public")
+      .in("status", ["submitted", "locked"])
+      .order("updated_at", { ascending: false })
+      .limit(1)
       .maybeSingle();
 
     if (error) throw error;
@@ -196,6 +199,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
       source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
       authority: "Admin_/official",
+      persistedByUserId: data.user_id || data.bracket_json.persistedByUserId || null,
     };
   }
 
@@ -204,7 +208,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
   }
 
   async saveOfficialR32BracketAuthority(bracket, { tournamentId = this.tournamentId, gameId = this.gameId } = {}) {
-    await this.requireSignedInUser();
+    const adminUser = await this.requireSignedInUser();
 
     assertPlainObject(bracket, "SupabaseBracketStore requires an Admin_/official BracketDocument object.");
     assertPlainObject(bracket.picksBySlot, "SupabaseBracketStore requires Admin_/official picksBySlot.");
@@ -216,7 +220,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       userId: ADMIN_OFFICIAL_USER_ID,
       tournamentId,
       gameId,
-      status: bracket.status || "draft",
+      status: "locked",
       lifecycleState: {
         ...(bracket.lifecycleState || {}),
         source: bracket.lifecycleState?.source || "admin-official-r32-editor-mode",
@@ -230,6 +234,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       lockedAt: bracket.lockedAt || null,
       visibility: "public",
       bracketKind: "official",
+      persistedByUserId: adminUser.id,
       officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
       officialResultsTruthSource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
       source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
@@ -247,7 +252,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       .from(TABLE_NAME)
       .upsert(
         {
-          user_id: ADMIN_OFFICIAL_USER_ID,
+          user_id: adminUser.id,
           tournament_id: canonicalBracketDocument.tournamentId,
           game_id: canonicalBracketDocument.gameId,
           status: canonicalBracketDocument.status,

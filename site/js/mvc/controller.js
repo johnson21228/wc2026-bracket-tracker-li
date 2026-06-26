@@ -35,7 +35,12 @@ export function createBracketController({ model, view }) {
     return slot?.round === "R32" || slotId.startsWith("R32");
   }
 
+  function adminOfficialEditorActive() {
+    return Boolean(model.getSummary?.()?.adminOfficialEditorActive || model.getSummary?.()?.adminOfficialR32EditorActive);
+  }
+
   function slotAllowedForActiveGame(slot) {
+    if (adminOfficialEditorActive()) return true;
     if (activeGameValue() !== "game-1") return true;
     return slotIsR32(slot);
   }
