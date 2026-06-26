@@ -1,14 +1,14 @@
-import { createBracketModel } from "./mvc/model.js?v=final-four-scope-fix-1300269";
-import { createBracketView } from "./mvc/view.js";
-import { createBracketController } from "./mvc/controller.js";
-import { createSupabaseAuthService } from "./services/SupabaseAuthService.js";
-import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js";
-import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js";
-import { createAccountSaveActionSurface } from "./identity/AccountSaveActionSurface.js";
-import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js";
-import { createPlayerStandingsSurface } from "./standings/PlayerStandingsSurface.js";
-import { createSupabasePlayerStandingsStore } from "./standings/SupabasePlayerStandingsStore.js";
-import { createSupabaseBracketStore } from "./services/SupabaseBracketStore.js";
+import { createBracketModel } from "./mvc/model.js?v=remove-old-saved-board-choice-1782492355";
+import { createBracketView } from "./mvc/view.js?v=remove-old-saved-board-choice-1782492355";
+import { createBracketController } from "./mvc/controller.js?v=remove-old-saved-board-choice-1782492355";
+import { createSupabaseAuthService } from "./services/SupabaseAuthService.js?v=remove-old-saved-board-choice-1782492355";
+import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js?v=remove-old-saved-board-choice-1782492355";
+import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js?v=remove-old-saved-board-choice-1782492355";
+import { createAccountSaveActionSurface } from "./identity/AccountSaveActionSurface.js?v=remove-old-saved-board-choice-1782492355";
+import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js?v=remove-old-saved-board-choice-1782492355";
+import { createPlayerStandingsSurface } from "./standings/PlayerStandingsSurface.js?v=remove-old-saved-board-choice-1782492355";
+import { createSupabasePlayerStandingsStore } from "./standings/SupabasePlayerStandingsStore.js?v=remove-old-saved-board-choice-1782492355";
+import { createSupabaseBracketStore } from "./services/SupabaseBracketStore.js?v=remove-old-saved-board-choice-1782492355";
 
 
 function setupInfoPanel(root) {
@@ -51,8 +51,7 @@ const ACTIVE_GAME_BACKGROUND_IMAGES = Object.freeze({
 });
 
 function selectedDevGameValue(root) {
-  const selected = root.querySelector(".dev-game-selector-option input:checked");
-  return selected?.value || "game-1";
+  return root.dataset.activeGame || "game-2";
 }
 
 function syncActiveGameBackground(root) {
@@ -61,7 +60,7 @@ function syncActiveGameBackground(root) {
 
   const active = selectedDevGameValue(root);
   const nextBackground =
-    ACTIVE_GAME_BACKGROUND_IMAGES[active] || ACTIVE_GAME_BACKGROUND_IMAGES["game-1"];
+    ACTIVE_GAME_BACKGROUND_IMAGES[active] || ACTIVE_GAME_BACKGROUND_IMAGES["game-2"];
 
   const current = background.getAttribute("src") || "";
   if (current !== nextBackground) {
@@ -89,18 +88,29 @@ async function main() {
     throw new Error("Missing [data-wc2026-app] site root.");
   }
 
+  console.info("[WC2026 startup] root found");
   setupInfoPanel(root);
   setupBracketeeringWorkflowPanel(root);
   const urlParams = new URLSearchParams(window.location.search);
   const adminOfficialEditor = urlParams.get("adminOfficialEditor") === "1" || urlParams.get("adminOfficial") === "1";
   const adminOfficialR32Editor = adminOfficialEditor || urlParams.get("adminOfficialR32Editor") === "1";
+
+  // Current LI: Bracketeering is one game. Legacy game-2 is only the bracket-board presentation alias.
+  root.dataset.bracketeeringGame = "game1";
+  root.dataset.activeGame = "game-2";
+  root.dataset.adminOfficialR32Editor = adminOfficialR32Editor ? "true" : "false";
+  root.querySelectorAll('.dev-game-selector-option input[value="game-1"]').forEach((input) => { input.checked = false; });
+  root.querySelectorAll('.dev-game-selector-option input[value="game-2"]').forEach((input) => { input.checked = true; });
+  console.info("[WC2026 startup] creating Supabase services");
   const authService = createSupabaseAuthService();
   const officialBracketStore = createSupabaseBracketStore();
+  console.info("[WC2026 startup] creating model");
   const model = await createBracketModel({
     officialBracketStore,
     adminOfficialR32Editor,
     adminOfficialEditor,
   });
+  console.info("[WC2026 startup] creating view");
   const view = createBracketView(root);
   setupActiveGameBackground(root);
   const controller = createBracketController({ model, view });
@@ -115,7 +125,9 @@ async function main() {
     authService,
     model,
   }).start();
+  console.info("[WC2026 startup] starting controller");
   controller.start();
+  console.info("[WC2026 startup] controller started");
 }
 
 main().catch((error) => {

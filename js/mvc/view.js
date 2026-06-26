@@ -43,8 +43,8 @@ export function createBracketView(root) {
   let teardownFloatingSurfaceDismissal = null;
 
   function activeGameValue() {
-    const selected = root.querySelector(".dev-game-selector-option input:checked");
-    return selected?.value || root.dataset.activeGame || "game-1";
+    // Current LI: one Bracketeering game. Legacy game-2 is only the bracket-board presentation alias.
+    return root.dataset.activeGame || "game-2";
   }
 
   function slotEnabledByPrecedent(slot) {
@@ -149,7 +149,7 @@ export function createBracketView(root) {
 
   function emptyPickLabelForSlot(slotId) {
     const normalizedSlotId = String(slotId || "").toUpperCase();
-    return normalizedSlotId.startsWith("R32") ? "Choose Team" : "Choose Winner";
+    return normalizedSlotId.startsWith("R32") ? "" : "Choose Winner";
   }
 
   function updateEmptyPickLabels() {
@@ -374,21 +374,23 @@ export function createBracketView(root) {
 
 
   function isGroupStagePresentationActive() {
-    return activeGameValue() === "game-1";
+    return false;
   }
 
   function shouldSuppressPickFillForSlot(slot) {
     const slotId = String(slot?.slotId || "").toUpperCase();
     return isGroupStagePresentationActive()
       && slot?.round !== "R32"
-      && !slotId.startsWith("R32");
+      && !slotId.startsWith("R32")
+      && !slot?.pickable;
   }
 
   function shouldSuppressPickInteractionForSlot(slot) {
     const slotId = String(slot?.slotId || "").toUpperCase();
     return isGroupStagePresentationActive()
       && slot?.round !== "R32"
-      && !slotId.startsWith("R32");
+      && !slotId.startsWith("R32")
+      && !slot?.pickable;
   }
 
   function displayTeamForSlot(slot) {
@@ -402,24 +404,7 @@ export function createBracketView(root) {
   }
 
   function isGame2ResolvedR32Display(slot, displayTeam) {
-    return activeGameValue() === "game-2" && slot.round === "R32" && Boolean(displayTeam) && Boolean(slot.game2ResolvedTeam);
-  }
-
-  function syncOfficialResultsBanner(summary) {
-    let banner = root.querySelector("[data-official-results-banner]");
-    if (!summary?.editingOfficialResults) {
-      banner?.remove();
-      return;
-    }
-
-    if (!banner) {
-      banner = document.createElement("aside");
-      banner.className = "official-results-banner";
-      banner.setAttribute("data-official-results-banner", "");
-      banner.setAttribute("role", "status");
-      banner.textContent = "Editing Official Results";
-      root.prepend(banner);
-    }
+    return false;
   }
 
   function officialTruthLabel(team) {
@@ -436,6 +421,9 @@ export function createBracketView(root) {
       button.className = "pick-slot-button";
       button.dataset.slotId = slot.slotId;
       button.dataset.round = slot.round;
+      if (slot.round === "R32" || String(slot.slotId || "").toUpperCase().startsWith("R32")) {
+        button.classList.add("round-r32");
+      }
       const enabledByPrecedent = slotEnabledByPrecedent(slot);
       const precedentUnavailableReason = disabledReasonForActiveGame(slot);
       const displayTeam = displayTeamForSlot(slot);
@@ -690,7 +678,7 @@ export function createBracketView(root) {
     const round = String(slot?.round || "").toUpperCase();
     const slotId = String(slot?.slotId || "").toUpperCase();
 
-    if (round === "R32" || slotId.startsWith("R32")) return "Choose Team";
+    if (round === "R32" || slotId.startsWith("R32")) return "";
 
     return "Choose Winner";
   }
@@ -1085,7 +1073,6 @@ export function createBracketView(root) {
   }
 
   function render(state) {
-    syncOfficialResultsBanner(state.summary);
     renderSlots(state.slotModels);
     renderFinalFourPanel(state.finalFour);
     renderGroupRail(state.groupRail);

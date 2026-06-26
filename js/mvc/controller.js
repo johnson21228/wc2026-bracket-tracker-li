@@ -27,7 +27,7 @@ export function createBracketController({ model, view }) {
   }
 
   function activeGameValue() {
-    return view.activeGameValue?.() || "game-1";
+    return "game-2";
   }
 
   function slotIsR32(slot) {
@@ -35,19 +35,28 @@ export function createBracketController({ model, view }) {
     return slot?.round === "R32" || slotId.startsWith("R32");
   }
 
+  function adminOfficialEditorActive() {
+    return Boolean(model.getSummary?.()?.adminOfficialEditorActive || model.getSummary?.()?.adminOfficialR32EditorActive);
+  }
+
   function slotAllowedForActiveGame(slot) {
-    if (activeGameValue() !== "game-1") return true;
-    return slotIsR32(slot);
+    if (adminOfficialEditorActive()) return true;
+    if (slotIsR32(slot)) return false;
+    return true;
   }
 
   function disabledReasonForActiveGame(slot) {
-    if (slotAllowedForActiveGame(slot)) return "";
-    return "Later-round picks open when Knockout Stage presentation is active.";
+    if (adminOfficialEditorActive()) return "";
+    if (slotIsR32(slot)) {
+      return "Round of 32 occupants are set by Admin_/official. Pick winners in the next round.";
+    }
+    return "";
   }
 
   function pickMenuNotReadyReason(slot) {
+    if (adminOfficialEditorActive()) return "";
     return "";
-}
+  }
 
   function reportBlockedPick(slot) {
     const activeGameReason = disabledReasonForActiveGame(slot);
@@ -123,7 +132,7 @@ export function createBracketController({ model, view }) {
     activeSlotId = null;
     view.closeMenu();
     redraw();
-    view.report(activeGame === "game-2" ? "Knockout Stage presentation is active." : "Group Stage presentation is active.");
+    view.report("Bracket board presentation is active.");
   }
 
   function onClearAll() {
