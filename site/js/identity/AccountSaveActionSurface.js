@@ -45,10 +45,9 @@ function renderConflict(root, { onUseSaved, onKeepBoard }) {
   element.setAttribute(ACCOUNT_SAVE_STATE_ATTRIBUTE, "conflict");
   conflict.hidden = false;
   conflict.innerHTML = `
-    <p>You already have picks saved. Use saved picks or keep this board?</p>
+    <p>Your saved joined bracket was loaded. Local draft picks are ignored for joined play.</p>
     <div class="join-live-picks-conflict-actions">
-      <button type="button" data-use-saved-picks>Use saved picks</button>
-      <button type="button" data-keep-board-picks>Keep this board</button>
+      <button type="button" data-use-saved-picks>Continue</button>
     </div>
   `;
   conflict.querySelector("[data-use-saved-picks]")?.addEventListener("click", onUseSaved);
@@ -157,7 +156,7 @@ function createAccountSaveActionSurface({
       renderStatus(root, "saved", "");
       dispatchLoadedPicks({ automatic: false, imported: result.imported || 0 });
     } catch (error) {
-      console.error("[JoinLivePicks] use saved picks failed", error);
+      console.error("[JoinLivePicks] load saved joined bracket failed", error);
       renderStatus(root, "retrying", "Could not save — retrying");
     }
   }

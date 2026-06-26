@@ -7,7 +7,12 @@ import { isSupabaseAuthConfigured } from "./SupabaseAuthService.js";
 const DEFAULT_TOURNAMENT_ID = "wc2026";
 const DEFAULT_GAME_ID = "game1";
 const DEFAULT_VISIBILITY = "private";
+
+function canonicalGameId() {
+  return DEFAULT_GAME_ID;
+}
 const ADMIN_OFFICIAL_USER_ID = "Admin_/official";
+const ADMIN_OFFICIAL_SUPABASE_USER_ID = "1e02144a-082e-481a-98b3-2c062250407b";
 const ADMIN_OFFICIAL_AUTHORITY_SOURCE = "Supabase:Admin_/official";
 const TABLE_NAME = "user_brackets";
 
@@ -66,7 +71,7 @@ function normalizeRemoteBracketDocument({ bracket, userId }) {
   assertPlainObject(bracket.picksBySlot, "SupabaseBracketStore requires BracketDocument.picksBySlot.");
 
   const now = new Date().toISOString();
-  const gameId = String(bracket.gameId || DEFAULT_GAME_ID);
+  const gameId = canonicalGameId();
   const tournamentId = String(bracket.tournamentId || DEFAULT_TOURNAMENT_ID);
 
   const normalizedCore = normalizeBracketDocument({
@@ -74,7 +79,7 @@ function normalizeRemoteBracketDocument({ bracket, userId }) {
       ...bracket,
       userId,
       tournamentId,
-      gameId,
+      gameId: canonicalGameId(),
       status: normalizeStatus(bracket.status),
     },
     bracketSlots: {
@@ -150,7 +155,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
     return user;
   }
 
-  async loadUserBracket(userId, { tournamentId = this.tournamentId, gameId = this.gameId } = {}) {
+  async loadUserBracket(userId, { tournamentId = this.tournamentId, gameId = canonicalGameId() } = {}) {
     const user = await this.requireSignedInUser();
     const requestedUserId = String(userId || "");
 
@@ -161,53 +166,146 @@ class SupabaseBracketStore extends BracketStorageAdapter {
     const supabase = this.ensureClient();
     const { data, error } = await supabase
       .from(TABLE_NAME)
-      .select("bracket_json, bracket_kind")
+      .select("bracket_json, bracket_kind, game_id, status, visibility, updated_at")
       .eq("user_id", user.id)
       .eq("tournament_id", tournamentId)
       .eq("game_id", gameId)
       .maybeSingle();
 
     if (error) throw error;
-    return data?.bracket_json
-      ? { ...data.bracket_json, bracketKind: data.bracket_kind || data.bracket_json.bracketKind || "player" }
-      : null;
+
+    if (!data?.bracket_json) {
+      console.warn("[WC2026 PlayerBracket] no saved player bracket row found", {
+        userId: user.id,
+        tournamentId,
+        gameId: canonicalGameId(),
+      });
+      return null;
+    }
+
+    console.info("[WC2026 PlayerBracket] loaded saved player bracket", {
+      userId: user.id,
+      gameId: data.game_id,
+      bracketKind: data.bracket_kind,
+      status: data.status,
+      visibility: data.visibility,
+      pickCount: Object.keys(data.bracket_json?.picksBySlot || {}).length,
+      updatedAt: data.updated_at,
+    });
+
+    return {
+      ...data.bracket_json,
+      gameId: canonicalGameId(),
+      bracketKind: data.bracket_kind || data.bracket_json.bracketKind || "player",
+      persistedGameId: data.game_id || data.bracket_json.persistedGameId || null,
+    };
   }
 
-  async loadOfficialR32BracketAuthority({ tournamentId = this.tournamentId, gameId = this.gameId } = {}) {
+  async loadOfficialR32BracketAuthority({ tournamentId = this.tournamentId, gameId = canonicalGameId() } = {}) {
     const supabase = this.ensureClient();
-    const { data, error } = await supabase
+
+    function hasR32Picks(bracket) {
+      const picks = bracket?.picksBySlot || {};
+      return Object.keys(picks).some((slotId) => String(slotId || "").toUpperCase().includes("R32"));
+    }
+
+    function isAdminOfficialAuthority(row) {
+      const bracket = row?.bracket_json || {};
+      return row?.user_id === ADMIN_OFFICIAL_SUPABASE_USER_ID
+        || bracket.userId === ADMIN_OFFICIAL_USER_ID
+        || bracket.authority === "Admin_/official"
+        || bracket.source === ADMIN_OFFICIAL_AUTHORITY_SOURCE
+        || bracket.officialR32AuthoritySource === ADMIN_OFFICIAL_AUTHORITY_SOURCE
+        || bracket.officialResultsTruthSource === ADMIN_OFFICIAL_AUTHORITY_SOURCE;
+    }
+
+    function officialDocumentFromRow(row, sourceKind) {
+      return {
+        ...row.bracket_json,
+        userId: ADMIN_OFFICIAL_USER_ID,
+        gameId: canonicalGameId(),
+        bracketKind: "official",
+        status: row.status || row.bracket_json.status || "locked",
+        visibility: row.visibility || row.bracket_json.visibility || "public",
+        officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+        officialResultsTruthSource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+        source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
+        authority: "Admin_/official",
+        persistedByUserId: row.user_id || row.bracket_json.persistedByUserId || null,
+        persistedBracketKind: row.bracket_kind || null,
+        officialAuthoritySourceKind: sourceKind,
+      };
+    }
+
+    const official = await supabase
       .from(TABLE_NAME)
-      .select("bracket_json, bracket_kind, user_id, status, visibility")
+      .select("bracket_json, bracket_kind, user_id, status, visibility, game_id, updated_at")
       .eq("tournament_id", tournamentId)
       .eq("game_id", gameId)
       .eq("bracket_kind", "official")
-      .eq("visibility", "public")
-      .in("status", ["submitted", "locked"])
       .order("updated_at", { ascending: false })
       .limit(1)
       .maybeSingle();
 
-    if (error) throw error;
-    if (!data?.bracket_json) return null;
+    if (official.error) throw official.error;
 
-    return {
-      ...data.bracket_json,
-      userId: ADMIN_OFFICIAL_USER_ID,
-      bracketKind: data.bracket_kind || data.bracket_json.bracketKind || "official",
-      status: data.status || data.bracket_json.status || "locked",
-      visibility: data.visibility || data.bracket_json.visibility || "public",
-      officialR32AuthoritySource: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
-      source: ADMIN_OFFICIAL_AUTHORITY_SOURCE,
-      authority: "Admin_/official",
-      persistedByUserId: data.user_id || data.bracket_json.persistedByUserId || null,
-    };
+    if (
+      official.data?.bracket_json &&
+      isAdminOfficialAuthority(official.data) &&
+      hasR32Picks(official.data.bracket_json)
+    ) {
+      console.info("[WC2026 OfficialR32] loaded official bracket row", {
+        gameId: official.data.game_id,
+        bracketKind: official.data.bracket_kind,
+        persistedByUserId: official.data.user_id,
+        pickCount: Object.keys(official.data.bracket_json?.picksBySlot || {}).length,
+      });
+      return officialDocumentFromRow(official.data, "official-row");
+    }
+
+    const adminPlayer = await supabase
+      .from(TABLE_NAME)
+      .select("bracket_json, bracket_kind, user_id, status, visibility, game_id, updated_at")
+      .eq("tournament_id", tournamentId)
+      .eq("game_id", gameId)
+      .eq("user_id", ADMIN_OFFICIAL_SUPABASE_USER_ID)
+      .order("updated_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (adminPlayer.error) throw adminPlayer.error;
+
+    if (adminPlayer.data?.bracket_json && hasR32Picks(adminPlayer.data.bracket_json)) {
+      console.info("[WC2026 OfficialR32] loaded Admin_ player row as Admin_/official R32 authority", {
+        gameId: adminPlayer.data.game_id,
+        bracketKind: adminPlayer.data.bracket_kind,
+        status: adminPlayer.data.status,
+        visibility: adminPlayer.data.visibility,
+        persistedByUserId: adminPlayer.data.user_id,
+        pickCount: Object.keys(adminPlayer.data.bracket_json?.picksBySlot || {}).length,
+      });
+      return officialDocumentFromRow(adminPlayer.data, "admin-player-row");
+    }
+
+    console.warn("[WC2026 OfficialR32] no Admin_/official R32 source row found", {
+      tournamentId,
+      gameId,
+      officialRowFound: Boolean(official.data?.bracket_json),
+      officialBracketKind: official.data?.bracket_kind,
+      officialHasR32Picks: hasR32Picks(official.data?.bracket_json || {}),
+      adminPlayerRowFound: Boolean(adminPlayer.data?.bracket_json),
+      adminPlayerBracketKind: adminPlayer.data?.bracket_kind,
+      adminPlayerHasR32Picks: hasR32Picks(adminPlayer.data?.bracket_json || {}),
+    });
+
+    return null;
   }
 
   async loadOfficialBracket(options = {}) {
     return this.loadOfficialR32BracketAuthority(options);
   }
 
-  async saveOfficialR32BracketAuthority(bracket, { tournamentId = this.tournamentId, gameId = this.gameId } = {}) {
+  async saveOfficialR32BracketAuthority(bracket, { tournamentId = this.tournamentId, gameId = canonicalGameId() } = {}) {
     const adminUser = await this.requireSignedInUser();
 
     assertPlainObject(bracket, "SupabaseBracketStore requires an Admin_/official BracketDocument object.");
@@ -219,7 +317,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       schemaVersion: Number(bracket.schemaVersion || 1),
       userId: ADMIN_OFFICIAL_USER_ID,
       tournamentId,
-      gameId,
+      gameId: canonicalGameId(),
       status: "locked",
       lifecycleState: {
         ...(bracket.lifecycleState || {}),
@@ -254,7 +352,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
         {
           user_id: adminUser.id,
           tournament_id: canonicalBracketDocument.tournamentId,
-          game_id: canonicalBracketDocument.gameId,
+          game_id: canonicalGameId(),
           status: canonicalBracketDocument.status,
           visibility: canonicalBracketDocument.visibility,
           bracket_kind: "official",
@@ -315,7 +413,7 @@ class SupabaseBracketStore extends BracketStorageAdapter {
         {
           user_id: user.id,
           tournament_id: canonicalBracketDocument.tournamentId,
-          game_id: canonicalBracketDocument.gameId,
+          game_id: canonicalGameId(),
           status: canonicalBracketDocument.status,
           visibility: canonicalBracketDocument.visibility,
           bracket_kind: canonicalBracketDocument.bracketKind === "official" ? "official" : "player",

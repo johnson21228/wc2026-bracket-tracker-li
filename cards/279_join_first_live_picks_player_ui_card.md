@@ -119,7 +119,7 @@ These are status messages, not player commands.
 
 If the player joins and an existing saved joined bracket conflicts with temporary browser picks, show one player-facing choice:
 
-“You already have picks saved. Use saved picks or keep this board?”
+“Your saved joined bracket was loaded. Local draft picks are ignored for joined play.”
 
 After that choice:
 
@@ -150,3 +150,8 @@ Likely implementation targets:
 8. Anonymous local exploration remains possible before joining.
 9. Existing saved bracket conflicts are handled once with a clear player choice.
 10. Verification proves this is a Join-first player UI rule and not a persistence-contract rewrite.
+
+
+## Supersession note
+
+The old saved-picks/current-board conflict choice is superseded. Joined play uses the Supabase saved bracket as authority. Local draft picks are ignored for joined play and must not be offered as an alternate board source.

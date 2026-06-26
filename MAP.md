@@ -23,15 +23,17 @@ tools/             optional validation/build helpers
 - `data/group_stage_matches_from_poster.json`
 - `data/groups_from_poster.json`
 
-## Two games
+## Current game model
 
-Game 1:
-Players pick the 32 teams that will advance from the 48-team group stage.
+Bracketeering is one connected game persisted as `game1`.
 
-Game 2:
-After the official Round of 32 is known, players fill the full knockout bracket through champion.
-- `site/game2/index.html` — Game 2 foundation board surface: same pub back layer and transparent geometry board layer as Game 1; picking rules intentionally deferred.
+Admin_/official owns the Round of 32 team-occupant field in Supabase. Players may render those R32 occupants but may not author them. Player-owned picks begin with R32 match winners and continue through later knockout rounds.
 
+Legacy `game-1` / `game-2` language may remain in historical files, but it is superseded for runtime authority. If `game-2` appears in current runtime, it is only a bracket-board presentation alias, not a separate game.
+
+- `li/world_cup/single_game_admin_official_runtime_rule.md` — current runtime authority.
+- `docs/features/single_game_admin_official_runtime.md` — implementation explanation.
+- `captures/CAPTURE_BACK_SINGLE_GAME_ADMIN_OFFICIAL_RUNTIME.md` — Capture Back record.
 
 ## Modular MVC/TDD Source Boundary
 

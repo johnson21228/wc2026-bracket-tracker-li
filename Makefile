@@ -105,6 +105,7 @@ verify:
 	python3 tools/verify_wc2026_official_r32_hydration_runtime.py
 	python3 tools/verify_wc2026_official_r32_as_player_feeder_teams.py
 	python3 tools/verify_wc2026_supabase_admin_official_r32_source.py
+	python3 tools/verify_wc2026_single_game_admin_official_runtime.py
 	python3 tools/verify_wc2026_force_player_r32_matches_admin_official.py
 	python3 tools/verify_wc2026_admin_official_r32_editor_mode.py
 	python3 tools/verify_wc2026_admin_official_full_bracket_editor_mode.py

@@ -2,73 +2,39 @@
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+INDEX = ROOT / "site/index.html"
+APP = ROOT / "site/js/app.js"
+VIEW = ROOT / "site/js/mvc/view.js"
 
-def read(path):
-    return (ROOT / path).read_text()
+index = INDEX.read_text()
+app = APP.read_text()
+view = VIEW.read_text()
 
-def require(path, token):
-    text = read(path)
-    if token not in text:
-        raise SystemExit(f"Banner lifecycle Stage selector UI verification failed:\n- missing {token!r} in {path}")
+errors = []
 
-def forbid_segment(path, start_token, end_token, forbidden_tokens):
-    text = read(path)
-    if start_token not in text:
-        raise SystemExit(
-            f"Banner lifecycle Stage selector UI verification failed:\n"
-            f"- missing segment start {start_token!r} in {path}"
-        )
-    start = text.index(start_token)
-    end = text.index(end_token, start) if end_token in text[start:] else len(text)
-    segment = text[start:end]
-    errors = [
-        token for token in forbidden_tokens
-        if token in segment
-    ]
-    if errors:
-        raise SystemExit(
-            "Banner lifecycle Stage selector UI verification failed:\n"
-            + "\n".join(
-                f"- active Game selector must remain presentation-only; found {token!r}"
-                for token in errors
-            )
-        )
+def require(condition, message):
+    if not condition:
+        errors.append(message)
 
-index = read("site/index.html")
-require("site/index.html", 'data-dev-game-selector')
-require("site/index.html", 'data-dev-game-selector-option')
-require("site/index.html", 'value="game-1" checked')
-require("site/index.html", 'value="game-2"')
-require("site/index.html", 'Dev game view')
-require("site/index.html", '>Group Stage<')
-require("site/index.html", '>Knockout Stage<')
+require('value="game-1"' in index, "legacy Group Stage radio hook must remain for compatibility")
+require('value="game-2"' in index, "legacy Knockout Stage radio hook must remain for compatibility")
+require('root.dataset.bracketeeringGame = "game1"' in app,
+        "runtime must declare one canonical persisted Bracketeering game")
+require('root.dataset.activeGame = "game-2"' in app,
+        "runtime must default presentation to bracket-board alias game-2")
+require('input[value="game-1"]' in app and "checked = false" in app,
+        "runtime must not default stale Group Stage presentation")
+require('input[value="game-2"]' in app and "checked = true" in app,
+        "runtime must check bracket-board presentation alias")
+require('return root.dataset.activeGame || "game-2";' in view,
+        "view must default to bracket-board presentation")
+require("function isGroupStagePresentationActive()" in view and "return false;" in view,
+        "Group Stage presentation must not suppress the one-game bracket board")
 
-app = read("site/js/app.js")
-require("site/js/app.js", "setupInfoPanel(root);")
-require("site/js/app.js", "setupActiveGameBackground(root);")
-require("site/js/app.js", "ACTIVE_GAME_BACKGROUND_IMAGES")
-require("site/js/app.js", '"game-1": "assets/board/pub_background_game1.jpeg"')
-require("site/js/app.js", '"game-2": "assets/board/knockout_pub_background.jpeg"')
+if errors:
+    print("Banner lifecycle Stage selector UI verification failed:")
+    for error in errors:
+        print(f"- {error}")
+    raise SystemExit(1)
 
-# The selector may now drive presentation-only runtime:
-# rules panel text and board background image. It must not drive gameplay.
-forbid_segment(
-    "site/js/app.js",
-    "function setupActiveGameBackground",
-    "async function main()",
-    [
-        "createBracketModel",
-        "createBracketController",
-        "localStorage",
-        "Supabase",
-        "score",
-        "route",
-        "fetch(",
-        "official_round_of_32",
-        "official_knockout_results",
-    ],
-)
-
-print(
-    "OK: WC2026 banner Stage selector UI defaults to Group Stage and only drives presentation-only rules/background state."
-)
+print("OK: legacy Stage selector hooks remain, but one-game runtime defaults to bracket-board presentation.")

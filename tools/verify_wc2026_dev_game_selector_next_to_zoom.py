@@ -1,57 +1,40 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+index = Path("site/index.html").read_text()
+app = Path("site/js/app.js").read_text()
+view = Path("site/js/mvc/view.js").read_text()
 
-def require_contains(text, token, errors, label):
-    if token not in text:
-        errors.append(f"{label}: missing {token!r}")
+errors = []
 
-def require_not_contains(text, token, errors, label):
-    if token in text:
-        errors.append(f"{label}: unexpected legacy player-facing token {token!r}")
+# Superseded rule:
+# The old dev Game/Stage selector was once required next to zoom controls.
+# The current one-game runtime uses game1 as persistence authority and may keep
+# legacy game-1/game-2 hooks only for presentation/cache compatibility.
+# Do not require Group Stage / Knockout Stage copy or a checked game-1 UI.
 
-def main() -> int:
-    site = (ROOT / "site/index.html").read_text()
-    view = (ROOT / "site/js/mvc/view.js").read_text()
+if "board-zoom-controls" not in index:
+    errors.append("Zoom controls must remain present.")
 
-    errors = []
+if 'root.dataset.bracketeeringGame = "game1"' not in app:
+    errors.append("Runtime must expose canonical bracketeeringGame=game1.")
 
-    # Legacy verifier filename retained for make verify continuity.
-    # This migration changes player-facing nomenclature first while preserving
-    # legacy game-1/game-2 runtime hooks.
-    require_contains(site, 'data-dev-game-selector', errors, "site/index.html")
-    require_contains(site, 'aria-label="Developer stage selector"', errors, "site/index.html")
-    require_contains(site, 'name="dev-game-view"', errors, "site/index.html")
-    require_contains(site, 'value="game-1"', errors, "site/index.html")
-    require_contains(site, 'value="game-2"', errors, "site/index.html")
-    require_contains(site, ">Group Stage<", errors, "site/index.html")
-    require_contains(site, ">Knockout Stage<", errors, "site/index.html")
+if 'root.dataset.activeGame = "game-2"' not in app:
+    errors.append("Runtime must default presentation to bracket-board activeGame=game-2.")
 
-    require_contains(view, ".dev-game-selector-option input:checked", errors, "site/js/mvc/view.js")
-    require_contains(view, 'data-dev-game-selector', errors, "site/js/mvc/view.js")
-    require_contains(view, 'game-1', errors, "site/js/mvc/view.js")
-    require_contains(view, 'game-2', errors, "site/js/mvc/view.js")
+if "selectedDevGameValue" not in app:
+    errors.append("Legacy active-game compatibility helper must remain available.")
 
-    require_not_contains(site, ">Game 1<", errors, "site/index.html")
-    require_not_contains(site, ">Game 2<", errors, "site/index.html")
-    require_not_contains(site, "Dev Game View", errors, "site/index.html")
+if "game-1" not in app or "game-2" not in app:
+    errors.append("Legacy game-1/game-2 compatibility hooks must remain in app.js during migration.")
 
-    # Placement/order is not part of this nomenclature migration. Verify both
-    # controls still exist without forcing exact banner ordering.
-    if "data-board-scale" not in site:
-        errors.append("site/index.html: missing zoom control token data-board-scale")
-    if "data-dev-game-selector" not in site:
-        errors.append("site/index.html: missing selector token data-dev-game-selector")
+if "game-1" in view and ".dev-game-selector-option input:checked" in view:
+    errors.append("View must not derive current gameplay authority from old checked dev selector.")
 
-    if errors:
-        print("WC2026 lifecycle Stage selector placement verification failed:")
-        for error in errors:
-            print(f"- {error}")
-        return 1
+if errors:
+    print("WC2026 lifecycle Stage selector placement verification failed:")
+    for error in errors:
+        print(f"- {error}")
+    raise SystemExit(1)
 
-    print("OK: Stage selector uses Group/Knockout Stage labels and preserves legacy selector hooks during presentation-only gameplay migration.")
-    return 0
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+print("OK: legacy dev Stage selector verifier superseded; one-game runtime keeps zoom controls and compatibility hooks without old selector authority.")

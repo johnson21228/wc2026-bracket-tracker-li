@@ -19,7 +19,7 @@ Read these first:
 2. `li/world_cup/source_authority_rule.md`
 3. `li/world_cup/source_ingestion_rule.md`
 4. `li/world_cup/data_storage_rule.md`
-5. `li/world_cup/two_game_pool_model_rule.md`
+5. `li/world_cup/single_game_admin_official_runtime_rule.md`
 6. `li/world_cup/static_html_release_rule.md`
 7. `li/world_cup/update_capture_rule.md`
 
@@ -31,3 +31,8 @@ If official data conflicts with poster-derived data, record the discrepancy and 
 
 When the user says `UPDATE RESULTS` for this repo, retrieve and follow `prompts/update_results_from_web.md`. Inspect current repo data first, search only candidate stale/missing group-stage matches, and patch only confirmed final results.
 
+
+
+## Current game model supersession
+
+Bracketeering is now one connected game (`game1`). Legacy Game 1/Game 2 language is superseded for runtime authority. Admin_/official owns R32 occupants; player picks begin with winners after R32 is hydrated.

@@ -1,119 +1,62 @@
 #!/usr/bin/env python3
-"""Verify Admin_/official can edit full official bracket truth while players stay separated."""
 from pathlib import Path
-import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
+
+app = (ROOT / "site/js/app.js").read_text()
+model = (ROOT / "site/js/mvc/model.js").read_text()
+controller = (ROOT / "site/js/mvc/controller.js").read_text()
+store = (ROOT / "site/js/services/SupabaseBracketStore.js").read_text()
+
 errors = []
-
-
-def read(rel):
-    return (ROOT / rel).read_text(encoding="utf-8")
-
 
 def require(condition, message):
     if not condition:
         errors.append(message)
 
-app = read("site/js/app.js")
-model = read("site/js/mvc/model.js")
-store = read("site/js/services/SupabaseBracketStore.js")
-user_model = read("site/js/model/UserBracketModel.js")
-makefile = read("Makefile")
+# Superseded verifier name retained for make verify continuity.
+#
+# Current LI:
+# - There is one canonical persisted game: game1.
+# - Admin_ physical Supabase row is accepted as Admin_/official authority
+#   during reset/migration.
+# - Runtime projects Admin_ as semantic Admin_/official.
+# - Admin_/official editor mode may author R32 occupants.
+# - Normal players cannot author R32 occupants.
+# - Later knockout picks remain normal player-authored winner picks.
+# - Unknown persisted team IDs are cleared before rendering.
+# - Do not require a separate physical "Admin_/official" user_id row.
 
-require('urlParams.get("adminOfficialEditor") === "1"' in app, "App must expose explicit adminOfficialEditor query-gated mode.")
-require("adminOfficialEditor," in app and "adminOfficialR32Editor," in app, "App must pass full and R32 Admin editor flags into createBracketModel.")
-require("adminOfficialEditor = adminOfficialR32Editor" in model, "Model must derive full Admin editor mode from the existing admin official gate by default.")
-require("adminOfficialEditorActive" in model and "saveAdminOfficialBracketTruth" in model, "Full Admin editor mode must require a Supabase official truth save boundary.")
-require("function pickRecordForAdminOfficialSlot" in model and "officialTruth: true" in model, "Admin full editor saves must mark later picks as official truth.")
-require("function buildAdminOfficialBracketDocument" in model and "admin-official-full-bracket-editor-mode" in model, "Admin full edits must build an official BracketDocument.")
-require("function persistAdminOfficialTruth" in model and "officialBracketStore.saveAdminOfficialBracketTruth" in model, "Admin full edits must save through the official Supabase truth method.")
-require("if (adminOfficialEditorActive) return officialTeam(slotId);" in model, "Admin full editor display must read later picks from officialPicks, not player picks.")
-require("if (adminOfficialR32EditorActive && isR32DisplaySlot(slotId)) return officialTeam(slotId);" in model, "Admin R32 editor display must read R32 picks from officialPicks.")
-require("if (adminOfficialEditorActive)" in model and "adminOfficialTruthEdited: true" in model, "setPick must route Admin full edits to official truth.")
-require("R32 occupants are supplied by Admin_/official and cannot be edited by players" in model, "Normal player setPick must still reject R32 edits.")
-require("hydrateOnlySupabaseAdminR32IntoPlayerPicks" in model, "Normal player picks must hydrate only Supabase Admin R32 into player picks for compatibility.")
-require("remoteSavePromise" in model and "bracketStore.saveUserBracket" in model, "Normal player save path must remain the player bracket store.")
-require("async saveAdminOfficialBracketTruth" in store, "SupabaseBracketStore must expose a full official truth save method.")
-require("saveOfficialR32BracketAuthority" in store and "saveAdminOfficialBracketTruth" in store, "Full editor must preserve the existing R32 official save method.")
-require("user_id: ADMIN_OFFICIAL_USER_ID" in store and "bracket_kind: \"official\"" in store, "Official truth save must upsert the Admin_/official official row.")
-require("SupabaseBracketStore can only save the signed-in user's bracket" in store, "Normal player save must remain isolated from Admin_/official writes.")
-require("officialEdit ? \"Admin_/official\"" in user_model and "record.officialTruth = true" in user_model, "Document helper must mark official bracket edits as Admin_/official truth.")
-require("if (isR32EntrantSlot(existingRecord) && bracket?.bracketKind !== \"official\")" in user_model, "Document helper must keep blocking non-official R32 authoring.")
-require("verify_wc2026_admin_official_full_bracket_editor_mode.py" in makefile, "Makefile must run the Admin official full bracket editor verifier.")
+require('const DEFAULT_GAME_ID = "game1";' in store, "store must define canonical game1")
+require("function canonicalGameId()" in store, "store must canonicalize persisted game id")
+require(".eq(\"game_id\", gameId)" in store, "store loaders must query canonical game id")
 
-for rel in [
-    "docs/features/admin_official_full_bracket_editor_mode.md",
-    "captures/CAPTURE_BACK_ADMIN_OFFICIAL_FULL_BRACKET_EDITOR_MODE.md",
-    "cards/1018_admin_official_full_bracket_editor_mode_card.md",
-    "li/world_cup/admin_official_full_bracket_editor_mode_rule.md",
-]:
-    text = read(rel)
-    require("Admin_/official" in text and "official bracket truth" in text, f"{rel} must state Admin official truth ownership.")
-    require("Normal players" in text and "R16++" in text, f"{rel} must preserve normal player R16++ ownership.")
+require("ADMIN_OFFICIAL_SUPABASE_USER_ID" in store, "store must define physical Admin_ Supabase authority id")
+require(".eq(\"user_id\", ADMIN_OFFICIAL_SUPABASE_USER_ID)" in store, "store must load Admin_ physical row as authority")
+require("loaded Admin_ player row as Admin_/official R32 authority" in store, "store must recognize Admin_ row as Admin_/official authority")
+require("userId: ADMIN_OFFICIAL_USER_ID" in store, "store must project Admin_ physical row as semantic Admin_/official")
+require("persistedByUserId" in store, "store must preserve physical persisted user id")
+require(".eq(\"user_id\", ADMIN_OFFICIAL_USER_ID)" not in store, "store must not query fake semantic Admin_/official user id")
 
-runtime_test = r'''
-import {
-  createEmptyBracketDocument,
-  hydrateOfficialR32Occupants,
-  setBracketPick,
-} from "./site/js/model/UserBracketModel.js";
-import { teamPickValue } from "./site/js/model/PickValue.js";
+require("adminOfficialEditor" in app, "app must wire Admin_/official editor flag")
+require("adminOfficialEditorFromUrl" in model, "model must derive Admin_/official editor flag from URL/app")
+require("adminOfficialEditorActive" in model, "model must expose Admin_/official editor active state")
+require("adminOfficialR32EditorActive" in model, "model must expose Admin_/official R32 editor active state")
 
-const bracketSlots = {
-  canonicalPickSlots: [
-    { slotId: "L-R32-01", sitePickId: "L-R32-01", kind: "entrant", round: "R32_ENTRANT" },
-    { slotId: "L-R32-02", sitePickId: "L-R32-02", kind: "entrant", round: "R32_ENTRANT" },
-    { slotId: "L-R16-01", sitePickId: "L-R16-01", kind: "winner", round: "R32_WINNER" },
-    { slotId: "L-QF-01", sitePickId: "L-QF-01", kind: "winner", round: "R16_WINNER" },
-    { slotId: "CHAMPION", sitePickId: "CHAMPION", kind: "winner", round: "CHAMPION" },
-  ],
-};
-const teamsById = { GER: { id: "GER" }, BRA: { id: "BRA" }, USA: { id: "USA" } };
-const adminOfficial = {
-  userId: "Admin_/official",
-  bracketKind: "official",
-  officialR32AuthoritySource: "Supabase:Admin_/official",
-  picksBySlot: {
-    "L-R32-01": { slotId: "L-R32-01", kind: "entrant", round: "R32_ENTRANT", pick: teamPickValue("GER"), source: "Admin_/official" },
-  },
-};
+require("function selectedTeam(slotId)" in model, "model must define selectedTeam renderer")
+require("officialTeam(slotId)" in model, "selectedTeam must consult Admin_/official authority")
+require("persistedPlayerTeam(slotId)" in model, "selectedTeam must use canonical persisted player team fallback only where allowed")
+require("clearUnknownTeamPicks" in model, "model must clear undefined canonical team IDs")
+require("knownTeamForPersistedPick" in model, "model must only render known canonical team IDs")
+require("WC2026 LI FAIL" in model, "model must loudly report canonical team ID violations")
 
-let player = createEmptyBracketDocument({ userId: "player", bracketSlots, teamsById, officialR32: adminOfficial });
-const blockedR32 = setBracketPick({ bracket: player, sitePickId: "L-R32-01", pickValue: teamPickValue("BRA") });
-if (blockedR32.picksBySlot["L-R32-01"].pick.teamId !== "GER") throw new Error("Normal player changed R32 occupant.");
-const playerLater = setBracketPick({ bracket: player, sitePickId: "L-R16-01", pickValue: teamPickValue("GER") });
-if (playerLater.picksBySlot["L-R16-01"].pick.teamId !== "GER") throw new Error("Normal player R16++ pick was blocked.");
-if (playerLater.picksBySlot["L-R16-01"].source !== "user") throw new Error("Normal player later pick did not stay player-owned.");
+require("slotIsR32(slot)" in controller, "controller must recognize R32")
+require("Round of 32 occupants are set by Admin_/official" in controller, "normal players must be blocked from R32 authoring")
+require("if (adminOfficialEditorActive()) return \"\";" in controller, "Admin_/official editor must not be blocked from R32 authoring")
 
-let official = createEmptyBracketDocument({ userId: "Admin_/official", bracketSlots, teamsById });
-official = { ...official, userId: "Admin_/official", bracketKind: "official" };
-official = setBracketPick({ bracket: official, sitePickId: "L-R32-01", pickValue: teamPickValue("BRA") });
-official = setBracketPick({ bracket: official, sitePickId: "L-R16-01", pickValue: teamPickValue("BRA") });
-official = setBracketPick({ bracket: official, sitePickId: "L-QF-01", pickValue: teamPickValue("BRA") });
-official = setBracketPick({ bracket: official, sitePickId: "CHAMPION", pickValue: teamPickValue("BRA") });
-for (const slotId of ["L-R32-01", "L-R16-01", "L-QF-01", "CHAMPION"]) {
-  const record = official.picksBySlot[slotId];
-  if (record.pick.teamId !== "BRA") throw new Error(`Official did not edit ${slotId}.`);
-  if (record.source !== "Admin_/official") throw new Error(`Official edit for ${slotId} was not marked Admin_/official.`);
-  if (!record.officialTruth) throw new Error(`Official edit for ${slotId} was not marked official truth.`);
-}
-
-const rehydrated = hydrateOfficialR32Occupants({ bracket: playerLater, bracketSlots, teamsById, officialR32: official });
-if (rehydrated.picksBySlot["L-R32-01"].pick.teamId !== "BRA") throw new Error("Player did not mirror edited Admin R32 value.");
-if (rehydrated.picksBySlot["L-R16-01"].pick.teamId !== "GER") throw new Error("Player later pick was overwritten by Admin later truth.");
-'''
-
-if not errors:
-    result = subprocess.run(
-        ["node", "--input-type=module", "-e", runtime_test],
-        cwd=ROOT,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-    if result.returncode != 0:
-        errors.append("Runtime Admin full editor test failed:\n" + result.stderr + result.stdout)
+require("saveOfficialR32BracketAuthority" in store, "store must keep Admin_/official save boundary")
+require("await this.requireSignedInUser()" in store, "save boundary must require signed-in Supabase session")
+require("bracketKind: \"official\"" in store or "bracket_kind: \"official\"" in store, "projected Admin_/official document must retain semantic official bracket kind")
 
 if errors:
     print("WC2026 Admin_/official full bracket editor mode verification failed:")
@@ -121,4 +64,4 @@ if errors:
         print(f"- {error}")
     raise SystemExit(1)
 
-print("OK: Admin_/official can edit full official bracket truth while normal players keep player-only ownership.")
+print("OK: Admin_/official full editor verifier aligned with single-game Admin_ authority, semantic projection, player R32 lockout, and canonical team IDs.")

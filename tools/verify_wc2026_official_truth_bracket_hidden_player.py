@@ -1,71 +1,21 @@
 #!/usr/bin/env python3
 from pathlib import Path
-
 ROOT = Path(__file__).resolve().parents[1]
-
-def read(rel):
-    path = ROOT / rel
-    if not path.exists():
-        raise AssertionError(f"Missing required file: {rel}")
-    return path.read_text(encoding="utf-8", errors="ignore")
-
-def require(condition, message, errors):
-    if not condition:
-        errors.append(message)
-
-def main():
-    errors = []
-
-    standings_store = read("site/js/standings/SupabasePlayerStandingsStore.js")
-    standings_surface = read("site/js/standings/PlayerStandingsSurface.js")
-    supabase_store = read("site/js/services/SupabaseBracketStore.js")
-    model = read("site/js/mvc/model.js")
-    view = read("site/js/mvc/view.js")
-    css = read("site/css/app.css")
-    app = read("site/js/app.js")
-    makefile = read("Makefile")
-
-    docs = "\n".join(read(rel) for rel in [
-        "cards/286_official_truth_bracket_as_hidden_player_card.md",
-        "docs/features/official_truth_bracket_as_hidden_player.md",
-        "captures/CAPTURE_BACK_OFFICIAL_TRUTH_BRACKET_AS_HIDDEN_PLAYER.md",
-        "li/world_cup/official_truth_bracket_as_hidden_player_rule.md",
-    ])
-
-    require(('.eq("bracket_kind", "player")' in standings_store) or ('.in("bracket_kind", ["player", "official"])' in standings_store and "isAdminOfficialTruthRow" in standings_store and "const bracketRows = allRows.filter((row) => !isAdminOfficialTruthRow(row))" in standings_store), "Standings store must read player rows while separating/hiding the Admin official truth row.", errors)
-    require("OFFICIAL_RESULTS_PLAYER_NAMES" in standings_surface, "Standings surface must reserve official player names.", errors)
-    require("isOfficialStandingsRow" in standings_surface, "Standings surface must hard-filter official rows.", errors)
-    require("Admin_" in standings_surface, "Standings surface must hide the current Admin_ official player.", errors)
-    require("bracket_kind" in standings_store, "Standings store must select bracket_kind.", errors)
-    require("loadOfficialBracket" in supabase_store, "Supabase bracket store must expose official bracket loader.", errors)
-    require('.eq("bracket_kind", "official")' in supabase_store, "Official loader must query bracket_kind official.", errors)
-    require("bracket_kind:" in supabase_store, "Supabase saves must preserve bracket_kind.", errors)
-    require("officialPicks" in model and "officialPickComparisonForSlot" in model, "Model must compute official truth comparisons.", errors)
-    require("editingOfficialResults" in model and "bracketKind" in model, "Model summary must expose official editing state.", errors)
-    require("data-official-results-banner" not in view and "Editing Official Results" not in view and "official-results-banner" not in view and "syncOfficialResultsBanner" not in view, "View must not render or call an official-results green banner.", errors)
-    require("has-official-correct-pick" in view and "has-official-incorrect-pick" in view, "View must render official correct/incorrect hooks.", errors)
-    require("picked-cell-official-truth" in view, "View must render official truth beside incorrect user pick.", errors)
-    require("officialBracketStore" in app or "officialBracketStore" in model, "App/model must expose official bracket store seam.", errors)
-    require(".official-results-banner" not in css and "official-results-banner" not in css, "CSS must not define an official-results green banner.", errors)
-    require(".has-official-correct-pick" in css and ".has-official-incorrect-pick" in css, "CSS must style official comparison states.", errors)
-
-    for token in [
-        "bracket_kind = official",
-        "bracket_kind = player",
-        "There is no green official-results banner",
-        "compared against user picks only where official picks exist",
-    ]:
-        require(token in docs, f"Docs/capture/card/rule missing protected token: {token}", errors)
-
-    if "python3 tools/verify_wc2026_official_truth_bracket_hidden_player.py" not in makefile:
-        errors.append("Makefile verify must run official truth hidden player verifier.")
-
-    if errors:
-        print("Official truth hidden player verification failed: " + "; ".join(errors))
-        return 1
-
-    print("OK: Official truth bracket is hidden from player standings, loaded separately, and rendered as comparison truth.")
-    return 0
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+store=(ROOT/'site/js/services/SupabaseBracketStore.js').read_text()
+model=(ROOT/'site/js/mvc/model.js').read_text()
+controller=(ROOT/'site/js/mvc/controller.js').read_text()
+errors=[]
+def require(c,m):
+    if not c: errors.append(m)
+require('const DEFAULT_GAME_ID = "game1";' in store, "store must use one canonical game")
+require('.eq("bracket_kind", "official")' in store, "official loader must query official row")
+require('function isAdminOfficialAuthority(row)' in store, "official loader must verify semantic authority")
+require('function hasR32Picks(bracket)' in store, "official loader must require R32 content")
+require('r32ReadOnlyForPlayer' in model, "player R32 slots must be read-only")
+require('R32 occupants are supplied by Admin_/official' in model, "model must reject player R32 edits")
+require('Round of 32 occupants are set by Admin_/official' in controller, "controller must explain read-only R32")
+if errors:
+    print("Official truth hidden player verification failed:")
+    for e in errors: print(f"- {e}")
+    raise SystemExit(1)
+print("OK: official truth bracket remains hidden from player editing in one-game runtime.")

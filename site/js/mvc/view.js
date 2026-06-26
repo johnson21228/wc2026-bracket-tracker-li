@@ -43,8 +43,8 @@ export function createBracketView(root) {
   let teardownFloatingSurfaceDismissal = null;
 
   function activeGameValue() {
-    const selected = root.querySelector(".dev-game-selector-option input:checked");
-    return selected?.value || root.dataset.activeGame || "game-1";
+    // Current LI: one Bracketeering game. Legacy game-2 is only the bracket-board presentation alias.
+    return root.dataset.activeGame || "game-2";
   }
 
   function slotEnabledByPrecedent(slot) {
@@ -374,7 +374,7 @@ export function createBracketView(root) {
 
 
   function isGroupStagePresentationActive() {
-    return activeGameValue() === "game-1";
+    return false;
   }
 
   function shouldSuppressPickFillForSlot(slot) {
@@ -404,7 +404,7 @@ export function createBracketView(root) {
   }
 
   function isGame2ResolvedR32Display(slot, displayTeam) {
-    return activeGameValue() === "game-2" && slot.round === "R32" && Boolean(displayTeam) && Boolean(slot.game2ResolvedTeam);
+    return false;
   }
 
   function officialTruthLabel(team) {

@@ -50,15 +50,15 @@
               <option value="1.25">125%</option>
             </select>
           </div>
-          <fieldset class="dev-game-selector" data-dev-game-selector aria-label="Developer stage selector" data-legacy-label="Dev game view">
-            <legend>Stage selector</legend>
+          <fieldset class="dev-game-selector" data-dev-game-selector aria-label="Board view selector" data-legacy-label="Presentation view">
+            <legend>Board view</legend>
             <label class="dev-game-selector-option">
-              <input type="radio" name="dev-game-view" value="game-1" checked data-dev-game-selector-option>
-              <span>Group Stage</span>
+              <input type="radio" name="dev-game-view" value="game-1" data-dev-game-selector-option>
+              <span>Groups</span>
             </label>
             <label class="dev-game-selector-option">
-              <input type="radio" name="dev-game-view" value="game-2" data-dev-game-selector-option>
-              <span>Knockout Stage</span>
+              <input type="radio" name="dev-game-view" value="game-2" checked data-dev-game-selector-option>
+              <span>Bracket</span>
             </label>
           </fieldset>
         </div>
@@ -153,6 +153,6 @@
     </section>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script type="module" src="js/app.js?v=final-four-scope-fix-1300269"></script>
+  <script type="module" src="js/app.js?v=remove-old-saved-board-choice-1782492355"></script>
 </body>
 </html>
