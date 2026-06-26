@@ -1,23 +1,23 @@
 # Unified Game 1 to Game 2 Bracket Lifecycle
 
-This document captures a possible product direction for the WC2026 bracket tracker.
+This document is a historical lifecycle note. It is superseded by the current knockout-only Admin_/official R32 authority model, but remains useful for geometry/lifecycle context.
 
 ## Core idea
 Game 1 can grow from a Round of 32 prediction game into the long-lived bracket workspace. Game 2 does not necessarily need to be a separate visual board. It may become a later phase of the same bracket board.
 
 ## Lifecycle
 
-### Phase 1 — Pre-official Round of 32 prediction
-Players assign predicted qualifiers to Round of 32 slots. This is the original Game 1 behavior.
+### Phase 1 — Admin_/official Round of 32 occupant setup
+Admin_/official assigns official R32 occupants. Normal players do not assign, project, or predict R32 occupants.
 
 ### Phase 2 — Conditional knockout picking
-When both teams for a bracket match are known in the player prediction layer, the app may allow the player to pick a winner for that match. These picks are still provisional if the underlying teams are not yet official.
+When both teams for a bracket match are known from hydrated Supabase Admin_/official R32 entrants or upstream player-owned winners, the app may allow the player to pick a winner for that match.
 
 ### Phase 3 — FIFA official Round of 32 announcement
-When FIFA announces the official Round of 32, Game 1 can be scored. The app should preserve each player's original predicted R32 slot choices as evidence and compare them to official FIFA truth.
+When Admin_/official has entered official R32 occupants, player BracketDocuments may store those R32 entries as hydrated mirror records for rendering and R16++ preselection. These entries are copied only from Supabase Admin_/official and are not scored as player-authored predictions.
 
 ### Phase 4 — Official truth replaces or overlays prediction truth
-The official Round of 32 becomes the canonical starting truth for knockout play. The UI can still show the player's original prediction layer, including missed, matched, and still-relevant picks.
+The Supabase Admin_/official Round of 32 is the canonical starting truth for knockout play. Static JSON, localStorage, and stale player documents must not supply public R32 truth.
 
 ### Phase 5 — Knockout bracket continuation
 The same manifest-driven bracket board continues servicing winner picks, advancement, and scoring. This is the Game 2 behavior, but it may be a board state rather than a separate visual implementation.
@@ -28,10 +28,11 @@ A unified lifecycle reduces duplicate geometry and lets the player remain in one
 ## Data distinction
 The implementation should keep these concepts separate:
 
-- player predicted R32 slot occupant
-- official FIFA R32 slot occupant
-- provisional knockout pick
-- official-truth knockout pick
+- Admin_/official R32 slot occupant
+- player BracketDocument R32 mirror entry with `playerAuthored: false`
+- player-owned R32 match-winner pick
+- player-owned later-round knockout pick
+- Admin_/official later-round official truth, which must not be copied into player documents
 - pick viability status
 - Game 1 scoring evidence
 - Game 2 scoring evidence

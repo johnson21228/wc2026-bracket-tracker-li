@@ -74,38 +74,39 @@ Must not:
 - know how menu tiles look
 - mutate Game 2 picks
 
-### 4. Game 1 Module — Round-of-32 Qualifier Prediction
+### 4. Admin_/official Module — Round-of-32 Occupant Authority
 
-Owns the pre-knockout prediction game: pick the 32 teams or fill the 32 qualification slots before the official R32 is known.
+Owns the official Round-of-32 occupant field. Normal players do not assign, project, or predict R32 occupants.
 
 Responsibilities:
 
-- let a player assign one eligible team to each Game 1 R32 slot
-- filter each tap menu by the slot qualification rule
-- prevent duplicate team assignment unless a correction flow explicitly allows it
-- lock and export Game 1 picks
-- compare Game 1 picks against the official R32 field when available
+- let Admin_/official assign official team occupants to Game 1 R32 slots
+- persist those occupants in the Supabase Admin_/official official bracket document
+- expose ONLY Supabase Admin_/official R32 entrants for player BracketDocument hydration
+- preserve partial Admin_/official truth without filling missing R32 slots from static JSON, localStorage, or stale player documents
 
 Must not:
 
-- become the source of truth for the official R32 bracket
-- mutate Game 2 seed structure after the official or fixed seed exists
+- copy Admin_/official R16, QF, SF, Final, Champion, or third-place truth into normal player documents
+- let normal players author R32 occupant slots
+- use a player bracket as the source of truth for the official R32 field
 
-### 5. Game 2 Module — Knockout Bracket Prediction
+### 5. Player Knockout Module — R32 Winner and Later Picks
 
-Owns the progressive knockout bracket game after the fixed R32 seed exists.
+Owns the player-owned knockout picks after the official R32 occupants are available.
 
 Responsibilities:
 
-- load a fixed R32 seed
-- let players pick R32/R16/QF/SF/final/champion winners
+- hydrate ONLY R32 entrant slots from Supabase Admin_/official into player BracketDocuments for rendering, scoring, and R16++ preselection compatibility
+- mark hydrated R32 entries with Admin_/official source/authority metadata and `playerAuthored: false`
+- let players pick R32 match winners and R16/QF/SF/final/champion winners
 - advance winners downstream only through valid feeder paths
-- clear dependent downstream picks when an upstream pick changes
-- optionally show Game 1 comparison metadata as tiebreaker evidence
+- clear dependent downstream picks when a player-owned upstream pick changes
 
 Must not:
 
-- generate official R32 slots from Game 1 picks
+- generate official R32 slots from player picks
+- copy Admin_/official later-round truth into player documents
 - use demo seed data without visibly marking it as demo/non-official
 
 ### 6. Scoring Module

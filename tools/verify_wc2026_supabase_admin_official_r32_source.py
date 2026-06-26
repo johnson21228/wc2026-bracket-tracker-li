@@ -32,7 +32,7 @@ REQUIRED = {
     "site/js/model/UserBracketModel.js": [
         "function officialR32AuthoritySource",
         "Supabase:Admin_/official",
-        "StaticJsonFallback:official_round_of_32",
+        "source === \"Supabase:Admin_/official\"",
         "hydratedFrom: occupant.hydratedFrom || \"Supabase:Admin_/official\"",
         "blockedPlayerR32Authoring: true",
     ],
@@ -109,6 +109,8 @@ const supabaseOfficial = {
   },
 };
 if (officialR32AuthoritySource(supabaseOfficial) !== "Supabase:Admin_/official") throw new Error("Supabase source was not recognized");
+const staticOfficial = { officialR32AuthoritySource: "StaticJsonFallback:official_round_of_32" };
+if (officialR32AuthoritySource(staticOfficial) === "Supabase:Admin_/official") throw new Error("Static fallback masqueraded as Supabase Admin source");
 let bracket = createEmptyBracketDocument({ userId: "player-1", bracketSlots, teamsById, officialR32: supabaseOfficial });
 if (bracket.picksBySlot["L-R32-01"].pick.teamId !== "USA") throw new Error("Supabase official R32 did not hydrate entrant");
 if (bracket.picksBySlot["L-R32-01"].hydratedFrom !== "Supabase:Admin_/official") throw new Error("hydrated entrant is not tagged Supabase Admin_/official");

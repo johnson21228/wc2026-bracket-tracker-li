@@ -43,7 +43,7 @@ Inside a filled R32 slot, visual priority is:
 
 ## Game 1 behavior
 
-For Game 1, the R32 card represents the player's predicted qualifier for that slot. The slot rule still governs eligibility, but the visible card should read as a team pick, not as a rule label.
+For Game 1, the R32 card represents the Admin_/official hydrated occupant for that slot. In normal player mode it is not a player-authored qualifier prediction. A player BracketDocument may carry the R32 occupant for rendering/preselection compatibility only when that record was copied from Supabase Admin_/official and marked `playerAuthored: false`.
 
 ## Game 2 behavior
 

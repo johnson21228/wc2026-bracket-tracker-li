@@ -389,7 +389,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     }
   }
 
-  picks = stripR32OccupantsFromPlayerPicks(picks);
+  picks = hydrateOnlySupabaseAdminR32IntoPlayerPicks(picks);
 
   function getTeam(teamId) {
     return teamById.get(teamId) || null;
@@ -405,9 +405,31 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     );
   }
 
+  function hydrateOnlySupabaseAdminR32IntoPlayerPicks(sourcePicks = {}) {
+    const playerOwnedPicks = stripR32OccupantsFromPlayerPicks(sourcePicks);
+    const canonicalPickSlots = allPickSlots();
+    const picksBySlot = Object.fromEntries(
+      canonicalPickSlots.map((slot) => [slot.slotId, pickRecordForRemoteSlot(slot, playerOwnedPicks[slot.slotId])])
+    );
+    const hydrated = hydrateOfficialR32Occupants({
+      bracket: {
+        schemaVersion: 1,
+        userId,
+        tournamentId: "wc2026",
+        gameId: "game1",
+        bracketKind: "player",
+        picksBySlot,
+      },
+      bracketSlots: { canonicalPickSlots },
+      teamsById: Object.fromEntries(teamById.entries()),
+      officialR32: officialBracketDocument,
+    });
+    return legacyPicksFromRemoteBracketDocument(hydrated);
+  }
+
   function selectedTeam(slotId) {
-    if (isR32DisplaySlot(slotId)) return officialTeam(slotId);
     if (adminOfficialEditorActive) return officialTeam(slotId);
+    if (adminOfficialR32EditorActive && isR32DisplaySlot(slotId)) return officialTeam(slotId);
     return getTeam(picks[slotId]);
   }
 
@@ -583,7 +605,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   function buildRemoteBracketDocument(reason = "autosave") {
     const now = new Date().toISOString();
     const previous = remoteBracketDocument || {};
-    picks = stripR32OccupantsFromPlayerPicks(picks);
+    picks = hydrateOnlySupabaseAdminR32IntoPlayerPicks(picks);
     const canonicalPickSlots = allPickSlots();
     const picksBySlot = Object.fromEntries(
       canonicalPickSlots.map((slot) => [slot.slotId, pickRecordForRemoteSlot(slot, picks[slot.slotId])])
@@ -1202,7 +1224,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       if (teamId) incomingPicks[slotId] = teamId;
     }
 
-    return importPicksSnapshot({ picks: stripR32OccupantsFromPlayerPicks(incomingPicks) });
+    return importPicksSnapshot({ picks: hydrateOnlySupabaseAdminR32IntoPlayerPicks(incomingPicks) });
   }
 
   function getAccountSaveBracketDocument({ userId: accountUserId = userId } = {}) {

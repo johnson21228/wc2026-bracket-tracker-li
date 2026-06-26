@@ -54,7 +54,7 @@ function officialR32AuthoritySource(officialR32 = null) {
   if (officialR32?.hydratedFrom) return String(officialR32.hydratedFrom);
   if (officialR32?.source === "Supabase:Admin_/official") return "Supabase:Admin_/official";
   if (officialR32?.userId === "Admin_/official" && officialR32?.bracketKind === "official") return "Supabase:Admin_/official";
-  return "StaticJsonFallback:official_round_of_32";
+  return "";
 }
 
 function officialR32OccupantsBySlot(officialR32 = null) {
@@ -124,9 +124,8 @@ function officialR32UnsetSlotRecord(slot, officialR32 = null) {
 
 function shouldReconcileR32FromOfficial(officialR32 = null) {
   if (!officialR32) return false;
-  if (officialR32?.r32TruthUnavailable || officialR32?.failClosed) return true;
   const source = officialR32AuthoritySource(officialR32);
-  return source === "Supabase:Admin_/official" || source === "StaticJsonFallback:official_round_of_32";
+  return source === "Supabase:Admin_/official";
 }
 
 function hydrateOfficialR32Occupants({ bracket, bracketSlots, teamsById = {}, officialR32 = null } = {}) {

@@ -82,7 +82,12 @@ const bracketSlots = {
   ],
 };
 const teamsById = { USA: { id: "USA" }, BRA: { id: "BRA" }, FRA: { id: "FRA" } };
-const officialR32 = { slots: [{ slotId: "L-R32-01", teamId: "USA" }] };
+const officialR32 = {
+  userId: "Admin_/official",
+  bracketKind: "official",
+  officialR32AuthoritySource: "Supabase:Admin_/official",
+  slots: [{ slotId: "L-R32-01", teamId: "USA" }],
+};
 
 let bracket = createEmptyBracketDocument({
   userId: "player-1",

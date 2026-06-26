@@ -4,7 +4,7 @@
 
 `playerVisibleR32 = Admin_/official R32 truth`.
 
-R32 picks/occupants are not player picks. They are owned by `Admin_/official` in Supabase. Player brackets may display a hydrated R32 field, but that display is a projection of Admin_/official truth, not player-authored state.
+R32 picks/occupants are not player picks. R32 occupants are not player-authored picks. They are owned by `Admin_/official` in Supabase. Player BracketDocuments may store hydrated R32 mirror records for rendering, scoring, and R16++ preselection compatibility, but those records must be copied only from Supabase Admin_/official and marked `playerAuthored: false`.
 
 ## Runtime rule
 
@@ -12,8 +12,9 @@ For the public player site:
 
 - read the Supabase `Admin_/official` official bracket document on app startup
 - extract only its R32 occupant slots
-- strip/ignore all R32 occupant values from player/local/legacy state
-- render R32 occupant cells from `Admin_/official` only
+- strip stale R32 occupant values from player/local/legacy state
+- copy ONLY Supabase Admin_/official R32 entrants into player `picksBySlot` as mirror records
+- render R32 occupant cells from the hydrated player BracketDocument for compatibility
 - reject player writes to R32 occupant cells
 - do not generate R32 choices from group data when official truth is wired
 - fail closed when `Admin_/official` is missing or unreadable
@@ -39,4 +40,4 @@ Do not say:
 
 ## Implementation note
 
-The main board model treats R32 display slots specially: `selectedTeam(slotId)` returns the Admin_/official team for R32 slots and returns player-owned picks only for non-R32 slots. Player/local R32 values are stripped before render/save, and R32 `setPick` calls are rejected.
+The main board model hydrates ONLY Supabase Admin_/official R32 entrants into player `picksBySlot`. Rendering and R16++ preselection can then use the existing player-document path, while normal player R32 `setPick` calls remain rejected and stale local/static R32 values remain invalid copy sources.

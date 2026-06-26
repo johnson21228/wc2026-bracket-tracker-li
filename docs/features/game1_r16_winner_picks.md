@@ -20,7 +20,7 @@ R32 slot assignments remain in the existing Game 1 storage record.
 
 R16 winner picks are stored separately so that future officialization and scoring can distinguish:
 
-- predicted R32 slot assignment
+- Admin_/official hydrated R32 slot occupant
 - predicted knockout advancement
 - official FIFA R32 truth
 - Game 2 official-truth knockout picks

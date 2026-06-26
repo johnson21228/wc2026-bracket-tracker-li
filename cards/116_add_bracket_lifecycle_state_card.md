@@ -18,8 +18,8 @@ R32 slots and knockout slots require different menus. Without lifecycle state, a
 ## Evidence to preserve
 Game 1 evidence must remain durable:
 
-- user-predicted R32 assignment picks
-- user-predicted `knockoutPicks`
+- Admin_/official R32 occupant truth mirrored into player BracketDocuments with `playerAuthored: false`
+- player-owned R32 match-winner and later `knockoutPicks`
 
 Game 2 evidence must remain separate:
 

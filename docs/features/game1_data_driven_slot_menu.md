@@ -36,7 +36,7 @@ Owns the 32 Round of 32 slot rules, including winners, runners-up, and third-pla
 
 ### Game 1
 
-Maps a tapped R32 slot to its eligible teams and stores the player pick.
+Maps a tapped R32 slot to its eligible teams only for Admin_/official R32 editing. Normal players do not store player-authored R32 occupant picks.
 
 ### UI Surface
 

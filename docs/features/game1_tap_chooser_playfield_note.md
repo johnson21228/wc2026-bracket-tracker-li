@@ -2,7 +2,7 @@
 
 The new image becomes the UI surface.
 
-The HTML/CSS adds transparent hit-test areas over each R32 cell. The player taps a slot and chooses from the teams allowed by that slot's group rule.
+The HTML/CSS adds transparent hit-test areas over each R32 cell. Under the current model, normal players do not choose R32 occupants; Admin_/official editor mode may use those slot rules to author official R32 truth.
 
 This turns Game 1 into:
 

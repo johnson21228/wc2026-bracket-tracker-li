@@ -2,7 +2,7 @@
 
 ## Overview
 
-Game 1 asks the player to project every Round of 32 slot before FIFA locks the official R32 board.
+Legacy note: this controller described the old player-authored R32 projection model. Current Bracketeering rules supersede that behavior: Admin_/official owns R32 occupant truth, and normal players do not project or assign R32 occupants.
 
 The controller decides what is possible.
 
@@ -24,7 +24,7 @@ The controller owns:
 - slot candidate generation
 - selection validation
 - duplicate-team prevention
-- local persistence
+- legacy local persistence; current public R32 occupant truth must come only from Supabase Admin_/official
 - pick-change events
 
 ## Candidate generation
