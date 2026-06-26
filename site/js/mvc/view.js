@@ -405,10 +405,6 @@ export function createBracketView(root) {
     return activeGameValue() === "game-2" && slot.round === "R32" && Boolean(displayTeam) && Boolean(slot.game2ResolvedTeam);
   }
 
-  function syncOfficialResultsBanner(_summary) {
-    root.querySelector("[data-official-results-banner]")?.remove();
-  }
-
   function officialTruthLabel(team) {
     if (!team) return "";
     return `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id || ""}`.trim();
@@ -1072,7 +1068,6 @@ export function createBracketView(root) {
   }
 
   function render(state) {
-    syncOfficialResultsBanner(state.summary);
     renderSlots(state.slotModels);
     renderFinalFourPanel(state.finalFour);
     renderGroupRail(state.groupRail);

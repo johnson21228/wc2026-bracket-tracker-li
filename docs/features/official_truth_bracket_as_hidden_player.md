@@ -15,5 +15,5 @@ Invariants:
 3. The official bracket is loaded separately from player standings.
 4. The board may compare a user pick to official truth only when official truth exists for that slot.
 5. Incorrect user picks may render beside the official pick.
-6. The official admin editing surface must visibly say “Editing Official Results”.
+6. There is no green official-results banner. The admin editor must not render an “Editing Official Results” rail, banner, or blocking status surface.
 7. The game board remains the truth editor for the official/admin account; no separate admin console is required for this stage.

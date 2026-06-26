@@ -42,17 +42,17 @@ def main():
     require("bracket_kind:" in supabase_store, "Supabase saves must preserve bracket_kind.", errors)
     require("officialPicks" in model and "officialPickComparisonForSlot" in model, "Model must compute official truth comparisons.", errors)
     require("editingOfficialResults" in model and "bracketKind" in model, "Model summary must expose official editing state.", errors)
-    require("data-official-results-banner" in view and "Editing Official Results" in view, "View must render official editing banner.", errors)
+    require("data-official-results-banner" not in view and "Editing Official Results" not in view and "official-results-banner" not in view and "syncOfficialResultsBanner" not in view, "View must not render or call an official-results green banner.", errors)
     require("has-official-correct-pick" in view and "has-official-incorrect-pick" in view, "View must render official correct/incorrect hooks.", errors)
     require("picked-cell-official-truth" in view, "View must render official truth beside incorrect user pick.", errors)
     require("officialBracketStore" in app or "officialBracketStore" in model, "App/model must expose official bracket store seam.", errors)
-    require(".official-results-banner" in css, "CSS must style official editing banner.", errors)
+    require(".official-results-banner" not in css and "official-results-banner" not in css, "CSS must not define an official-results green banner.", errors)
     require(".has-official-correct-pick" in css and ".has-official-incorrect-pick" in css, "CSS must style official comparison states.", errors)
 
     for token in [
         "bracket_kind = official",
         "bracket_kind = player",
-        "Editing Official Results",
+        "There is no green official-results banner",
         "compared against user picks only where official picks exist",
     ]:
         require(token in docs, f"Docs/capture/card/rule missing protected token: {token}", errors)
