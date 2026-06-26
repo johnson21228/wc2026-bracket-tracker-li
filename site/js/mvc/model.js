@@ -249,6 +249,7 @@ export async function createBracketModel({
   officialBracketStore = bracketStore,
   userId = "local-player",
   persistenceMode = "local",
+  adminOfficialR32Editor = false,
 } = {}) {
   const [
     geometry,
@@ -325,8 +326,10 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   let remoteBracketDocument = null;
   let officialBracketDocument = null;
   let remoteSavePromise = Promise.resolve();
+  let officialSavePromise = Promise.resolve();
   let picks = {};
   let officialPicks = {};
+  const adminOfficialR32EditorActive = Boolean(adminOfficialR32Editor && officialBracketStore?.saveOfficialR32BracketAuthority);
 
   if (remotePersistenceActive) {
     try {
@@ -457,6 +460,76 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     };
   }
 
+  function pickRecordForOfficialR32Slot(slot, teamId) {
+    const normalizedTeamId = String(teamId || "").trim();
+    return {
+      slotId: slot.slotId,
+      kind: "entrant",
+      round: "R32_ENTRANT",
+      pick: normalizedTeamId ? teamPickValue(normalizedTeamId) : null,
+      source: "Admin_/official",
+      authority: "Admin_/official",
+      playerAuthored: false,
+      hydratedFrom: "Supabase:Admin_/official",
+    };
+  }
+
+  function buildAdminOfficialR32BracketDocument(reason = "admin-official-r32-edit") {
+    const now = new Date().toISOString();
+    const previous = officialBracketDocument || {};
+    const r32Slots = pickSurfaceSlots(slots).filter((slot) => slot.round === "R32");
+    const picksBySlot = Object.fromEntries(
+      r32Slots.map((slot) => [slot.slotId, pickRecordForOfficialR32Slot(slot, officialPicks[slot.slotId])])
+    );
+
+    return {
+      ...previous,
+      schemaVersion: Number(previous.schemaVersion || 1),
+      userId: "Admin_/official",
+      tournamentId: previous.tournamentId || "wc2026",
+      gameId: previous.gameId || "game1",
+      status: previous.status || "draft",
+      lifecycleState: {
+        ...(previous.lifecycleState || {}),
+        source: "admin-official-r32-editor-mode",
+        lastSaveReason: reason,
+      },
+      phaseLocks: previous.phaseLocks || { r32LockedAt: null },
+      picksBySlot,
+      createdAt: previous.createdAt || now,
+      updatedAt: now,
+      submittedAt: previous.submittedAt || null,
+      lockedAt: previous.lockedAt || null,
+      visibility: "public",
+      bracketKind: "official",
+      officialR32AuthoritySource: "Supabase:Admin_/official",
+      officialResultsTruthSource: "Supabase:Admin_/official",
+      source: "Supabase:Admin_/official",
+      authority: "Admin_/official",
+    };
+  }
+
+  function persistAdminOfficialR32(reason = "admin-official-r32-edit") {
+    if (!adminOfficialR32EditorActive) return;
+    const bracketDocument = buildAdminOfficialR32BracketDocument(reason);
+    officialBracketDocument = bracketDocument;
+    officialSavePromise = officialSavePromise
+      .catch(() => null)
+      .then(() => officialBracketStore.saveOfficialR32BracketAuthority(bracketDocument))
+      .then((saved) => {
+        officialBracketDocument = saved || bracketDocument;
+        officialPicks = legacyPicksFromRemoteBracketDocument(officialBracketDocument);
+        console.info("[WC2026 AdminOfficialR32Editor] saved Admin_/official R32 truth", {
+          userId: "Admin_/official",
+          pickCount: Object.keys(officialPicks).length,
+          reason,
+        });
+      })
+      .catch((error) => {
+        console.error("[WC2026 AdminOfficialR32Editor] Admin_/official R32 save failed", error);
+      });
+  }
+
   function buildRemoteBracketDocument(reason = "autosave") {
     const now = new Date().toISOString();
     const previous = remoteBracketDocument || {};
@@ -566,9 +639,9 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   }
 
   function getR32Choices(slotId) {
-    // R32 occupant cells are Admin_/official display truth, not player-editable picks.
-    // The player site must never generate fallback R32 choices from group data.
-    if (officialBracketStore) return [];
+    // Normal players never get R32 choices; player-visible R32 mirrors Admin_/official only.
+    // In Admin_/official editor mode, R32 choices reopen so the official truth document can be authored.
+    if (officialBracketStore && !adminOfficialR32EditorActive) return [];
     const logic = r32LogicByGeometryId.get(slotId);
     if (!logic) return [];
     const groups = logic.groups || [];
@@ -643,7 +716,8 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
 
 
   function duplicateR32Pick(slotId, teamId) {
-    return Object.entries(picks).find(([otherSlotId, otherTeamId]) => {
+    const sourcePicks = adminOfficialR32EditorActive ? officialPicks : picks;
+    return Object.entries(sourcePicks).find(([otherSlotId, otherTeamId]) => {
       return otherSlotId !== slotId && otherTeamId === teamId && slotsById.get(otherSlotId)?.round === "R32";
     }) || null;
   }
@@ -706,7 +780,14 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       return { ok: false, reason: "Unknown team.", cleared: [] };
     }
     if (isR32DisplaySlot(slotId)) {
-      return { ok: false, reason: "R32 occupants are supplied by Admin_/official and cannot be edited by players.", cleared: [] };
+      if (!adminOfficialR32EditorActive) {
+        return { ok: false, reason: "R32 occupants are supplied by Admin_/official and cannot be edited by players.", cleared: [] };
+      }
+      if (teamId) officialPicks[slotId] = teamId;
+      else delete officialPicks[slotId];
+      persistAdminOfficialR32("set-admin-official-r32-pick");
+      const official = selectedTeam(slotId);
+      return { ok: true, cleared: [], pickValidity: pickValidityForSlot(slot, official), adminOfficialR32Edited: true };
     }
     if (teamId) picks[slotId] = teamId;
     else delete picks[slotId];
@@ -1027,6 +1108,8 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
         side: slot.side,
         boundsPx: slot.boundsPx,
         pickable: choices.length > 0,
+        r32EditableByAdminOfficial: slot.round === "R32" && adminOfficialR32EditorActive,
+        r32ReadOnlyForPlayer: slot.round === "R32" && !adminOfficialR32EditorActive,
         choices,
         selectedTeam: team,
         game2ResolvedTeam,
@@ -1083,6 +1166,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       playerVisibleR32Source: officialBracketDocument?.officialR32AuthoritySource || "",
       playerVisibleR32MatchesAdminOfficial: Boolean(officialBracketDocument),
       adminOfficialR32FailClosed: Boolean(officialBracketDocument?.r32TruthUnavailable || officialBracketDocument?.failClosed),
+      adminOfficialR32EditorActive,
     };
   }
 

@@ -25,7 +25,7 @@ require("officialBracketStore" in app and "createBracketModel({\n    officialBra
 require("function selectedTeam(slotId)" in model and "if (isR32DisplaySlot(slotId)) return officialTeam(slotId);" in model, "R32 display must be projected from Admin_/official, not player picks.")
 require("stripR32OccupantsFromPlayerPicks" in model and "picks = stripR32OccupantsFromPlayerPicks(picks);" in model, "Loaded player/local R32 occupant values must be stripped before render/save.")
 require("R32 occupants are supplied by Admin_/official and cannot be edited by players" in model, "setPick must reject player edits to R32 occupant slots.")
-require("if (officialBracketStore) return [];" in model and "must never generate fallback R32 choices from group data" in model, "Public official runtime must not generate R32 fallback choices from group data.")
+require("if (officialBracketStore && !adminOfficialR32EditorActive) return [];" in model and "Normal players never get R32 choices" in model, "Public player runtime must not generate R32 fallback choices from group data outside Admin_/official editor mode.")
 require("failClosedAdminOfficialR32TruthDocument" in model and "Admin_/official R32 truth missing; failing closed" in model, "Main board must fail closed when Admin_/official is missing or unreadable.")
 require("playerVisibleR32MatchesAdminOfficial" in model and "adminOfficialR32FailClosed" in model, "Model summary must expose Admin R32 mirror/fail-closed status.")
 require("officialR32UnsetSlotRecord" in user_model and "mirrorsAdminOfficialExactly: true" in user_model and "officialUnset: true" in user_model, "R32 hydration must overwrite stale player slots and preserve partial Admin truth exactly.")
