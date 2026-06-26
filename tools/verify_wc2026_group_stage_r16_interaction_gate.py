@@ -13,56 +13,40 @@ def require(condition, message, errors):
 def main():
     errors = []
 
-    capture = read("captures/CAPTURE_BACK_GROUP_STAGE_R16_INTERACTION_GATE.md")
-    card = read("cards/1009_group_stage_r16_interaction_gate_card.md")
-    doc = read("docs/features/group_stage_r16_interaction_gate.md")
-    rule = read("li/world_cup/group_stage_r16_interaction_gate_rule.md")
-
     view = read("site/js/mvc/view.js")
     controller = read("site/js/mvc/controller.js")
     board_css = read("site/css/board.css")
 
-    require("R16+ pick-menu interaction" in capture,
-            "Capture must name the R16+ pick-menu interaction defect.", errors)
-    require("Gate R16+ Pick Interaction During Group Stage" in card,
-            "Card must capture the implementation target.", errors)
-    require("pickable cursor, and pick-menu invocation" in doc,
-            "Feature doc must state visual plus interaction suppression.", errors)
-    require("controller backstop blocks R16+ slot menu invocation during Group Stage" in rule,
-            "LI rule must require controller backstop.", errors)
-
     require("shouldSuppressPickFillForSlot" in view,
             "Existing Group Stage visual suppression gate must remain present.", errors)
     require("function shouldSuppressPickInteractionForSlot(slot)" in view,
-            "View must expose a Group Stage R16+ interaction suppression gate.", errors)
-    require("const pickInteractionSuppressed = shouldSuppressPickInteractionForSlot(slot);" in view,
-            "View must compute R16+ pick interaction suppression for board slots.", errors)
-    require("button.disabled = disabledByPickability || pickInteractionSuppressed;" in view,
-            "Suppressed Group Stage R16+ cells must be disabled as pick targets.", errors)
-    require("if (slot.pickable && !pickInteractionSuppressed) button.classList.add(\"is-pickable\");" in view,
-            "Suppressed Group Stage R16+ cells must not receive pickable cursor styling.", errors)
-    require("button.addEventListener(\"click\", () => handlers.onSlotClick?.(slot.slotId));" in view
-            and "if (!pickInteractionSuppressed)" in view,
-            "Suppressed Group Stage R16+ cells must not invoke slot-click handlers.", errors)
-    require("button.disabled = !pick.pickable || pickInteractionSuppressed;" in view,
-            "Final Four pick rows must also honor Group Stage interaction suppression.", errors)
+            "View must expose the Group Stage interaction suppression function.", errors)
+    require("&& !slot?.pickable" in view,
+            "Presentation suppression must exempt pickable R16+ slots fed by official R32 teams.", errors)
+
     require("function slotAllowedForActiveGame(slot)" in controller,
-            "Controller active-game slot gate must remain present for the implementation backstop.", errors)
-    require("function slotIsR32(slot)" in controller and "return slotIsR32(slot);" in controller,
-            "Controller backstop must allow only R32 slots during Group Stage.", errors)
-    require("Later-round picks open when Knockout Stage presentation is active." in controller,
-            "Controller must report a player-facing reason when Group Stage blocks R16+ picks.", errors)
+            "Controller slot gate must remain present.", errors)
+    require("if (slotIsR32(slot)) return false;" in controller,
+            "Controller must make R32 occupants read-only for players.", errors)
+    require("Round of 32 occupants are set by Admin_/official. Pick winners in the next round." in controller,
+            "Controller must explain that players pick winners after official R32 occupants.", errors)
+
+    require("return slotIsR32(slot);" not in controller,
+            "Controller must not preserve stale Group Stage allow-only-R32 gating.", errors)
+    require("Later-round picks open when Knockout Stage presentation is active." not in controller,
+            "Controller must not preserve stale Group Stage R16+ blocking copy.", errors)
+
     require(".pick-slot-button.is-pick-interaction-suppressed" in board_css
             and ".final-four-pick-row.is-pick-interaction-suppressed" in board_css
             and "cursor: default !important" in board_css
             and "pointer-events: none" in board_css,
-            "Suppressed Group Stage R16+ cells must override pointer cursor and pointer events.", errors)
+            "Suppressed non-pickable presentation cells must still override cursor and pointer events.", errors)
 
     if errors:
-        print("Group Stage R16+ interaction gate capture verification failed: " + "; ".join(errors))
+        print("Group Stage R16+ interaction gate compatibility verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: Group Stage R16+ interaction gate defect is captured with visual, interaction, and controller-backstop requirements.")
+    print("OK: lifecycle stage is presentation-only; official R32 occupants are read-only while pickable R16+ winner slots remain interactive.")
 
 if __name__ == "__main__":
     raise SystemExit(main())

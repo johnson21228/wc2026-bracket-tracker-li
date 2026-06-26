@@ -1850,3 +1850,452 @@ body {
   line-height: 1.05;
   text-shadow: 0 1px 2px rgba(0, 0, 0, .72);
 }
+
+/* Top floating chrome: zoom group separated from info/profile/standings group. */
+:root {
+  --wc-top-chrome-top: 12px;
+  --wc-top-chrome-size: 44px;
+  --wc-top-chrome-gap: 10px;
+  --wc-top-zoom-left: 16px;
+
+  /* Move this one value to align the left edge of the info button with the bracket/R16 visual edge. */
+  --wc-top-info-left: 238px;
+
+  --wc-top-profile-width: 118px;
+  --wc-top-standings-width: 168px;
+}
+
+/* Zoom group: + and − only. */
+.map-icon-controls {
+  position: fixed !important;
+  top: var(--wc-top-chrome-top) !important;
+  left: var(--wc-top-zoom-left) !important;
+  right: auto !important;
+  bottom: auto !important;
+  z-index: 19000 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: var(--wc-top-chrome-gap) !important;
+  transform: none !important;
+}
+
+/* The info button is the third map button; separate it from +/− and align it to the bracket edge. */
+.map-icon-controls .map-icon-button:nth-of-type(3) {
+  position: fixed !important;
+  top: var(--wc-top-chrome-top) !important;
+  left: var(--wc-top-info-left) !important;
+  z-index: 19000 !important;
+}
+
+/* Wrapper shells do not draw visible chrome. */
+.supabase-identity-surface,
+.player-standings-control {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+.supabase-identity-surface .identity-compact-card,
+.supabase-identity-surface .identity-actions {
+  display: contents !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Profile sits immediately after info. */
+.supabase-identity-surface .identity-status-button {
+  position: fixed !important;
+  top: var(--wc-top-chrome-top) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-chrome-gap)) !important;
+  z-index: 19000 !important;
+}
+
+/* Standings sits immediately after Profile. */
+.player-standings-control .standings-icon-button {
+  position: fixed !important;
+  top: var(--wc-top-chrome-top) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-chrome-gap) + var(--wc-top-profile-width) + var(--wc-top-chrome-gap)) !important;
+  z-index: 19000 !important;
+}
+
+/* Shared compact chrome. */
+.map-icon-button,
+.supabase-identity-surface .identity-status-button,
+.player-standings-control .standings-icon-button {
+  height: var(--wc-top-chrome-size) !important;
+  min-height: var(--wc-top-chrome-size) !important;
+  max-height: var(--wc-top-chrome-size) !important;
+  border-radius: 999px !important;
+  border: 2px solid rgba(255, 255, 255, .26) !important;
+  background: rgba(15, 23, 42, .76) !important;
+  color: rgba(255, 255, 255, .94) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .28) !important;
+  backdrop-filter: blur(10px);
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+.map-icon-button {
+  width: var(--wc-top-chrome-size) !important;
+  min-width: var(--wc-top-chrome-size) !important;
+  max-width: var(--wc-top-chrome-size) !important;
+  padding: 0 !important;
+}
+
+.supabase-identity-surface .identity-status-button {
+  width: var(--wc-top-profile-width) !important;
+  min-width: var(--wc-top-profile-width) !important;
+  max-width: var(--wc-top-profile-width) !important;
+}
+
+.player-standings-control .standings-icon-button {
+  width: var(--wc-top-standings-width) !important;
+  min-width: var(--wc-top-standings-width) !important;
+  max-width: var(--wc-top-standings-width) !important;
+}
+
+.supabase-identity-surface .identity-status-button,
+.player-standings-control .standings-icon-button {
+  padding: 0 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+.supabase-identity-surface .identity-title,
+.supabase-identity-surface .identity-kicker,
+.supabase-identity-surface .identity-detail {
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --wc-top-chrome-top: 10px;
+    --wc-top-chrome-size: 40px;
+    --wc-top-chrome-gap: 8px;
+    --wc-top-zoom-left: 12px;
+    --wc-top-info-left: 148px;
+    --wc-top-profile-width: 100px;
+    --wc-top-standings-width: 138px;
+  }
+
+  .supabase-identity-surface .identity-status-button,
+  .player-standings-control .standings-icon-button {
+    font-size: 14px !important;
+    padding: 0 10px !important;
+  }
+}
+
+/* Final top chrome text/case polish. */
+.player-standings-control .standings-icon-button {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  font-family: inherit !important;
+}
+
+.player-standings-control .standings-icon-button::first-letter {
+  text-transform: uppercase !important;
+}
+
+/* Final top chrome grouping:
+   + and − stay as zoom controls.
+   Info, Profile, and Standings form one connected group. */
+:root {
+  --wc-top-chrome-top: 12px;
+  --wc-top-chrome-size: 44px;
+  --wc-top-connected-gap: 8px;
+
+  /* Move this value to align the left edge of the info button with the bracket edge. */
+  --wc-top-info-left: 210px;
+
+  --wc-top-profile-width: 118px;
+  --wc-top-standings-width: 138px;
+}
+
+/* Put the actual info button next to Profile. */
+.map-icon-controls [data-info-panel-open],
+.map-icon-controls [data-rules-panel-open] {
+  position: fixed !important;
+  top: var(--wc-top-chrome-top) !important;
+  left: var(--wc-top-info-left) !important;
+  width: var(--wc-top-chrome-size) !important;
+  min-width: var(--wc-top-chrome-size) !important;
+  max-width: var(--wc-top-chrome-size) !important;
+  height: var(--wc-top-chrome-size) !important;
+  min-height: var(--wc-top-chrome-size) !important;
+  max-height: var(--wc-top-chrome-size) !important;
+  z-index: 19000 !important;
+}
+
+/* Profile immediately follows info. */
+.supabase-identity-surface .identity-status-button {
+  position: fixed !important;
+  top: var(--wc-top-chrome-top) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap)) !important;
+  width: var(--wc-top-profile-width) !important;
+  min-width: var(--wc-top-profile-width) !important;
+  max-width: var(--wc-top-profile-width) !important;
+  height: var(--wc-top-chrome-size) !important;
+  min-height: var(--wc-top-chrome-size) !important;
+  max-height: var(--wc-top-chrome-size) !important;
+  z-index: 19000 !important;
+}
+
+/* Standings immediately follows Profile. */
+.player-standings-control .standings-icon-button {
+  position: fixed !important;
+  top: var(--wc-top-chrome-top) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap) + var(--wc-top-profile-width) + var(--wc-top-connected-gap)) !important;
+  width: var(--wc-top-standings-width) !important;
+  min-width: var(--wc-top-standings-width) !important;
+  max-width: var(--wc-top-standings-width) !important;
+  height: var(--wc-top-chrome-size) !important;
+  min-height: var(--wc-top-chrome-size) !important;
+  max-height: var(--wc-top-chrome-size) !important;
+  z-index: 19000 !important;
+}
+
+/* Standings matches Profile typography exactly. */
+.supabase-identity-surface .identity-status-button,
+.player-standings-control .standings-icon-button {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  font-family: inherit !important;
+  line-height: 1 !important;
+  padding: 0 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+/* Normalize any inner text spans. */
+.supabase-identity-surface .identity-title,
+.supabase-identity-surface .identity-kicker,
+.supabase-identity-surface .identity-detail,
+.player-standings-control .standings-icon-button {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+/* Final force: Standings button typography must match Profile button. */
+.player-standings-control .standings-icon-button,
+.player-standings-control .standings-icon-button *,
+.standings-icon-button,
+.standings-icon-button * {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  font-family: inherit !important;
+  line-height: 1 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+/* Standings top chrome must sit behind any open panels or pick menus. */
+.player-standings-control,
+.player-standings-control .standings-icon-button {
+  z-index: 9000 !important;
+}
+
+/* Keep core top chrome above the board but below modal/panel layers. */
+.map-icon-controls,
+.map-icon-button,
+.supabase-identity-surface .identity-status-button {
+  z-index: 9500 !important;
+}
+
+/* Panels and menus must cover Standings chrome when open. */
+.pick-menu,
+.pick-menu-layer,
+.group-panel,
+.group-panel-surface,
+.info-panel,
+.rules-panel,
+.player-standings-panel,
+.identity-panel-backdrop,
+.identity-panel,
+[data-pick-menu],
+[data-group-panel],
+[data-info-panel],
+[data-rules-panel] {
+  z-index: 20000 !important;
+}
+
+/* Anchor the Profile panel near the Profile top-chrome button instead of centering it. */
+.identity-panel,
+.supabase-identity-panel,
+[data-identity-panel],
+[data-profile-panel] {
+  position: fixed !important;
+  top: calc(var(--wc-top-chrome-top, 12px) + var(--wc-top-chrome-size, 44px) + 10px) !important;
+  left: calc(var(--wc-top-info-left, 210px) + var(--wc-top-chrome-size, 44px) + var(--wc-top-connected-gap, 8px)) !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: min(520px, calc(100vw - 32px)) !important;
+  max-height: calc(100vh - 96px) !important;
+  overflow: auto !important;
+  transform: none !important;
+  z-index: 21000 !important;
+}
+
+/* Keep the dimmed backdrop full-screen, but do not let it center the Profile panel. */
+.identity-panel-backdrop,
+.supabase-identity-backdrop,
+[data-identity-backdrop],
+[data-profile-backdrop] {
+  position: fixed !important;
+  inset: 0 !important;
+  display: block !important;
+  z-index: 20500 !important;
+}
+
+/* Profile panel should cover the Profile/Standings buttons when overlapping. */
+.identity-panel,
+.identity-panel *,
+.supabase-identity-panel,
+.supabase-identity-panel * {
+  z-index: 21000;
+}
+
+@media (max-width: 760px) {
+  .identity-panel,
+  .supabase-identity-panel,
+  [data-identity-panel],
+  [data-profile-panel] {
+    top: calc(var(--wc-top-chrome-top, 10px) + var(--wc-top-chrome-size, 40px) + 8px) !important;
+    left: 12px !important;
+    width: calc(100vw - 24px) !important;
+    max-height: calc(100vh - 76px) !important;
+  }
+}
+
+
+/* Standings stays visible normally, but panels/backdrops cover it when open. */
+.player-standings-control,
+.player-standings-control .standings-icon-button {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 9000 !important;
+}
+
+.identity-panel-backdrop,
+.supabase-identity-backdrop,
+[data-identity-backdrop],
+[data-profile-backdrop] {
+  z-index: 20500 !important;
+}
+
+.identity-panel,
+.supabase-identity-panel,
+[data-identity-panel],
+[data-profile-panel],
+.player-standings-panel,
+.pick-menu,
+.pick-menu-layer,
+.group-panel,
+.group-panel-surface,
+.info-panel,
+.rules-panel,
+[data-pick-menu],
+[data-group-panel],
+[data-info-panel],
+[data-rules-panel] {
+  z-index: 21000 !important;
+}
+
+/* R32 official occupant rendering: filled read-only slots, no Choose Team look. */
+.slot.round-r32,
+.pick-slot.round-r32,
+[data-round="R32"],
+[data-slot-round="R32"] {
+  background: rgba(83, 68, 53, 1) !important;
+}
+
+.slot.round-r32 .choose-team,
+.slot.round-r32 .pick-placeholder,
+.slot.round-r32 .slot-placeholder,
+.slot.round-r32 [data-placeholder],
+.pick-slot.round-r32 .choose-team,
+.pick-slot.round-r32 .pick-placeholder,
+.pick-slot.round-r32 .slot-placeholder,
+.pick-slot.round-r32 [data-placeholder],
+[data-round="R32"] .choose-team,
+[data-round="R32"] .pick-placeholder,
+[data-round="R32"] .slot-placeholder,
+[data-round="R32"] [data-placeholder],
+[data-slot-round="R32"] .choose-team,
+[data-slot-round="R32"] .pick-placeholder,
+[data-slot-round="R32"] .slot-placeholder,
+[data-slot-round="R32"] [data-placeholder] {
+  display: none !important;
+}
+
+/* R32 buttons should render as read-only occupied team slots, not pick prompts. */
+.pick-slot-button[data-round="R32"],
+.pick-slot-button[data-slot-round="R32"],
+.pick-slot-button.round-r32 {
+  background: rgba(83, 68, 53, 1) !important;
+}
+
+.pick-slot-button[data-round="R32"] .pick-slot-placeholder,
+.pick-slot-button[data-slot-round="R32"] .pick-slot-placeholder,
+.pick-slot-button.round-r32 .pick-slot-placeholder {
+  display: none !important;
+}
+
+/* Final R32 official rendering: nearly opaque read-only cells. */
+.pick-slot-button.round-r32,
+.pick-slot-button[data-round="R32"],
+.pick-slot-button.round-r32.is-stage-presentation-context,
+.pick-slot-button[data-round="R32"].is-stage-presentation-context {
+  background: rgb(83, 68, 53) !important;
+  background-color: rgb(83, 68, 53) !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.pick-slot-button.round-r32 .pick-slot-label,
+.pick-slot-button[data-round="R32"] .pick-slot-label {
+  display: none !important;
+}
+
+.pick-slot-button.round-r32 .pick-slot-value,
+.pick-slot-button[data-round="R32"] .pick-slot-value {
+  opacity: 1 !important;
+}
+
+.pick-slot-button.round-r32::before,
+.pick-slot-button.round-r32::after,
+.pick-slot-button[data-round="R32"]::before,
+.pick-slot-button[data-round="R32"]::after {
+  background: transparent !important;
+  background-image: none !important;
+  opacity: 0 !important;
+  backdrop-filter: none !important;
+}

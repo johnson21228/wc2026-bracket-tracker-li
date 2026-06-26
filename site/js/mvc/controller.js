@@ -41,13 +41,16 @@ export function createBracketController({ model, view }) {
 
   function slotAllowedForActiveGame(slot) {
     if (adminOfficialEditorActive()) return true;
-    if (activeGameValue() !== "game-1") return true;
-    return slotIsR32(slot);
+    if (slotIsR32(slot)) return false;
+    return true;
   }
 
   function disabledReasonForActiveGame(slot) {
-    if (slotAllowedForActiveGame(slot)) return "";
-    return "Later-round picks open when Knockout Stage presentation is active.";
+    if (adminOfficialEditorActive()) return null;
+    if (slotIsR32(slot)) {
+      return "Round of 32 occupants are set by Admin_/official. Pick winners in the next round.";
+    }
+    return null;
   }
 
   function pickMenuNotReadyReason(slot) {

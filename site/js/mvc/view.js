@@ -149,7 +149,7 @@ export function createBracketView(root) {
 
   function emptyPickLabelForSlot(slotId) {
     const normalizedSlotId = String(slotId || "").toUpperCase();
-    return normalizedSlotId.startsWith("R32") ? "Choose Team" : "Choose Winner";
+    return normalizedSlotId.startsWith("R32") ? "" : "Choose Winner";
   }
 
   function updateEmptyPickLabels() {
@@ -381,14 +381,16 @@ export function createBracketView(root) {
     const slotId = String(slot?.slotId || "").toUpperCase();
     return isGroupStagePresentationActive()
       && slot?.round !== "R32"
-      && !slotId.startsWith("R32");
+      && !slotId.startsWith("R32")
+      && !slot?.pickable;
   }
 
   function shouldSuppressPickInteractionForSlot(slot) {
     const slotId = String(slot?.slotId || "").toUpperCase();
     return isGroupStagePresentationActive()
       && slot?.round !== "R32"
-      && !slotId.startsWith("R32");
+      && !slotId.startsWith("R32")
+      && !slot?.pickable;
   }
 
   function displayTeamForSlot(slot) {
@@ -419,6 +421,9 @@ export function createBracketView(root) {
       button.className = "pick-slot-button";
       button.dataset.slotId = slot.slotId;
       button.dataset.round = slot.round;
+      if (slot.round === "R32" || String(slot.slotId || "").toUpperCase().startsWith("R32")) {
+        button.classList.add("round-r32");
+      }
       const enabledByPrecedent = slotEnabledByPrecedent(slot);
       const precedentUnavailableReason = disabledReasonForActiveGame(slot);
       const displayTeam = displayTeamForSlot(slot);
@@ -673,7 +678,7 @@ export function createBracketView(root) {
     const round = String(slot?.round || "").toUpperCase();
     const slotId = String(slot?.slotId || "").toUpperCase();
 
-    if (round === "R32" || slotId.startsWith("R32")) return "Choose Team";
+    if (round === "R32" || slotId.startsWith("R32")) return "";
 
     return "Choose Winner";
   }
