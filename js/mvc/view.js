@@ -604,15 +604,20 @@ export function createBracketView(root) {
       const pickFillSuppressed = shouldSuppressPickFillForSlot(slot);
       const pickInteractionSuppressed = shouldSuppressPickInteractionForSlot(slot);
       const game2ResolvedR32Display = isGame2ResolvedR32Display(slot, displayTeam);
-      const readOnlyGame2R32Display = game2ResolvedR32Display;
       const isR32Slot = slot.round === "R32" || String(slot.slotId || "").toUpperCase().startsWith("R32");
       const r32GroupShortcutId = isR32Slot && displayTeam
         ? (teamGroupShortcutId(displayTeam) || teamGroupShortcutIdFromLookup(displayTeam, teamGroupShortcutLookup))
         : "";
       const r32GroupShortcutLabel = r32GroupShortcutId ? `Group ${r32GroupShortcutId}` : "";
       const hasR32GroupShortcut = Boolean(r32GroupShortcutId);
-      const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display && !hasR32GroupShortcut;
-      button.disabled = hasR32GroupShortcut ? false : (disabledByPickability || pickInteractionSuppressed);
+      const pickEditable = Boolean(slot.pickable && !pickInteractionSuppressed);
+      const interactionMode = hasR32GroupShortcut
+        ? "readonly-group-panel"
+        : pickEditable
+          ? "editable-pick"
+          : "none";
+      button.dataset.interactionMode = interactionMode;
+      button.disabled = interactionMode === "none";
       button.dataset.pickDisabledByPrecedent = enabledByPrecedent ? "false" : "true";
       if (displayTeam && String(slot.slotId || "").toUpperCase() === "CHAMPION") {
         button.classList.add("is-champion-winner");
@@ -721,9 +726,9 @@ export function createBracketView(root) {
         button.setAttribute("data-game2-resolved-r32-source", slot.game2ResolvedSource || "unknown");
       }
       if (!displayTeam) button.classList.add("is-unpicked");
-      if (hasR32GroupShortcut) {
+      if (interactionMode === "readonly-group-panel") {
         button.classList.add("has-r32-group-shortcut");
-        button.classList.add("is-pickable");
+        button.classList.add("is-readonly-inspectable");
         button.dataset.r32GroupShortcut = r32GroupShortcutId;
         button.dataset.r32GroupPanelShortcut = "true";
         button.setAttribute("data-r32-group-panel-shortcut", "true");
@@ -749,12 +754,13 @@ export function createBracketView(root) {
         button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
         button.setAttribute("aria-label", `${slot.label}: invalid pick. ${button.title}`);
       }
-      if ((slot.pickable || hasR32GroupShortcut) && (!pickInteractionSuppressed || hasR32GroupShortcut)) button.classList.add("is-pickable");
-      if (!enabledByPrecedent && !hasR32GroupShortcut) {
+      if (interactionMode === "editable-pick") button.classList.add("is-pickable");
+      if (interactionMode === "readonly-group-panel") button.classList.add("is-readonly-inspectable");
+      if (!enabledByPrecedent && interactionMode === "none") {
         button.classList.add("is-waiting-for-precedent");
         button.title = precedentUnavailableReason;
       }
-      if (hasR32GroupShortcut) {
+      if (interactionMode === "readonly-group-panel") {
         const openR32GroupPanel = () => {
           pendingGroupPanelAnchorBoundsPx = boardLocalBoundsForElement(button);
           pendingGroupPanelAnchorElement = button;
@@ -766,7 +772,7 @@ export function createBracketView(root) {
           event.preventDefault();
           openR32GroupPanel();
         });
-      } else if (!pickInteractionSuppressed) {
+      } else if (interactionMode === "editable-pick") {
         button.addEventListener("click", () => handlers.onSlotClick?.(slot.slotId));
       }
       layer.append(button);
