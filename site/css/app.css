@@ -2628,3 +2628,21 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 .pick-slot-button.has-r32-group-shortcut .picked-cell-identity {
   pointer-events: none;
 }
+
+.pick-slot-button.has-r32-group-shortcut {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.pick-slot-button.has-r32-group-shortcut:hover,
+.pick-slot-button.has-r32-group-shortcut:focus-visible {
+  filter: brightness(1.16);
+  transform: translateY(-1px);
+}
+
+.pick-slot-button.has-r32-group-shortcut:hover .picked-cell-identity,
+.pick-slot-button.has-r32-group-shortcut:focus-visible .picked-cell-identity {
+  outline: 2px solid rgba(255, 255, 255, 0.72);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
