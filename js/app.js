@@ -85,6 +85,18 @@ function setupActiveGameBackground(root) {
   });
 }
 
+function ensureAccountSaveMount(appRoot) {
+  if (!appRoot) return null;
+  let mount = appRoot.querySelector("[data-account-save-action-surface]");
+  if (!mount) {
+    mount = document.createElement("div");
+    mount.className = "account-save-action-surface";
+    mount.setAttribute("data-account-save-action-surface", "");
+    appRoot.prepend(mount);
+  }
+  return mount;
+}
+
 async function main() {
   const root = document.querySelector("[data-wc2026-app]");
   if (!root) {
@@ -124,7 +136,7 @@ async function main() {
   const standingsSurface = createPlayerStandingsSurface({ root, authService, profileStore, standingsStore });
   standingsSurface.start();
   createAccountSaveActionSurface({
-    root,
+    root: ensureAccountSaveMount(root),
     authService,
     model,
   }).start();

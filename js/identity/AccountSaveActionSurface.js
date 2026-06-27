@@ -87,11 +87,12 @@ function clearNotice(root, type) {
     notice.remove();
     return;
   }
-  if (type === "not-joined" && root.textContent?.includes("Playing Bracketeering requires you to join the pool")) {
-    root.replaceChildren();
+  const legacyNotice = root.querySelector?.("[data-join-live-picks-conflict]");
+  if (type === "not-joined" && legacyNotice?.textContent?.includes("Playing Bracketeering requires you to join the pool")) {
+    clearConflict(root);
   }
-  if (type === "not-joined" && root.textContent?.includes("Playing Bracketeering requires you to join the Pool")) {
-    root.replaceChildren();
+  if (type === "not-joined" && legacyNotice?.textContent?.includes("Playing Bracketeering requires you to join the Pool")) {
+    clearConflict(root);
   }
 }
 
