@@ -1,0 +1,177 @@
+{
+  "schema": "wc2026.knockout_pub_background_generated.v6",
+  "baseImage": "site/assets/board/knockout_pub_background.jpeg",
+  "outputPath": "site/assets/board/knockout_pub_background.jpeg",
+  "styleRule": "preserve the base calendar/poster composition; erase old row content with one seamless card-body patch; place emoji-derived high-resolution flag images directly on top; render unresolved TBD tiny/subtle; render vs tiny/subtle and centered with flags; dim upper-left light bulb/neon sign; do not draw row frames or row boxes; do not draw footer/caption/provenance text under the calendar",
+  "dataAuthorities": [
+    "site/data/current/knockout_matches.json",
+    "site/data/current/official_truth.json",
+    "site/data/model/teams.json",
+    "site/data/current/group_standings.json"
+  ],
+  "knownPairRule": "render Flag vs Flag only when both authoritative teams are known; otherwise render TBD",
+  "rowsByDate": {
+    "2026-06-28": [
+      {
+        "matchNumber": 73,
+        "display": "RSA vs CAN"
+      }
+    ],
+    "2026-06-29": [
+      {
+        "matchNumber": 74,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 75,
+        "display": "NED vs MAR"
+      },
+      {
+        "matchNumber": 76,
+        "display": "BRA vs JPN"
+      }
+    ],
+    "2026-06-30": [
+      {
+        "matchNumber": 77,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 78,
+        "display": "CIV vs NOR"
+      },
+      {
+        "matchNumber": 79,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-01": [
+      {
+        "matchNumber": 80,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 81,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 82,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-02": [
+      {
+        "matchNumber": 83,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 84,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 85,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-03": [
+      {
+        "matchNumber": 86,
+        "display": "ARG vs CPV"
+      },
+      {
+        "matchNumber": 87,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 88,
+        "display": "AUS vs EGY"
+      }
+    ],
+    "2026-07-04": [
+      {
+        "matchNumber": 89,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 90,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-05": [
+      {
+        "matchNumber": 91,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 92,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-06": [
+      {
+        "matchNumber": 93,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 94,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-07": [
+      {
+        "matchNumber": 95,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 96,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-09": [
+      {
+        "matchNumber": 97,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-10": [
+      {
+        "matchNumber": 98,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-11": [
+      {
+        "matchNumber": 99,
+        "display": "TBD"
+      },
+      {
+        "matchNumber": 100,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-14": [
+      {
+        "matchNumber": 101,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-15": [
+      {
+        "matchNumber": 102,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-18": [
+      {
+        "matchNumber": 103,
+        "display": "TBD"
+      }
+    ],
+    "2026-07-19": [
+      {
+        "matchNumber": 104,
+        "display": "TBD"
+      }
+    ]
+  }
+}

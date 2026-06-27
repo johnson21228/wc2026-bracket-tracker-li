@@ -1,169 +1,173 @@
 # UPDATE KNOCKOUT PUB BACKGROUND IMAGE
 
-You are helping me maintain the `wc2026-bracket-tracker-li` Workbench repo.
+Use this prompt when the knockout pub background needs to be regenerated from current site data.
 
-Repo root:
+## Trigger
 
-`/Users/stevejohnson/Developer/wc2026-bracket-tracker-li`
+```text
+UPDATE KNOCKOUT PUB BACKGROUND IMAGE
+```
 
-LI means Language Infrastructure. CB means Capture Back.
+## Role
 
-## Trigger phrase
+You are updating the WC2026 Bracketeering knockout pub background image. This is a visual asset generation task, not a runtime/UI redesign task.
 
-When I say **UPDATE KNOCKOUT PUB BACKGROUND IMAGE**, use this prompt.
+## Runtime target
 
-## Task
+The site uses this exact image as the knockout-board pub background:
 
-Generate the most up-to-date knockout-round gameboard background image for the Bracketeering Pub site.
+```text
+site/assets/board/knockout_pub_background.jpeg
+```
 
-The runtime target image is:
+Generate a replacement for that same path. Do not create a new runtime image path unless explicitly asked.
 
-- `site/assets/board/knockout_pub_background.jpeg`
+## Base image
 
-Use the existing runtime image as the base/reference image:
+The accepted base image for each future update is the latest runtime file.
 
-- Base image: `site/assets/board/knockout_pub_background.jpeg`
+## Base image for the next update
 
-The replacement image must follow the same overall visual style, mood, composition language, and pub/gameboard feel as the base image. Do not redesign the whole board into a different visual product.
+Use the current runtime image as the base/reference image:
 
-## Grounding rule
+```text
+site/assets/board/knockout_pub_background.jpeg
+```
 
-Do not rely on memory.
+This matters: future updates should start from the latest accepted calendar image, not from an older draft. Preserve the latest accepted composition, lighting edits, row placement, flag scale, subtle `vs`, subtle `TBD`, and no-footer cleanup.
 
-Before generating or editing the image, inspect the latest repo data and source truth available in the current repo or latest uploaded pack.
+The base image is inspired by a real pub photo of the WC2026 group-stage match schedule poster. Preserve that look. The output should look like the same pub calendar/poster artifact, not a new dashboard, not a new bracket UI, and not a generic schedule graphic.
 
-Start with:
+## Data authorities
 
-- `site/data/current/knockout_matches.json`
-- `site/data/current/official_truth.json`
+Read current site data from:
 
-Also inspect these files when present:
+```text
+site/data/current/knockout_matches.json
+site/data/current/official_truth.json
+site/data/model/teams.json
+site/data/current/group_standings.json
+```
 
-- `site/data/current/teams.json`
-- `site/data/current/group_standings.json`
-- `source/text/knockout_schedule_evidence_20260618.json`
-- `source/text/knockout_pub_calendar_background_manifest.json`
+Use `knockout_matches.json` for dates and match rows. Use `official_truth.json` for authoritative known teams. Use team data only to resolve each known team’s associated flag emoji.
 
-The schedule JSON owns dates, match numbers, round names, times, venues, and bracket edges. The official truth JSON owns known R32 team occupants when available. The image is a projection, not schedule authority.
+## Update behavior for future runs
 
-## Image concept
+Treat this as an incremental calendar refresh:
 
-Create a clean pub-style knockout calendar/gameboard background.
+- Keep already-approved resolved `Flag vs Flag` rows in the same style and position unless the authoritative data changed.
+- Replace only `TBD` rows whose teams are now authoritative in `official_truth.json`.
+- Leave unresolved rows as tiny/subtle `TBD`.
+- Do not move date cards, redraw the overall poster, or redesign the calendar just because new teams were added.
+- Do not reintroduce footer/caption/provenance text.
+- Do not brighten the upper-left bulb or neon sign again.
 
-Each day's image section must show:
+## Visual requirements
 
-1. The date at the top of that day's section.
-2. One row for each match on that date.
-3. Each known match row as:
+Preserve the current runtime image calendar layout as closely as possible:
 
-`Flag vs Flag`
+- Keep the same pub wall / poster / warm sports-bar atmosphere.
+- Keep the same overall calendar grid and date-card arrangement.
+- Keep the same red date headers, parchment cards, title area, and poster-like texture.
+- Keep upper-left bulb/neon lighting dimmed so it does not compete with the calendar.
+- Do not replace the calendar with a new layout.
+- Do not add a modern table, dashboard, bracket diagram, or app UI.
+- The generated background should look very similar to the current runtime image at a glance.
 
-4. If either or both teams in a match are not yet known, show the row as:
+Only update the match rows inside the existing date cards.
 
-`TBD`
+## Match-row rendering
 
-Do not print long team names in match rows. Do not print bracket feeder codes like `1A`, `2B`, `W73`, or `3C/D/F/G/H` in the final image rows unless specifically asked in a later prompt. The image should be readable at gameboard scale.
+For each date card:
 
-## Flag rule
+- Show the date at the top, following the base image calendar style.
+- Show one row for each knockout match on that date. In other words, render one row for each match in the schedule for that day.
+- Each known match row should contain only:
 
-Use national flags for known teams.
+```text
+Flag vs Flag
+```
 
-Make each flag as tall as it can be while still fitting nicely inside the match row. The flags should feel prominent and legible, not tiny decoration.
+- Generate the flag images from the associated team flag emoji.
+- Render the flags as high-resolution image glyphs, not as tiny text.
+- Make each flag as tall as possible while still fitting cleanly inside the row; the flag should be as tall as it can be without crowding the row.
+- Place the flags and `vs` directly over the existing calendar-card background.
+- Do not draw any frame, outline, rounded rectangle, box, pill, panel, highlight band, or border around individual match rows.
+- Do not put the row data inside a separate container.
+- A subtle flag shadow is acceptable only if it helps readability; it must not read as a row frame.
+- Keep the row uncluttered and poster-like.
 
-Keep consistent row height and spacing. Avoid crowding. Preserve enough visual quiet space so the board remains usable as a background behind site overlays.
+For any match where either team is not yet authoritative, render the whole row as:
 
-## Known-team resolution rule
+```text
+TBD
+```
 
-Resolve teams from the current site truth only.
+The `TBD` text must be tiny, quiet, and subtle. It should be the smallest readable label that still communicates unresolved status. Do not let `TBD` compete visually with known flag rows, date headers, or the poster title. Prefer muted dark ink with reduced opacity, centered in the row.
 
-For Round of 32 rows, map known R32 occupants from `site/data/current/official_truth.json` into the corresponding R32 match row when the slot is known.
+The `TBD` text must sit directly on the calendar-card background with no row frame, no box, and no border.
 
-If the repo has an explicit mapping between R32 slot ids and knockout match numbers, use that mapping. If the mapping is not explicit, inspect the current runtime/data modules that render the board before guessing.
+The `vs` between flags must be tiny, quiet, subtle, and aligned to the visual centerline of the flags. Raise it as needed so it sits on the flag centerline rather than dropping low.
 
-If a match cannot be confidently mapped to two known teams, render that row as `TBD`.
+## Forbidden visual additions
 
-For later rounds whose teams depend on match winners, render `TBD` unless the repo has official completed winner truth for that match.
+Do not add any footer, caption, provenance line, generation note, metadata text, or explanatory text under the calendar.
 
-## Date grouping rule
+Do not render text such as:
 
-Group rows by the `date` field from `site/data/current/knockout_matches.json`.
+```text
+Updated from site data
+flags from emoji
+unresolved matches TBD
+```
 
-Use the repo's date values exactly. Do not invent or shift dates.
+anywhere in the image.
 
-A good date header is compact and readable, for example:
+## Truth rules
 
-- `JUNE 28`
-- `JUNE 29`
-- `JULY 1`
-- `FINAL — JULY 19`
+Do not rely on memory. Read the current repo files every time before deciding which rows are known or unresolved.
 
-The header style should follow the base image's pub/chalk/calendar style.
+- Do not invent teams.
+- Do not guess teams.
+- Do not guess unresolved winners.
+- Do not use provisional or likely teams unless they are already present in `official_truth.json`.
+- Do not render feeder labels such as `1A`, `2B`, `W73`, or `3C/E/F/H/I` in the final image.
+- Do not render match IDs, kickoff times, or long team names in the final row text.
+- If both teams are known, render `Flag vs Flag`.
+- If either side is unknown, render tiny/subtle `TBD`.
 
-## Layout rule
+## Output
 
-Prefer a calendar-board composition that fits all knockout dates cleanly.
+Create a replacement background image suitable for:
 
-The image should communicate the full tournament path without becoming a dense spreadsheet. Use day sections, compact rows, generous padding, and consistent alignment.
+```text
+site/assets/board/knockout_pub_background.jpeg
+```
 
-Rows should be simple:
+Also produce a small manifest at:
 
-- known: `🇧🇷  vs  🇩🇪`
-- unknown: `TBD`
+```text
+source/text/knockout_pub_background_generated_manifest.json
+```
 
-The exact flags shown must come from current repo truth.
+The manifest should describe:
 
-## Style rule
+- the base image used
+- the site data files used
+- which rows rendered `Flag vs Flag`
+- which rows rendered `TBD`
+- confirmation that no individual row frames/boxes were drawn
+- confirmation that no footer/caption/provenance text was drawn under the calendar
+- confirmation that this was treated as an incremental update from the latest accepted runtime image
 
-Follow the base image style:
+The image should remain a background asset. Do not change gameplay logic, site controls, Supabase data, bracket runtime, pick menus, standings, or scoring.
 
-- pub/gameboard atmosphere
-- warm/bracket-party energy
-- board/calendar feel
-- readable date headers
-- high-contrast match rows
-- no photorealistic player portraits
-- no FIFA/brand logos unless already present in the base image and safe to preserve
-- no cluttered tiny text
 
-Keep the result useful as a site background. The game UI will sit on top of it.
+## Local verification after applying a generated replacement
 
-## Required output before image generation
+After placing the generated image and manifest in the repo, run:
 
-Before generating or updating the image, report:
-
-- files inspected
-- which file is schedule authority
-- which file is team-occupant truth
-- dates found
-- number of matches per date
-- which R32 matches have two known teams, one known team, or no known teams
-- any mapping uncertainty
-
-If any mapping uncertainty exists, state it and render uncertain rows as `TBD` rather than guessing.
-
-## Required output after image generation
-
-After generating the candidate image, provide a CB-ready patch plan:
-
-- replace `site/assets/board/knockout_pub_background.jpeg`
-- optionally add/update a source image under `source/images/`
-- optionally add/update a manifest under `source/text/`
-- add/update a capture under `captures/`
-- add/update a card under `cards/`
-- add/update a verifier under `tools/`
-- run the targeted verifier
-- run `make verify`
-- run `make pack`
-
-## CB rule
-
-Only if I ask “CB this,” generate a download/apply overlay pattern.
-
-The apply instructions must start with:
-
-`cd /Users/stevejohnson/Developer/wc2026-bracket-tracker-li`
-
-The CB must preserve the existing prompt and LI governance style. Do not silently overwrite unrelated image/data files.
-
-
-Verifier keywords: one row for each match. Do not guess teams.
+```bash
+make verify
+make pack
+```

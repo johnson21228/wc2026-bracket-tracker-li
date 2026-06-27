@@ -48,6 +48,7 @@ verify:
 	python3 tools/verify_wc2026_rules_panel_no_developer_note.py
 	python3 tools/verify_wc2026_active_game_pub_background.py
 	python3 tools/verify_wc2026_knockout_pub_background_image_prompt.py
+	python3 tools/verify_wc2026_knockout_pub_background_runtime_asset.py
 	python3 tools/verify_wc2026_lifecycle_background_softening.py
 	python3 tools/verify_wc2026_active_game_pick_gating.py
 	python3 tools/verify_wc2026_active_game_pick_rules_pipeline.py
