@@ -41,7 +41,7 @@ require("syncStandingsButtonState" in surface,
         "Standings button must sync joined/not-joined state.")
 require("button.hidden = !canOpen" in surface and "button.disabled = !canOpen" in surface,
         "Standings must be hidden/disabled until joined and stored picks are readable.")
-require("Join to enter standings." in surface,
+require("Join to enter the pool." in surface,
         "Signed-out standings copy must use Join-first wording.")
 require("Loading standings…" in surface,
         "Standings panel must provide loading state.")

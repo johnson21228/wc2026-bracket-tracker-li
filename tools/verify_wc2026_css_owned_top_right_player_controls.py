@@ -10,8 +10,8 @@ checks = {
     ],
     "site/css/app.css": [
         "CB 1026 hard override: identity child stays inside right-pinned card",
-        "--player-standings-width: 176px",
-        "[Standings readable pill] gap [Join/Profile circle] 16px browser right edge",
+        "--player-standings-width: 64px",
+        "[Pool readable pill] gap [Join/Profile circle] 16px browser right edge",
         "[data-supabase-identity-surface] .identity-compact-card",
         "right: calc(env(safe-area-inset-right, 0px) + var(--player-control-right)) !important",
         "body [data-supabase-identity-surface] .identity-compact-card .identity-status-button",
@@ -26,7 +26,7 @@ checks = {
         "content: none !important",
     ],
     "site/js/standings/PlayerStandingsSurface.js": [
-        "button.textContent = \"Standings\"",
+        "button.textContent = \"Pool\"",
         "data-player-standings-control",
         "data-player-standings-open",
     ],
@@ -63,4 +63,4 @@ if errors:
         print(f"- {error}")
     raise SystemExit(1)
 
-print("OK: Join/Profile child is static inside the right-pinned card; Standings is pinned to its left.")
+print("OK: Join/Profile child is static inside the right-pinned card; Pool is pinned to its left.")
