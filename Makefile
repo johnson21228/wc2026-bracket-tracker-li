@@ -130,6 +130,7 @@ verify:
 	python3 tools/verify_wc2026_player_standings_no_pick_links.py
 	python3 tools/verify_wc2026_player_standings_scoring_rule.py
 	python3 tools/verify_wc2026_player_standings_max_possible_reachability_rule.py
+	python3 tools/verify_wc2026_player_standings_weighted_reachability_runtime.py
 	python3 tools/verify_wc2026_player_standings_score_headers.py
 	python3 tools/verify_wc2026_player_standings_scoring_vocabulary.py
 	python3 tools/verify_wc2026_storage_backed_player_standings.py

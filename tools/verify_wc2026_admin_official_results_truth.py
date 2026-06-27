@@ -36,7 +36,9 @@ require('const bracketRows = allRows.filter((row) => !isAdminOfficialTruthRow(ro
 require('scoreAgainstAdminOfficialTruth' in store, "standings store must score against Admin official truth")
 require('isR32EntrantRecord' in store and 'if (isR32EntrantRecord(slotId, officialRecord)) continue' in store, "scoring must skip official R32 entrants and score result winners")
 require('officialTruthPicksBySlot' in store and 'officialResultsTruthSource' in store, "player rows must carry official truth comparison metadata")
-require('groupPoints: 0' in store, "group-stage player scoring must remain zero/no group-stage picks")
+require('scoreWeightForSlot' in store and 'if (/^[LR]-R16-' in store, "standings scoring must be knockout-slot weighted")
+require('score: score.score' in store and 'maxPossible: score.maxPossible' in store, "standings rows must expose score and maxPossible")
+require('groupPoints: score.groupPoints' in store and 'knockoutPoints: score.knockoutPoints' in store, "legacy standings fields must only mirror scoring compatibility values")
 
 for forbidden in ['officialTruth = bracketRows', 'officialTruth = playerRows', 'normalizeBracketRow(row, profileByUserId)' ]:
     require(forbidden not in store, f"store must not derive official truth from player rows: {forbidden}")
