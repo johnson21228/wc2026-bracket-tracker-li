@@ -247,10 +247,9 @@ function renderStandingsRows(panel, rows) {
     <tr>
       <td class="player-standings-rank">${index + 1}</td>
       <td class="player-standings-player">
-        <button type="button" class="player-standings-player-button" data-player-board-viewer-open data-player-standings-row="${index}" aria-haspopup="dialog" aria-controls="player-board-viewer-panel" aria-label="View ${escapeHtml(row.publicPlayerName)} picks on the board">
+        <div class="player-standings-player-summary">
           <span class="player-standings-player-name">${escapeHtml(row.publicPlayerName)}</span>
-          <span class="player-standings-player-action" aria-hidden="true">View picks</span>
-        </button>
+        </div>
       </td>
       <td class="player-standings-group-count">${row.groupPoints}</td>
       <td class="player-standings-knockout-count">${row.knockoutPoints}</td>
@@ -651,11 +650,6 @@ export function createPlayerStandingsSurface({
     });
 
     panel.addEventListener("click", (event) => {
-      const openBoardButton = event.target?.closest?.("[data-player-board-viewer-open]");
-      if (openBoardButton) {
-        openPlayerBoardViewer(openBoardButton);
-        return;
-      }
       if (event.target === panel) closePanel();
     });
 

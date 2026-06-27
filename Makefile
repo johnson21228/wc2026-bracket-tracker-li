@@ -127,6 +127,7 @@ verify:
 	python3 tools/verify_wc2026_account_save_action_target.py
 	python3 tools/verify_wc2026_join_first_live_picks_player_ui.py
 	python3 tools/verify_wc2026_player_standings_panel.py
+	python3 tools/verify_wc2026_player_standings_no_pick_links.py
 	python3 tools/verify_wc2026_storage_backed_player_standings.py
 	python3 tools/verify_wc2026_player_standings_board_viewer.py
 	python3 tools/verify_wc2026_group_stage_pick_lock_gate.py
