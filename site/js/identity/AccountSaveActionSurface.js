@@ -80,6 +80,21 @@ function clearConflict(root) {
   conflict.innerHTML = "";
 }
 
+function clearNotice(root, type) {
+  if (!root) return;
+  const notice = root.querySelector?.(`[data-account-save-notice="${type}"]`);
+  if (notice) {
+    notice.remove();
+    return;
+  }
+  if (type === "not-joined" && root.textContent?.includes("Playing Bracketeering requires you to join the pool")) {
+    root.replaceChildren();
+  }
+  if (type === "not-joined" && root.textContent?.includes("Playing Bracketeering requires you to join the Pool")) {
+    root.replaceChildren();
+  }
+}
+
 function createAccountSaveActionSurface({
   root,
   authService,
@@ -107,6 +122,9 @@ function createAccountSaveActionSurface({
     joined = state?.status === "signed-in" || Boolean(state?.user?.id);
     playerUserId = state?.user?.id || "";
     authSettled = Boolean(state?.status) && state.status !== "loading" && state.status !== "initializing";
+    if (joined) {
+      clearNotice(root, "not-joined");
+    }
     return state;
   }
 
@@ -251,6 +269,9 @@ function createAccountSaveActionSurface({
       joined = state?.status === "signed-in" || Boolean(state?.user?.id);
       playerUserId = state?.user?.id || "";
       authSettled = Boolean(state?.status) && state.status !== "loading" && state.status !== "initializing";
+      if (joined) {
+        clearNotice(root, "not-joined");
+      }
       reconcileJoinedPicks({ automatic: true });
     });
   }
