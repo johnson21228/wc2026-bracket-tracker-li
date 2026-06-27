@@ -11,6 +11,14 @@ def require(condition, message):
     if not condition:
         errors.append(message)
 
+require('function buildTeamGroupShortcutLookup(groupRail)' in view,
+        "R32 shortcut must build fallback group lookup from rendered group rail")
+require('function teamGroupShortcutIdFromLookup(team, lookup)' in view,
+        "R32 shortcut must derive group id from team id/abbr/name when display team lacks group field")
+require('renderSlots(state.slotModels, state.groupRail);' in view,
+        "render must pass group rail into slot rendering for R32 group shortcut fallback")
+require('teamGroupShortcutId(displayTeam) || teamGroupShortcutIdFromLookup(displayTeam, teamGroupShortcutLookup)' in view,
+        "R32 shortcut must use direct team group first, then group rail lookup fallback")
 require('const hasR32GroupShortcut = Boolean(r32GroupShortcutId);' in view,
         "missing explicit R32 shortcut interaction mode")
 require('button.disabled = hasR32GroupShortcut ? false :' in view,
