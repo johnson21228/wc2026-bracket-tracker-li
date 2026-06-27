@@ -36,9 +36,20 @@ for forbidden in [
 
 for token in [
     ".identity-icon-button",
-    "border-radius: 999px",
+    "border-radius: 50% !important",
     "width: 44px",
     "height: 44px",
+    "width: 44px !important",
+    "height: 44px !important",
+    "min-width: 44px !important",
+    "max-width: 44px !important",
+    "min-height: 44px !important",
+    "max-height: 44px !important",
+    "aspect-ratio: 1 / 1",
+    "border-radius: 50% !important",
+    "padding: 0 !important",
+    "display: inline-grid !important",
+    "flex: 0 0 44px",
     ".identity-icon-svg",
     "stroke-linecap: round",
 ]:
