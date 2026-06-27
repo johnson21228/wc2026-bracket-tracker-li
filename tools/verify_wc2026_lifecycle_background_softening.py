@@ -9,9 +9,9 @@ css = Path("site/css/board.css").read_text()
 controller = Path("site/js/mvc/controller.js").read_text()
 view = Path("site/js/mvc/view.js").read_text()
 
-expected_rule = ".board-background-layer { z-index: 0; opacity: .48; }"
+expected_rule = ".board-background-layer { z-index: 0; opacity: .32; }"
 if expected_rule not in css:
-    errors.append("shared board background layer opacity must be softened to .48")
+    errors.append("shared board background layer opacity must be softened to .32")
 
 if ".board-background-layer { z-index: 0; opacity: .72; }" in css:
     errors.append("old .72 board background opacity must not remain")
