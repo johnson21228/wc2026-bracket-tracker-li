@@ -2335,3 +2335,219 @@ body {
   stroke-linejoin: round;
   pointer-events: none;
 }
+
+/* CB 1026 authority: Join/Profile is pinned to the browser right edge.
+   Standings is a readable pill pinned to the left edge of Join/Profile. */
+
+:root {
+  --player-control-top: var(--wc-top-chrome-top, 12px);
+  --player-control-right: 16px;
+  --player-control-gap: var(--wc-top-connected-gap, 8px);
+  --player-identity-size: var(--wc-top-chrome-size, 44px);
+  --player-standings-width: 240px;
+  --player-control-z: 2600;
+}
+
+/* Join/Profile: right-edge anchor. */
+[data-supabase-identity-surface] .identity-compact-card {
+  position: fixed !important;
+  top: calc(env(safe-area-inset-top, 0px) + var(--player-control-top)) !important;
+  right: calc(env(safe-area-inset-right, 0px) + var(--player-control-right)) !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: var(--player-control-z) !important;
+  width: var(--player-identity-size) !important;
+  height: var(--player-identity-size) !important;
+  min-width: var(--player-identity-size) !important;
+  min-height: var(--player-identity-size) !important;
+  max-width: var(--player-identity-size) !important;
+  max-height: var(--player-identity-size) !important;
+  margin: 0 !important;
+  transform: translateZ(0) !important;
+}
+
+[data-supabase-identity-surface] .identity-status-button.identity-icon-button,
+[data-supabase-identity-surface] .identity-status-button {
+  width: var(--player-identity-size) !important;
+  height: var(--player-identity-size) !important;
+  min-width: var(--player-identity-size) !important;
+  min-height: var(--player-identity-size) !important;
+  max-width: var(--player-identity-size) !important;
+  max-height: var(--player-identity-size) !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+/* Standings: readable pill to the left of Join/Profile. */
+.player-standings-control {
+  position: fixed !important;
+  top: calc(env(safe-area-inset-top, 0px) + var(--player-control-top)) !important;
+  right: calc(
+    env(safe-area-inset-right, 0px)
+    + var(--player-control-right)
+    + var(--player-identity-size)
+    + var(--player-control-gap)
+  ) !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: var(--player-control-z) !important;
+  width: var(--player-standings-width) !important;
+  height: var(--player-identity-size) !important;
+  min-width: var(--player-standings-width) !important;
+  max-width: var(--player-standings-width) !important;
+  min-height: var(--player-identity-size) !important;
+  max-height: var(--player-identity-size) !important;
+  margin: 0 !important;
+  transform: translateZ(0) !important;
+}
+
+.player-standings-control .standings-icon-button {
+  position: static !important;
+  width: var(--player-standings-width) !important;
+  height: var(--player-identity-size) !important;
+  min-width: var(--player-standings-width) !important;
+  max-width: var(--player-standings-width) !important;
+  min-height: var(--player-identity-size) !important;
+  max-height: var(--player-identity-size) !important;
+  border-radius: 999px !important;
+  padding: 0 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  letter-spacing: .01em !important;
+  text-indent: 0 !important;
+}
+
+.player-standings-control .standings-icon-button::before {
+  content: none !important;
+}
+
+/* CB 1026 hard override: identity child stays inside right-pinned card.
+   Actual layout:
+   [Standings readable pill] gap [Join/Profile circle] 16px browser right edge.
+   The identity CARD is pinned right; the identity BUTTON is static inside it. */
+
+:root {
+  --player-control-top: var(--wc-top-chrome-top, 12px);
+  --player-control-right: 16px;
+  --player-control-gap: var(--wc-top-connected-gap, 8px);
+  --player-identity-size: var(--wc-top-chrome-size, 44px);
+  --player-standings-width: 176px;
+  --player-control-z: 2600;
+}
+
+[data-supabase-identity-surface] .identity-compact-card {
+  position: fixed !important;
+  top: calc(env(safe-area-inset-top, 0px) + var(--player-control-top)) !important;
+  right: calc(env(safe-area-inset-right, 0px) + var(--player-control-right)) !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: var(--player-control-z) !important;
+  width: var(--player-identity-size) !important;
+  height: var(--player-identity-size) !important;
+  min-width: var(--player-identity-size) !important;
+  min-height: var(--player-identity-size) !important;
+  max-width: var(--player-identity-size) !important;
+  max-height: var(--player-identity-size) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  display: block !important;
+}
+
+body [data-supabase-identity-surface] .identity-compact-card .identity-status-button,
+body [data-supabase-identity-surface] .identity-compact-card .identity-status-button.identity-icon-button {
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: var(--player-identity-size) !important;
+  height: var(--player-identity-size) !important;
+  min-width: var(--player-identity-size) !important;
+  min-height: var(--player-identity-size) !important;
+  max-width: var(--player-identity-size) !important;
+  max-height: var(--player-identity-size) !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+
+.player-standings-control {
+  position: fixed !important;
+  top: calc(env(safe-area-inset-top, 0px) + var(--player-control-top)) !important;
+  right: calc(
+    env(safe-area-inset-right, 0px)
+    + var(--player-control-right)
+    + var(--player-identity-size)
+    + var(--player-control-gap)
+  ) !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: var(--player-control-z) !important;
+  width: var(--player-standings-width) !important;
+  height: var(--player-identity-size) !important;
+  min-width: var(--player-standings-width) !important;
+  max-width: var(--player-standings-width) !important;
+  min-height: var(--player-identity-size) !important;
+  max-height: var(--player-identity-size) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+
+.player-standings-control .standings-icon-button {
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: var(--player-standings-width) !important;
+  height: var(--player-identity-size) !important;
+  min-width: var(--player-standings-width) !important;
+  max-width: var(--player-standings-width) !important;
+  min-height: var(--player-identity-size) !important;
+  max-height: var(--player-identity-size) !important;
+  border-radius: 999px !important;
+  padding: 0 18px !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+  font-size: 17px !important;
+  font-weight: 900 !important;
+  letter-spacing: .01em !important;
+  text-indent: 0 !important;
+}
+
+.player-standings-control .standings-icon-button::before {
+  content: none !important;
+}

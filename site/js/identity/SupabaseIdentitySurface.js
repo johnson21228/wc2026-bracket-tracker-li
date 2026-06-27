@@ -29,6 +29,30 @@ const IDENTITY_ICON_BUTTON_ACCESSIBILITY_TOKENS = [
   'title="Profile"',
 ];
 
+function forceCircularIdentityButton(button) {
+  for (const [name, value] of [
+    ["inline-size", "44px"],
+    ["block-size", "44px"],
+    ["width", "44px"],
+    ["height", "44px"],
+    ["min-width", "44px"],
+    ["max-width", "44px"],
+    ["min-height", "44px"],
+    ["max-height", "44px"],
+    ["border-radius", "50%"],
+    ["padding", "0"],
+    ["display", "inline-grid"],
+    ["place-items", "center"],
+    ["line-height", "1"],
+    ["flex", "0 0 44px"],
+    ["box-sizing", "border-box"],
+    ["overflow", "hidden"],
+    ["white-space", "nowrap"],
+  ]) {
+    button.style.setProperty(name, value, "important");
+  }
+}
+
 function decorateIdentityRoundIconButtons(surface) {
   const buttons = Array.from(surface?.querySelectorAll?.("button") || []);
   for (const button of buttons) {
@@ -49,6 +73,7 @@ function decorateIdentityRoundIconButtons(surface) {
 
     if (isJoinButton) {
       button.classList.add("identity-icon-button");
+      forceCircularIdentityButton(button);
       button.setAttribute("aria-label", "Join Bracketeering");
       button.setAttribute("title", "Join Bracketeering");
       button.innerHTML = identityIconSvg("person-add");
@@ -56,6 +81,7 @@ function decorateIdentityRoundIconButtons(surface) {
 
     if (isProfileButton) {
       button.classList.add("identity-icon-button");
+      forceCircularIdentityButton(button);
       button.setAttribute("aria-label", "Profile");
       button.setAttribute("title", "Profile");
       button.innerHTML = identityIconSvg("person-check");
