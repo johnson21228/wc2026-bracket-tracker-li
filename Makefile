@@ -68,6 +68,7 @@ verify:
 	python3 tools/verify_wc2026_final_four_center_stack_geometry.py
 	python3 tools/verify_wc2026_final_four_center_stack_pick_menu.py
 	python3 tools/verify_wc2026_unpicked_bracket_cells_choose_team.py
+	python3 tools/verify_wc2026_r32_group_panel_shortcut.py
 	python3 tools/verify_wc2026_update_results_prompt.py
 	python3 tools/verify_wc2026_knockout_schedule_model.py
 	python3 tools/verify_wc2026_group_stage_full_match_times.py
