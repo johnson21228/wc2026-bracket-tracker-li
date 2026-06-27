@@ -95,6 +95,7 @@ function createAccountSaveActionSurface({
 
   let joined = false;
   let playerUserId = "";
+  let authSettled = false;
   let autosaveTimer = null;
   let retryTimer = null;
   let conflictActive = false;
@@ -105,6 +106,7 @@ function createAccountSaveActionSurface({
     const state = await authService?.currentState?.();
     joined = state?.status === "signed-in" || Boolean(state?.user?.id);
     playerUserId = state?.user?.id || "";
+    authSettled = Boolean(state?.status) && state.status !== "loading" && state.status !== "initializing";
     return state;
   }
 
@@ -196,7 +198,9 @@ function createAccountSaveActionSurface({
       lastJoinedPickFingerprint = "";
       conflictActive = false;
       clearConflict(root);
-      renderNotice(root, "not-joined", NOT_JOINED_STARTUP_MESSAGE);
+      if (authSettled) {
+        renderNotice(root, "not-joined", NOT_JOINED_STARTUP_MESSAGE);
+      }
       return;
     }
 
@@ -246,6 +250,7 @@ function createAccountSaveActionSurface({
     authService?.subscribe?.((state) => {
       joined = state?.status === "signed-in" || Boolean(state?.user?.id);
       playerUserId = state?.user?.id || "";
+      authSettled = Boolean(state?.status) && state.status !== "loading" && state.status !== "initializing";
       reconcileJoinedPicks({ automatic: true });
     });
   }
