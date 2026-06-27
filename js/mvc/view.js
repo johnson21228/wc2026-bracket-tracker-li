@@ -585,6 +585,15 @@ export function createBracketView(root) {
     return "";
   }
 
+  function openR32GroupPanelFromButton(button) {
+    const groupId = button?.dataset?.r32GroupShortcut || "";
+    if (!groupId) return false;
+    pendingGroupPanelAnchorBoundsPx = boardLocalBoundsForElement(button);
+    pendingGroupPanelAnchorElement = button;
+    handlers.onGroupPanelOpen?.(groupId);
+    return true;
+  }
+
   function renderSlots(slotModels, groupRail = []) {
     const teamGroupShortcutLookup = buildTeamGroupShortcutLookup(groupRail);
     const layer = boardPlane.querySelector("[data-pick-layer]");
@@ -761,11 +770,7 @@ export function createBracketView(root) {
         button.title = precedentUnavailableReason;
       }
       if (interactionMode === "readonly-group-panel") {
-        const openR32GroupPanel = () => {
-          pendingGroupPanelAnchorBoundsPx = boardLocalBoundsForElement(button);
-          pendingGroupPanelAnchorElement = button;
-          handlers.onGroupPanelOpen?.(r32GroupShortcutId);
-        };
+        const openR32GroupPanel = () => openR32GroupPanelFromButton(button);
         button.addEventListener("click", openR32GroupPanel);
         button.addEventListener("keydown", (event) => {
           if (event.key !== "Enter" && event.key !== " ") return;
@@ -1282,6 +1287,14 @@ export function createBracketView(root) {
     pendingGroupPanelAnchorElement = null;
     placeGroupPanelOverAnchor(panel, anchorBoundsPx);
   }
+
+  boardPlane.addEventListener("click", (event) => {
+    const shortcutButton = event.target?.closest?.("[data-r32-group-panel-shortcut='true']");
+    if (!shortcutButton || !boardPlane.contains(shortcutButton)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    openR32GroupPanelFromButton(shortcutButton);
+  }, true);
 
   function render(state) {
     renderSlots(state.slotModels, state.groupRail);
