@@ -41,6 +41,10 @@ require('boardPlane.addEventListener("click", (event)' in view,
         "R32 shortcut must have a delegated board-plane click fallback")
 require('[data-r32-group-panel-shortcut=\'true\']' in view or '[data-r32-group-panel-shortcut="true"]' in view,
         "R32 delegated fallback must target the explicit shortcut marker")
+require('const slotId = button?.dataset?.slotId || "";' in view,
+        "R32 group-panel shortcut must read the clicked slot id")
+require('if (slotId) handlers.onSlotClick?.(slotId);' in view,
+        "R32 group-panel shortcut must reuse the normal slot preselection path")
 require('openR32GroupPanelFromButton(shortcutButton);' in view,
         "R32 delegated fallback must open the group panel from the clicked shortcut button")
 require('button.dataset.r32GroupPanelShortcut = "true";' in view,

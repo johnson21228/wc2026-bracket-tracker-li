@@ -587,7 +587,9 @@ export function createBracketView(root) {
 
   function openR32GroupPanelFromButton(button) {
     const groupId = button?.dataset?.r32GroupShortcut || "";
+    const slotId = button?.dataset?.slotId || "";
     if (!groupId) return false;
+    if (slotId) handlers.onSlotClick?.(slotId);
     pendingGroupPanelAnchorBoundsPx = boardLocalBoundsForElement(button);
     pendingGroupPanelAnchorElement = button;
     handlers.onGroupPanelOpen?.(groupId);
