@@ -35,6 +35,14 @@ require('const hasR32GroupShortcut = Boolean(r32GroupShortcutId);' in view,
         "missing explicit R32 shortcut interaction mode")
 require('button.disabled = interactionMode === "none";' in view,
         "resolved R32 group shortcut buttons must not be disabled")
+require('function openR32GroupPanelFromButton(button)' in view,
+        "R32 shortcut must have a shared opener function")
+require('boardPlane.addEventListener("click", (event)' in view,
+        "R32 shortcut must have a delegated board-plane click fallback")
+require('[data-r32-group-panel-shortcut=\'true\']' in view or '[data-r32-group-panel-shortcut="true"]' in view,
+        "R32 delegated fallback must target the explicit shortcut marker")
+require('openR32GroupPanelFromButton(shortcutButton);' in view,
+        "R32 delegated fallback must open the group panel from the clicked shortcut button")
 require('button.dataset.r32GroupPanelShortcut = "true";' in view,
         "missing R32 group panel shortcut dataset marker")
 require('button.setAttribute("data-r32-group-panel-shortcut", "true");' in view,
