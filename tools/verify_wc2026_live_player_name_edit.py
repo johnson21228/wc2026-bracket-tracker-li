@@ -13,6 +13,7 @@ required = [
     "profileStore.saveProfile({ userId, displayName })",
     "Player name saved.",
     "data-sign-out",
+    "loadProfileForState(latestState)",
 ]
 
 forbidden = [

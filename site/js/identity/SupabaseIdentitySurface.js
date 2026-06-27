@@ -330,6 +330,9 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
 
       const signOutButton = actions.querySelector("[data-sign-out]");
       signOutButton?.addEventListener("click", () => authService.signOut());
+
+      scheduleCooldownTick();
+      loadProfileForState(latestState);
       return;
     }
 
