@@ -550,6 +550,10 @@ export function createBracketView(root) {
     return `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id || ""}`.trim();
   }
 
+  function normalizeTeamKey(value) {
+    return String(value || "").trim().toUpperCase();
+  }
+
   function teamGroupShortcutId(team) {
     const raw = team?.group || team?.groupId || team?.groupName || team?.pool || "";
     const value = String(raw || "").trim();
@@ -557,7 +561,32 @@ export function createBracketView(root) {
     return value.replace(/^Group\s+/i, "").toUpperCase();
   }
 
-  function renderSlots(slotModels) {
+  function buildTeamGroupShortcutLookup(groupRail) {
+    const lookup = new Map();
+    for (const group of groupRail || []) {
+      const groupId = String(group?.groupId || group?.id || group?.label || "").replace(/^Group\s+/i, "").toUpperCase();
+      if (!groupId) continue;
+      for (const team of group.teams || []) {
+        for (const key of [team?.id, team?.teamId, team?.abbr, team?.code, team?.name]) {
+          const normalized = normalizeTeamKey(key);
+          if (normalized) lookup.set(normalized, groupId);
+        }
+      }
+    }
+    return lookup;
+  }
+
+  function teamGroupShortcutIdFromLookup(team, lookup) {
+    if (!team || !lookup) return "";
+    for (const key of [team.id, team.teamId, team.abbr, team.code, team.name]) {
+      const groupId = lookup.get(normalizeTeamKey(key));
+      if (groupId) return groupId;
+    }
+    return "";
+  }
+
+  function renderSlots(slotModels, groupRail = []) {
+    const teamGroupShortcutLookup = buildTeamGroupShortcutLookup(groupRail);
     const layer = boardPlane.querySelector("[data-pick-layer]");
     layer.innerHTML = "";
     for (const slot of slotModels) {
@@ -577,7 +606,9 @@ export function createBracketView(root) {
       const game2ResolvedR32Display = isGame2ResolvedR32Display(slot, displayTeam);
       const readOnlyGame2R32Display = game2ResolvedR32Display;
       const isR32Slot = slot.round === "R32" || String(slot.slotId || "").toUpperCase().startsWith("R32");
-      const r32GroupShortcutId = isR32Slot && displayTeam ? teamGroupShortcutId(displayTeam) : "";
+      const r32GroupShortcutId = isR32Slot && displayTeam
+        ? (teamGroupShortcutId(displayTeam) || teamGroupShortcutIdFromLookup(displayTeam, teamGroupShortcutLookup))
+        : "";
       const r32GroupShortcutLabel = r32GroupShortcutId ? `Group ${r32GroupShortcutId}` : "";
       const hasR32GroupShortcut = Boolean(r32GroupShortcutId);
       const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display && !hasR32GroupShortcut;
@@ -1247,7 +1278,7 @@ export function createBracketView(root) {
   }
 
   function render(state) {
-    renderSlots(state.slotModels);
+    renderSlots(state.slotModels, state.groupRail);
     renderFinalFourPanel(state.finalFour);
     renderGroupRail(state.groupRail);
     renderMenu(state.openPickMenu);
