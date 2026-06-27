@@ -4,7 +4,7 @@
   "gameId": "game1",
   "source": "site-owned-official-truth",
   "authority": "site-owned-official-truth",
-  "updatedAt": "2026-06-27T05:53:06.096588Z",
+  "updatedAt": "2026-06-27T14:50:20.856020Z",
   "picksBySlot": {
     "R-R32-05": {
       "slotId": "R-R32-05",
@@ -211,50 +211,6 @@
       "pick": {
         "kind": "team",
         "teamId": "ARG"
-      },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
-    },
-    "L-R16-03": {
-      "slotId": "L-R16-03",
-      "teamId": "CAN",
-      "teamName": "Canada",
-      "pick": {
-        "kind": "team",
-        "teamId": "CAN"
-      },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
-    },
-    "L-R16-04": {
-      "slotId": "L-R16-04",
-      "teamId": "MAR",
-      "teamName": "Morocco",
-      "pick": {
-        "kind": "team",
-        "teamId": "MAR"
-      },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
-    },
-    "R-R16-01": {
-      "slotId": "R-R16-01",
-      "teamId": "BRA",
-      "teamName": "Brazil",
-      "pick": {
-        "kind": "team",
-        "teamId": "BRA"
-      },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
-    },
-    "R-R16-02": {
-      "slotId": "R-R16-02",
-      "teamId": "CIV",
-      "teamName": "Côte d’Ivoire",
-      "pick": {
-        "kind": "team",
-        "teamId": "CIV"
       },
       "source": "site-owned-official-truth",
       "officialTruth": true
