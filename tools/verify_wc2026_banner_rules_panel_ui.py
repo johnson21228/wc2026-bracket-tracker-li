@@ -10,10 +10,10 @@ def main() -> int:
         "World Cup Bracketeering Hub",
         "Bracketeering Info",
         "How to play",
-        "First you need to register to get into the “Pool”",
+        "First, register to join the “Pool.”",
         "Tap the button that looks like a person",
-        "Using Google options avoids finding the email that might go to your spam folder",
-        "You will need to assign your player name",
+        "Using Google sign-in helps you avoid having to find an email that might go to your spam folder",
+        "You will need to choose your player name",
         "Tap or click each bracket slot and pick a winning team",
         "The winner gets $50",
         "410-925-7495",
@@ -24,7 +24,7 @@ def main() -> int:
         "4 points for each correct Quarterfinal winner",
         "8 points for each correct Semifinal winner",
         "16 points for correctly picking the World Cup champion",
-        "There is no tie breaker at the moment",
+        "There is no tiebreaker at the moment",
         "Have fun",
     ]
 

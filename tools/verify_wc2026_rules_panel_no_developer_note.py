@@ -10,11 +10,11 @@ def main() -> int:
         "Bracketeering Info",
         "World Cup Bracketeering Hub",
         "How to play",
-        "First you need to register to get into the “Pool”",
+        "First, register to join the “Pool.”",
         "Tap the button that looks like a person",
-        "Using Google options avoids finding the email that might go to your spam folder",
-        "You will need to assign your player name",
-        "There is no tie breaker at the moment",
+        "Using Google sign-in helps you avoid having to find an email that might go to your spam folder",
+        "You will need to choose your player name",
+        "There is no tiebreaker at the moment",
     ]
 
     for token in required_tokens:

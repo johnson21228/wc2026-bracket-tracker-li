@@ -44,7 +44,7 @@ def main() -> int:
     # Player-facing Info panel now uses one-game Bracketeering copy.
     if "This is your World Cup Bracketeering Hub." not in index:
         errors.append("site/index.html should expose current Bracketeering Hub info copy")
-    if "There is no tie breaker at the moment." not in index:
+    if "There is no tiebreaker at the moment." not in index:
         errors.append("site/index.html should expose current knockout scoring copy")
     stale_info_terms = [
         "The game has two parts",

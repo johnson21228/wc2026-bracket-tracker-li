@@ -46,6 +46,7 @@ verify:
 	python3 tools/verify_wc2026_dev_game_selector_next_to_zoom.py
 	python3 tools/verify_wc2026_banner_rules_panel_ui.py
 	python3 tools/verify_wc2026_rules_panel_no_developer_note.py
+	python3 tools/verify_wc2026_info_panel_copy_polish.py
 	python3 tools/verify_wc2026_active_game_pub_background.py
 	python3 tools/verify_wc2026_knockout_runtime_default_background.py
 	python3 tools/verify_wc2026_knockout_background_deemphasis.py
