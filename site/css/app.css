@@ -2591,3 +2591,26 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
   font-weight: 500 !important;
   letter-spacing: 0.01em !important;
 }
+
+.identity-profile-name-send-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  gap: 8px;
+  align-items: center;
+}
+
+.identity-profile-send-button {
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.identity-profile-send-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

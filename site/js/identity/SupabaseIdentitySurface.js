@@ -115,8 +115,9 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
   let cooldownTimer = null;
   let profileState = { status: "idle", profile: null, message: "" };
   let profileLoadUserId = "";
-  let profileLiveSaveTimer = null;
-  let profileLiveSaveDraft = "";
+  let profileNameDraft = "";
+  let profileNameDirty = false;
+  let profileNameSaveInFlight = false;
 
   function escapeHtml(value) {
     return String(value || "")
@@ -201,9 +202,9 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
       return `<p>${escapeHtml(profileState.message || "Player name saved.")}</p>`;
     }
     if (profileDisplayName()) {
-      return `<p>Player name saves automatically.</p>`;
+      return `<p>Press Enter or tap send to update your player name.</p>`;
     }
-    return `<p>Type your player name. Edits save automatically.</p>`;
+    return `<p>Type your player name, then press Enter or tap send.</p>`;
   }
 
   async function loadProfileForState(state) {
@@ -293,47 +294,108 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
     }
 
     if (isSignedIn) {
-      profileLiveSaveDraft = profileDisplayName();
+      if (!profileNameDirty && !profileNameDraft) {
+        profileNameDraft = profileDisplayName();
+      }
+
+      const currentDraft = profileNameDirty ? profileNameDraft : profileDisplayName();
+      const normalizedDraft = String(currentDraft || "").trim().replace(/\s+/g, " ");
+      const normalizedSaved = String(profileDisplayName() || "").trim().replace(/\s+/g, " ");
+      const canSendPlayerName = Boolean(
+        profileNameDirty &&
+        !profileNameSaveInFlight &&
+        normalizedDraft.length >= 2 &&
+        normalizedDraft.length <= 40 &&
+        normalizedDraft !== normalizedSaved
+      );
+
       actions.innerHTML = `
         <div class="identity-profile-fields">
           <label for="supabase-profile-display-name">Player name</label>
-          <input id="supabase-profile-display-name" type="text" autocomplete="nickname" data-profile-display-name value="${escapeHtml(profileDisplayName())}" placeholder="Player name">
-          ${profileMessageHtml()}
+          <div class="identity-profile-name-send-row">
+            <input id="supabase-profile-display-name" type="text" autocomplete="nickname" data-profile-display-name value="${escapeHtml(currentDraft)}" placeholder="Player name" ${profileNameSaveInFlight ? "disabled" : ""}>
+            <button
+              type="button"
+              class="identity-profile-send-button"
+              data-save-profile-display-name
+              aria-label="Update player name"
+              title="Update player name"
+              ${canSendPlayerName ? "" : "disabled"}>${profileNameSaveInFlight ? "…" : "➤"}</button>
+          </div>
+          <p data-profile-display-name-message>${profileNameDirty ? "Player name has not been saved yet." : ""}</p>
+          ${profileNameDirty ? "" : profileMessageHtml()}
         </div>
         <button type="button" data-sign-out>Log out</button>
       `;
 
+      async function saveProfileDisplayNameNow() {
+        const userId = signedInUserId(latestState);
+        const displayName = String(profileNameDraft || "").trim().replace(/\s+/g, " ");
+        if (!profileStore || !userId || profileNameSaveInFlight) return;
+        if (!profileNameDirty || displayName === profileDisplayName()) return;
+
+        const previousProfile = profileState.profile;
+        profileNameSaveInFlight = true;
+        profileState = { status: "saving", profile: previousProfile, message: "" };
+        render(latestState);
+
+        const { profile, error } = await profileStore.saveProfile({ userId, displayName });
+        if (signedInUserId(latestState) !== userId) return;
+
+        profileNameSaveInFlight = false;
+        if (error) {
+          profileNameDirty = true;
+          profileState = { status: "error", profile: previousProfile, message: `Player name save failed: ${error.message || String(error)}` };
+        } else {
+          profileNameDraft = profile?.display_name || displayName;
+          profileNameDirty = false;
+          profileState = { status: "saved", profile, message: "Player name saved." };
+        }
+        render(latestState);
+      }
+
       const input = actions.querySelector("[data-profile-display-name]");
       input?.addEventListener("input", (event) => {
-        profileLiveSaveDraft = event.target.value || "";
-        if (profileLiveSaveTimer) {
-          clearTimeout(profileLiveSaveTimer);
+        profileNameDraft = event.target.value || "";
+        const normalizedDraft = String(profileNameDraft || "").trim().replace(/\s+/g, " ");
+        const normalizedSaved = String(profileDisplayName() || "").trim().replace(/\s+/g, " ");
+        profileNameDirty = normalizedDraft !== normalizedSaved;
+
+        const sendButton = actions.querySelector("[data-save-profile-display-name]");
+        if (sendButton) {
+          sendButton.disabled = !(
+            profileNameDirty &&
+            !profileNameSaveInFlight &&
+            normalizedDraft.length >= 2 &&
+            normalizedDraft.length <= 40
+          );
         }
-        profileLiveSaveTimer = window.setTimeout(async () => {
-          profileLiveSaveTimer = null;
-          const userId = signedInUserId(latestState);
-          const displayName = profileLiveSaveDraft.trim();
-          if (!profileStore || !userId) return;
 
-          const previousProfile = profileState.profile;
-          const { profile, error } = await profileStore.saveProfile({ userId, displayName });
-          if (signedInUserId(latestState) !== userId) return;
-
-          if (error) {
-            profileState = { status: "error", profile: previousProfile, message: `Player name save failed: ${error.message || String(error)}` };
-          } else {
-            profileState = { status: "saved", profile, message: "Player name saved." };
-          }
-          render(latestState);
-        }, 550);
+        const message = actions.querySelector("[data-profile-display-name-message]");
+        if (message) {
+          message.textContent = profileNameDirty ? "Player name has not been saved yet." : "";
+        }
       });
 
-      const signOutButton = actions.querySelector("[data-sign-out]");
-      signOutButton?.addEventListener("click", () => authService.signOut());
+      input?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          saveProfileDisplayNameNow();
+        }
+      });
 
-      scheduleCooldownTick();
-      loadProfileForState(latestState);
-      return;
+      input?.addEventListener("blur", () => {
+        // Explicit send UI: leaving the field does not save.
+      });
+
+      actions.querySelector("[data-save-profile-display-name]")?.addEventListener("click", () => {
+        saveProfileDisplayNameNow();
+      });
+
+      actions.querySelector("[data-sign-out]")?.addEventListener("click", async () => {
+        if (profileNameSaveInFlight) return;
+        await authService.signOut();
+      });
     }
 
 
