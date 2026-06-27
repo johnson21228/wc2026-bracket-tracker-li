@@ -151,7 +151,7 @@ export function createBracketView(root) {
 
   function emptyPickLabelForSlot(slotId) {
     const normalizedSlotId = String(slotId || "").toUpperCase();
-    return normalizedSlotId.startsWith("R32") ? "TBD" : "Choose Winner";
+    return normalizedSlotId.startsWith("R32") ? "TBD" : "";
   }
 
   function updateEmptyPickLabels() {
@@ -819,6 +819,7 @@ export function createBracketView(root) {
     const slotId = String(slot?.slotId || "").toUpperCase();
 
     if (round === "R32" || slotId.startsWith("R32")) return "TBD";
+    if (!slot?.pickable || !slotEnabledByPrecedent(slot)) return "";
 
     return "Choose Winner";
   }

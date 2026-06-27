@@ -14,14 +14,15 @@ def require(condition, message):
 
 require("function emptyPickLabelForSlot(slotId)" in view,
         "missing emptyPickLabelForSlot(slotId)")
-require('return normalizedSlotId.startsWith("R32") ? "TBD" : "Choose Winner";' in view,
-        "R32 empty labels must render TBD while later rounds use Choose Winner")
+require('return normalizedSlotId.startsWith("R32") ? "TBD" : "";' in view,
+        "R32 empty labels must render TBD while later waiting rounds stay blank")
 require("function playerFacingEmptyPickText(slot)" in view,
         "missing playerFacingEmptyPickText(slot)")
 require('if (round === "R32" || slotId.startsWith("R32")) return "TBD";' in view,
         "R32 player-facing empty labels must render TBD")
+require('if (!slot?.pickable || !slotEnabledByPrecedent(slot)) return "";' in view, "later-round waiting slots must render blank")
 require('return "Choose Winner";' in view,
-        "later-round empty slots must use Choose Winner")
+        "later-round ready empty slots must use Choose Winner")
 require('return "Choose Team";' not in view,
         "stale Choose Team label must not remain as an R32 render source")
 require('.classList.add("is-tbd")' in view,
@@ -33,4 +34,4 @@ if errors:
         print(f"- {error}")
     raise SystemExit(1)
 
-print("OK: R32 empty labels render small TBD and later rounds use Choose Winner.")
+print("OK: R32 empty labels render small TBD, later waiting slots stay blank, and ready slots use Choose Winner.")
