@@ -4,6 +4,216 @@
   "gameId": "game1",
   "source": "site-owned-official-truth",
   "authority": "site-owned-official-truth",
-  "updatedAt": null,
-  "picksBySlot": {}
+  "updatedAt": "2026-06-27T05:19:34.963381Z",
+  "picksBySlot": {
+    "R-R32-05": {
+      "slotId": "R-R32-05",
+      "teamId": "MEX",
+      "teamName": "Mexico",
+      "pick": {
+        "kind": "team",
+        "teamId": "MEX"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R32-05": {
+      "slotId": "L-R32-05",
+      "teamId": "RSA",
+      "teamName": "South Africa",
+      "pick": {
+        "kind": "team",
+        "teamId": "RSA"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "R-R32-13": {
+      "slotId": "R-R32-13",
+      "teamId": "SUI",
+      "teamName": "Switzerland",
+      "pick": {
+        "kind": "team",
+        "teamId": "SUI"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R32-06": {
+      "slotId": "L-R32-06",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "pick": {
+        "kind": "team",
+        "teamId": "CAN"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "R-R32-01": {
+      "slotId": "R-R32-01",
+      "teamId": "BRA",
+      "teamName": "Brazil",
+      "pick": {
+        "kind": "team",
+        "teamId": "BRA"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R32-08": {
+      "slotId": "L-R32-08",
+      "teamId": "MAR",
+      "teamName": "Morocco",
+      "pick": {
+        "kind": "team",
+        "teamId": "MAR"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R32-13": {
+      "slotId": "L-R32-13",
+      "teamId": "USA",
+      "teamName": "USA",
+      "pick": {
+        "kind": "team",
+        "teamId": "USA"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "R-R32-11": {
+      "slotId": "R-R32-11",
+      "teamId": "AUS",
+      "teamName": "Australia",
+      "pick": {
+        "kind": "team",
+        "teamId": "AUS"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R32-01": {
+      "slotId": "L-R32-01",
+      "teamId": "GER",
+      "teamName": "Germany",
+      "pick": {
+        "kind": "team",
+        "teamId": "GER"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "R-R32-03": {
+      "slotId": "R-R32-03",
+      "teamId": "CIV",
+      "teamName": "Côte d’Ivoire",
+      "pick": {
+        "kind": "team",
+        "teamId": "CIV"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R32-07": {
+      "slotId": "L-R32-07",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "pick": {
+        "kind": "team",
+        "teamId": "NED"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "R-R32-02": {
+      "slotId": "R-R32-02",
+      "teamId": "JPN",
+      "teamName": "Japan",
+      "pick": {
+        "kind": "team",
+        "teamId": "JPN"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R32-15": {
+      "slotId": "L-R32-15",
+      "teamId": "BEL",
+      "teamName": "Belgium",
+      "pick": {
+        "kind": "team",
+        "teamId": "BEL"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "R-R32-12": {
+      "slotId": "R-R32-12",
+      "teamId": "EGY",
+      "teamName": "Egypt",
+      "pick": {
+        "kind": "team",
+        "teamId": "EGY"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R32-11": {
+      "slotId": "L-R32-11",
+      "teamId": "ESP",
+      "teamName": "Spain",
+      "pick": {
+        "kind": "team",
+        "teamId": "ESP"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "R-R32-10": {
+      "slotId": "R-R32-10",
+      "teamId": "CPV",
+      "teamName": "Cabo Verde",
+      "pick": {
+        "kind": "team",
+        "teamId": "CPV"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R32-03": {
+      "slotId": "L-R32-03",
+      "teamId": "FRA",
+      "teamName": "France",
+      "pick": {
+        "kind": "team",
+        "teamId": "FRA"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "R-R32-04": {
+      "slotId": "R-R32-04",
+      "teamId": "NOR",
+      "teamName": "Norway",
+      "pick": {
+        "kind": "team",
+        "teamId": "NOR"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "R-R32-09": {
+      "slotId": "R-R32-09",
+      "teamId": "ARG",
+      "teamName": "Argentina",
+      "pick": {
+        "kind": "team",
+        "teamId": "ARG"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    }
+  }
 }
