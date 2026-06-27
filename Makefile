@@ -112,6 +112,7 @@ verify:
 	python3 tools/verify_wc2026_admin_official_full_bracket_editor_mode.py
 	python3 tools/verify_wc2026_hydrate_only_supabase_admin_r32_into_player_picks.py
 	python3 tools/verify_wc2026_admin_r32_hydration_compatibility_model_li.py
+	python3 tools/verify_wc2026_site_owned_official_truth_li.py
 	python3 tools/verify_wc2026_admin_official_results_truth.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
 	python3 tools/verify_wc2026_supabase_sql_rls_finalization.py
