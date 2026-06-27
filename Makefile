@@ -156,6 +156,7 @@ verify:
 	python3 tools/verify_wc2026_bracketeering_workflow_easter_egg_panel.py
 	python3 tools/verify_wc2026_full_canonical_bracket_document_runtime.py
 	python3 tools/verify_wc2026_bracketdocument_save_seam_before_supabase.py
+	python3 tools/verify_wc2026_update_all_missing_completed_group_results.py
 clean-hygiene:
 	python3 tools/clean_repo_hygiene.py
 
