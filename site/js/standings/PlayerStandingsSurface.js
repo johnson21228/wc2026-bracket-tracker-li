@@ -92,7 +92,7 @@ export function sortPlayerStandingsRows(rows = []) {
     .map(normalizeStandingsRow)
     .sort((a, b) => (
       (b.total - a.total)
-      || (b.knockoutPoints - a.knockoutPoints)
+      || ((b.maxPossible ?? b.knockoutPoints) - (a.maxPossible ?? a.knockoutPoints))
       || (b.tiebreakerScore - a.tiebreakerScore)
       || a.publicPlayerName.localeCompare(b.publicPlayerName)
     ));
@@ -257,8 +257,8 @@ function renderStandingsRows(panel, rows) {
           <span class="player-standings-player-name">${escapeHtml(row.publicPlayerName)}</span>
         </div>
       </td>
-      <td class="player-standings-group-count">${row.groupPoints}</td>
-      <td class="player-standings-knockout-count">${row.knockoutPoints}</td>
+      <td class="player-standings-score">${row.score ?? row.groupPoints ?? 0}</td>
+      <td class="player-standings-max-possible">${row.maxPossible ?? row.knockoutPoints ?? 0}</td>
     </tr>
   `).join("");
 

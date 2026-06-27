@@ -17,8 +17,10 @@ for forbidden in [
 ]:
     require(forbidden not in surface, f"Old standings header must be removed: {forbidden}")
 
-require("player-standings-group-count" in surface, "Existing score cell class may remain for compatibility.")
-require("player-standings-knockout-count" in surface, "Existing max-possible cell class may remain for compatibility.")
+require("player-standings-score" in surface, "Player Standings score cell class must use score language.")
+require("player-standings-max-possible" in surface, "Player Standings max possible cell class must use max-possible language.")
+require("player-standings-group-count" not in surface, "Old group-count display class must be removed.")
+require("player-standings-knockout-count" not in surface, "Old knockout-count display class must be removed.")
 
 if errors:
     print("WC2026 Player Standings score header verification failed:")
