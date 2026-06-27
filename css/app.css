@@ -2620,3 +2620,11 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
   letter-spacing: 0.08em;
   opacity: 0.72;
 }
+
+.pick-slot-button.has-r32-group-shortcut {
+  cursor: pointer;
+}
+
+.pick-slot-button.has-r32-group-shortcut .picked-cell-identity {
+  pointer-events: none;
+}
