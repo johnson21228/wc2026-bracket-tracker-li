@@ -19,9 +19,21 @@ require('renderSlots(state.slotModels, state.groupRail);' in view,
         "render must pass group rail into slot rendering for R32 group shortcut fallback")
 require('teamGroupShortcutId(displayTeam) || teamGroupShortcutIdFromLookup(displayTeam, teamGroupShortcutLookup)' in view,
         "R32 shortcut must use direct team group first, then group rail lookup fallback")
+require('const interactionMode = hasR32GroupShortcut' in view,
+        "R32 shortcut must use explicit interaction mode")
+require('button.dataset.interactionMode = interactionMode;' in view,
+        "R32 shortcut must expose interaction mode for DOM/debugging")
+require('button.disabled = interactionMode === "none";' in view,
+        "only non-interactive cells may be disabled")
+require('interactionMode === "readonly-group-panel"' in view,
+        "resolved R32 cells must be readonly group-panel buttons, not pickable buttons")
+require('interactionMode === "editable-pick"' in view,
+        "editable pick cells must remain a separate interaction mode")
+require('button.classList.add("is-readonly-inspectable");' in view,
+        "resolved R32 cells must have explicit readonly inspectable styling hook")
 require('const hasR32GroupShortcut = Boolean(r32GroupShortcutId);' in view,
         "missing explicit R32 shortcut interaction mode")
-require('button.disabled = hasR32GroupShortcut ? false :' in view,
+require('button.disabled = interactionMode === "none";' in view,
         "resolved R32 group shortcut buttons must not be disabled")
 require('button.dataset.r32GroupPanelShortcut = "true";' in view,
         "missing R32 group panel shortcut dataset marker")
