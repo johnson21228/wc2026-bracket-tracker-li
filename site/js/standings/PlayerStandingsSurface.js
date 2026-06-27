@@ -48,12 +48,16 @@ function safePublicPlayerName(row) {
 }
 
 function normalizeStandingsRow(row) {
-  const groupPoints = numericScore(row?.groupPoints);
-  const knockoutPoints = numericScore(row?.knockoutPoints);
+  const groupPoints = Number.isFinite(Number(row?.score))
+    ? numericScore(row.score)
+    : numericScore(row?.groupPoints);
+  const knockoutPoints = Number.isFinite(Number(row?.maxPossible))
+    ? numericScore(row.maxPossible)
+    : numericScore(row?.knockoutPoints);
   const tiebreakerScore = numericScore(row?.tiebreakerScore);
   const total = Number.isFinite(Number(row?.total))
     ? numericScore(row.total)
-    : groupPoints + knockoutPoints;
+    : groupPoints;
   const picksBySlot = row?.picksBySlot && typeof row.picksBySlot === "object" && !Array.isArray(row.picksBySlot)
     ? row.picksBySlot
     : {};
@@ -71,6 +75,8 @@ function normalizeStandingsRow(row) {
     picksCount,
     groupPoints,
     knockoutPoints,
+    score: groupPoints,
+    maxPossible: knockoutPoints,
     tiebreakerScore,
     total,
     officialTruthPicksBySlot,
