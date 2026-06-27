@@ -4,7 +4,7 @@
   "gameId": "game1",
   "source": "site-owned-official-truth",
   "authority": "site-owned-official-truth",
-  "updatedAt": "2026-06-27T05:19:34.963381Z",
+  "updatedAt": "2026-06-27T05:43:36.616484Z",
   "picksBySlot": {
     "R-R32-05": {
       "slotId": "R-R32-05",
@@ -211,6 +211,17 @@
       "pick": {
         "kind": "team",
         "teamId": "ARG"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R16-03": {
+      "slotId": "L-R16-03",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "pick": {
+        "kind": "team",
+        "teamId": "CAN"
       },
       "source": "site-owned-official-truth",
       "officialTruth": true
