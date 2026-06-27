@@ -455,6 +455,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     return teamObjectFromPickRecord(document?.picksBySlot?.[slotId]);
   }
 
+
   function knownTeamForPersistedPick({ source, slotId, teamId }) {
     const normalizedTeamId = String(teamId || "").trim();
     if (!normalizedTeamId) return null;
@@ -471,11 +472,12 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     return null;
   }
 
+
   function persistedOfficialTeam(slotId) {
     return knownTeamForPersistedPick({
       source: "Admin_/official R32 authority",
       slotId,
-      teamId: officialPicks[slotId] || pickTeamIdFromDocument(officialBracketDocument, slotId),
+      teamId: officialPicks[slotId] || (teamObjectFromDocumentPick(officialBracketDocument, slotId)?.id || ""),
     });
   }
 
@@ -483,7 +485,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     return knownTeamForPersistedPick({
       source: "player bracket",
       slotId,
-      teamId: picks[slotId] || pickTeamIdFromDocument(remoteBracketDocument, slotId),
+      teamId: picks[slotId] || (teamObjectFromDocumentPick(remoteBracketDocument, slotId)?.id || ""),
     });
   }
 

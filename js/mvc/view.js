@@ -40,6 +40,8 @@ export function createBracketView(root) {
   const BOARD_BUTTON_ZOOM_STEP = 0.25;
   const BOARD_DRAG_PAN_THRESHOLD_PX = 5;
   const BOARD_DOUBLE_CLICK_ZOOM_STEP = 0.18;
+  const BOARD_TOUCH_PAN_THRESHOLD_PX = 4;
+  const BOARD_TOUCH_PINCH_MIN_DISTANCE_PX = 18;
   let teardownFloatingSurfaceDismissal = null;
 
   function activeGameValue() {
@@ -285,6 +287,141 @@ export function createBracketView(root) {
   }
 
 
+
+  function installTouchBoardMapMode() {
+    if (!boardScroll || boardScroll.dataset.touchMapModeInstalled === "true") return;
+    boardScroll.dataset.touchMapModeInstalled = "true";
+
+    let touchMode = "";
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchLastX = 0;
+    let touchLastY = 0;
+    let touchStartScrollLeft = 0;
+    let touchStartScrollTop = 0;
+    let pinchStartDistance = 0;
+    let pinchStartScale = boardScale;
+    let pinchLastCenterX = 0;
+    let pinchLastCenterY = 0;
+
+    function touchPoint(event, index = 0) {
+      const touch = event.touches?.[index];
+      return touch ? { x: touch.clientX, y: touch.clientY } : { x: 0, y: 0 };
+    }
+
+    function pinchDistance(event) {
+      if (!event.touches || event.touches.length < 2) return 0;
+      const first = touchPoint(event, 0);
+      const second = touchPoint(event, 1);
+      return Math.hypot(second.x - first.x, second.y - first.y);
+    }
+
+    function pinchCenter(event) {
+      const first = touchPoint(event, 0);
+      const second = touchPoint(event, 1);
+      return {
+        x: (first.x + second.x) / 2,
+        y: (first.y + second.y) / 2,
+      };
+    }
+
+    function resetTouchMapMode() {
+      touchMode = "";
+      boardScroll.classList.remove("is-touch-panning");
+      boardScroll.classList.remove("is-touch-pinching");
+    }
+
+    boardScroll.addEventListener("touchstart", (event) => {
+      if (isBoardPanInteractiveTarget(event.target)) {
+        resetTouchMapMode();
+        return;
+      }
+
+      if (event.touches.length === 1) {
+        const point = touchPoint(event, 0);
+        touchMode = "pan-armed";
+        touchStartX = point.x;
+        touchStartY = point.y;
+        touchLastX = point.x;
+        touchLastY = point.y;
+        touchStartScrollLeft = boardScroll.scrollLeft || 0;
+        touchStartScrollTop = boardScroll.scrollTop || 0;
+        return;
+      }
+
+      if (event.touches.length === 2) {
+        const center = pinchCenter(event);
+        touchMode = "pinch";
+        pinchStartDistance = pinchDistance(event);
+        pinchStartScale = boardScale;
+        pinchLastCenterX = center.x;
+        pinchLastCenterY = center.y;
+        boardScroll.classList.add("is-touch-pinching");
+        if (pinchStartDistance >= BOARD_TOUCH_PINCH_MIN_DISTANCE_PX) event.preventDefault();
+      }
+    }, { passive: false });
+
+    boardScroll.addEventListener("touchmove", (event) => {
+      if (!touchMode) return;
+
+      if (event.touches.length === 1 && (touchMode === "pan-armed" || touchMode === "pan")) {
+        const point = touchPoint(event, 0);
+        const deltaX = point.x - touchStartX;
+        const deltaY = point.y - touchStartY;
+        const movedEnough = Math.hypot(deltaX, deltaY) >= BOARD_TOUCH_PAN_THRESHOLD_PX;
+
+        if (!movedEnough && touchMode !== "pan") return;
+
+        touchMode = "pan";
+        boardScroll.classList.add("is-touch-panning");
+        event.preventDefault();
+
+        boardScroll.scrollLeft = Math.max(0, touchStartScrollLeft - deltaX);
+        boardScroll.scrollTop = Math.max(0, touchStartScrollTop - deltaY);
+        touchLastX = point.x;
+        touchLastY = point.y;
+        return;
+      }
+
+      if (event.touches.length === 2) {
+        const distance = pinchDistance(event);
+        if (distance < BOARD_TOUCH_PINCH_MIN_DISTANCE_PX || pinchStartDistance < BOARD_TOUCH_PINCH_MIN_DISTANCE_PX) return;
+
+        const center = pinchCenter(event);
+        touchMode = "pinch";
+        boardScroll.classList.add("is-touch-pinching");
+        event.preventDefault();
+
+        boardScroll.scrollLeft += pinchLastCenterX - center.x;
+        boardScroll.scrollTop += pinchLastCenterY - center.y;
+        pinchLastCenterX = center.x;
+        pinchLastCenterY = center.y;
+
+        const ratio = distance / pinchStartDistance;
+        zoomBoardAroundPoint(pinchStartScale * ratio, center.x, center.y);
+      }
+    }, { passive: false });
+
+    boardScroll.addEventListener("touchend", (event) => {
+      if (event.touches.length === 0) {
+        resetTouchMapMode();
+        return;
+      }
+
+      if (event.touches.length === 1) {
+        const point = touchPoint(event, 0);
+        touchMode = "pan-armed";
+        touchStartX = point.x;
+        touchStartY = point.y;
+        touchStartScrollLeft = boardScroll.scrollLeft || 0;
+        touchStartScrollTop = boardScroll.scrollTop || 0;
+        boardScroll.classList.remove("is-touch-pinching");
+      }
+    }, { passive: false });
+
+    boardScroll.addEventListener("touchcancel", resetTouchMapMode, { passive: false });
+  }
+
   function installMouseBoardDoubleClickZoom() {
     if (!boardScroll || boardScroll.dataset.mouseDoubleClickZoomInstalled === "true") return;
     boardScroll.dataset.mouseDoubleClickZoomInstalled = "true";
@@ -338,6 +475,7 @@ export function createBracketView(root) {
       handlers.onCloseMenu?.();
     });
     installMouseBoardDragPan();
+    installTouchBoardMapMode();
     installMouseBoardDoubleClickZoom();
     boardScroll?.addEventListener("wheel", (event) => {
       const wantsBoardZoom = event.ctrlKey || event.metaKey;
