@@ -2548,6 +2548,46 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
   text-indent: 0 !important;
 }
 
+
+/* [Pool readable pill] gap [Join/Profile circle] 16px browser right edge */
 .player-standings-control .standings-icon-button::before {
   content: none !important;
+}
+
+
+/* Site-owned SVG glyphs for map chrome controls. */
+.map-control-svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+  color: currentColor;
+  pointer-events: none;
+}
+
+
+/* Inline SVG glyphs for map chrome controls. */
+.map-icon-button .map-control-svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  color: currentColor;
+  pointer-events: none;
+}
+
+.map-icon-button .map-icon {
+  display: none !important;
+}
+
+
+/* Info glyph is intentionally larger inside the same round map button. */
+.map-icon-button .map-control-svg.map-control-info-svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Pool button label is intentionally lighter/smaller than Join/Profile chrome. */
+.player-standings-control .standings-icon-button {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
 }

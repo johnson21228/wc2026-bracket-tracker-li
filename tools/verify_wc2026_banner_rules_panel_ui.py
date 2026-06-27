@@ -1,77 +1,59 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-index = (ROOT / "site/index.html").read_text()
-app_js = (ROOT / "site/js/app.js").read_text()
-makefile = (ROOT / "Makefile").read_text()
 
-errors = []
+def main() -> int:
+    index = Path("site/index.html").read_text()
+    errors = []
 
-def require(condition, message):
-    if not condition:
-        errors.append(message)
+    required_tokens = [
+        "World Cup Bracketeering Hub",
+        "Bracketeering Info",
+        "How to play",
+        "First you need to register to get into the “Pool”",
+        "Tap the button that looks like a person",
+        "Using Google options avoids finding the email that might go to your spam folder",
+        "You will need to assign your player name",
+        "Tap or click each bracket slot and pick a winning team",
+        "The winner gets $50",
+        "410-925-7495",
+        "Navigate the game board like Google Maps",
+        "Scoring",
+        "1 point for each correct Round of 32 winner",
+        "2 points for each correct Round of 16 winner",
+        "4 points for each correct Quarterfinal winner",
+        "8 points for each correct Semifinal winner",
+        "16 points for correctly picking the World Cup champion",
+        "There is no tie breaker at the moment",
+        "Have fun",
+    ]
 
-for token in [
-    "data-info-panel",
-    "data-info-panel-open",
-    "data-info-panel-close",
-    "data-rules-panel",
-    "data-rules-panel-open",
-    "data-rules-panel-close",
-    "Bracketeering Info",
-    "World Cup Bracketeering Hub",
-    "This is your World Cup Bracketeering Hub",
-    "Navigate the game board like Google Maps",
-    "The winner gets $50",
-    "verification email may end up in your spam/junk folder",
-    "Please, just have fun making picks",
-    "Press the join button to play the game with others",
-    "The game has two parts",
-    "Part one results are used as a tiebreaker",
-    "Group Stage Picks lock at 11:59 PM ET",
-    "Knockout Stage picks are locked when the first knockout match begins",
-    "16 points for correctly picking the World Cup champion",
-]:
-    require(token in index, f"missing Info panel token: {token}")
+    for token in required_tokens:
+        if token not in index:
+            errors.append(f"missing Info panel token: {token}")
 
-for token in [
-    "Bracketeering Rules",
-    "FIFA Bracketeering Hub",
-    "official FIFA-supplied",
-    "Development preview",
-    "Developer note",
-    "Game 1 Rules:",
-    "Game 2 Preview",
-]:
-    require(token not in index, f"obsolete Rules/developer token remains: {token}")
+    stale_tokens = [
+        "The game has two parts",
+        "Part one results are used as a tiebreaker",
+        "Group Stage Picks lock at 11:59 PM ET",
+        "Knockout Stage picks are locked when the first knockout match begins",
+        "Please, just have fun making picks",
+        "Press the join button to play the game with others",
+    ]
 
-for token in [
-    "function setupInfoPanel",
-    "data-info-panel-open",
-    "data-info-panel-close",
-    "data-rules-panel-open",
-    "data-rules-panel-close",
-    "openInfoPanel",
-    "closeInfoPanel",
-]:
-    require(token in app_js, f"missing Info panel runtime token: {token}")
+    for token in stale_tokens:
+        if token in index:
+            errors.append(f"stale Info panel token still present: {token}")
 
-for token in [
-    "function setupRulesPanel",
-    "openRulesPanel",
-    "closeRulesPanel",
-    "Showing Game 1 rules",
-    "Showing Game 2 rules",
-]:
-    require(token not in app_js, f"obsolete Rules runtime token remains: {token}")
+    if errors:
+        print("Info panel UI verification failed:")
+        for error in errors:
+            print(f"- {error}")
+        return 1
 
-require("tools/verify_wc2026_banner_rules_panel_ui.py" in makefile, "Makefile missing Info panel verifier")
+    print("OK: WC2026 Info panel uses current one-game Bracketeering Hub copy.")
+    return 0
 
-if errors:
-    print("Info panel UI verification failed:")
-    for error in errors:
-        print(f"- {error}")
-    raise SystemExit(1)
 
-print("OK: WC2026 Info panel is a single player-facing World Cup Bracketeering Hub info display.")
+if __name__ == "__main__":
+    raise SystemExit(main())

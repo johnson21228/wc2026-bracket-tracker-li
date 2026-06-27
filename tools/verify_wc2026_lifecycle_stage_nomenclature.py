@@ -41,13 +41,20 @@ def main() -> int:
     if "python3 tools/verify_wc2026_lifecycle_stage_nomenclature.py" not in makefile:
         errors.append("Makefile verify target must run lifecycle stage nomenclature verifier")
 
-    # Player-facing banner/index surface should use stage wording.
-    if "Stage" not in index:
-        errors.append("site/index.html should expose Stage wording for the banner control")
-    if "Group Stage" not in index:
-        errors.append("site/index.html should expose Group Stage label")
-    if "Knockout Stage" not in index:
-        errors.append("site/index.html should expose Knockout Stage label")
+    # Player-facing Info panel now uses one-game Bracketeering copy.
+    if "This is your World Cup Bracketeering Hub." not in index:
+        errors.append("site/index.html should expose current Bracketeering Hub info copy")
+    if "There is no tie breaker at the moment." not in index:
+        errors.append("site/index.html should expose current knockout scoring copy")
+    stale_info_terms = [
+        "The game has two parts",
+        "Group Stage Picks",
+        "Knockout Round Picks",
+        "Group Stage points:",
+    ]
+    for token in stale_info_terms:
+        if token in index:
+            errors.append(f"site/index.html still exposes stale Info panel copy: {token}")
 
     forbidden_index_terms = ["Game selector", "Game View", "DEV GAME VIEW"]
     for token in forbidden_index_terms:

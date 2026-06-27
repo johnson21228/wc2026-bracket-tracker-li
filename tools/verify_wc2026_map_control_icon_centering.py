@@ -25,11 +25,11 @@ def main():
 
     # The player-facing glyphs are now decorative icon spans rather than text nodes.
     for token in [
-        'class="map-icon-glyph map-icon-glyph-plus" aria-hidden="true"',
-        'class="map-icon-glyph map-icon-glyph-minus" aria-hidden="true"',
-        'class="map-icon-glyph map-icon-glyph-info" aria-hidden="true"',
+        'class="map-control-svg" viewBox="0 0 44 44"',
+        'class="map-control-svg" viewBox="0 0 44 44"',
+        'class="map-control-svg map-control-info-svg" viewBox="0 0 44 44"',
     ]:
-        require(token in index, f"missing map icon glyph span: {token}", errors)
+        require(token in index, f"missing map inline SVG glyph: {token}", errors)
 
     forbidden_markup = [
         'aria-label="Zoom in">+</button>',
