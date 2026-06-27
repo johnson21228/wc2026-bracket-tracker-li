@@ -25,3 +25,14 @@ After LockDownTime2, the site must not allow any player-owned bracket pick to be
 Lockdown applies to player-owned picks only.
 
 Admin/site-owned official truth, official R32 occupants, and result updates remain governed by the admin/site-owned truth rules and are outside this player-pick lockdown.
+
+
+## Locked Pick Rendering Contract
+
+Locked picks remain visible exactly as picks. Lockdown does not hide, blank, fade, invalidate, or remove the chosen team.
+
+Lockdown removes edit affordance and blocks changes:
+- the locked pick must not present a normal editable pick menu;
+- the locked pick must not present preselection as an available action;
+- the locked pick write path must reject changes after the applicable lockdown time;
+- site/admin-owned truth and result updates remain outside this player-pick lockdown.

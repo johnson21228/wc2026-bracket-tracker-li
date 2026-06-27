@@ -2671,8 +2671,6 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 .bracket-slot.is-pick-locked,
 [data-pick-locked] {
   cursor: not-allowed;
-  filter: grayscale(.35);
-  opacity: .74;
 }
 
 .pick-slot-button.is-pick-locked::after,
