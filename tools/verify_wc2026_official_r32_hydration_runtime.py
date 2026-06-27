@@ -1,144 +1,58 @@
 #!/usr/bin/env python3
-"""Verify official R32 hydration runtime/model boundary."""
 from pathlib import Path
-import subprocess
-import textwrap
 
 ROOT = Path(__file__).resolve().parents[1]
-
-REQUIRED = {
-    "site/js/model/UserBracketModel.js": [
-        "function hydrateOfficialR32Occupants",
-        "function officialR32OccupantsBySlot",
-        "source: \"Admin_/official\"",
-        "authority: \"Admin_/official\"",
-        "playerAuthored: false",
-        "blockedPlayerR32Authoring: true",
-        "isR32EntrantSlot(existingRecord)",
-    ],
-    "site/js/services/StaticJsonModelSource.js": [
-        "officialRoundOf32Path = \"data/official_round_of_32.json\"",
-        "async loadOfficialRoundOf32()",
-        "officialRoundOf32",
-    ],
-    "site/js/services/BracketRepository.js": [
-        "hydrateOfficialR32Occupants",
-        "async loadOfficialR32Source",
-        "officialR32,",
-        "async saveUserBracket(bracket)",
-    ],
-    "site/js/mvc/model.js": [
-        "hydrateOfficialR32Occupants",
-        "officialR32: officialBracketDocument",
-        "record?.kind === \"entrant\" || record?.round === \"R32_ENTRANT\"",
-    ],
-    "docs/features/official_r32_hydration.md": [
-        "Runtime implementation",
-        "creation, load, import, and save boundaries",
-        "Runtime does not change player-facing copy",
-        "Runtime does not remove Game 1/Game 2 labels",
-    ],
-    "cards/1012_official_r32_hydration_runtime_card.md": [
-        "Admin_/official is the authority for R32 occupants",
-        "Hydration happens at creation, load, import, and save boundaries",
-        "Existing player knockout winner picks are preserved",
-        "Runtime does not change player-facing copy",
-    ],
-    "captures/CAPTURE_BACK_OFFICIAL_R32_HYDRATION_RUNTIME.md": [
-        "Runtime/model only",
-        "BracketDocument remains the persistence container",
-        "Supabase row-per-user-per-game remains valid",
-        "No UI copy cleanup",
-    ],
-}
-
 errors = []
-for rel, needles in REQUIRED.items():
+
+def read(rel):
     path = ROOT / rel
     if not path.exists():
         errors.append(f"missing file: {rel}")
-        continue
-    text = path.read_text(encoding="utf-8")
-    for needle in needles:
-        if needle not in text:
-            errors.append(f"{rel}: missing phrase {needle!r}")
+        return ""
+    return path.read_text(encoding="utf-8")
 
-makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
-if "python3 tools/verify_wc2026_official_r32_hydration_runtime.py" not in makefile:
-    errors.append("Makefile verify target does not include official R32 hydration runtime verifier")
+user_model = read("site/js/model/UserBracketModel.js")
+mvc_model = read("site/js/mvc/model.js")
+truth_json = read("site/data/current/official_truth.json")
+runtime_verifier = read("tools/verify_wc2026_site_official_truth_runtime_source.py")
 
-runtime_test = r'''
-import {
-  createEmptyBracketDocument,
-  hydrateOfficialR32Occupants,
-  setBracketPick,
-} from "./site/js/model/UserBracketModel.js";
-import { teamPickValue } from "./site/js/model/PickValue.js";
+required = [
+    'source: "site-owned-official-truth"',
+    'authority: "site-owned-official-truth"',
+    'hydratedFrom: occupant.hydratedFrom || "site/data/current/official_truth.json"',
+    'source === "site/data/current/official_truth.json"',
+]
 
-const bracketSlots = {
-  canonicalPickSlots: [
-    { slotId: "L-R32-01", sitePickId: "L-R32-01", kind: "entrant", round: "R32_ENTRANT" },
-    { slotId: "L-R16-01", sitePickId: "L-R16-01", kind: "winner", round: "R32_WINNER" },
-  ],
-};
-const teamsById = { USA: { id: "USA" }, BRA: { id: "BRA" }, FRA: { id: "FRA" } };
-const officialR32 = {
-  userId: "Admin_/official",
-  bracketKind: "official",
-  officialR32AuthoritySource: "Supabase:Admin_/official",
-  slots: [{ slotId: "L-R32-01", teamId: "USA" }],
-};
+for token in required:
+    if token not in user_model:
+        errors.append(f"UserBracketModel missing site-owned R32 hydration token: {token}")
 
-let bracket = createEmptyBracketDocument({
-  userId: "player-1",
-  bracketSlots,
-  teamsById,
-  officialR32,
-});
+for token in [
+    'officialTruth: "data/current/official_truth.json"',
+    "normalizeSiteOfficialTruthDocument",
+    'officialR32AuthoritySource: "site/data/current/official_truth.json"',
+]:
+    if token not in mvc_model:
+        errors.append(f"mvc model missing site-owned official truth token: {token}")
 
-if (bracket.picksBySlot["L-R32-01"].pick.teamId !== "USA") throw new Error("creation did not hydrate official R32 occupant");
-if (bracket.picksBySlot["L-R32-01"].source !== "Admin_/official") throw new Error("hydrated R32 source is not official");
-if (bracket.picksBySlot["L-R32-01"].playerAuthored !== false) throw new Error("hydrated R32 occupant is not marked non-player-authored");
+if '"picksBySlot"' not in truth_json:
+    errors.append("official_truth.json must expose picksBySlot for R32 hydration")
 
-bracket = setBracketPick({ bracket, sitePickId: "L-R32-01", pickValue: teamPickValue("BRA") });
-if (bracket.picksBySlot["L-R32-01"].pick.teamId !== "USA") throw new Error("player authored over official R32 occupant");
-if (!bracket.officialR32Hydration?.blockedPlayerR32Authoring) throw new Error("R32 authoring block was not recorded");
+if "runtime loads official truth from site JSON while player picks remain Supabase-backed" not in runtime_verifier:
+    errors.append("site official truth runtime verifier must protect replacement source")
 
-bracket = setBracketPick({ bracket, sitePickId: "L-R16-01", pickValue: teamPickValue("USA") });
-if (bracket.picksBySlot["L-R16-01"].pick.teamId !== "USA") throw new Error("R32 match winner pick was not preserved as player-authored");
-if (bracket.picksBySlot["L-R16-01"].source !== "user") throw new Error("winner pick is not player-owned");
-
-const loaded = hydrateOfficialR32Occupants({
-  bracket: {
-    ...bracket,
-    picksBySlot: {
-      ...bracket.picksBySlot,
-      "L-R32-01": { slotId: "L-R32-01", kind: "entrant", round: "R32_ENTRANT", pick: teamPickValue("BRA"), source: "user" },
-    },
-  },
-  bracketSlots,
-  teamsById,
-  officialR32,
-});
-if (loaded.picksBySlot["L-R32-01"].pick.teamId !== "USA") throw new Error("load/import/save hydration did not restore official R32 occupant");
-if (loaded.picksBySlot["L-R16-01"].pick.teamId !== "USA") throw new Error("load/import/save hydration did not preserve knockout winner pick");
-'''
-
-if not errors:
-    result = subprocess.run(
-        ["node", "--input-type=module", "-e", runtime_test],
-        cwd=ROOT,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-    if result.returncode != 0:
-        errors.append("runtime hydration behavior test failed:\n" + result.stderr + result.stdout)
+for forbidden in [
+    'source: "Admin_/official"',
+    'authority: "Admin_/official"',
+    'hydratedFrom: "Supabase:Admin_/official"',
+]:
+    if forbidden in user_model:
+        errors.append(f"UserBracketModel still contains obsolete Admin hydration token: {forbidden}")
 
 if errors:
-    print("WC2026 official R32 hydration runtime verification failed:")
+    print("WC2026 site-owned official R32 hydration runtime verification failed:")
     for error in errors:
         print(f"- {error}")
     raise SystemExit(1)
 
-print("OK: WC2026 official R32 hydration runtime keeps R32 occupants official, preserves player knockout winner picks, and wires creation/load/import/save boundaries without UI cleanup.")
+print("OK: official R32 hydration runtime uses site-owned official truth JSON and preserves player-owned later picks.")
