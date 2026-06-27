@@ -40,3 +40,21 @@ if errors:
     raise SystemExit(1)
 
 print("OK: resolved R32 cells open their team group panel without restoring R32 pick editing.")
+
+
+# R32 group-panel shortcut must be a real tap/preselect target without restoring R32 pick editing.
+view = (ROOT / "site/js/mvc/view.js").read_text()
+shortcut_checks = {
+    'function teamGroupShortcutId(team)': "must derive group shortcut through helper",
+    'team?.group || team?.groupId || team?.groupName || team?.pool': "must tolerate multiple team group field names",
+    'const r32GroupShortcutId = isR32Slot && displayTeam ? teamGroupShortcutId(displayTeam) : "";': "R32 shortcut must derive from rendered team",
+    'const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display && !r32GroupShortcutId;': "R32 shortcut must keep resolved R32 button enabled",
+    'button.classList.add("has-r32-group-shortcut")': "R32 shortcut class must be present",
+    'button.dataset.r32GroupShortcut = r32GroupShortcutId;': "R32 group id dataset must be present",
+    'handlers.onGroupPanelOpen?.(r32GroupShortcutId);': "R32 shortcut must open group panel",
+    'if ((slot.pickable || r32GroupShortcutId) && !pickInteractionSuppressed) button.classList.add("is-pickable");': "R32 shortcut must get pickable/preselect visual affordance",
+}
+for token, message in shortcut_checks.items():
+    require(token in view, message)
+require('handlers.onSlotClick?.(slot.slotId)' in view, "normal non-R32 pick editing path must remain")
+require('if (r32GroupShortcutId)' in view, "R32 shortcut must branch before normal slot click")

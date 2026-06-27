@@ -550,6 +550,13 @@ export function createBracketView(root) {
     return `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id || ""}`.trim();
   }
 
+  function teamGroupShortcutId(team) {
+    const raw = team?.group || team?.groupId || team?.groupName || team?.pool || "";
+    const value = String(raw || "").trim();
+    if (!value) return "";
+    return value.replace(/^Group\s+/i, "").toUpperCase();
+  }
+
   function renderSlots(slotModels) {
     const layer = boardPlane.querySelector("[data-pick-layer]");
     layer.innerHTML = "";
@@ -570,7 +577,7 @@ export function createBracketView(root) {
       const game2ResolvedR32Display = isGame2ResolvedR32Display(slot, displayTeam);
       const readOnlyGame2R32Display = game2ResolvedR32Display;
       const isR32Slot = slot.round === "R32" || String(slot.slotId || "").toUpperCase().startsWith("R32");
-      const r32GroupShortcutId = isR32Slot && displayTeam?.group ? String(displayTeam.group).replace(/^Group\s+/i, "").toUpperCase() : "";
+      const r32GroupShortcutId = isR32Slot && displayTeam ? teamGroupShortcutId(displayTeam) : "";
       const r32GroupShortcutLabel = r32GroupShortcutId ? `Group ${r32GroupShortcutId}` : "";
       const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display && !r32GroupShortcutId;
       button.disabled = disabledByPickability || pickInteractionSuppressed;
@@ -707,7 +714,7 @@ export function createBracketView(root) {
         button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
         button.setAttribute("aria-label", `${slot.label}: invalid pick. ${button.title}`);
       }
-      if (slot.pickable && !pickInteractionSuppressed) button.classList.add("is-pickable");
+      if ((slot.pickable || r32GroupShortcutId) && !pickInteractionSuppressed) button.classList.add("is-pickable");
       if (!enabledByPrecedent) {
         button.classList.add("is-waiting-for-precedent");
         button.title = precedentUnavailableReason;
