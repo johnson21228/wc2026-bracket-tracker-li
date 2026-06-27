@@ -35,24 +35,126 @@ function isR32EntrantRecord(slotId, record) {
   return round === "R32" || round === "R32_ENTRANT" || kind === "entrant" || /^L-R32-|^R-R32-/i.test(String(slotId || ""));
 }
 
+function paddedSlotNumber(value) {
+  return String(value).padStart(2, "0");
+}
+
+function feederSlotIdsForSlot(slotId) {
+  const id = String(slotId || "").toUpperCase();
+
+  let match = id.match(/^([LR])-R16-(\d{2})$/);
+  if (match) {
+    const side = match[1];
+    const index = Number(match[2]);
+    return [
+      `${side}-R32-${paddedSlotNumber(index * 2 - 1)}`,
+      `${side}-R32-${paddedSlotNumber(index * 2)}`,
+    ];
+  }
+
+  match = id.match(/^([LR])-QF-(\d{2})$/);
+  if (match) {
+    const side = match[1];
+    const index = Number(match[2]);
+    return [
+      `${side}-R16-${paddedSlotNumber(index * 2 - 1)}`,
+      `${side}-R16-${paddedSlotNumber(index * 2)}`,
+    ];
+  }
+
+  match = id.match(/^([LR])-SF-(\d{2})$/);
+  if (match) {
+    const side = match[1];
+    const index = Number(match[2]);
+    return [
+      `${side}-QF-${paddedSlotNumber(index * 2 - 1)}`,
+      `${side}-QF-${paddedSlotNumber(index * 2)}`,
+    ];
+  }
+
+  if (id === "FINAL-LEFT") return ["L-SF-01", "L-SF-02"];
+  if (id === "FINAL-RIGHT") return ["R-SF-01", "R-SF-02"];
+  if (id === "CHAMPION") return ["FINAL-LEFT", "FINAL-RIGHT"];
+
+  return [];
+}
+
+function scoreWeightForSlot(slotId) {
+  const id = String(slotId || "").toUpperCase();
+
+  if (/^[LR]-R16-\d{2}$/.test(id)) return 1;
+  if (/^[LR]-QF-\d{2}$/.test(id)) return 2;
+  if (/^[LR]-SF-\d{2}$/.test(id)) return 4;
+  if (id === "FINAL-LEFT" || id === "FINAL-RIGHT") return 8;
+  if (id === "CHAMPION") return 16;
+
+  return 0;
+}
+
+function scoringSlotIds(playerPicksBySlot, officialTruthPicksBySlot) {
+  return Array.from(new Set([
+    ...Object.keys(playerPicksBySlot || {}),
+    ...Object.keys(officialTruthPicksBySlot || {}),
+  ])).filter((slotId) => scoreWeightForSlot(slotId) > 0);
+}
+
+function canTeamStillReachSlot(teamId, slotId, officialTruthPicksBySlot, visiting = new Set()) {
+  const candidateTeamId = String(teamId || "").trim();
+  const currentSlotId = String(slotId || "").toUpperCase();
+
+  if (!candidateTeamId || !currentSlotId) return false;
+  if (visiting.has(currentSlotId)) return false;
+
+  const officialTeamId = pickTeamIdFromRecord(officialTruthPicksBySlot?.[currentSlotId]);
+  if (officialTeamId) return officialTeamId === candidateTeamId;
+
+  const feederSlotIds = feederSlotIdsForSlot(currentSlotId);
+  if (!feederSlotIds.length) return true;
+
+  const nextVisiting = new Set(visiting);
+  nextVisiting.add(currentSlotId);
+
+  return feederSlotIds.some((feederSlotId) => (
+    canTeamStillReachSlot(candidateTeamId, feederSlotId, officialTruthPicksBySlot, nextVisiting)
+  ));
+}
+
 function scoreAgainstAdminOfficialTruth(playerPicksBySlot, officialTruthPicksBySlot) {
-  let knockoutPoints = 0;
+  let score = 0;
+  let maxPossible = 0;
   let scoredOfficialSlots = 0;
 
-  for (const [slotId, officialRecord] of Object.entries(officialTruthPicksBySlot || {})) {
+  for (const slotId of scoringSlotIds(playerPicksBySlot, officialTruthPicksBySlot)) {
+    const officialRecord = officialTruthPicksBySlot?.[slotId];
     if (isR32EntrantRecord(slotId, officialRecord)) continue;
+
+    const weight = scoreWeightForSlot(slotId);
     const officialTeamId = pickTeamIdFromRecord(officialRecord);
-    if (!officialTeamId) continue;
-    scoredOfficialSlots += 1;
     const playerTeamId = pickTeamIdFromRecord(playerPicksBySlot?.[slotId]);
-    if (playerTeamId && playerTeamId === officialTeamId) knockoutPoints += 1;
+
+    if (officialTeamId) scoredOfficialSlots += 1;
+    if (!playerTeamId) continue;
+
+    if (officialTeamId) {
+      if (playerTeamId === officialTeamId) {
+        score += weight;
+        maxPossible += weight;
+      }
+      continue;
+    }
+
+    if (canTeamStillReachSlot(playerTeamId, slotId, officialTruthPicksBySlot)) {
+      maxPossible += weight;
+    }
   }
 
   return {
-    groupPoints: 0,
-    knockoutPoints,
+    score,
+    maxPossible,
+    groupPoints: score,
+    knockoutPoints: maxPossible,
     scoredOfficialSlots,
-    total: knockoutPoints,
+    total: score,
   };
 }
 
@@ -93,6 +195,8 @@ function normalizeBracketRow(row, profileByUserId, officialTruth = null) {
     publicPlayerName: publicPlayerNameFor({ profile, userId }),
     picksBySlot,
     picksCount,
+    score: score.score,
+    maxPossible: score.maxPossible,
     groupPoints: score.groupPoints,
     knockoutPoints: score.knockoutPoints,
     tiebreakerScore: score.scoredOfficialSlots,
