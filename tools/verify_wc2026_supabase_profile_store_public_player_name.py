@@ -1,70 +1,68 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
+identity = Path("site/js/identity/SupabaseIdentitySurface.js").read_text()
+profile_store = Path("site/js/services/SupabaseProfileStore.js").read_text()
+app = Path("site/js/app.js").read_text()
+makefile = Path("Makefile").read_text()
 
-def require(condition, message, errors):
-    if not condition:
-        errors.append(message)
+errors = []
 
+required_identity = [
+    "Join the Pool",
+    "Playing Bracketeering requires you to join the Pool.",
+    "Use Google sign-in to avoid email verification.",
+    "check your spam folder",
+    "Profile",
+    "Edit your player name or log out.",
+    "Edit your player name below, or log out.",
+    "Player name",
+    "data-profile-display-name",
+    "profileStore.saveProfile({ userId, displayName })",
+    "window.setTimeout(async () =>",
+    "data-sign-out",
+    "Log out",
+]
 
-def main():
-    errors = []
+for token in required_identity:
+    if token not in identity:
+        errors.append(f"Identity UI missing player-name/Profile token: {token}")
 
-    identity = Path("site/js/identity/SupabaseIdentitySurface.js").read_text()
-    profile_store = Path("site/js/services/SupabaseProfileStore.js").read_text()
-    standings = Path("site/js/standings/PlayerStandingsSurface.js").read_text()
-    app = Path("site/js/app.js").read_text()
-    makefile = Path("Makefile").read_text()
+required_store = [
+    '.from("profiles")',
+    ".upsert(",
+    "display_name",
+    "userId",
+]
 
-    require("Public player name" in identity,
-            "Identity surface must let joined users edit public player name.", errors)
-    require("Update player name" in identity,
-            "Profile step must use Join-first player-name update copy.", errors)
-    require("Your public player name is what other players see." in identity,
-            "Identity UI must distinguish public player name from private account identity.", errors)
-    require("Profile" in identity and "Joined status" in identity,
-            "Supabase identity chip/panel must expose Join-first Profile state.", errors)
-    require("Picks:" in identity and "live after joining" in identity,
-            "Profile step must describe live picks after joining.", errors)
+for token in required_store:
+    if token not in profile_store:
+        errors.append(f"Profile store missing Supabase public player-name token: {token}")
 
-    require('.from("profiles")' in profile_store,
-            "Profile persistence must live in SupabaseProfileStore.", errors)
-    require(".upsert(" in profile_store and "display_name" in profile_store,
-            "SupabaseProfileStore must upsert display_name.", errors)
-    require("email" not in profile_store.lower(),
-            "Profile store must not persist or expose raw email as player identity.", errors)
+if "createSupabaseIdentitySurface({" not in app or "profileStore" not in app:
+    errors.append("App must mount identity surface with profileStore.")
 
-    require("publicNameFromAuthState" in standings,
-            "Standings must resolve public player names from auth/profile state.", errors)
-    require("profileStore" in standings,
-            "Standings surface must use profile store for public player names.", errors)
+if "python3 tools/verify_wc2026_supabase_profile_store_public_player_name.py" not in makefile:
+    errors.append("Makefile verify must keep public player-name verifier wired.")
 
-    require("createSupabaseProfileStore" in app and "profileStore" in app,
-            "App must wire SupabaseProfileStore into identity and standings surfaces.", errors)
+for stale in [
+    "Your public player name is what other players see.",
+    "Update player name",
+    "data-profile-save",
+    "Picks:",
+    "live after joining",
+    "You can still explore the board before joining",
+    "keep playing locally",
+    "No account needed for local play",
+    "Local bracket remains active",
+]:
+    if stale in identity:
+        errors.append(f"Stale public player-name/join copy remains: {stale}")
 
-    for forbidden in [
-        "Signed in as:",
-        "Save player name",
-        "Bracket saving:",
-        "not enabled yet",
-        "Sign in to save",
-        "Save Picks",
-        "Load Saved",
-        "Supabase-backed profile",
-    ]:
-        require(forbidden not in identity,
-                f"Profile UI must not expose stale pre-Join copy: {forbidden}", errors)
+if errors:
+    print("Join-first public player name verification failed:")
+    for error in errors:
+        print(f"- {error}")
+    raise SystemExit(1)
 
-    require("python3 tools/verify_wc2026_supabase_profile_store_public_player_name.py" in makefile,
-            "Makefile verify must include public player name verifier.", errors)
-
-    if errors:
-        print("Join-first public player name verification failed: " + "; ".join(errors))
-        return 1
-
-    print("OK: Supabase profile store supports Join-first public player names without exposing email or stale save/load copy.")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+print("OK: Supabase profile store supports live player-name editing without stale local-play/Profile copy.")

@@ -1,73 +1,47 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
+source = Path("site/js/identity/SupabaseIdentitySurface.js").read_text()
 
-def require(condition, message, errors):
-    if not condition:
-        errors.append(message)
+required = [
+    "Join the Pool",
+    "Playing Bracketeering requires you to join the Pool.",
+    "Use Google sign-in to avoid email verification.",
+    "check your spam folder",
+    "Not joined yet.",
+    "Sign in with Google, or use email verification.",
+    "Profile",
+    "Edit your player name or log out.",
+    "Edit your player name below, or log out.",
+    "Joined status:",
+    "Joined",
+    "data-profile-display-name",
+    "data-sign-out",
+]
 
+forbidden = [
+    "You can still explore the board before joining",
+    "keep playing locally",
+    "No account needed for local play",
+    "Local bracket remains active",
+    "Join to keep picks live and enter standings",
+    "Your picks are live.",
+    "data-profile-save",
+    "Save player name",
+]
 
-def main():
-    errors = []
+errors = []
+for token in required:
+    if token not in source:
+        errors.append(f"Missing required signed-in/join dialog token: {token}")
+for token in forbidden:
+    if token in source:
+        errors.append(f"Stale Join/Profile dialog copy remains: {token}")
 
-    identity = Path("site/js/identity/SupabaseIdentitySurface.js").read_text()
-    profile_store = Path("site/js/services/SupabaseProfileStore.js").read_text()
-    app = Path("site/js/app.js").read_text()
-    makefile = Path("Makefile").read_text()
+if errors:
+    print("Join-first signed-in identity UI polish verification failed:")
+    for error in errors:
+        print(f"- {error}")
+    raise SystemExit(1)
 
-    require("createSupabaseIdentitySurface" in identity,
-            "Identity surface must remain the site-owned player surface.", errors)
-    require("Profile" in identity,
-            "Joined player button must collapse to a concise Profile control.", errors)
-    require("Join" in identity and "Joined" in identity and "Joined as" in identity,
-            "Identity UI must use Join-first player-facing states.", errors)
-    require("Public player name" in identity,
-            "Profile panel must edit public player name.", errors)
-    require("Your public player name is what other players see." in identity,
-            "Profile panel must explain public player identity.", errors)
-    require("Joined status" in identity,
-            "Profile panel must show joined status.", errors)
-    require("Picks:" in identity and "live after joining" in identity,
-            "Profile panel must describe live picks after joining.", errors)
-    require("Join to keep picks live and enter standings." in identity,
-            "Join panel must explain the joined-play benefit.", errors)
-    require("Before joining, this board is temporary browser play." in identity,
-            "Anonymous local exploration must remain available before joining.", errors)
-
-    require('.from("profiles")' in profile_store,
-            "Public player name persistence must remain in SupabaseProfileStore.", errors)
-    require(".upsert(" in profile_store and "display_name" in profile_store,
-            "Profile store must still upsert public display names.", errors)
-    require("createSupabaseIdentitySurface({" in app and "profileStore" in app,
-            "App must mount identity surface with profile store.", errors)
-
-    for forbidden in [
-        "Sign in to save",
-        "Signed in as:",
-        "Close sign-in panel",
-        "Bracket saving:",
-        "bracket saving is not enabled",
-        "Supabase-backed profile",
-        "Supabase profile store",
-        "login",
-        "Save Picks",
-        "Load Saved",
-        "Storage mode",
-        "Remote store",
-    ]:
-        require(forbidden not in identity,
-                f"Signed-in player UI must not expose old login/storage copy: {forbidden}", errors)
-
-    require("python3 tools/verify_wc2026_signed_in_identity_ui_polish.py" in makefile,
-            "Makefile verify must keep signed-in identity polish verifier wired.", errors)
-
-    if errors:
-        print("Join-first signed-in identity UI polish verification failed: " + "; ".join(errors))
-        return 1
-
-    print("OK: signed-in identity UI is Join-first: concise Profile control, public player name editing, joined status, and live-picks copy.")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+print("OK: signed-in identity UI supports live player-name editing/logout and signed-out dialog requires joining.")

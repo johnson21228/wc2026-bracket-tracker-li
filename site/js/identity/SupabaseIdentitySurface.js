@@ -115,6 +115,8 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
   let cooldownTimer = null;
   let profileState = { status: "idle", profile: null, message: "" };
   let profileLoadUserId = "";
+  let profileLiveSaveTimer = null;
+  let profileLiveSaveDraft = "";
 
   function escapeHtml(value) {
     return String(value || "")
@@ -196,12 +198,12 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
       return `<p class="identity-panel-error">${escapeHtml(profileState.message || "Could not load public player name.")}</p>`;
     }
     if (profileState.status === "saved") {
-      return `<p>${escapeHtml(profileState.message || "Public player name saved.")}</p>`;
+      return `<p>${escapeHtml(profileState.message || "Player name saved.")}</p>`;
     }
     if (profileDisplayName()) {
-      return `<p>This is the public player name other players may see later.</p>`;
+      return `<p>Player name saves automatically.</p>`;
     }
-    return `<p>Choose a public player name. Do not use your private email as your player name.</p>`;
+    return `<p>Type your player name. Edits save automatically.</p>`;
   }
 
   async function loadProfileForState(state) {
@@ -251,15 +253,15 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
           <div class="identity-panel-header">
             <div>
               <p class="identity-kicker">Bracketeering player</p>
-              <h2 id="supabase-identity-panel-title">${isSignedIn ? "Profile" : "Join Bracketeering Hub"}</h2>
+              <h2 id="supabase-identity-panel-title">${isSignedIn ? "Profile" : "Join the Pool"}</h2>
             </div>
             <button type="button" class="identity-panel-close" data-identity-panel-close aria-label="Close player panel">×</button>
           </div>
-          <p class="identity-panel-intro">${isSignedIn ? "Edit your public player name." : "Join to keep picks live and enter standings. You can still explore the board before joining. Continue with Google, email yourself a sign-in link, or keep playing locally on this browser."}</p>
-          <p class="identity-local-note">${isSignedIn ? "Your picks are live." : "Before joining, this board is temporary browser play. No account needed for local play. Your picks are saved only on this browser until you join."}</p>
+          <p class="identity-panel-intro">${isSignedIn ? "Edit your player name or log out." : "Playing Bracketeering requires you to join the Pool."}</p>
+          <p class="identity-local-note">${isSignedIn ? "Edit your player name below, or log out." : "Use Google sign-in to avoid email verification. If you use email, check your spam folder if the sign-in link does not appear in your inbox."}</p>
           <div class="identity-panel-state" data-auth-state="${escapeHtml(state.status)}">
-            <strong>${escapeHtml(statusLabel(state))}</strong>
-            <span>${escapeHtml(panelMessage(state))}</span>
+            <strong>${escapeHtml(isSignedIn ? "Joined status:" : "Not joined yet.")}</strong>
+            <span>${escapeHtml(isSignedIn ? "Joined" : "Sign in with Google, or use email verification.")}</span>
           </div>
           <div class="identity-panel-actions"></div>
         </section>
@@ -291,62 +293,43 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
     }
 
     if (isSignedIn) {
-      const signedInDetails = document.createElement("div");
-      signedInDetails.className = "identity-panel-signed-in-details";
-      signedInDetails.innerHTML = `
-        <p><strong>Joined status:</strong> Joined</p>
-        <p>Your public player name is what other players see.</p>
-        <div class="identity-panel-profile">
-          <label for="identity-public-player-name"><strong>Public player name</strong></label>
-          <input
-            id="identity-public-player-name"
-            type="text"
-            maxlength="40"
-            autocomplete="nickname"
-            placeholder="Example: Steve"
-            value="${escapeHtml(profileDisplayName())}"
-            ${profileState.status === "loading" || profileState.status === "saving" ? "disabled" : ""}
-          />
-          <button type="button" class="identity-panel-primary-button" data-profile-save ${profileState.status === "loading" || profileState.status === "saving" ? "disabled" : ""}>
-            Update player name
-          </button>
+      profileLiveSaveDraft = profileDisplayName();
+      actions.innerHTML = `
+        <div class="identity-profile-fields">
+          <label for="supabase-profile-display-name">Player name</label>
+          <input id="supabase-profile-display-name" type="text" autocomplete="nickname" data-profile-display-name value="${escapeHtml(profileDisplayName())}" placeholder="Player name">
           ${profileMessageHtml()}
         </div>
-        <p><strong>Picks:</strong> live after joining.</p>
+        <button type="button" data-sign-out>Log out</button>
       `;
-      actions.append(signedInDetails);
 
-      actions.querySelector("[data-profile-save]")?.addEventListener("click", async () => {
-        const userId = signedInUserId(latestState);
-        const displayName = actions.querySelector("#identity-public-player-name")?.value || "";
+      const input = actions.querySelector("[data-profile-display-name]");
+      input?.addEventListener("input", (event) => {
+        profileLiveSaveDraft = event.target.value || "";
+        if (profileLiveSaveTimer) {
+          clearTimeout(profileLiveSaveTimer);
+        }
+        profileLiveSaveTimer = window.setTimeout(async () => {
+          profileLiveSaveTimer = null;
+          const userId = signedInUserId(latestState);
+          const displayName = profileLiveSaveDraft.trim();
+          if (!profileStore || !userId) return;
 
-        if (!profileStore) {
-          profileState = { status: "error", profile: null, message: "Player profile is not available yet." };
+          const previousProfile = profileState.profile;
+          const { profile, error } = await profileStore.saveProfile({ userId, displayName });
+          if (signedInUserId(latestState) !== userId) return;
+
+          if (error) {
+            profileState = { status: "error", profile: previousProfile, message: `Player name save failed: ${error.message || String(error)}` };
+          } else {
+            profileState = { status: "saved", profile, message: "Player name saved." };
+          }
           render(latestState);
-          return;
-        }
-
-        profileState = { ...profileState, status: "saving", message: "Updating public player name…" };
-        render(latestState);
-
-        const { profile, error } = await profileStore.saveProfile({ userId, displayName });
-        if (error) {
-          profileState = { status: "error", profile: profileState.profile, message: `Player name update failed: ${error.message || String(error)}` };
-        } else {
-          profileState = { status: "saved", profile, message: "Player name updated." };
-        }
-        render(latestState);
+        }, 550);
       });
 
-      const signOutButton = document.createElement("button");
-      signOutButton.type = "button";
-      signOutButton.className = "identity-panel-primary-button";
-      signOutButton.textContent = "Leave joined session";
-      signOutButton.addEventListener("click", () => authService.signOut());
-      actions.append(signOutButton);
-
-      scheduleCooldownTick();
-      loadProfileForState(latestState);
+      const signOutButton = actions.querySelector("[data-sign-out]");
+      signOutButton?.addEventListener("click", () => authService.signOut());
       return;
     }
 
