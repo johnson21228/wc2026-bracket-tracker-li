@@ -3,6 +3,8 @@ import { SupabaseBracketStore } from "../services/SupabaseBracketStore.js";
 const ACCOUNT_SAVE_STATE_ATTRIBUTE = "data-account-save-state";
 const ACCOUNT_PICKS_LOADED_EVENT = "wc2026:account-picks-loaded";
 const AUTOSAVE_DELAY_MS = 650;
+const JOINED_PICKS_LOADED_MESSAGE = "Your picks have been loaded.";
+const NOT_JOINED_STARTUP_MESSAGE = "Playing Bracketeering requires you to join the pool. Tap the button with the person icon to join. Tap the button with the “i” to get information about playing the game.";
 
 function pickFingerprintFromDocument(bracketDocument) {
   const picksBySlot = bracketDocument?.picksBySlot || {};
@@ -45,7 +47,7 @@ function renderConflict(root, { onUseSaved, onKeepBoard }) {
   element.setAttribute(ACCOUNT_SAVE_STATE_ATTRIBUTE, "conflict");
   conflict.hidden = false;
   conflict.innerHTML = `
-    <p>Your saved joined bracket was loaded. Local draft picks are ignored for joined play.</p>
+    <p>${JOINED_PICKS_LOADED_MESSAGE}</p>
     <div class="join-live-picks-conflict-actions">
       <button type="button" data-use-saved-picks>Continue</button>
     </div>
@@ -176,7 +178,7 @@ function createAccountSaveActionSurface({
       lastJoinedPickFingerprint = "";
       conflictActive = false;
       clearConflict(root);
-      renderStatus(root, "not-joined", "");
+      renderStatus(root, "not-joined", NOT_JOINED_STARTUP_MESSAGE);
       return;
     }
 

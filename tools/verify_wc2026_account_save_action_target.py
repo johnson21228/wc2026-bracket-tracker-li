@@ -8,8 +8,10 @@ if "Keep this board" in source:
     errors.append("Joined play must not preserve local board picks.")
 if "Use saved picks" in source:
     errors.append("Old Use saved picks label must not remain.")
-if "Local draft picks are ignored for joined play" not in source:
-    errors.append("Joined-play message must explain local draft picks are ignored.")
+if "Your picks have been loaded." not in source:
+    errors.append("Joined-play message must use simple player-facing loaded-picks copy.")
+if "Local draft picks are ignored for joined play" in source:
+    errors.append("Joined-play message must not expose local draft technical language.")
 
 if errors:
     raise SystemExit("\n".join(errors))

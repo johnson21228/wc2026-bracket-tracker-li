@@ -130,6 +130,7 @@ verify:
 	python3 tools/verify_wc2026_supabase_profiles_and_bracket_saving_target.py
 	python3 tools/verify_wc2026_supabase_identity_ui_surface.py
 	python3 tools/verify_wc2026_supabase_auth_identity_surface_before_postgres.py
+	python3 tools/verify_wc2026_not_joined_startup_guidance.py
 	python3 tools/verify_wc2026_signed_in_identity_ui_polish.py
 	python3 tools/verify_wc2026_supabase_profile_store_public_player_name.py
 	python3 tools/verify_wc2026_supabase_bracket_store_seam.py

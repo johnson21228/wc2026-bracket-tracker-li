@@ -7,8 +7,10 @@ store = Path("site/js/services/SupabaseBracketStore.js").read_text()
 errors = []
 if "Keep this board" in account or "Use saved picks" in account:
     errors.append("Joined-player local/saved conflict path must not remain.")
-if "Local draft picks are ignored for joined play" not in account:
-    errors.append("Joined-player surface must declare local draft picks ignored.")
+if "Your picks have been loaded." not in account:
+    errors.append("Joined-player surface must use simple player-facing loaded-picks copy.")
+if "Local draft picks are ignored for joined play" in account:
+    errors.append("Joined-player surface must not expose local draft technical language.")
 if "loadUserBracket" not in store:
     errors.append("SupabaseBracketStore must load joined saved bracket.")
 

@@ -12,8 +12,10 @@ for stale in [
     if stale in source:
         errors.append(f"Stale joined-player conflict UI remains: {stale}")
 
-if "Local draft picks are ignored for joined play" not in source:
-    errors.append("Joined-first UI must say local draft picks are ignored for joined play.")
+if "Your picks have been loaded." not in source:
+    errors.append("Joined-first UI must use simple player-facing loaded-picks copy.")
+if "Local draft picks are ignored for joined play" in source:
+    errors.append("Joined-first UI must not expose local draft technical language.")
 
 if errors:
     raise SystemExit("\n".join(errors))
