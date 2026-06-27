@@ -2614,3 +2614,9 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+.unpicked-cell-label.is-tbd {
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  opacity: 0.72;
+}

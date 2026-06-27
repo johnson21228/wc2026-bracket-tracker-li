@@ -151,7 +151,7 @@ export function createBracketView(root) {
 
   function emptyPickLabelForSlot(slotId) {
     const normalizedSlotId = String(slotId || "").toUpperCase();
-    return normalizedSlotId.startsWith("R32") ? "" : "Choose Winner";
+    return normalizedSlotId.startsWith("R32") ? "TBD" : "Choose Winner";
   }
 
   function updateEmptyPickLabels() {
@@ -632,9 +632,11 @@ export function createBracketView(root) {
             value.append(identity);
           }
         } else {
+          const unpickedText = unpickedSlotDisplayText(slot);
           const unpickedLabel = document.createElement("span");
           unpickedLabel.className = "unpicked-cell-label";
-          unpickedLabel.textContent = unpickedSlotDisplayText(slot);
+          unpickedLabel.textContent = unpickedText;
+          if (unpickedText === "TBD") unpickedLabel.classList.add("is-tbd");
           value.append(unpickedLabel);
         }
 
@@ -816,7 +818,7 @@ export function createBracketView(root) {
     const round = String(slot?.round || "").toUpperCase();
     const slotId = String(slot?.slotId || "").toUpperCase();
 
-    if (round === "R32" || slotId.startsWith("R32")) return "";
+    if (round === "R32" || slotId.startsWith("R32")) return "TBD";
 
     return "Choose Winner";
   }
