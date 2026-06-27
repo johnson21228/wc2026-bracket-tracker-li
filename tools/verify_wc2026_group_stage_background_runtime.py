@@ -23,16 +23,18 @@ require_file("site/assets/board/knockout_pub_background.jpeg")
 index = text("site/index.html")
 view = text("site/js/mvc/view.js")
 
-require("site/index.html", 'href="assets/board/pub_background_game1.jpeg"')
-require("site/js/mvc/view.js", 'src="assets/board/pub_background_game1.jpeg"')
+require("site/index.html", 'href="assets/board/knockout_pub_background.jpeg"')
+require("site/js/mvc/view.js", 'src="assets/board/knockout_pub_background.jpeg"')
 
-if 'href="assets/board/knockout_pub_background.jpeg"' in index:
-    raise SystemExit("site/index.html still preloads the knockout pub background as the active runtime image")
-if 'src="assets/board/knockout_pub_background.jpeg"' in view:
-    raise SystemExit("site/js/mvc/view.js still renders the knockout pub background as the active runtime image")
+# Superseded: knockout pub background is now intentionally the active runtime image.
+if 'href="assets/board/knockout_pub_background.jpeg"' not in index:
+    raise SystemExit("site/index.html must preload the knockout pub background as the active runtime image")
+# Superseded: knockout pub background is now intentionally rendered by the board view.
+if 'src="assets/board/knockout_pub_background.jpeg"' not in view:
+    raise SystemExit("site/js/mvc/view.js must render the knockout pub background as the active runtime image")
 
 if (ROOT / "site/js/services/assetPaths.js").exists():
-    require("site/js/services/assetPaths.js", "assets/board/pub_background_game1.jpeg")
+    require("site/js/services/assetPaths.js", "assets/board/knockout_pub_background.jpeg")
 
 for path, tokens in {
     "li/world_cup/runtime_pub_background_selection_rule.md": [
@@ -59,4 +61,4 @@ for path, tokens in {
         require(path, token)
 
 require("Makefile", "python3 tools/verify_wc2026_group_stage_background_runtime.py")
-print("OK: WC2026 runtime board background uses the group-stage pub image and is verified.")
+print("OK: WC2026 legacy group-stage background verifier is superseded by knockout pub default background.")

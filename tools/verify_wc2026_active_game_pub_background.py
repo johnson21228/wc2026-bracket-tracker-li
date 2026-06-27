@@ -2,47 +2,47 @@
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+KNOCKOUT = "assets/board/knockout_pub_background.jpeg"
+GROUP = "assets/board/pub_background_game1.jpeg"
+
 
 def read(path):
     return (ROOT / path).read_text()
 
+
 def require_file(path):
     if not (ROOT / path).exists():
         raise SystemExit(f"Missing required file: {path}")
+
 
 def require(path, token):
     text = read(path)
     if token not in text:
         raise SystemExit(f"Missing {token!r} in {path}")
 
-def forbid(path, token):
-    text = read(path)
-    if token in text:
-        raise SystemExit(f"Forbidden stale token {token!r} remains in {path}")
 
-require_file("site/assets/board/pub_background_game1.jpeg")
 require_file("site/assets/board/knockout_pub_background.jpeg")
+require_file("site/assets/board/pub_background_game1.jpeg")
 
-require("site/js/services/assetPaths.js", "assets/board/pub_background_game1.jpeg")
-require("site/js/mvc/view.js", 'src="assets/board/pub_background_game1.jpeg"')
-require("site/index.html", 'href="assets/board/pub_background_game1.jpeg"')
+require("site/js/services/assetPaths.js", f'backgroundImage: "{KNOCKOUT}"')
+require("site/js/mvc/view.js", f'src="{KNOCKOUT}"')
+require("site/index.html", f'href="{KNOCKOUT}"')
 
 require("site/js/app.js", "ACTIVE_GAME_BACKGROUND_IMAGES")
-require("site/js/app.js", '"game-1": "assets/board/pub_background_game1.jpeg"')
+require("site/js/app.js", '"game-1": "assets/board/knockout_pub_background.jpeg"')
 require("site/js/app.js", '"game-2": "assets/board/knockout_pub_background.jpeg"')
 require("site/js/app.js", "setupActiveGameBackground(root);")
-require("site/js/app.js", "const view = createBracketView(root);\n  setupActiveGameBackground(root);")
 require("site/js/app.js", "syncActiveGameBackground(root);")
 
-# Stale default runtime references should be gone from active runtime files.
 for path in [
     "site/js/services/assetPaths.js",
     "site/js/mvc/view.js",
     "site/index.html",
 ]:
-    forbid(path, "assets/board/pub_background.jpeg")
+    text = read(path)
+    if GROUP in text:
+        raise SystemExit(f"Stale group-stage runtime background remains in {path}")
 
-# Keep this visual-only: selector changes background only, not gameplay/storage.
 app = read("site/js/app.js")
 start = app.index("function setupActiveGameBackground")
 end = app.index("async function main()")
@@ -62,4 +62,4 @@ for forbidden in [
             f"found {forbidden!r} in setupActiveGameBackground segment."
         )
 
-print("OK: WC2026 active game selector switches pub background image as presentation-only UI.")
+print("OK: WC2026 site defaults to the knockout pub background image without changing gameplay logic.")
