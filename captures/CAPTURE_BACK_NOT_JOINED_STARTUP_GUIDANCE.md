@@ -10,7 +10,7 @@ Playing Bracketeering requires you to join the pool. Tap the button with the per
 
 ## Joined player copy
 
-Your picks have been loaded.
+Saved picks have been loaded.
 
 ## Boundary
 

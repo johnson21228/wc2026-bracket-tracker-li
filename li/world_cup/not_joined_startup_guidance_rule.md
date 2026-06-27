@@ -6,6 +6,6 @@ When the site loads and the player is not joined, the Account Save / Join status
 
 Joined players with saved picks should see:
 
-“Your picks have been loaded.”
+“Saved picks have been loaded.”
 
 The player-facing status must not expose technical storage language such as localStorage, Supabase, or ignored local draft picks.

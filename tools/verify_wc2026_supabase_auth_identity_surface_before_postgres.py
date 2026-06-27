@@ -8,7 +8,7 @@ if "You already have picks saved. Use saved picks or keep this board?" in source
     errors.append("Old saved-vs-current-board conflict prompt must not remain.")
 if "Keep this board" in source:
     errors.append("Joined play must not offer Keep this board.")
-if "Your picks have been loaded." not in source:
+if "Saved picks have been loaded." not in source:
     errors.append("Joined play must use simple player-facing loaded-picks copy.")
 if "Local draft picks are ignored for joined play" in source:
     errors.append("Joined play must not expose local draft technical language.")

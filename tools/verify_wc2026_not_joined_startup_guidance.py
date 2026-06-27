@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import re
 
 
 def main() -> int:
@@ -7,8 +8,27 @@ def main() -> int:
     makefile = Path("Makefile").read_text()
     errors = []
 
+    source = Path("site/js/identity/AccountSaveActionSurface.js").read_text()
+
+    not_joined_branch = re.search(
+        r'if \(!joined\) \{(?P<body>.*?)\n    \}',
+        source,
+        re.S,
+    )
+    if not not_joined_branch:
+        errors.append("missing explicit !joined branch for startup guidance")
+    else:
+        body = not_joined_branch.group("body")
+        if "renderNotice(root, \"not-joined\", NOT_JOINED_STARTUP_MESSAGE);" not in body:
+            errors.append("not-joined startup guidance must only render from the !joined branch")
+
+    joined_regions = source.replace(not_joined_branch.group("body") if not_joined_branch else "", "")
+    if "NOT_JOINED_STARTUP_MESSAGE" in joined_regions and 'const NOT_JOINED_STARTUP_MESSAGE' not in joined_regions:
+        errors.append("not-joined startup message leaked outside the !joined branch")
+
+
     required = [
-        'const JOINED_PICKS_LOADED_MESSAGE = "Your picks have been loaded.";',
+        'const JOINED_PICKS_LOADED_MESSAGE = "Saved picks have been loaded.";',
         'const NOT_JOINED_STARTUP_MESSAGE = "Playing Bracketeering requires you to join the pool. Tap the button with the person icon to join. Tap the button with the “i” to get information about playing the game.";',
         'renderNotice(root, "not-joined", NOT_JOINED_STARTUP_MESSAGE);',
         "function renderNotice(root, state, message)",
