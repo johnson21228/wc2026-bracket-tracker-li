@@ -38,3 +38,18 @@ The same board surface is allowed to show different edit authority based on acti
 - A normal player sees `Admin_/official` R32 values after hydration.
 - If `Admin_/official` changes an R32 value, player display changes to match.
 - `Admin_/official` later-round truth remains separate from normal player picks.
+
+## Superseded by site-owned official truth
+
+This document is superseded by `li/world_cup/site_owned_official_truth_rule.md`.
+
+Current authority:
+
+- Official R32 occupants are site-owned truth under `site/data/current/`.
+- Official results are site-owned truth under `site/data/current/`.
+- Supabase stores player identity/profile and player bracket picks only.
+- Player standings are computed, not stored.
+- The Supabase `Admin_/official` official bracket row is no longer an official truth source.
+
+This file remains as historical context only and must not be used as current runtime authority.
+

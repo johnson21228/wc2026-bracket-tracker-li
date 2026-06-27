@@ -22,3 +22,18 @@ Scoring compares player knockout winner picks to official result truth. Scoring 
 This CB is LI-only and does not change runtime behavior.
 
 Future runtime CBs should implement this hydration rule at creation, load, import, and save boundaries. Future UI CBs should remove or rename Game 1/Game 2 and group-prediction language after the runtime model is safe.
+
+## Superseded by site-owned official truth
+
+This document is superseded by `li/world_cup/site_owned_official_truth_rule.md`.
+
+Current authority:
+
+- Official R32 occupants are site-owned truth under `site/data/current/`.
+- Official results are site-owned truth under `site/data/current/`.
+- Supabase stores player identity/profile and player bracket picks only.
+- Player standings are computed, not stored.
+- The Supabase `Admin_/official` official bracket row is no longer an official truth source.
+
+This file remains as historical context only and must not be used as current runtime authority.
+

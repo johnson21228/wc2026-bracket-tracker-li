@@ -1,6 +1,6 @@
 # Player Standings Scoring
 
-Player Standings computes earned points and maximum possible points by comparing player picks against `Admin_/official` result truth.
+Player Standings computes earned points and maximum possible points by comparing player picks against site-owned official result truth.
 
 ## Weights
 
@@ -14,7 +14,7 @@ A perfect bracket has a 56-point budget.
 
 ## Earned points
 
-Earned points are awarded only for resolved official slots where the player's canonical team ID matches the `Admin_/official` canonical team ID.
+Earned points are awarded only for resolved official slots where the player's canonical team ID matches the site-owned official truth canonical team ID.
 
 ## Maximum possible points
 

@@ -27,3 +27,18 @@ On player load, login/join, import, save, or first local BracketDocument creatio
 5. Preserve player-owned R16++ picks.
 
 Rendering and R16++ preselection may then read from the hydrated player picks map for compatibility with the existing site path.
+
+## Superseded by site-owned official truth
+
+This document is superseded by `li/world_cup/site_owned_official_truth_rule.md`.
+
+Current authority:
+
+- Official R32 occupants are site-owned truth under `site/data/current/`.
+- Official results are site-owned truth under `site/data/current/`.
+- Supabase stores player identity/profile and player bracket picks only.
+- Player standings are computed, not stored.
+- The Supabase `Admin_/official` official bracket row is no longer an official truth source.
+
+This file remains as historical context only and must not be used as current runtime authority.
+

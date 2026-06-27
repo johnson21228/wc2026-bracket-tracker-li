@@ -16,7 +16,7 @@ Perfect bracket budget: 56 points.
 
 ## Acceptance
 
-- Earned points compare player picks against `Admin_/official` truth.
+- Earned points compare player picks against site-owned official truth.
 - Maximum possible points represents the player's remaining ceiling from their existing picks.
 - Unresolved official slots do not score yet.
 - Eliminated future picks no longer count as possible.

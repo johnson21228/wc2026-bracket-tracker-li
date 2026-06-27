@@ -8,5 +8,5 @@ Clarify that Max Possible is reachability-aware.
 
 - Admin empty/unresolved slots do not automatically count as possible.
 - A player's unresolved pick counts only if the picked team can still reach that slot.
-- Prior resolved Admin_/official results can eliminate later player picks from Max Possible.
-- Score remains based only on resolved Admin_/official matches.
+- Prior resolved site-owned official results can eliminate later player picks from Max Possible.
+- Score remains based only on resolved site-owned official matches.

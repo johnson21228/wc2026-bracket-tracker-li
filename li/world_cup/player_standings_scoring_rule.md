@@ -1,6 +1,6 @@
 # Rule: Player Standings Scoring
 
-Player Standings must compute each player's earned points and maximum possible points from the player's submitted/live bracket picks compared against `Admin_/official` result truth.
+Player Standings must compute each player's earned points and maximum possible points from the player's submitted/live bracket picks compared against site-owned official result truth.
 
 ## Round weights
 
@@ -26,12 +26,12 @@ Total perfect score: 56 points.
 
 ## Earned points
 
-A player's earned points are the sum of weighted player picks that match resolved `Admin_/official` result truth.
+A player's earned points are the sum of weighted player picks that match resolved site-owned official result truth.
 
 A slot scores only when:
 
 1. The player has a pick for that slot.
-2. `Admin_/official` has resolved truth for that slot.
+2. site-owned official truth has resolved truth for that slot.
 3. The player's canonical picked team ID equals the official canonical team ID for that slot.
 
 Unresolved official slots score zero for now. They are not wrong yet.
@@ -49,9 +49,9 @@ A future pick is no longer possible when earlier resolved official truth has eli
 
 ## Authority
 
-`Admin_/official` is the only source of scoring truth.
+site-owned official truth is the only source of scoring truth.
 
-Normal player picks never define official results. Normal player picks are compared against `Admin_/official` truth.
+Normal player picks never define official results. Normal player picks are compared against site-owned official truth.
 
 ## Display
 

@@ -41,3 +41,18 @@ Production official R32 hydration now reads the Supabase `Admin_/official` brack
 Static `site/data/official_round_of_32.json` is no longer the production authority. It remains a clearly named local/dev fallback only: `StaticJsonFallback:official_round_of_32`.
 
 Hydrated non-admin R32 entrant records must retain `source: "Admin_/official"`, `authority: "Admin_/official"`, `playerAuthored: false`, and `hydratedFrom: "Supabase:Admin_/official"` when Supabase authority is available. Player actions still cannot author R32 entrants, and existing player-owned knockout winner picks are preserved.
+
+## Superseded by site-owned official truth
+
+This document is superseded by `li/world_cup/site_owned_official_truth_rule.md`.
+
+Current authority:
+
+- Official R32 occupants are site-owned truth under `site/data/current/`.
+- Official results are site-owned truth under `site/data/current/`.
+- Supabase stores player identity/profile and player bracket picks only.
+- Player standings are computed, not stored.
+- The Supabase `Admin_/official` official bracket row is no longer an official truth source.
+
+This file remains as historical context only and must not be used as current runtime authority.
+
