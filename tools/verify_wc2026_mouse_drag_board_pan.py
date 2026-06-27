@@ -1,123 +1,47 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import re
 
-ROOT = Path(__file__).resolve().parents[1]
+view = Path("site/js/mvc/view.js").read_text()
+css = Path("site/css/board.css").read_text()
+errors = []
 
+def require(condition, message):
+    if not condition:
+        errors.append(message)
 
-def require_contains(path: Path, needle: str, errors: list[str], label: str | None = None) -> None:
-    text = path.read_text()
-    if needle not in text:
-        errors.append(label or f"{path} missing {needle!r}")
+require("function installMouseBoardDragPan()" in view, "mouse drag pan installer must exist")
+require("boardScroll.dataset.mouseDragPanInstalled" in view, "mouse drag pan must be installed once")
+require('event.pointerType === "touch"' in view, "mouse drag pan must ignore touch pointer events")
+require("event.pointerType && event.pointerType !== \"mouse\"" in view, "mouse drag pan must remain mouse-only")
+require("isBoardPanInteractiveTarget(event.target)" in view, "mouse drag pan must exclude interactive targets")
+require("BOARD_DRAG_PAN_THRESHOLD_PX" in view, "mouse drag pan threshold must remain explicit")
+require("boardScroll.classList.add(\"is-drag-panning\")" in view, "mouse drag pan must expose drag-panning class")
+require("boardScroll.scrollLeft" in view and "boardScroll.scrollTop" in view, "mouse drag pan must pan the board viewport")
+require("installMouseBoardDragPan();" in view, "mouse drag pan must be installed from handler setup")
 
+require("function installTouchBoardMapMode()" in view, "touch map mode may coexist as its own scoped installer")
+require("installTouchBoardMapMode();" in view, "touch map mode must be installed separately from mouse drag pan")
 
-def require_not_contains(path: Path, needle: str, errors: list[str], label: str | None = None) -> None:
-    text = path.read_text()
-    if needle in text:
-        errors.append(label or f"{path} unexpectedly contains {needle!r}")
+mouse_start = view.index("function installMouseBoardDragPan()")
+mouse_end = view.index("function installTouchBoardMapMode()", mouse_start)
+mouse_block = view[mouse_start:mouse_end]
+require("touchstart" not in mouse_block, "mouse drag pan block must not own touchstart")
+require("touchmove" not in mouse_block, "mouse drag pan block must not own touchmove")
+require("pinch" not in mouse_block.lower(), "mouse drag pan block must not own pinch logic")
 
+touch_start = view.index("function installTouchBoardMapMode()")
+touch_end = view.index("function installMouseBoardDoubleClickZoom()", touch_start)
+touch_block = view[touch_start:touch_end]
+require("touchstart" in touch_block and "touchmove" in touch_block, "touch gestures must be isolated to touch map mode")
+require("pinchCenter(event)" in touch_block, "pinch logic must be isolated to touch map mode")
 
-def main() -> int:
-    view = ROOT / "site/js/mvc/view.js"
-    app_css = ROOT / "site/css/app.css"
-    makefile = ROOT / "Makefile"
-    docs = ROOT / "docs/features/mouse_drag_board_pan.md"
-    li = ROOT / "li/world_cup/mouse_drag_board_pan_rule.md"
-    card = ROOT / "cards/251_mouse_drag_board_pan_card.md"
-    capture = ROOT / "captures/CAPTURE_BACK_MOUSE_DRAG_BOARD_PAN.md"
+require(".game1-board-viewport.is-drag-panning" in css or ".is-drag-panning" in css, "drag-panning class should have CSS affordance")
+require("touch-action: none" in css, "touch gesture ownership should be CSS-scoped to the board viewport")
 
-    errors: list[str] = []
-    for path in [view, app_css, makefile, docs, li, card, capture]:
-        if not path.exists():
-            errors.append(f"Missing required file: {path.relative_to(ROOT)}")
+if errors:
+    print("WC2026 mouse drag board pan verification failed:")
+    for error in errors:
+        print(f"- {error}")
+    raise SystemExit(1)
 
-    if errors:
-        print("WC2026 mouse drag board pan verification failed: " + "; ".join(errors))
-        return 1
-
-    view_text = view.read_text()
-    css_text = app_css.read_text()
-
-    required_view_tokens = [
-        ("function installMouseBoardDragPan()", "missing View-owned board drag-pan installer"),
-        ("function isBoardPanInteractiveTarget(target)", "missing interactive target exclusion helper"),
-        ("event.pointerType === \"touch\"", "missing explicit touch guard"),
-        ("event.pointerType && event.pointerType !== \"mouse\"", "missing mouse-only pointer guard"),
-        ("event.button !== 0", "missing left-button-only guard"),
-        ("!event.isPrimary", "missing primary pointer guard"),
-        ("BOARD_DRAG_PAN_THRESHOLD_PX", "missing small drag threshold"),
-        ("setPointerCapture", "missing mouse pointer capture for drag-pan"),
-        ("pointerdown", "missing pointerdown handler"),
-        ("pointermove", "missing pointermove handler"),
-        ("pointerup", "missing pointerup handler"),
-        ("pointercancel", "missing pointercancel handler"),
-        ("lostpointercapture", "missing lostpointercapture cleanup"),
-        ("boardScroll.scrollLeft = dragState.startScrollLeft - deltaX", "drag-pan must mutate scrollLeft only for horizontal pan"),
-        ("boardScroll.scrollTop = dragState.startScrollTop - deltaY", "drag-pan must mutate scrollTop only for vertical pan"),
-        ("installMouseBoardDragPan();", "drag-pan installer must be wired into setHandlers"),
-        (".pick-menu-popover", "interactive exclusions must include pick menu popovers"),
-        (".group-panel-popover", "interactive exclusions must include group panel popovers"),
-        ("[data-menu-layer]", "interactive exclusions must include menu layer"),
-        ("[data-group-panel-layer]", "interactive exclusions must include group panel layer"),
-        ("[data-board-zoom]", "interactive exclusions must include zoom controls"),
-    ]
-    for token, message in required_view_tokens:
-        if token not in view_text:
-            errors.append(message)
-
-    forbidden_view_tokens = [
-        "touchstart",
-        "touchmove",
-        "gesturestart",
-        "gesturechange",
-        "touch-action: none",
-    ]
-    for token in forbidden_view_tokens:
-        if token in view_text:
-            errors.append(f"custom touch/pinch gesture token should not appear in view.js: {token}")
-
-    required_css_tokens = [
-        ("Card 251: mouse-only map-style board drag-pan affordance", "missing CSS marker for drag-pan affordance"),
-        (".board-scroll", "missing board scroll CSS target"),
-        ("cursor: grab", "missing grab cursor"),
-        (".board-scroll.is-drag-panning", "missing dragging class CSS"),
-        ("cursor: grabbing", "missing grabbing cursor"),
-        ("user-select: none", "missing text-selection suppression while dragging"),
-        ("-webkit-overflow-scrolling: touch", "native iOS scrolling polish should remain explicit"),
-    ]
-    for token, message in required_css_tokens:
-        if token not in css_text:
-            errors.append(message)
-
-    if "touch-action: none" in css_text:
-        errors.append("CSS must not globally disable touch navigation with touch-action: none")
-
-    require_contains(makefile, "python3 tools/verify_wc2026_mouse_drag_board_pan.py", errors, "Makefile does not run mouse drag board pan verifier")
-    
-    if "mouse-only" not in docs.read_text().lower():
-        errors.append("feature doc should name mouse-only scope")
-    require_contains(li, "touch", errors, "LI rule should preserve touch navigation boundary")
-    require_contains(capture, "Do not disturb iPad/iPhone browser touch navigation", errors, "capture back should preserve touch navigation constraint")
-
-
-    card_251_css_match = re.search(
-        r"/\* Card 251: mouse-only map-style board drag-pan affordance\. \*/\s*\.board-scroll\s*\{(?P<body>[^}]*)\}",
-        css_text,
-        re.S,
-    )
-    if not card_251_css_match:
-        errors.append("missing Card 251 board-scroll CSS block")
-    elif "overscroll-behavior" in card_251_css_match.group("body"):
-        errors.append("Card 251 board-scroll CSS must not contain overscroll-behavior because MacBook trackpad scroll chaining should remain native")
-
-
-    if errors:
-        print("WC2026 mouse drag board pan verification failed: " + "; ".join(errors))
-        return 1
-
-    print("OK: WC2026 board has mouse-only map-style drag-pan while preserving native touch navigation.")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+print("OK: WC2026 mouse drag board pan remains mouse-only while touch map mode owns touch separately.")

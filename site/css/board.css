@@ -1233,3 +1233,45 @@
   background-color: rgba(112, 40, 24, .82) !important;
   outline: 1px solid rgba(255, 64, 64, .95);
 }
+
+/* Card 290: iPhone Safari touch map mode.
+   The viewport owns touch gestures; the board plane owns zoom/pan state; fixed controls remain browser chrome. */
+.game1-board-viewport {
+  touch-action: none;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.game1-board-viewport.is-touch-panning,
+.game1-board-viewport.is-touch-pinching {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.pick-slot-button,
+.r32-pick-slot-button,
+.group-button,
+.group-panel-popover,
+.pick-menu-popover,
+.board-zoom-controls,
+[data-board-zoom-in],
+[data-board-zoom-out],
+[data-rules-panel-open],
+[data-rules-panel],
+[data-identity-panel-open],
+.identity-panel,
+.identity-panel-backdrop {
+  touch-action: manipulation;
+}
+
+.board-zoom-controls {
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* Card 290: desktop drag-pan keeps an explicit CSS affordance while touch map mode stays separate. */
+.game1-board-viewport.is-drag-panning,
+.game1-board-viewport.is-drag-pan-armed {
+  cursor: grabbing;
+  user-select: none;
+}
