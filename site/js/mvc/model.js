@@ -49,6 +49,7 @@ const DATA_URLS = Object.freeze({
   currentHighlights: "data/current/match_highlights.json",
   knockoutMatches: "data/current/knockout_matches.json",
   game2FifaFinalR32Assignments: "data/game2_fifa_final_r32_assignments.json",
+  officialTruth: "data/current/official_truth.json",
 });
 
 async function readJson(url) {
@@ -244,6 +245,27 @@ function failClosedAdminOfficialR32TruthDocument(reason = "unavailable") {
   };
 }
 
+function normalizeSiteOfficialTruthDocument(payload = {}) {
+  const picksBySlot = payload?.picksBySlot && typeof payload.picksBySlot === "object" && !Array.isArray(payload.picksBySlot)
+    ? payload.picksBySlot
+    : {};
+
+  return {
+    schemaVersion: Number(payload?.schemaVersion || 1),
+    userId: "site-owned-official-truth",
+    tournamentId: payload?.tournamentId || "wc2026",
+    gameId: payload?.gameId || "game1",
+    bracketKind: "official",
+    picksBySlot,
+    officialR32AuthoritySource: "site/data/current/official_truth.json",
+    officialResultsTruthSource: "site/data/current/official_truth.json",
+    source: "site-owned-official-truth",
+    authority: "site-owned-official-truth",
+    partialOfficialTruthAllowed: true,
+  };
+}
+
+
 export async function createBracketModel({
   bracketStore = null,
   officialBracketStore = bracketStore,
@@ -263,6 +285,7 @@ export async function createBracketModel({
     currentHighlightsPayload,
     knockoutMatchesPayload,
     game2FifaFinalR32AssignmentsPayload,
+    officialTruthPayload,
   ] = await Promise.all([
     readJson(DATA_URLS.geometry),
     readJson(DATA_URLS.r32Bridge),
@@ -274,6 +297,7 @@ export async function createBracketModel({
     readJson(DATA_URLS.currentHighlights),
     readJson(DATA_URLS.knockoutMatches),
     readJson(DATA_URLS.game2FifaFinalR32Assignments),
+    readJson(DATA_URLS.officialTruth),
   ]);
 
 const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
@@ -339,10 +363,8 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
 
   // Admin mode is a runtime/UI authority flag. Do not make it depend on a specific store method.
   // Store method availability is checked only when saving.
-  const adminOfficialEditorActive = Boolean(adminOfficialEditor || adminOfficialEditorFromUrl);
-  const adminOfficialR32EditorActive = Boolean(
-    adminOfficialEditorActive || adminOfficialR32Editor || adminOfficialEditorFromUrl
-  );
+  const adminOfficialEditorActive = false;
+  const adminOfficialR32EditorActive = false;
 
   if (remotePersistenceActive) {
     try {
@@ -361,58 +383,15 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     picks = pickFromStorage();
   }
 
-  const loadOfficialR32BracketAuthority = officialBracketStore?.loadOfficialR32BracketAuthority || officialBracketStore?.loadOfficialBracket;
-  if (loadOfficialR32BracketAuthority) {
-    try {
-      officialBracketDocument = await loadOfficialR32BracketAuthority.call(officialBracketStore, {
-        tournamentId: "wc2026",
-        gameId: "game1",
-      });
-      if (officialBracketDocument) {
-        officialBracketDocument = {
-          ...officialBracketDocument,
-          userId: "Admin_/official",
-          bracketKind: "official",
-          officialR32AuthoritySource: "Supabase:Admin_/official",
-          officialResultsTruthSource: "Supabase:Admin_/official",
-          source: "Supabase:Admin_/official",
-          authority: "Admin_/official",
-        };
-      }
-      officialPicks = clearUnknownTeamPicks(legacyPicksFromRemoteBracketDocument(officialBracketDocument), "Admin_/official bracket");
-      console.info("[WC2026 OfficialResults] loaded Supabase Admin_/official truth bracket picks", {
-        source: officialBracketDocument?.officialR32AuthoritySource || "Supabase:Admin_/official",
-        userId: officialBracketDocument?.userId || "Admin_/official",
-        pickCount: Object.keys(officialPicks).length,
-      });
-    } catch (error) {
-      console.error("[WC2026 OfficialR32] Admin_/official R32 truth unavailable; failing closed", error);
-      officialBracketDocument = failClosedAdminOfficialR32TruthDocument("load-error");
-      officialPicks = {};
-    }
-
-    if (!officialBracketDocument) {
-      if (adminOfficialR32EditorActive) {
-        console.warn("[WC2026 OfficialR32] Admin_/official R32 truth missing; Supabase-connected admin editor remains open to create it.");
-        officialBracketDocument = {
-          userId: "Admin_/official",
-          bracketKind: "official",
-          picksBySlot: {},
-          officialR32AuthoritySource: "Supabase:Admin_/official",
-          officialResultsTruthSource: "Supabase:Admin_/official",
-          source: "Supabase:Admin_/official",
-          authority: "Admin_/official",
-          adminCreatable: true,
-          supabaseRequired: true,
-        };
-        officialPicks = {};
-      } else {
-        console.error("[WC2026 OfficialR32] Admin_/official R32 truth missing; failing closed");
-        officialBracketDocument = failClosedAdminOfficialR32TruthDocument("missing-admin-official-row");
-        officialPicks = {};
-      }
-    }
-  }
+  officialBracketDocument = normalizeSiteOfficialTruthDocument(officialTruthPayload);
+  officialPicks = clearUnknownTeamPicks(
+    legacyPicksFromRemoteBracketDocument(officialBracketDocument),
+    "site-owned official truth"
+  );
+  console.info("[WC2026 OfficialResults] loaded site-owned official truth picks", {
+    source: officialBracketDocument.officialResultsTruthSource,
+    pickCount: Object.keys(officialPicks).length,
+  });
 
   picks = hydrateOnlySupabaseAdminR32IntoPlayerPicks(picks);
 

@@ -52,6 +52,8 @@ function slotIdFromOfficialRecord(record) {
 function officialR32AuthoritySource(officialR32 = null) {
   if (officialR32?.officialR32AuthoritySource) return String(officialR32.officialR32AuthoritySource);
   if (officialR32?.hydratedFrom) return String(officialR32.hydratedFrom);
+  if (officialR32?.source === "site-owned-official-truth") return "site/data/current/official_truth.json";
+  if (officialR32?.officialR32AuthoritySource === "site/data/current/official_truth.json") return "site/data/current/official_truth.json";
   if (officialR32?.source === "Supabase:Admin_/official") return "Supabase:Admin_/official";
   if (officialR32?.userId === "Admin_/official" && officialR32?.bracketKind === "official") return "Supabase:Admin_/official";
   return "";
@@ -68,7 +70,7 @@ function officialR32OccupantsBySlot(officialR32 = null) {
     occupants[normalizedSlotId] = {
       slotId: normalizedSlotId,
       teamId,
-      source: "Admin_/official",
+      source: "site-owned-official-truth",
       hydratedFrom,
     };
   };
@@ -101,10 +103,10 @@ function officialR32SlotRecord(slot, occupant, teamsById = {}) {
     kind: "entrant",
     round: "R32_ENTRANT",
     pick: pickValue.kind === "unpicked" ? null : pickValue,
-    source: "Admin_/official",
-    authority: "Admin_/official",
+    source: "site-owned-official-truth",
+    authority: "site-owned-official-truth",
     playerAuthored: false,
-    hydratedFrom: occupant.hydratedFrom || "Supabase:Admin_/official",
+    hydratedFrom: occupant.hydratedFrom || "site/data/current/official_truth.json",
   };
 }
 
@@ -114,8 +116,8 @@ function officialR32UnsetSlotRecord(slot, officialR32 = null) {
     kind: "entrant",
     round: "R32_ENTRANT",
     pick: null,
-    source: "Admin_/official",
-    authority: "Admin_/official",
+    source: "site-owned-official-truth",
+    authority: "site-owned-official-truth",
     playerAuthored: false,
     officialUnset: true,
     hydratedFrom: officialR32AuthoritySource(officialR32),
@@ -125,7 +127,7 @@ function officialR32UnsetSlotRecord(slot, officialR32 = null) {
 function shouldReconcileR32FromOfficial(officialR32 = null) {
   if (!officialR32) return false;
   const source = officialR32AuthoritySource(officialR32);
-  return source === "Supabase:Admin_/official";
+  return source === "site/data/current/official_truth.json" || source === "Supabase:Admin_/official";
 }
 
 function hydrateOfficialR32Occupants({ bracket, bracketSlots, teamsById = {}, officialR32 = null } = {}) {
@@ -145,10 +147,10 @@ function hydrateOfficialR32Occupants({ bracket, bracketSlots, teamsById = {}, of
   return {
     ...bracket,
     officialR32Hydration: {
-      source: "Admin_/official",
+      source: "site-owned-official-truth",
       appliesAt: ["creation", "load", "import", "save", "render"],
       playerAuthored: false,
-      mirrorsAdminOfficialExactly: true,
+      mirrorsSiteOfficialTruthExactly: true,
       failClosed: Boolean(officialR32?.r32TruthUnavailable || officialR32?.failClosed),
       hydratedFrom: officialR32AuthoritySource(officialR32),
     },
@@ -310,7 +312,7 @@ function setBracketPick({ bracket, sitePickId, pickValue }) {
       ...bracket,
       officialR32Hydration: {
         ...(bracket?.officialR32Hydration || {}),
-        source: "Admin_/official",
+        source: "site-owned-official-truth",
         playerAuthored: false,
         blockedPlayerR32Authoring: true,
       },
