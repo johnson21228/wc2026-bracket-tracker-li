@@ -1,38 +1,31 @@
 # Player Pick Lockdown Times Rule
 
-Bracketeering uses two player-pick lockdown gates.
+Player pick lockdown is a global player-pick finality rule.
 
-The site exposes two configured properties: LockDownTime1 and LockDownTime2.
+After `LockDownTime2`, no player-owned pick may be changed, cleared, or replaced.
 
-The lockdown timezone is America/New_York. Player-facing copy may display this as ET.
+## Current rule
 
-## LockDownTime1
+- `LockDownTime2` is the only active player-pick lockdown time.
+- `LockDownTime2` applies to all player-owned picks.
+- Locked picks remain visible exactly as they were before lockdown.
+- Lockdown is not a rendering change.
+- Lockdown is enforced at player-pick write boundaries.
+- Late browser interactions should be blocked before they reach pick editors.
+- Late model/controller writes must be rejected.
+- Site-owned official truth remains outside player-pick lockdown.
 
-LockDownTime1 freezes only the Canada vs South Africa Round of 32 pick.
+## Removed rule
 
-After LockDownTime1, a player's existing Canada vs South Africa pick remains visible, but the site must not allow that player to change, clear, or replace that pick.
+The previous first-lock gate has been removed.
 
-All other player-owned picks remain editable until LockDownTime2.
-
-## LockDownTime2
-
-LockDownTime2 freezes all remaining player-owned picks.
-
-After LockDownTime2, the site must not allow any player-owned bracket pick to be changed, cleared, or replaced.
-
-## Boundary
-
-Lockdown applies to player-owned picks only.
-
-Admin/site-owned official truth, official R32 occupants, and result updates remain governed by the admin/site-owned truth rules and are outside this player-pick lockdown.
+The code and LI should not describe any match-specific, R32-only, slot-specific, or feeder-team lockdown behavior.
 
 
-## Locked Pick Rendering Contract
+## Manual LockDown property
 
-Locked picks remain visible exactly as picks. Lockdown does not hide, blank, fade, invalidate, or remove the chosen team.
+`LockDown` is a top-level site property.
 
-Lockdown removes edit affordance and blocks changes:
-- the locked pick must not present a normal editable pick menu;
-- the locked pick must not present preselection as an available action;
-- the locked pick write path must reject changes after the applicable lockdown time;
-- site/admin-owned truth and result updates remain outside this player-pick lockdown.
+When `LockDown` is `true`, all player-owned picks are frozen immediately and cannot be changed, cleared, or replaced.
+
+When `LockDown` is `false`, the timed `LockDownTime2` rule controls the global player-pick freeze.

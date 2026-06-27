@@ -136,6 +136,25 @@ function teamSort(a, b) {
   return String(a.abbr).localeCompare(String(b.abbr));
 }
 
+function assertProjectionPickChangeAllowed({ fifaSlotId, teamId = "", slot = null, team = null }) {
+  const policy = window.BracketeeringPickLockdownPolicy;
+  if (!policy || typeof policy.assertPickChangeAllowed !== "function") {
+    return { ok: true };
+  }
+
+  return policy.assertPickChangeAllowed({
+    slotId: slot?.bridgeSlot?.geometrySlotId || slot?.logicSlot?.fifaSlotId || fifaSlotId,
+    teamId: team?.id || teamId || "",
+    text: [
+      fifaSlotId,
+      slot?.logicSlot?.fifaLabel,
+      team?.id,
+      team?.abbr,
+      team?.name,
+    ].filter(Boolean).join(" "),
+  });
+}
+
 function pickRecordFromTeam({ fifaSlot, team }) {
   return {
     kind: "projected-r32-slot-team",
@@ -248,6 +267,9 @@ class Game1R32PickController {
     const team = slot.candidates.find((candidate) => candidate.id === normalizedTeamId || candidate.abbr === normalizedTeamId);
     if (!team) return { ok: false, reason: "Team is not a valid candidate for this FIFA R32 slot." };
 
+    const lockdown = assertProjectionPickChangeAllowed({ fifaSlotId, teamId, slot, team });
+    if (!lockdown.ok) return lockdown;
+
     const picks = this.readPicks();
     const duplicateEntry = Object.entries(picks).find(([otherSlotId, pick]) => {
       if (otherSlotId === fifaSlotId) return false;
@@ -324,6 +346,8 @@ class Game1R32PickController {
   }
 
   clearPick({ fifaSlotId }) {
+    const lockdown = assertProjectionPickChangeAllowed({ fifaSlotId });
+    if (!lockdown.ok) return lockdown;
     if (areGroupStagePicksLocked()) return { ok: false, reason: groupStagePicksLockedMessage() };
     const picks = this.readPicks();
     const previous = picks[fifaSlotId] || null;

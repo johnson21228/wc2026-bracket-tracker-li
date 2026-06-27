@@ -1,17 +1,29 @@
 # Capture Back: Player Pick Lockdown Times
 
-Implemented player-pick lockdown LI and runtime configuration.
+## Outcome
 
-Runtime properties:
+Player pick lockdown now means one global finality rule:
 
-- LockDownTime1
-- LockDownTime2
-- LockDownTimeZone
+After `LockDownTime2`, no player-owned pick can be changed, cleared, or replaced.
 
-Behavior:
+## Preserved behavior
 
-- LockDownTime1 locks Canada vs South Africa only.
-- LockDownTime2 locks all remaining player-owned picks.
 - Locked picks remain visible.
-- Locked UI interactions are blocked.
+- Rendering does not change merely because a pick is locked.
+- Player-owned pick writes are blocked after the global lock.
 - Admin/site-owned official truth remains outside player-pick lockdown.
+
+## Removed behavior
+
+The previous first-lock gate has been removed.
+
+The previous match-specific / R32 slot-specific lock path is no longer part of the model, runtime, or LI.
+
+
+## Manual LockDown property
+
+`LockDown` is a top-level site property.
+
+When `LockDown` is `true`, all player-owned picks are frozen immediately and cannot be changed, cleared, or replaced.
+
+When `LockDown` is `false`, the timed `LockDownTime2` rule controls the global player-pick freeze.

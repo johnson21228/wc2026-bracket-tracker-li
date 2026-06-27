@@ -953,7 +953,22 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     return [];
   }
 
+  function assertPlayerPickChangeAllowed(slotId, teamId) {
+    const policy = window.BracketeeringPickLockdownPolicy;
+    if (!policy || typeof policy.assertPickChangeAllowed !== "function") {
+      return { ok: true };
+    }
+
+    return policy.assertPickChangeAllowed({
+      slotId,
+      teamId,
+      text: [slotId, teamId].filter(Boolean).join(" "),
+    });
+  }
+
   function setPick(slotId, teamId) {
+    const lockdown = assertPlayerPickChangeAllowed(slotId, teamId);
+    if (!lockdown.ok) return lockdown;
     const slot = getSlotDefinition(slotId);
     if (!slot) {
       return { ok: false, reason: "Unknown bracket slot.", cleared: [] };

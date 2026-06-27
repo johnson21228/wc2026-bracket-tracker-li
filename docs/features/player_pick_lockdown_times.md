@@ -1,15 +1,33 @@
 # Player Pick Lockdown Times
 
-The runtime reads lockdown properties from site/data/current/site_properties.json.
+Bracketeering has one active player-pick lockdown concept:
 
-Required properties:
+After `LockDownTime2`, player picks are final.
 
-- LockDownTimeZone: America/New_York
-- LockDownTime1: 2026-06-28T15:00:00-04:00
-- LockDownTime2: 2026-06-29T13:00:00-04:00
+## Behavior
 
-LockDownTime1 is slot-scoped to the Canada vs South Africa Round of 32 pick.
+When `LockDownTime2` is reached:
 
-LockDownTime2 is bracket-scoped and freezes all remaining player-owned picks.
+- all player-owned picks are frozen;
+- existing picks remain visible;
+- the board should not visually change just because picks are locked;
+- players cannot change, clear, or replace picks;
+- UI attempts are blocked;
+- model/controller write attempts are rejected.
 
-Locked picks remain visible. Locked pick interactions are blocked by site/js/services/PickLockdownPolicy.js.
+This applies to player-owned picks only. Admin/site-owned official truth remains separate.
+
+## Removed behavior
+
+The previous first-lock gate has been removed.
+
+There is no match-specific lock, no slot-specific R32 lock, and no feeder-team based lockdown behavior.
+
+
+## Manual LockDown property
+
+`LockDown` is a top-level site property.
+
+When `LockDown` is `true`, all player-owned picks are frozen immediately and cannot be changed, cleared, or replaced.
+
+When `LockDown` is `false`, the timed `LockDownTime2` rule controls the global player-pick freeze.
