@@ -159,8 +159,8 @@ function ensureStandingsButton(root) {
   button.setAttribute("data-player-standings-open", "");
   button.setAttribute("aria-haspopup", "dialog");
   button.setAttribute("aria-controls", "player-standings-panel");
-  button.setAttribute("aria-label", "Open Standings");
-  button.textContent = "Standings";
+  button.setAttribute("aria-label", "Open Pool");
+  button.textContent = "Pool";
   controls.append(button);
   return button;
 }
@@ -182,9 +182,9 @@ function ensureStandingsPanel(root) {
       <header class="player-standings-header">
         <div>
           <p class="player-standings-kicker">Pool</p>
-          <h2 id="player-standings-title">Standings</h2>
+          <h2 id="player-standings-title">Pool Standings</h2>
         </div>
-        <button type="button" class="player-standings-close" data-player-standings-close aria-label="Close Standings">×</button>
+        <button type="button" class="player-standings-close" data-player-standings-close aria-label="Close Pool Standings">×</button>
       </header>
       <div class="player-standings-body" data-player-standings-body>
         <p class="player-standings-status">Loading standings…</p>
@@ -480,12 +480,12 @@ export function createPlayerStandingsSurface({
     button.classList.toggle("is-results-locked", joined && !resultsVisible);
     button.classList.toggle("is-storage-unavailable", joined && resultsVisible && storageReadyChecked && !storageReady);
     button.title = !joined
-      ? "Join to enter standings."
+      ? "Join to enter the pool."
       : !resultsVisible
         ? playerResultsHiddenUntilLockMessage()
         : storageReady
-          ? "Open Standings"
-          : "Standings unavailable until stored picks can be read.";
+          ? "Open Pool"
+          : "Pool standings unavailable until stored picks can be read.";
     button.setAttribute("aria-label", button.title);
   }
 
@@ -559,7 +559,7 @@ export function createPlayerStandingsSurface({
     }
 
     if (!await refreshStorageReady()) {
-      renderStatus("Standings unavailable until stored picks can be read.");
+      renderStatus("Pool standings unavailable until stored picks can be read.");
       return;
     }
 
@@ -575,7 +575,7 @@ export function createPlayerStandingsSurface({
         : fallbackParticipationRows(currentAuthState, currentProfileState);
 
       if (!rows.length && !isSignedIn(currentAuthState)) {
-        renderStatus("Join to enter standings.");
+        renderStatus("Join to enter the pool.");
         return;
       }
 

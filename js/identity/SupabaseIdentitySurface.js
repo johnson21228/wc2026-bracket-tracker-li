@@ -1,5 +1,102 @@
+
+function identityIconSvg(kind) {
+  if (kind === "person-add") {
+    return `
+      <svg class="identity-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M15 19.5v-1.2c0-2.1-2.2-3.8-5-3.8s-5 1.7-5 3.8v1.2" />
+        <circle cx="10" cy="8" r="3.3" />
+        <path d="M18 8v6" />
+        <path d="M15 11h6" />
+      </svg>
+    `;
+  }
+  if (kind === "person-check") {
+    return `
+      <svg class="identity-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M15 19.5v-1.2c0-2.1-2.2-3.8-5-3.8s-5 1.7-5 3.8v1.2" />
+        <circle cx="10" cy="8" r="3.3" />
+        <path d="M15.5 12.2l2 2 4-4" />
+      </svg>
+    `;
+  }
+  return "";
+}
+
+const IDENTITY_ICON_BUTTON_ACCESSIBILITY_TOKENS = [
+  'aria-label="Join Bracketeering"',
+  'title="Join Bracketeering"',
+  'aria-label="Profile"',
+  'title="Profile"',
+];
+
+function forceCircularIdentityButton(button) {
+  for (const [name, value] of [
+    ["inline-size", "44px"],
+    ["block-size", "44px"],
+    ["width", "44px"],
+    ["height", "44px"],
+    ["min-width", "44px"],
+    ["max-width", "44px"],
+    ["min-height", "44px"],
+    ["max-height", "44px"],
+    ["border-radius", "50%"],
+    ["padding", "0"],
+    ["display", "inline-grid"],
+    ["place-items", "center"],
+    ["line-height", "1"],
+    ["flex", "0 0 44px"],
+    ["box-sizing", "border-box"],
+    ["overflow", "hidden"],
+    ["white-space", "nowrap"],
+  ]) {
+    button.style.setProperty(name, value, "important");
+  }
+}
+
+function decorateIdentityRoundIconButtons(surface) {
+  const buttons = Array.from(surface?.querySelectorAll?.("button") || []);
+  for (const button of buttons) {
+    const visibleText = (button.textContent || "").trim().toLowerCase();
+    const classText = String(button.className || "");
+
+    const isJoinButton =
+      visibleText === "join" ||
+      visibleText.includes("join") ||
+      classText.includes("join-button") ||
+      classText.includes("account-save-action");
+
+    const isProfileButton =
+      visibleText === "profile" ||
+      visibleText.includes("profile") ||
+      classText.includes("profile-control") ||
+      classText.includes("profile-button");
+
+    if (isJoinButton) {
+      button.classList.add("identity-icon-button");
+      forceCircularIdentityButton(button);
+      button.setAttribute("aria-label", "Join Bracketeering");
+      button.setAttribute("title", "Join Bracketeering");
+      button.innerHTML = identityIconSvg("person-add");
+    }
+
+    if (isProfileButton) {
+      button.classList.add("identity-icon-button");
+      forceCircularIdentityButton(button);
+      button.setAttribute("aria-label", "Profile");
+      button.setAttribute("title", "Profile");
+      button.innerHTML = identityIconSvg("person-check");
+    }
+  }
+}
+
 export function createSupabaseIdentitySurface({ root, authService, profileStore = null }) {
   const surface = root?.querySelector?.("[data-supabase-identity-surface]");
+  if (surface) {
+    const identityRoundIconObserver = new MutationObserver(() => decorateIdentityRoundIconButtons(surface));
+    identityRoundIconObserver.observe(surface, { childList: true, subtree: true });
+    decorateIdentityRoundIconButtons(surface);
+  }
+
   if (!surface || !authService) {
     return { start() {} };
   }
