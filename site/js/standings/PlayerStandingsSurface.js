@@ -262,8 +262,8 @@ function renderStandingsRows(panel, rows) {
         <tr>
           <th scope="col">Rank</th>
           <th scope="col">Player</th>
-          <th scope="col">Group</th>
-          <th scope="col">Knockout</th>
+          <th scope="col">Score</th>
+          <th scope="col">Max Possible</th>
         </tr>
       </thead>
       <tbody>${rowMarkup}</tbody>
