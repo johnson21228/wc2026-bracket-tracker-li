@@ -56,6 +56,24 @@ function renderConflict(root, { onUseSaved, onKeepBoard }) {
   conflict.querySelector("[data-keep-board-picks]")?.addEventListener("click", onKeepBoard);
 }
 
+function renderNotice(root, state, message) {
+  const element = ensureJoinLivePicksElement(root);
+  const conflict = element.querySelector("[data-join-live-picks-conflict]");
+  const status = element.querySelector("[data-join-live-picks-status]");
+  element.setAttribute(ACCOUNT_SAVE_STATE_ATTRIBUTE, state);
+  status.textContent = "";
+  conflict.hidden = false;
+  conflict.innerHTML = `
+    <p>${message}</p>
+    <div class="join-live-picks-conflict-actions">
+      <button type="button" data-dismiss-join-live-picks-notice>Continue</button>
+    </div>
+  `;
+  conflict.querySelector("[data-dismiss-join-live-picks-notice]")?.addEventListener("click", () => {
+    clearConflict(root);
+  });
+}
+
 function clearConflict(root) {
   const conflict = ensureJoinLivePicksElement(root).querySelector("[data-join-live-picks-conflict]");
   conflict.hidden = true;
@@ -178,7 +196,7 @@ function createAccountSaveActionSurface({
       lastJoinedPickFingerprint = "";
       conflictActive = false;
       clearConflict(root);
-      renderStatus(root, "not-joined", NOT_JOINED_STARTUP_MESSAGE);
+      renderNotice(root, "not-joined", NOT_JOINED_STARTUP_MESSAGE);
       return;
     }
 
