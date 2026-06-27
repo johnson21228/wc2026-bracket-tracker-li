@@ -2,8 +2,8 @@ import { getSharedSupabaseClient } from "../services/SupabaseClient.js";
 
 const USER_BRACKETS_TABLE = "user_brackets";
 const PROFILES_TABLE = "profiles";
-const ADMIN_OFFICIAL_USER_ID = "Admin_/official";
-const ADMIN_OFFICIAL_TRUTH_SOURCE = "Supabase:Admin_/official";
+const SITE_OFFICIAL_TRUTH_URL = "data/current/official_truth.json";
+const SITE_OFFICIAL_TRUTH_SOURCE = "site/data/current/official_truth.json";
 
 function safeText(value, fallback = "") {
   const text = String(value || "").trim().replace(/\s+/g, " ");
@@ -119,7 +119,7 @@ function canTeamStillReachSlot(teamId, slotId, officialTruthPicksBySlot, visitin
   ));
 }
 
-function scoreAgainstAdminOfficialTruth(playerPicksBySlot, officialTruthPicksBySlot) {
+function scoreAgainstOfficialTruth(playerPicksBySlot, officialTruthPicksBySlot) {
   let score = 0;
   let maxPossible = 0;
   let scoredOfficialSlots = 0;
@@ -158,23 +158,24 @@ function scoreAgainstAdminOfficialTruth(playerPicksBySlot, officialTruthPicksByS
   };
 }
 
-function isAdminOfficialTruthRow(row) {
-  const bracketJson = row?.bracket_json && typeof row.bracket_json === "object" ? row.bracket_json : {};
-  return row?.user_id === ADMIN_OFFICIAL_USER_ID
-    || row?.bracket_kind === "official"
-    || bracketJson.userId === ADMIN_OFFICIAL_USER_ID
-    || bracketJson.bracketKind === "official";
-}
+async function loadSiteOfficialTruth() {
+  const response = await fetch(SITE_OFFICIAL_TRUTH_URL, { cache: "no-cache" });
+  if (!response.ok) {
+    throw new Error(`Could not load site official truth: ${response.status}`);
+  }
 
-function normalizeAdminOfficialTruth(row) {
-  const bracketJson = row?.bracket_json && typeof row.bracket_json === "object" ? row.bracket_json : {};
-  const picksBySlot = picksBySlotFromBracket(bracketJson);
+  const truth = await response.json();
+  const picksBySlot = picksBySlotFromBracket(truth);
+
   return {
-    userId: ADMIN_OFFICIAL_USER_ID,
+    schemaVersion: Number(truth?.schemaVersion || 1),
+    userId: "site-owned-official-truth",
     bracketKind: "official",
+    tournamentId: truth?.tournamentId || "wc2026",
+    gameId: truth?.gameId || "game1",
     picksBySlot,
-    source: ADMIN_OFFICIAL_TRUTH_SOURCE,
-    officialResultsTruthSource: ADMIN_OFFICIAL_TRUTH_SOURCE,
+    source: SITE_OFFICIAL_TRUTH_SOURCE,
+    officialResultsTruthSource: SITE_OFFICIAL_TRUTH_SOURCE,
     partialOfficialTruthAllowed: true,
   };
 }
@@ -188,7 +189,7 @@ function normalizeBracketRow(row, profileByUserId, officialTruth = null) {
   const picksCount = Object.keys(picksBySlot).length;
   const profile = profileByUserId.get(userId) || null;
   const officialTruthPicksBySlot = officialTruth?.picksBySlot || {};
-  const score = scoreAgainstAdminOfficialTruth(picksBySlot, officialTruthPicksBySlot);
+  const score = scoreAgainstOfficialTruth(picksBySlot, officialTruthPicksBySlot);
 
   return {
     userId,
@@ -252,14 +253,13 @@ export function createSupabasePlayerStandingsStore({
       .select("user_id, tournament_id, game_id, status, visibility, bracket_kind, bracket_json, updated_at")
       .eq("tournament_id", tournamentId)
       .eq("game_id", gameId)
-      .in("bracket_kind", ["player", "official"])
+      .eq("bracket_kind", "player")
       .order("updated_at", { ascending: false });
 
     if (error) throw error;
 
-    const allRows = Array.isArray(data) ? data : [];
-    const officialTruth = normalizeAdminOfficialTruth(allRows.find(isAdminOfficialTruthRow) || null);
-    const bracketRows = allRows.filter((row) => !isAdminOfficialTruthRow(row));
+    const bracketRows = Array.isArray(data) ? data : [];
+    const officialTruth = await loadSiteOfficialTruth();
     const userIds = Array.from(new Set(
       bracketRows
         .map((row) => row?.user_id)
