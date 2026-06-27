@@ -396,6 +396,10 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
         if (profileNameSaveInFlight) return;
         await authService.signOut();
       });
+
+      scheduleCooldownTick();
+      loadProfileForState(latestState);
+      return;
     }
 
 
