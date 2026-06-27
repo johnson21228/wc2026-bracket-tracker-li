@@ -550,6 +550,13 @@ export function createBracketView(root) {
     return `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id || ""}`.trim();
   }
 
+  function teamGroupShortcutId(team) {
+    const raw = team?.group || team?.groupId || team?.groupName || team?.pool || "";
+    const value = String(raw || "").trim();
+    if (!value) return "";
+    return value.replace(/^Group\s+/i, "").toUpperCase();
+  }
+
   function renderSlots(slotModels) {
     const layer = boardPlane.querySelector("[data-pick-layer]");
     layer.innerHTML = "";
@@ -570,10 +577,11 @@ export function createBracketView(root) {
       const game2ResolvedR32Display = isGame2ResolvedR32Display(slot, displayTeam);
       const readOnlyGame2R32Display = game2ResolvedR32Display;
       const isR32Slot = slot.round === "R32" || String(slot.slotId || "").toUpperCase().startsWith("R32");
-      const r32GroupShortcutId = isR32Slot && displayTeam?.group ? String(displayTeam.group).replace(/^Group\s+/i, "").toUpperCase() : "";
+      const r32GroupShortcutId = isR32Slot && displayTeam ? teamGroupShortcutId(displayTeam) : "";
       const r32GroupShortcutLabel = r32GroupShortcutId ? `Group ${r32GroupShortcutId}` : "";
-      const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display && !r32GroupShortcutId;
-      button.disabled = disabledByPickability || pickInteractionSuppressed;
+      const hasR32GroupShortcut = Boolean(r32GroupShortcutId);
+      const disabledByPickability = !slot.pickable && !readOnlyGame2R32Display && !hasR32GroupShortcut;
+      button.disabled = hasR32GroupShortcut ? false : (disabledByPickability || pickInteractionSuppressed);
       button.dataset.pickDisabledByPrecedent = enabledByPrecedent ? "false" : "true";
       if (displayTeam && String(slot.slotId || "").toUpperCase() === "CHAMPION") {
         button.classList.add("is-champion-winner");
@@ -586,7 +594,7 @@ export function createBracketView(root) {
       button.setAttribute(
         "aria-label",
         displayTeam
-          ? r32GroupShortcutId
+          ? hasR32GroupShortcut
             ? `${playerFacingSlotLabel(slot)}: ${fullTeamLabel(displayTeam)}. Open ${r32GroupShortcutLabel} panel.`
             : `${playerFacingSlotLabel(slot)}: ${fullTeamLabel(displayTeam)}`
           : pickFillSuppressed
@@ -682,9 +690,12 @@ export function createBracketView(root) {
         button.setAttribute("data-game2-resolved-r32-source", slot.game2ResolvedSource || "unknown");
       }
       if (!displayTeam) button.classList.add("is-unpicked");
-      if (r32GroupShortcutId) {
+      if (hasR32GroupShortcut) {
         button.classList.add("has-r32-group-shortcut");
+        button.classList.add("is-pickable");
         button.dataset.r32GroupShortcut = r32GroupShortcutId;
+        button.dataset.r32GroupPanelShortcut = "true";
+        button.setAttribute("data-r32-group-panel-shortcut", "true");
         button.title = `Open ${r32GroupShortcutLabel} panel`;
       }
       if (slot.officialPickComparison?.state === "correct") {
@@ -707,21 +718,25 @@ export function createBracketView(root) {
         button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
         button.setAttribute("aria-label", `${slot.label}: invalid pick. ${button.title}`);
       }
-      if (slot.pickable && !pickInteractionSuppressed) button.classList.add("is-pickable");
-      if (!enabledByPrecedent) {
+      if ((slot.pickable || hasR32GroupShortcut) && (!pickInteractionSuppressed || hasR32GroupShortcut)) button.classList.add("is-pickable");
+      if (!enabledByPrecedent && !hasR32GroupShortcut) {
         button.classList.add("is-waiting-for-precedent");
         button.title = precedentUnavailableReason;
       }
-      if (!pickInteractionSuppressed) {
-        if (r32GroupShortcutId) {
-          button.addEventListener("click", () => {
-            pendingGroupPanelAnchorBoundsPx = boardLocalBoundsForElement(button);
-            pendingGroupPanelAnchorElement = button;
-            handlers.onGroupPanelOpen?.(r32GroupShortcutId);
-          });
-        } else {
-          button.addEventListener("click", () => handlers.onSlotClick?.(slot.slotId));
-        }
+      if (hasR32GroupShortcut) {
+        const openR32GroupPanel = () => {
+          pendingGroupPanelAnchorBoundsPx = boardLocalBoundsForElement(button);
+          pendingGroupPanelAnchorElement = button;
+          handlers.onGroupPanelOpen?.(r32GroupShortcutId);
+        };
+        button.addEventListener("click", openR32GroupPanel);
+        button.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          openR32GroupPanel();
+        });
+      } else if (!pickInteractionSuppressed) {
+        button.addEventListener("click", () => handlers.onSlotClick?.(slot.slotId));
       }
       layer.append(button);
     }
