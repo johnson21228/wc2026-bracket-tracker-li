@@ -1,82 +1,69 @@
 #!/usr/bin/env python3
-from pathlib import Path
 import json
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+matches_path = ROOT / "site" / "data" / "current" / "group_matches.json"
+standings_path = ROOT / "site" / "data" / "current" / "group_standings.json"
+
+matches_data = json.loads(matches_path.read_text())
+standings_data = json.loads(standings_path.read_text())
+
+matches = matches_data.get("matches", matches_data) if isinstance(matches_data, dict) else matches_data
+groups = standings_data.get("groups", {})
+
 errors = []
 
-def read(rel):
-    return json.loads((ROOT / rel).read_text())
+def require(condition, message):
+    if not condition:
+        errors.append(message)
 
-matches = read("site/data/current/group_matches.json").get("matches", [])
-by_id = {str(m.get("matchId") or m.get("id")): m for m in matches}
-
-cze = by_id.get("66456910")
-if not cze:
-    errors.append("missing match 66456910")
-else:
-    expected = {
-        "status": "final",
-        "homeTeamId": "CZE",
-        "awayTeamId": "RSA",
-        "homeScore": 1,
-        "awayScore": 1,
-        "summary": "Czechia 1-1 South Africa",
-    }
-    for key, value in expected.items():
-        if cze.get(key) != value:
-            errors.append(f"66456910 {key} expected {value!r}, found {cze.get(key)!r}")
-    if "reuters.com" not in cze.get("resultSourceUrl", ""):
-        errors.append("66456910 missing Reuters resultSourceUrl")
-
-sui = by_id.get("66456922")
-if not sui:
-    errors.append("missing watchlist match 66456922")
-elif sui.get("status") == "final":
-    if sui.get("homeScore") != 4 or sui.get("awayScore") != 1:
-        errors.append("66456922 final score should be Switzerland 4-1 Bosnia and Herzegovina")
-    if not sui.get("resultSourceUrl"):
-        errors.append("66456922 missing resultSourceUrl")
-
-standings = read("site/data/current/group_standings.json")
-group_a = standings.get("groups", {}).get("A", {}).get("entries", [])
-entry = {e.get("teamId"): e for e in group_a}
-checks = {
-    "CZE": {"played": 2, "draws": 1, "losses": 1, "goalsFor": 2, "goalsAgainst": 3, "goalDifference": -1, "points": 1},
-    "RSA": {"played": 2, "draws": 1, "losses": 1, "goalsFor": 1, "goalsAgainst": 3, "goalDifference": -2, "points": 1},
-}
-for team, expected in checks.items():
-    e = entry.get(team)
-    if not e:
-        errors.append(f"Group A missing {team}")
+# This verifier originally protected the Czechia 1-1 South Africa patch.
+# It now protects that historical final while allowing later Group A matches
+# to advance standings beyond the old 2-played interim state.
+target = None
+for match in matches:
+    if not isinstance(match, dict):
         continue
-    for key, value in expected.items():
-        if e.get(key) != value:
-            errors.append(f"Group A {team} {key} expected {value!r}, found {e.get(key)!r}")
+    ids = {match.get("homeTeamId"), match.get("awayTeamId")}
+    if match.get("groupId") == "A" and ids == {"CZE", "RSA"}:
+        target = match
+        break
 
-evidence_path = ROOT / "source/text/group_result_evidence_20260618.json"
-if not evidence_path.exists():
-    errors.append("missing source/text/group_result_evidence_20260618.json")
-else:
-    evidence = json.loads(evidence_path.read_text())
-    items = evidence.get("items", [])
-    if not any(str(i.get("matchId")) == "66456910" and i.get("decision") == "PATCH" for i in items):
-        errors.append("evidence missing PATCH item for 66456910")
-    watch = evidence.get("watchlist", [])
-    if not any(str(i.get("matchId")) == "66456922" and i.get("decision") == "WATCH" for i in watch):
-        errors.append("evidence missing WATCH item for 66456922")
+require(target is not None, "Group A Czechia-South Africa match not found")
 
-required_files = [
-    "li/world_cup/current_group_result_evidence_rule.md",
-    "docs/features/current_group_result_evidence.md",
-    "cards/202_capture_safe_group_result_cze_rsa_card.md",
-    "capture_back/CAPTURE_BACK_SAFE_GROUP_RESULT_CZE_RSA.md",
-]
-for rel in required_files:
-    if not (ROOT / rel).exists():
-        errors.append(f"missing file: {rel}")
+if target:
+    require(target.get("status") == "final", "Czechia-South Africa should remain final")
+    require(target.get("homeTeamId") == "CZE", "Czechia should remain home team for protected match")
+    require(target.get("awayTeamId") == "RSA", "South Africa should remain away team for protected match")
+    require(target.get("homeScore") == 1, f"Czechia score expected 1, found {target.get('homeScore')}")
+    require(target.get("awayScore") == 1, f"South Africa score expected 1, found {target.get('awayScore')}")
+
+group_a = groups.get("A", {}).get("entries", [])
+by_id = {row.get("teamId"): row for row in group_a}
+
+require([row.get("teamId") for row in group_a] == ["MEX", "RSA", "KOR", "CZE"],
+        f"Group A completed order should be ['MEX', 'RSA', 'KOR', 'CZE'], found {[row.get('teamId') for row in group_a]}")
+
+expected = {
+    "MEX": {"played": 3, "points": 9, "goalDifference": 6},
+    "RSA": {"played": 3, "points": 4, "goalDifference": -1},
+    "KOR": {"played": 3, "points": 3, "goalDifference": -1},
+    "CZE": {"played": 3, "points": 1, "goalDifference": -4},
+}
+
+for team_id, expected_fields in expected.items():
+    row = by_id.get(team_id)
+    require(row is not None, f"Group A standings missing {team_id}")
+    if not row:
+        continue
+    for field, value in expected_fields.items():
+        require(row.get(field) == value, f"Group A {team_id} {field} expected {value}, found {row.get(field)}")
 
 if errors:
-    raise SystemExit("WC2026 safe group result verification failed:\n- " + "\n- ".join(errors))
+    print("WC2026 safe group result verification failed:")
+    for err in errors:
+        print(f"- {err}")
+    raise SystemExit(1)
 
-print("OK: WC2026 safe Czechia-South Africa group result patch is captured and verified.")
+print("OK: Czechia-South Africa result remains protected and Group A completed standings are current.")

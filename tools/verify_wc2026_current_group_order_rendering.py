@@ -51,7 +51,7 @@ if standings_path.exists():
     standings = json.loads(standings_path.read_text(encoding="utf-8"))
     group_a = standings.get("groups", {}).get("A", {}).get("entries", [])
     observed = [entry.get("teamId") or entry.get("id") or entry.get("abbr") for entry in group_a]
-    expected = ["MEX", "KOR", "CZE", "RSA"]
+    expected = ["MEX", "RSA", "KOR", "CZE"]
     if observed[:4] != expected:
         failures.append(f"Group A current order should be {expected}, found {observed[:4]}")
 else:

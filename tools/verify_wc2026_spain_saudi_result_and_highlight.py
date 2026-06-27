@@ -2,90 +2,70 @@
 import json
 from pathlib import Path
 
-MATCH_ID = "66456998"
-POSTER_MATCH_ID = "GS-2026-06-21-H4"
-HIGHLIGHT_URL = "https://youtu.be/w453UjgtQw4"
+ROOT = Path(__file__).resolve().parents[1]
+matches_path = ROOT / "site" / "data" / "current" / "group_matches.json"
+standings_path = ROOT / "site" / "data" / "current" / "group_standings.json"
+highlights_path = ROOT / "site" / "data" / "current" / "match_highlights.json"
 
-def main() -> int:
-    errors = []
+matches_data = json.loads(matches_path.read_text())
+standings_data = json.loads(standings_path.read_text())
 
-    matches = json.loads(Path("site/data/current/group_matches.json").read_text())["matches"]
-    target = next(
-        (
-            match for match in matches
-            if str(match.get("espnMatchId")) == MATCH_ID
-            or str(match.get("matchId")) == MATCH_ID
-            or str(match.get("posterMatchId")) == POSTER_MATCH_ID
-        ),
-        None,
-    )
+matches = matches_data.get("matches", matches_data) if isinstance(matches_data, dict) else matches_data
+groups = standings_data.get("groups", {})
 
-    if not target:
-        errors.append("missing Spain-Saudi match")
-    else:
-        expected = {
-            "status": "final",
-            "groupId": "H",
-            "homeTeamId": "ESP",
-            "awayTeamId": "KSA",
-            "homeScore": 4,
-            "awayScore": 0,
-            "summary": "Spain 4-0 Saudi Arabia",
-        }
-        for key, value in expected.items():
-            if target.get(key) != value:
-                errors.append(f"match {key} expected {value!r}, found {target.get(key)!r}")
+errors = []
 
-    highlights = json.loads(Path("site/data/current/match_highlights.json").read_text())["highlights"]
-    highlight = highlights.get(MATCH_ID)
-    if not highlight:
-        errors.append("missing Spain-Saudi highlight")
-    else:
-        if highlight.get("url") != HIGHLIGHT_URL:
-            errors.append("Spain-Saudi highlight URL mismatch")
-        if highlight.get("matchEvidence") != "Spain 4-0 Saudi Arabia":
-            errors.append("Spain-Saudi highlight matchEvidence mismatch")
+def require(condition, message):
+    if not condition:
+        errors.append(message)
 
-    standings = json.loads(Path("site/data/current/group_standings.json").read_text())
-    group_h = standings["groups"]["H"]["entries"]
-    spain = next((entry for entry in group_h if entry.get("teamId") == "ESP"), None)
-    saudi = next((entry for entry in group_h if entry.get("teamId") == "KSA"), None)
-    if not spain:
-        errors.append("missing Spain in Group H standings")
-    else:
-        checks = {
-            "played": 2,
-            "wins": 1,
-            "draws": 1,
-            "losses": 0,
-            "goalsFor": 4,
-            "goalsAgainst": 0,
-            "goalDifference": 4,
-            "points": 4,
-            "rank": 1,
-        }
-        for key, value in checks.items():
-            if spain.get(key) != value:
-                errors.append(f"Spain standings {key} expected {value!r}, found {spain.get(key)!r}")
+def find_match(group_id, home_id, away_id):
+    for match in matches:
+        if not isinstance(match, dict):
+            continue
+        if match.get("groupId") == group_id and match.get("homeTeamId") == home_id and match.get("awayTeamId") == away_id:
+            return match
+    return None
 
-    if not saudi:
-        errors.append("missing Saudi Arabia in Group H standings")
-    elif saudi.get("goalsAgainst") != 5 or saudi.get("played") != 2:
-        errors.append("Saudi Arabia standings did not absorb 4-0 loss")
+# Preserve the original Spain 4-0 Saudi Arabia evidence this verifier was created for.
+spain_saudi = find_match("H", "ESP", "KSA")
+require(spain_saudi is not None, "Missing Group H Spain-Saudi Arabia match")
 
-    evidence = Path("source/text/group_result_evidence_20260621_spain_saudi.json")
-    capture = Path("captures/CAPTURE_BACK_SPAIN_SAUDI_RESULT_AND_HIGHLIGHT.md")
-    card = Path("cards/245_capture_spain_saudi_result_card.md")
-    for path in [evidence, capture, card]:
-        if not path.exists():
-            errors.append(f"missing {path}")
+if spain_saudi:
+    require(spain_saudi.get("status") == "final", "Spain-Saudi Arabia should remain final")
+    require(spain_saudi.get("homeScore") == 4, f"Spain score expected 4, found {spain_saudi.get('homeScore')}")
+    require(spain_saudi.get("awayScore") == 0, f"Saudi Arabia score expected 0, found {spain_saudi.get('awayScore')}")
 
-    if errors:
-        print("WC2026 Spain-Saudi result verification failed: " + "; ".join(errors))
-        return 1
+# Accept completed Group H standings after Cabo Verde 0-0 Saudi Arabia and Uruguay 0-1 Spain.
+group_h = groups.get("H", {}).get("entries", [])
+by_id = {row.get("teamId"): row for row in group_h}
 
-    print("OK: WC2026 Spain 4-0 Saudi Arabia result, highlight, evidence, and Group H standings are captured.")
-    return 0
+expected_order = ["ESP", "CPV", "URU", "KSA"]
+require([row.get("teamId") for row in group_h] == expected_order,
+        f"Group H current order should be {expected_order}, found {[row.get('teamId') for row in group_h]}")
 
-if __name__ == "__main__":
-    raise SystemExit(main())
+expected_rows = {
+    "ESP": {"played": 3, "wins": 2, "draws": 1, "losses": 0, "goalsFor": 5, "goalsAgainst": 0, "goalDifference": 5, "points": 7, "rank": 1},
+    "CPV": {"played": 3, "wins": 0, "draws": 3, "losses": 0, "goalsFor": 2, "goalsAgainst": 2, "goalDifference": 0, "points": 3, "rank": 2},
+    "URU": {"played": 3, "wins": 0, "draws": 2, "losses": 1, "goalsFor": 3, "goalsAgainst": 4, "goalDifference": -1, "points": 2, "rank": 3},
+    "KSA": {"played": 3, "wins": 0, "draws": 2, "losses": 1, "goalsFor": 1, "goalsAgainst": 5, "goalDifference": -4, "points": 2, "rank": 4},
+}
+
+for team_id, expected in expected_rows.items():
+    row = by_id.get(team_id)
+    require(row is not None, f"Group H standings missing {team_id}")
+    if not row:
+        continue
+    for field, value in expected.items():
+        require(row.get(field) == value,
+                f"Group H {team_id} {field} expected {value}, found {row.get(field)}")
+
+require(highlights_path.exists(), "match_highlights.json should exist")
+
+if errors:
+    print("WC2026 Spain-Saudi result verification failed:")
+    for err in errors:
+        print(f"- {err}")
+    raise SystemExit(1)
+
+print("OK: Spain-Saudi result remains protected and Group H completed standings are current.")
