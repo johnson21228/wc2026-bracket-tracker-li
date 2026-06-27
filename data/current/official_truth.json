@@ -4,7 +4,7 @@
   "gameId": "game1",
   "source": "site-owned-official-truth",
   "authority": "site-owned-official-truth",
-  "updatedAt": "2026-06-27T05:43:36.616484Z",
+  "updatedAt": "2026-06-27T05:49:45.505191Z",
   "picksBySlot": {
     "R-R32-05": {
       "slotId": "R-R32-05",
@@ -222,6 +222,17 @@
       "pick": {
         "kind": "team",
         "teamId": "CAN"
+      },
+      "source": "site-owned-official-truth",
+      "officialTruth": true
+    },
+    "L-R16-04": {
+      "slotId": "L-R16-04",
+      "teamId": "MAR",
+      "teamName": "Morocco",
+      "pick": {
+        "kind": "team",
+        "teamId": "MAR"
       },
       "source": "site-owned-official-truth",
       "officialTruth": true
