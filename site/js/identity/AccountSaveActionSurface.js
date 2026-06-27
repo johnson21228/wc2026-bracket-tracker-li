@@ -47,6 +47,7 @@ function renderConflict(root, { onUseSaved, onKeepBoard }) {
   element.setAttribute(ACCOUNT_SAVE_STATE_ATTRIBUTE, "conflict");
   conflict.hidden = false;
   conflict.innerHTML = `
+    <p>${JOINED_PICKS_LOADED_MESSAGE}</p>
     <div class="join-live-picks-conflict-actions">
       <button type="button" data-use-saved-picks>Continue</button>
     </div>
@@ -190,7 +191,6 @@ function createAccountSaveActionSurface({
     try {
       const result = model.importAccountBracketDocument(loadedJoinedBracket);
       if (!result?.ok) throw new Error(result?.reason || "Saved picks could not be used.");
-      renderStatus(root, "loaded", JOINED_PICKS_LOADED_MESSAGE);
 
       lastJoinedPickFingerprint = pickFingerprintFromDocument(loadedJoinedBracket);
       renderStatus(root, "saved", "");
@@ -242,7 +242,6 @@ function createAccountSaveActionSurface({
       if (localPickCount() === 0) {
         const result = model.importAccountBracketDocument(loadedJoinedBracket);
         if (!result?.ok) throw new Error(result?.reason || "Joined picks could not be loaded.");
-        renderStatus(root, "loaded", JOINED_PICKS_LOADED_MESSAGE);
         renderStatus(root, "saved", "");
         dispatchLoadedPicks({ automatic, imported: result.imported || 0 });
         return;
