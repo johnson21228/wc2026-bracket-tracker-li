@@ -4,7 +4,7 @@
   "gameId": "game1",
   "source": "site-owned-official-truth",
   "authority": "site-owned-official-truth",
-  "updatedAt": "2026-06-28T00:30:00-04:00",
+  "updatedAt": "2026-06-28T01:05:00-04:00",
   "picksBySlot": {
     "R-R32-05": {
       "slotId": "R-R32-05",
@@ -480,8 +480,14 @@
         "teamCode": "DZA",
         "teamName": "Algeria",
         "source": "site-owned-official-truth-r32-schedule",
-        "sourceLabel": "Switzerland vs Algeria"
-      }
+        "sourceLabel": "Switzerland vs Algeria",
+        "flag": "🇩🇿",
+        "countryCode": "DZ",
+        "displayName": "Algeria"
+      },
+      "flag": "🇩🇿",
+      "countryCode": "DZ",
+      "displayName": "Algeria"
     },
     "R-R32-15": {
       "teamId": "COL",
@@ -513,6 +519,8 @@
     }
   },
   "notes": [
-    "R32 official truth seed slots completed from the official Round of 32 schedule on 2026-06-28."
+    "R32 official truth seed slots completed from the official Round of 32 schedule on 2026-06-28.",
+    "R-R32-14 set to Algeria from Switzerland vs Algeria Round of 32 schedule.",
+    "R-R32-14 includes full Algeria metadata including flag for Switzerland vs Algeria."
   ]
 }
