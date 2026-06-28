@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-06-28T00:05:00-04:00",
+  "scope": "final Group J/K/L group-stage results and standings refresh",
+  "matches": [
+    {
+      "matchId": "GS-2026-06-27-J5",
+      "group": "J",
+      "result": "Algeria 3-3 Austria",
+      "source": "Refreshed World Cup schedule source; user correction review",
+      "url": "https://www.fifa.com/en/match-centre/match/17/285023/289273/400021497"
+    },
+    {
+      "matchId": "GS-2026-06-27-J6",
+      "group": "J",
+      "result": "Jordan 1-3 Argentina",
+      "source": "Guardian live/report",
+      "url": "https://www.theguardian.com/football/live/2026/jun/28/fifa-world-cup-2026-live-jordan-v-argentina-updates-jor-vs-arg-group-j-match-score-latest"
+    },
+    {
+      "matchId": "GS-2026-06-27-K5",
+      "group": "K",
+      "result": "Colombia 0-0 Portugal",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/sports/soccer/colombia-top-group-after-goalless-draw-with-portugal-2026-06-28/"
+    },
+    {
+      "matchId": "GS-2026-06-27-K6",
+      "group": "K",
+      "result": "Congo DR 3-1 Uzbekistan",
+      "source": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/760482/uzbekistan-congo-dr"
+    },
+    {
+      "matchId": "GS-2026-06-27-L5",
+      "group": "L",
+      "result": "Panama 0-2 England",
+      "source": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/760485/england-panama"
+    },
+    {
+      "matchId": "GS-2026-06-27-L6",
+      "group": "L",
+      "result": "Croatia 2-1 Ghana",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/sports/soccer/vlasic-header-sends-croatia-into-world-cup-knockouts-with-2-1-win-over-ghana-2026-06-27/"
+    }
+  ],
+  "notes": [
+    "Patch updates group_matches.json final scores only for the six remaining final Group J/K/L fixtures.",
+    "group_standings.json is recomputed from checked-in final match scores; third-place table is contextual and not an R32 slot allocation source.",
+    "official_truth.json and knockout/R32 picks are intentionally untouched.",
+    "Correction: Algeria-Austria was changed from 2-2 to 3-3 after user review and a refreshed schedule-source check; standings were updated without touching official_truth.json."
+  ]
+}

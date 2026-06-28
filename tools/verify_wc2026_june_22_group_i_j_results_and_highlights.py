@@ -46,12 +46,12 @@ require_group("I", ["FRA", "NOR", "SEN", "IRQ"], {
     "IRQ": {"played": 3, "wins": 0, "draws": 0, "losses": 3, "goalsFor": 1, "goalsAgainst": 12, "goalDifference": -11, "points": 0, "rank": 4},
 })
 
-# Group J has not received its final matchday in this patch, so keep the current checked-in state.
+# Group J is now complete after the June 27 final matchday.
 require_group("J", ["ARG", "AUT", "DZA", "JOR"], {
-    "ARG": {"played": 2, "wins": 2, "draws": 0, "losses": 0, "goalsFor": 5, "goalsAgainst": 0, "goalDifference": 5, "points": 6, "rank": 1},
-    "AUT": {"played": 2, "wins": 1, "draws": 0, "losses": 1, "goalsFor": 3, "goalsAgainst": 3, "goalDifference": 0, "points": 3, "rank": 2},
-    "DZA": {"played": 2, "wins": 1, "draws": 0, "losses": 1, "goalsFor": 2, "goalsAgainst": 4, "goalDifference": -2, "points": 3, "rank": 3},
-    "JOR": {"played": 2, "wins": 0, "draws": 0, "losses": 2, "goalsFor": 2, "goalsAgainst": 5, "goalDifference": -3, "points": 0, "rank": 4},
+    "ARG": {"played": 3, "wins": 3, "draws": 0, "losses": 0, "goalsFor": 8, "goalsAgainst": 1, "goalDifference": 7, "points": 9, "rank": 1},
+    "AUT": {"played": 3, "wins": 1, "draws": 1, "losses": 1, "goalsFor": 6, "goalsAgainst": 6, "goalDifference": 0, "points": 4, "rank": 2},
+    "DZA": {"played": 3, "wins": 1, "draws": 1, "losses": 1, "goalsFor": 5, "goalsAgainst": 7, "goalDifference": -2, "points": 4, "rank": 3},
+    "JOR": {"played": 3, "wins": 0, "draws": 0, "losses": 3, "goalsFor": 3, "goalsAgainst": 8, "goalDifference": -5, "points": 0, "rank": 4},
 })
 
 third_by_group = {row.get("groupId"): row for row in thirds}
@@ -68,4 +68,4 @@ if errors:
         print(f"- {err}")
     raise SystemExit(1)
 
-print("OK: June 22 Group I/J evidence remains protected and Group I completed standings are current.")
+print("OK: June 22 Group I/J evidence remains protected and Group J now reflects final completed standings.")
