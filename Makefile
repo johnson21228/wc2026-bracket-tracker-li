@@ -93,6 +93,7 @@ verify:
 	python3 tools/verify_wc2026_sign_in_panel_over_game_board.py
 	python3 tools/verify_wc2026_identity_round_icon_buttons.py
 	python3 tools/verify_wc2026_css_owned_top_right_player_controls.py
+	python3 tools/verify_wc2026_pool_button_behind_panels.py
 	python3 tools/verify_wc2026_center_final_four_visual_only.py
 	python3 tools/verify_wc2026_final_stack_svg_manifest_alignment.py
 	python3 tools/verify_wc2026_final_four_pick_display.py

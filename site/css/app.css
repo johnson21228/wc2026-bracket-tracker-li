@@ -2685,3 +2685,29 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
   pointer-events: none;
 }
 
+/* Pool/Standings button must stay behind transient panels and menus.
+   The button remains clickable when no panel/menu is open, but never wins
+   the stacking contest over pick menus, group panels, or sign-in/profile UI. */
+.top-right-player-controls,
+.player-standings-control,
+.player-standings-button,
+#player-standings-button,
+[data-player-standings-button] {
+  z-index: 120;
+}
+
+.pick-menu,
+.pick-menu-layer,
+.r32-pick-menu,
+.group-panel,
+.group-standings-panel,
+.board-floating-surface,
+.floating-surface,
+.sign-in-panel,
+.profile-panel,
+.account-panel,
+[data-floating-surface],
+[data-pick-menu],
+[data-group-panel] {
+  z-index: 900;
+}
