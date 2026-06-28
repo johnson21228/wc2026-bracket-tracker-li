@@ -2687,13 +2687,17 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 
 /* Pool/Standings button must stay behind transient panels and menus.
    The button remains clickable when no panel/menu is open, but never wins
-   the stacking contest over pick menus, group panels, or sign-in/profile UI. */
+   the stacking contest over pick menus, group panels, sign-in/profile UI,
+   or Workbench/Easter Egg panels. */
 .top-right-player-controls,
 .player-standings-control,
 .player-standings-button,
 #player-standings-button,
-[data-player-standings-button] {
-  z-index: 120;
+[data-player-standings-button],
+.player-standings-control .standings-icon-button,
+.player-standings-control .standings-icon-button.is-join-required,
+.player-standings-control .standings-icon-button:disabled {
+  z-index: 120 !important;
 }
 
 .pick-menu,
@@ -2706,8 +2710,61 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 .sign-in-panel,
 .profile-panel,
 .account-panel,
+.workbench-easter-egg-panel,
+.bracketeering-workflow-panel,
 [data-floating-surface],
 [data-pick-menu],
-[data-group-panel] {
-  z-index: 900;
+[data-group-panel],
+[data-workbench-easter-egg-panel],
+[data-bracketeering-workflow-panel] {
+  z-index: 13200 !important;
+}
+
+
+/* Final override: Pool/Standings never overlays Workbench/Easter Egg. */
+.top-right-player-controls,
+.player-standings-control,
+.player-standings-control *,
+.player-standings-button,
+#player-standings-button,
+[data-player-standings-button],
+[data-player-standings-button] * {
+  z-index: 120 !important;
+}
+
+/* Workbench/Easter Egg must be above all top chrome controls. */
+.workbench-easter-egg-panel,
+.bracketeering-workflow-panel,
+[data-workbench-easter-egg-panel],
+[data-bracketeering-workflow-panel],
+#workbench-easter-egg-panel,
+#bracketeering-workflow-panel {
+  position: fixed !important;
+  z-index: 25000 !important;
+}
+
+.player-standings-player-picks-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.player-standings-player-picks-button:hover,
+.player-standings-player-picks-button:focus-visible {
+  color: #fff;
+}
+
+/* Player picks read-only board viewer must sit above the Pool standings panel. */
+.player-board-viewer-panel,
+[data-player-board-viewer-panel],
+[data-player-board-viewer],
+.player-board-viewer {
+  z-index: 30000 !important;
 }

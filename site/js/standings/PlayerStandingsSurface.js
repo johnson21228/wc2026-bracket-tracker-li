@@ -70,6 +70,7 @@ function normalizeStandingsRow(row) {
     : {};
 
   return {
+    userId: row?.userId || row?.user_id || row?.ownerUserId || row?.owner_user_id || row?.playerUserId || row?.player_user_id || "",
     publicPlayerName: safePublicPlayerName(row),
     picksBySlot,
     picksCount,
@@ -240,27 +241,35 @@ function ensurePlayerBoardViewerPanel(root) {
   return panel;
 }
 
-function renderStandingsRows(panel, rows) {
+function renderStandingsRows(panel, rows, { authState = null, profileState = null } = {}) {
   const body = panel.querySelector("[data-player-standings-body]");
   const sortedRows = sortPlayerStandingsRows(rows);
+  const currentUserId = authState?.user?.id || authState?.userId || profileState?.userId || profileState?.profile?.user_id || profileState?.id || null;
 
   if (!sortedRows.length) {
     body.innerHTML = `<p class="player-standings-status">No players yet</p>`;
     return [];
   }
 
-  const rowMarkup = sortedRows.map((row, index) => `
+  const rowMarkup = sortedRows.map((row, index) => {
+    const canViewPicks = true;
+    const nameMarkup = canViewPicks
+      ? `<button type="button" class="player-standings-player-name player-standings-player-picks-button" data-player-standings-row="${index}" title="View ${escapeHtml(row.publicPlayerName)}'s picks">${escapeHtml(row.publicPlayerName)}</button>`
+      : `<span class="player-standings-player-name">${escapeHtml(row.publicPlayerName)}</span>`;
+
+    return `
     <tr>
       <td class="player-standings-rank">${index + 1}</td>
       <td class="player-standings-player">
         <div class="player-standings-player-summary">
-          <span class="player-standings-player-name">${escapeHtml(row.publicPlayerName)}</span>
+          ${nameMarkup}
         </div>
       </td>
       <td class="player-standings-score">${row.score ?? row.groupPoints ?? 0}</td>
       <td class="player-standings-max-possible">${row.maxPossible ?? row.knockoutPoints ?? 0}</td>
     </tr>
-  `).join("");
+  `;
+  }).join("");
 
   body.innerHTML = `
     <table class="player-standings-table" aria-label="Player standings">
@@ -416,8 +425,10 @@ function renderPlayerBoard(panel, { row, assets }) {
   const nativeHeight = Number(nativeSize.height || nativeSize.h || 1024);
   const slotMarkup = slots.map((slot) => {
     const bounds = slot.boundsPx;
-    const team = normalizeBoardViewerTeam(pickTeamIdFromRecord(picksBySlot[slot.slotId]), teamById);
-    const officialTeam = normalizeBoardViewerTeam(pickTeamIdFromRecord(officialTruthPicksBySlot[slot.slotId]), teamById);
+    const playerTeamId = pickTeamIdFromRecord(picksBySlot[slot.slotId]);
+    const officialTeamId = pickTeamIdFromRecord(officialTruthPicksBySlot[slot.slotId]);
+    const team = normalizeBoardViewerTeam(playerTeamId || (slot.round === "R32" ? officialTeamId : null), teamById);
+    const officialTeam = normalizeBoardViewerTeam(officialTeamId, teamById);
     const officialState = officialTeam && team
       ? (officialTeam.id === team.id ? "correct" : "incorrect")
       : "";
@@ -579,7 +590,7 @@ export function createPlayerStandingsSurface({
         return;
       }
 
-      currentStandingsRows = renderStandingsRows(panel, rows);
+      currentStandingsRows = renderStandingsRows(panel, rows, { authState: currentAuthState, profileState: currentProfileState });
     } catch (error) {
       console.error("[PlayerStandingsSurface] standings unavailable", error);
       renderStatus("Standings unavailable");
@@ -656,6 +667,13 @@ export function createPlayerStandingsSurface({
     });
 
     panel.addEventListener("click", (event) => {
+      const picksButton = event.target instanceof HTMLElement
+        ? event.target.closest("[data-player-standings-row]")
+        : null;
+      if (picksButton) {
+        openPlayerBoardViewer(picksButton);
+        return;
+      }
       if (event.target === panel) closePanel();
     });
 
