@@ -1,0 +1,688 @@
+{
+  "schema": "wc2026-knockout-pub-background-schedule-v1",
+  "purpose": "Non-runtime trusted source for generating knockout pub background images.",
+  "runtimeUse": false,
+  "sourceFiles": [
+    "site/data/current/knockout_matches.json",
+    "tools/verify_wc2026_official_truth_r32_schedule_assignments.py"
+  ],
+  "notes": [
+    "Do not import this file into gameplay runtime.",
+    "Use this file for background-image generation only.",
+    "R32 teams are copied from the schedule-assignment verifier, not from stale partial official_truth.json."
+  ],
+  "matches": [
+    {
+      "match_id": 73,
+      "round": "Round of 32",
+      "date": "2026-06-28",
+      "kickoff_local": "12:00",
+      "timezone": "America/Los_Angeles",
+      "kickoff_et": "15:00",
+      "venue": "Los Angeles Stadium",
+      "city": "Los Angeles",
+      "home_slot": "2A",
+      "away_slot": "2B",
+      "home_team": {
+        "code": "GER",
+        "name": "Germany"
+      },
+      "away_team": {
+        "code": "PAR",
+        "name": "Paraguay"
+      },
+      "image_label": "GER vs PAR"
+    },
+    {
+      "match_id": 74,
+      "round": "Round of 32",
+      "date": "2026-06-29",
+      "kickoff_local": "16:30",
+      "timezone": "America/New_York",
+      "kickoff_et": "16:30",
+      "venue": "Boston Stadium",
+      "city": "Foxborough",
+      "home_slot": "1E",
+      "away_slot": "3A/B/C/D/F",
+      "home_team": {
+        "code": "FRA",
+        "name": "France"
+      },
+      "away_team": {
+        "code": "SWE",
+        "name": "Sweden"
+      },
+      "image_label": "FRA vs SWE"
+    },
+    {
+      "match_id": 75,
+      "round": "Round of 32",
+      "date": "2026-06-29",
+      "kickoff_local": "19:00",
+      "timezone": "America/Monterrey",
+      "kickoff_et": "21:00",
+      "venue": "Monterrey Stadium",
+      "city": "Guadalupe",
+      "home_slot": "1F",
+      "away_slot": "2C",
+      "home_team": {
+        "code": "RSA",
+        "name": "South Africa"
+      },
+      "away_team": {
+        "code": "CAN",
+        "name": "Canada"
+      },
+      "image_label": "RSA vs CAN"
+    },
+    {
+      "match_id": 76,
+      "round": "Round of 32",
+      "date": "2026-06-29",
+      "kickoff_local": "12:00",
+      "timezone": "America/Chicago",
+      "kickoff_et": "13:00",
+      "venue": "Houston Stadium",
+      "city": "Houston",
+      "home_slot": "1C",
+      "away_slot": "2F",
+      "home_team": {
+        "code": "NED",
+        "name": "Netherlands"
+      },
+      "away_team": {
+        "code": "MAR",
+        "name": "Morocco"
+      },
+      "image_label": "NED vs MAR"
+    },
+    {
+      "match_id": 77,
+      "round": "Round of 32",
+      "date": "2026-06-30",
+      "kickoff_local": "17:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "17:00",
+      "venue": "New York New Jersey Stadium",
+      "city": "East Rutherford",
+      "home_slot": "1I",
+      "away_slot": "3C/D/F/G/H",
+      "home_team": {
+        "code": "POR",
+        "name": "Portugal"
+      },
+      "away_team": {
+        "code": "CRO",
+        "name": "Croatia"
+      },
+      "image_label": "POR vs CRO"
+    },
+    {
+      "match_id": 78,
+      "round": "Round of 32",
+      "date": "2026-06-30",
+      "kickoff_local": "12:00",
+      "timezone": "America/Chicago",
+      "kickoff_et": "13:00",
+      "venue": "Dallas Stadium",
+      "city": "Arlington",
+      "home_slot": "2E",
+      "away_slot": "2I",
+      "home_team": {
+        "code": "ESP",
+        "name": "Spain"
+      },
+      "away_team": {
+        "code": "AUT",
+        "name": "Austria"
+      },
+      "image_label": "ESP vs AUT"
+    },
+    {
+      "match_id": 79,
+      "round": "Round of 32",
+      "date": "2026-06-30",
+      "kickoff_local": "19:00",
+      "timezone": "America/Mexico_City",
+      "kickoff_et": "21:00",
+      "venue": "Mexico City Stadium",
+      "city": "Mexico City",
+      "home_slot": "1A",
+      "away_slot": "3C/E/F/H/I",
+      "home_team": {
+        "code": "USA",
+        "name": "USA"
+      },
+      "away_team": {
+        "code": "BIH",
+        "name": "Bosnia and Herzegovina"
+      },
+      "image_label": "USA vs BIH"
+    },
+    {
+      "match_id": 80,
+      "round": "Round of 32",
+      "date": "2026-07-01",
+      "kickoff_local": "12:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "12:00",
+      "venue": "Atlanta Stadium",
+      "city": "Atlanta",
+      "home_slot": "1L",
+      "away_slot": "3E/H/I/J/K",
+      "home_team": {
+        "code": "BEL",
+        "name": "Belgium"
+      },
+      "away_team": {
+        "code": "SEN",
+        "name": "Senegal"
+      },
+      "image_label": "BEL vs SEN"
+    },
+    {
+      "match_id": 81,
+      "round": "Round of 32",
+      "date": "2026-07-01",
+      "kickoff_local": "17:00",
+      "timezone": "America/Los_Angeles",
+      "kickoff_et": "20:00",
+      "venue": "San Francisco Bay Stadium",
+      "city": "Santa Clara",
+      "home_slot": "1D",
+      "away_slot": "3B/E/F/I/J",
+      "home_team": {
+        "code": "BRA",
+        "name": "Brazil"
+      },
+      "away_team": {
+        "code": "JPN",
+        "name": "Japan"
+      },
+      "image_label": "BRA vs JPN"
+    },
+    {
+      "match_id": 82,
+      "round": "Round of 32",
+      "date": "2026-07-01",
+      "kickoff_local": "13:00",
+      "timezone": "America/Los_Angeles",
+      "kickoff_et": "16:00",
+      "venue": "Seattle Stadium",
+      "city": "Seattle",
+      "home_slot": "1G",
+      "away_slot": "3A/E/H/I/J",
+      "home_team": {
+        "code": "CIV",
+        "name": "Côte d’Ivoire"
+      },
+      "away_team": {
+        "code": "NOR",
+        "name": "Norway"
+      },
+      "image_label": "CIV vs NOR"
+    },
+    {
+      "match_id": 83,
+      "round": "Round of 32",
+      "date": "2026-07-02",
+      "kickoff_local": "19:00",
+      "timezone": "America/Toronto",
+      "kickoff_et": "19:00",
+      "venue": "Toronto Stadium",
+      "city": "Toronto",
+      "home_slot": "2K",
+      "away_slot": "2L",
+      "home_team": {
+        "code": "MEX",
+        "name": "Mexico"
+      },
+      "away_team": {
+        "code": "ECU",
+        "name": "Ecuador"
+      },
+      "image_label": "MEX vs ECU"
+    },
+    {
+      "match_id": 84,
+      "round": "Round of 32",
+      "date": "2026-07-02",
+      "kickoff_local": "12:00",
+      "timezone": "America/Los_Angeles",
+      "kickoff_et": "15:00",
+      "venue": "Los Angeles Stadium",
+      "city": "Los Angeles",
+      "home_slot": "1H",
+      "away_slot": "2J",
+      "home_team": {
+        "code": "ENG",
+        "name": "England"
+      },
+      "away_team": {
+        "code": "COD",
+        "name": "DR Congo"
+      },
+      "image_label": "ENG vs COD"
+    },
+    {
+      "match_id": 85,
+      "round": "Round of 32",
+      "date": "2026-07-02",
+      "kickoff_local": "20:00",
+      "timezone": "America/Vancouver",
+      "kickoff_et": "23:00",
+      "venue": "BC Place Vancouver",
+      "city": "Vancouver",
+      "home_slot": "1B",
+      "away_slot": "3E/F/G/I/J",
+      "home_team": {
+        "code": "ARG",
+        "name": "Argentina"
+      },
+      "away_team": {
+        "code": "CPV",
+        "name": "Cabo Verde"
+      },
+      "image_label": "ARG vs CPV"
+    },
+    {
+      "match_id": 86,
+      "round": "Round of 32",
+      "date": "2026-07-03",
+      "kickoff_local": "18:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "18:00",
+      "venue": "Miami Stadium",
+      "city": "Miami",
+      "home_slot": "1J",
+      "away_slot": "2H",
+      "home_team": {
+        "code": "AUS",
+        "name": "Australia"
+      },
+      "away_team": {
+        "code": "EGY",
+        "name": "Egypt"
+      },
+      "image_label": "AUS vs EGY"
+    },
+    {
+      "match_id": 87,
+      "round": "Round of 32",
+      "date": "2026-07-03",
+      "kickoff_local": "20:30",
+      "timezone": "America/Chicago",
+      "kickoff_et": "21:30",
+      "venue": "Kansas City Stadium",
+      "city": "Kansas City",
+      "home_slot": "1K",
+      "away_slot": "3D/E/I/J/L",
+      "home_team": {
+        "code": "SUI",
+        "name": "Switzerland"
+      },
+      "away_team": {
+        "code": "DZA",
+        "name": "Algeria"
+      },
+      "image_label": "SUI vs DZA"
+    },
+    {
+      "match_id": 88,
+      "round": "Round of 32",
+      "date": "2026-07-03",
+      "kickoff_local": "13:00",
+      "timezone": "America/Chicago",
+      "kickoff_et": "14:00",
+      "venue": "Dallas Stadium",
+      "city": "Arlington",
+      "home_slot": "2D",
+      "away_slot": "2G",
+      "home_team": {
+        "code": "COL",
+        "name": "Colombia"
+      },
+      "away_team": {
+        "code": "GHA",
+        "name": "Ghana"
+      },
+      "image_label": "COL vs GHA"
+    },
+    {
+      "match_id": 89,
+      "round": "Round of 16",
+      "date": "2026-07-04",
+      "kickoff_local": "17:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "17:00",
+      "venue": "Philadelphia Stadium",
+      "city": "Philadelphia",
+      "home_slot": "W74",
+      "away_slot": "W77",
+      "home_team": {
+        "code": "TBD",
+        "name": "W74"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W77"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 90,
+      "round": "Round of 16",
+      "date": "2026-07-04",
+      "kickoff_local": "12:00",
+      "timezone": "America/Chicago",
+      "kickoff_et": "13:00",
+      "venue": "Houston Stadium",
+      "city": "Houston",
+      "home_slot": "W73",
+      "away_slot": "W75",
+      "home_team": {
+        "code": "TBD",
+        "name": "W73"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W75"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 91,
+      "round": "Round of 16",
+      "date": "2026-07-05",
+      "kickoff_local": "16:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "16:00",
+      "venue": "New York New Jersey Stadium",
+      "city": "East Rutherford",
+      "home_slot": "W76",
+      "away_slot": "W78",
+      "home_team": {
+        "code": "TBD",
+        "name": "W76"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W78"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 92,
+      "round": "Round of 16",
+      "date": "2026-07-05",
+      "kickoff_local": "18:00",
+      "timezone": "America/Mexico_City",
+      "kickoff_et": "20:00",
+      "venue": "Mexico City Stadium",
+      "city": "Mexico City",
+      "home_slot": "W79",
+      "away_slot": "W80",
+      "home_team": {
+        "code": "TBD",
+        "name": "W79"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W80"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 93,
+      "round": "Round of 16",
+      "date": "2026-07-06",
+      "kickoff_local": "14:00",
+      "timezone": "America/Chicago",
+      "kickoff_et": "15:00",
+      "venue": "Dallas Stadium",
+      "city": "Arlington",
+      "home_slot": "W83",
+      "away_slot": "W84",
+      "home_team": {
+        "code": "TBD",
+        "name": "W83"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W84"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 94,
+      "round": "Round of 16",
+      "date": "2026-07-06",
+      "kickoff_local": "17:00",
+      "timezone": "America/Los_Angeles",
+      "kickoff_et": "20:00",
+      "venue": "Seattle Stadium",
+      "city": "Seattle",
+      "home_slot": "W81",
+      "away_slot": "W82",
+      "home_team": {
+        "code": "TBD",
+        "name": "W81"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W82"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 95,
+      "round": "Round of 16",
+      "date": "2026-07-07",
+      "kickoff_local": "12:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "12:00",
+      "venue": "Atlanta Stadium",
+      "city": "Atlanta",
+      "home_slot": "W86",
+      "away_slot": "W88",
+      "home_team": {
+        "code": "TBD",
+        "name": "W86"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W88"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 96,
+      "round": "Round of 16",
+      "date": "2026-07-07",
+      "kickoff_local": "13:00",
+      "timezone": "America/Vancouver",
+      "kickoff_et": "16:00",
+      "venue": "BC Place Vancouver",
+      "city": "Vancouver",
+      "home_slot": "W85",
+      "away_slot": "W87",
+      "home_team": {
+        "code": "TBD",
+        "name": "W85"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W87"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 97,
+      "round": "Quarter-final",
+      "date": "2026-07-09",
+      "kickoff_local": "16:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "16:00",
+      "venue": "Boston Stadium",
+      "city": "Foxborough",
+      "home_slot": "W89",
+      "away_slot": "W90",
+      "home_team": {
+        "code": "TBD",
+        "name": "W89"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W90"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 98,
+      "round": "Quarter-final",
+      "date": "2026-07-10",
+      "kickoff_local": "12:00",
+      "timezone": "America/Los_Angeles",
+      "kickoff_et": "15:00",
+      "venue": "Los Angeles Stadium",
+      "city": "Los Angeles",
+      "home_slot": "W93",
+      "away_slot": "W94",
+      "home_team": {
+        "code": "TBD",
+        "name": "W93"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W94"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 99,
+      "round": "Quarter-final",
+      "date": "2026-07-11",
+      "kickoff_local": "17:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "17:00",
+      "venue": "Miami Stadium",
+      "city": "Miami",
+      "home_slot": "W91",
+      "away_slot": "W92",
+      "home_team": {
+        "code": "TBD",
+        "name": "W91"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W92"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 100,
+      "round": "Quarter-final",
+      "date": "2026-07-11",
+      "kickoff_local": "20:00",
+      "timezone": "America/Chicago",
+      "kickoff_et": "21:00",
+      "venue": "Kansas City Stadium",
+      "city": "Kansas City",
+      "home_slot": "W95",
+      "away_slot": "W96",
+      "home_team": {
+        "code": "TBD",
+        "name": "W95"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W96"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 101,
+      "round": "Semi-final",
+      "date": "2026-07-14",
+      "kickoff_local": "14:00",
+      "timezone": "America/Chicago",
+      "kickoff_et": "15:00",
+      "venue": "Dallas Stadium",
+      "city": "Arlington",
+      "home_slot": "W97",
+      "away_slot": "W98",
+      "home_team": {
+        "code": "TBD",
+        "name": "W97"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W98"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 102,
+      "round": "Semi-final",
+      "date": "2026-07-15",
+      "kickoff_local": "15:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "15:00",
+      "venue": "Atlanta Stadium",
+      "city": "Atlanta",
+      "home_slot": "W99",
+      "away_slot": "W100",
+      "home_team": {
+        "code": "TBD",
+        "name": "W99"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W100"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 103,
+      "round": "Third-place match",
+      "date": "2026-07-18",
+      "kickoff_local": "17:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "17:00",
+      "venue": "Miami Stadium",
+      "city": "Miami",
+      "home_slot": "L101",
+      "away_slot": "L102",
+      "home_team": {
+        "code": "TBD",
+        "name": "L101"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "L102"
+      },
+      "image_label": "TBD vs TBD"
+    },
+    {
+      "match_id": 104,
+      "round": "Final",
+      "date": "2026-07-19",
+      "kickoff_local": "15:00",
+      "timezone": "America/New_York",
+      "kickoff_et": "15:00",
+      "venue": "New York New Jersey Stadium",
+      "city": "East Rutherford",
+      "home_slot": "W101",
+      "away_slot": "W102",
+      "home_team": {
+        "code": "TBD",
+        "name": "W101"
+      },
+      "away_team": {
+        "code": "TBD",
+        "name": "W102"
+      },
+      "image_label": "TBD vs TBD"
+    }
+  ]
+}
