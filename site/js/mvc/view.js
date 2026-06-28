@@ -491,44 +491,7 @@ export function createBracketView(root) {
     });
   }
 
-  
-function resolvedSlotTooltipText(slot, pick) {
-  const teamName =
-    pick?.teamName ||
-    pick?.team?.teamName ||
-    pick?.team?.name ||
-    slot?.teamName ||
-    slot?.team?.teamName ||
-    slot?.team?.name ||
-    slot?.resolvedTeamName ||
-    slot?.displayName;
-
-  const teamCode =
-    pick?.teamCode ||
-    pick?.teamId ||
-    pick?.team?.teamCode ||
-    pick?.team?.teamId ||
-    slot?.teamCode ||
-    slot?.teamId ||
-    slot?.team?.teamCode ||
-    slot?.team?.teamId;
-
-  if (teamName && teamCode && teamName !== teamCode) {
-    return `${teamName} (${teamCode})`;
-  }
-
-  if (teamName) {
-    return teamName;
-  }
-
-  if (teamCode) {
-    return teamCode;
-  }
-
-  return slot?.sourceLabel || slot?.label || slot?.slotLabel || slot?.id || "Pick slot";
-}
-
-function renderBoardShell(nativeSize) {
+  function renderBoardShell(nativeSize) {
     boardNativeSize = nativeSize;
     applyBoardRenderScale(boardScale);
     boardPlane.innerHTML = `
@@ -685,6 +648,9 @@ function renderBoardShell(nativeSize) {
             ? `${playerFacingSlotLabel(slot)}: pick hidden during Group Stage`
             : `${playerFacingSlotLabel(slot)}: ${slot.pickable ? "choose team" : "waiting for earlier picks"}`
       );
+      if (isR32Slot && displayTeam) {
+        button.title = fullTeamLabel(displayTeam);
+      }
       applyBounds(button, slot.boundsPx);
 
       if (!pickFillSuppressed) {
@@ -780,7 +746,7 @@ function renderBoardShell(nativeSize) {
         button.dataset.r32GroupShortcut = r32GroupShortcutId;
         button.dataset.r32GroupPanelShortcut = "true";
         button.setAttribute("data-r32-group-panel-shortcut", "true");
-        button.title = `Open ${r32GroupShortcutLabel} panel`;
+        button.title = `${fullTeamLabel(displayTeam)} — Open ${r32GroupShortcutLabel} panel`;
       }
       if (slot.officialPickComparison?.state === "correct") {
         button.classList.add("has-official-correct-pick");
@@ -790,7 +756,7 @@ function renderBoardShell(nativeSize) {
         button.classList.add("has-official-incorrect-pick");
         button.setAttribute("data-official-pick-state", "incorrect");
         if (slot.officialTruthTeam) {
-          button.title = resolvedSlotTooltipText(slot, pick);
+          button.title = `Official result: ${fullTeamLabel(slot.officialTruthTeam)}`;
         }
       }
 
@@ -799,7 +765,7 @@ function renderBoardShell(nativeSize) {
       }
       if (!pickFillSuppressed && displayTeam && slot.pickValidity?.state === "invalid") {
         button.classList.add("has-invalid-pick");
-        button.title = resolvedSlotTooltipText(slot, pick);
+        button.title = slot.pickValidity.reason || "This pick is invalid under the current standings.";
         button.setAttribute("aria-label", `${slot.label}: invalid pick. ${button.title}`);
       }
       if (interactionMode === "editable-pick") button.classList.add("is-pickable");

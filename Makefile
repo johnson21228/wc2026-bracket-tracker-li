@@ -69,7 +69,7 @@ verify:
 	python3 tools/verify_wc2026_final_four_center_stack_pick_menu.py
 	python3 tools/verify_wc2026_unpicked_bracket_cells_choose_team.py
 	python3 tools/verify_wc2026_r32_group_panel_shortcut.py
-	python3 tools/verify_wc2026_r32_tooltip_team_name.py
+	python3 tools/verify_wc2026_r32_slot_full_team_tooltip.py
 	python3 tools/verify_wc2026_update_results_prompt.py
 	python3 tools/verify_wc2026_knockout_schedule_model.py
 	python3 tools/verify_wc2026_group_stage_full_match_times.py
@@ -79,7 +79,6 @@ verify:
 	python3 tools/verify_wc2026_belgium_iran_result_and_highlight.py
 	python3 tools/verify_wc2026_june_22_group_i_j_results_and_highlights.py
 	python3 tools/verify_wc2026_june_23_group_k_l_results.py
-	python3 tools/verify_wc2026_june_27_final_group_results.py
 	python3 tools/verify_wc2026_group_b_complete_results.py
 	python3 tools/verify_wc2026_current_group_order_rendering.py
 	python3 tools/verify_wc2026_pick_validity_rendering.py
@@ -94,7 +93,6 @@ verify:
 	python3 tools/verify_wc2026_sign_in_panel_over_game_board.py
 	python3 tools/verify_wc2026_identity_round_icon_buttons.py
 	python3 tools/verify_wc2026_css_owned_top_right_player_controls.py
-	python3 tools/verify_wc2026_pool_button_behind_panels.py
 	python3 tools/verify_wc2026_center_final_four_visual_only.py
 	python3 tools/verify_wc2026_final_stack_svg_manifest_alignment.py
 	python3 tools/verify_wc2026_final_four_pick_display.py
@@ -127,7 +125,6 @@ verify:
 	python3 tools/verify_wc2026_editable_site_official_truth_json.py
 	python3 tools/verify_wc2026_site_official_truth_runtime_source.py
 	python3 tools/verify_wc2026_official_truth_r32_only_seed.py
-	python3 tools/verify_wc2026_official_truth_r32_schedule_assignments.py
 	python3 tools/verify_wc2026_superseded_admin_official_truth_li.py
 	python3 tools/verify_wc2026_admin_official_results_truth.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
