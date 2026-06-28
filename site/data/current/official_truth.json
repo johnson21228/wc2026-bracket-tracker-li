@@ -4,7 +4,7 @@
   "gameId": "game1",
   "source": "site-owned-official-truth",
   "authority": "site-owned-official-truth",
-  "updatedAt": "2026-06-27T14:50:20.856020Z",
+  "updatedAt": "2026-06-28T00:30:00-04:00",
   "picksBySlot": {
     "R-R32-05": {
       "slotId": "R-R32-05",
@@ -12,10 +12,16 @@
       "teamName": "Mexico",
       "pick": {
         "kind": "team",
-        "teamId": "MEX"
+        "teamId": "MEX",
+        "teamCode": "MEX",
+        "teamName": "Mexico",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Mexico vs Ecuador"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "MEX",
+      "sourceLabel": "Mexico vs Ecuador"
     },
     "L-R32-05": {
       "slotId": "L-R32-05",
@@ -23,10 +29,16 @@
       "teamName": "South Africa",
       "pick": {
         "kind": "team",
-        "teamId": "RSA"
+        "teamId": "RSA",
+        "teamCode": "RSA",
+        "teamName": "South Africa",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "South Africa vs Canada"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "RSA",
+      "sourceLabel": "South Africa vs Canada"
     },
     "R-R32-13": {
       "slotId": "R-R32-13",
@@ -34,10 +46,16 @@
       "teamName": "Switzerland",
       "pick": {
         "kind": "team",
-        "teamId": "SUI"
+        "teamId": "SUI",
+        "teamCode": "SUI",
+        "teamName": "Switzerland",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Switzerland vs Algeria"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "SUI",
+      "sourceLabel": "Switzerland vs Algeria"
     },
     "L-R32-06": {
       "slotId": "L-R32-06",
@@ -45,10 +63,16 @@
       "teamName": "Canada",
       "pick": {
         "kind": "team",
-        "teamId": "CAN"
+        "teamId": "CAN",
+        "teamCode": "CAN",
+        "teamName": "Canada",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "South Africa vs Canada"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "CAN",
+      "sourceLabel": "South Africa vs Canada"
     },
     "R-R32-01": {
       "slotId": "R-R32-01",
@@ -56,10 +80,16 @@
       "teamName": "Brazil",
       "pick": {
         "kind": "team",
-        "teamId": "BRA"
+        "teamId": "BRA",
+        "teamCode": "BRA",
+        "teamName": "Brazil",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Brazil vs Japan"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "BRA",
+      "sourceLabel": "Brazil vs Japan"
     },
     "L-R32-08": {
       "slotId": "L-R32-08",
@@ -67,10 +97,16 @@
       "teamName": "Morocco",
       "pick": {
         "kind": "team",
-        "teamId": "MAR"
+        "teamId": "MAR",
+        "teamCode": "MAR",
+        "teamName": "Morocco",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Netherlands vs Morocco"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "MAR",
+      "sourceLabel": "Netherlands vs Morocco"
     },
     "L-R32-13": {
       "slotId": "L-R32-13",
@@ -78,10 +114,16 @@
       "teamName": "USA",
       "pick": {
         "kind": "team",
-        "teamId": "USA"
+        "teamId": "USA",
+        "teamCode": "USA",
+        "teamName": "USA",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "United States vs Bosnia and Herzegovina"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "USA",
+      "sourceLabel": "United States vs Bosnia and Herzegovina"
     },
     "R-R32-11": {
       "slotId": "R-R32-11",
@@ -89,10 +131,16 @@
       "teamName": "Australia",
       "pick": {
         "kind": "team",
-        "teamId": "AUS"
+        "teamId": "AUS",
+        "teamCode": "AUS",
+        "teamName": "Australia",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Australia vs Egypt"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "AUS",
+      "sourceLabel": "Australia vs Egypt"
     },
     "L-R32-01": {
       "slotId": "L-R32-01",
@@ -100,10 +148,16 @@
       "teamName": "Germany",
       "pick": {
         "kind": "team",
-        "teamId": "GER"
+        "teamId": "GER",
+        "teamCode": "GER",
+        "teamName": "Germany",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Germany vs Paraguay"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "GER",
+      "sourceLabel": "Germany vs Paraguay"
     },
     "R-R32-03": {
       "slotId": "R-R32-03",
@@ -111,10 +165,16 @@
       "teamName": "Côte d’Ivoire",
       "pick": {
         "kind": "team",
-        "teamId": "CIV"
+        "teamId": "CIV",
+        "teamCode": "CIV",
+        "teamName": "Côte d’Ivoire",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Côte d’Ivoire vs Norway"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "CIV",
+      "sourceLabel": "Côte d’Ivoire vs Norway"
     },
     "L-R32-07": {
       "slotId": "L-R32-07",
@@ -122,10 +182,16 @@
       "teamName": "Netherlands",
       "pick": {
         "kind": "team",
-        "teamId": "NED"
+        "teamId": "NED",
+        "teamCode": "NED",
+        "teamName": "Netherlands",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Netherlands vs Morocco"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "NED",
+      "sourceLabel": "Netherlands vs Morocco"
     },
     "R-R32-02": {
       "slotId": "R-R32-02",
@@ -133,10 +199,16 @@
       "teamName": "Japan",
       "pick": {
         "kind": "team",
-        "teamId": "JPN"
+        "teamId": "JPN",
+        "teamCode": "JPN",
+        "teamName": "Japan",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Brazil vs Japan"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "JPN",
+      "sourceLabel": "Brazil vs Japan"
     },
     "L-R32-15": {
       "slotId": "L-R32-15",
@@ -144,10 +216,16 @@
       "teamName": "Belgium",
       "pick": {
         "kind": "team",
-        "teamId": "BEL"
+        "teamId": "BEL",
+        "teamCode": "BEL",
+        "teamName": "Belgium",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Belgium vs Senegal"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "BEL",
+      "sourceLabel": "Belgium vs Senegal"
     },
     "R-R32-12": {
       "slotId": "R-R32-12",
@@ -155,10 +233,16 @@
       "teamName": "Egypt",
       "pick": {
         "kind": "team",
-        "teamId": "EGY"
+        "teamId": "EGY",
+        "teamCode": "EGY",
+        "teamName": "Egypt",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Australia vs Egypt"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "EGY",
+      "sourceLabel": "Australia vs Egypt"
     },
     "L-R32-11": {
       "slotId": "L-R32-11",
@@ -166,10 +250,16 @@
       "teamName": "Spain",
       "pick": {
         "kind": "team",
-        "teamId": "ESP"
+        "teamId": "ESP",
+        "teamCode": "ESP",
+        "teamName": "Spain",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Spain vs Austria"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "ESP",
+      "sourceLabel": "Spain vs Austria"
     },
     "R-R32-10": {
       "slotId": "R-R32-10",
@@ -177,10 +267,16 @@
       "teamName": "Cabo Verde",
       "pick": {
         "kind": "team",
-        "teamId": "CPV"
+        "teamId": "CPV",
+        "teamCode": "CPV",
+        "teamName": "Cabo Verde",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Argentina vs Cabo Verde"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "CPV",
+      "sourceLabel": "Argentina vs Cabo Verde"
     },
     "L-R32-03": {
       "slotId": "L-R32-03",
@@ -188,10 +284,16 @@
       "teamName": "France",
       "pick": {
         "kind": "team",
-        "teamId": "FRA"
+        "teamId": "FRA",
+        "teamCode": "FRA",
+        "teamName": "France",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "France vs Sweden"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "FRA",
+      "sourceLabel": "France vs Sweden"
     },
     "R-R32-04": {
       "slotId": "R-R32-04",
@@ -199,10 +301,16 @@
       "teamName": "Norway",
       "pick": {
         "kind": "team",
-        "teamId": "NOR"
+        "teamId": "NOR",
+        "teamCode": "NOR",
+        "teamName": "Norway",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Côte d’Ivoire vs Norway"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "NOR",
+      "sourceLabel": "Côte d’Ivoire vs Norway"
     },
     "R-R32-09": {
       "slotId": "R-R32-09",
@@ -210,10 +318,201 @@
       "teamName": "Argentina",
       "pick": {
         "kind": "team",
-        "teamId": "ARG"
+        "teamId": "ARG",
+        "teamCode": "ARG",
+        "teamName": "Argentina",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Argentina vs Cabo Verde"
       },
-      "source": "site-owned-official-truth",
-      "officialTruth": true
+      "source": "site-owned-official-truth-r32-schedule",
+      "officialTruth": true,
+      "teamCode": "ARG",
+      "sourceLabel": "Argentina vs Cabo Verde"
+    },
+    "L-R32-02": {
+      "teamId": "PAR",
+      "teamCode": "PAR",
+      "teamName": "Paraguay",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "Germany vs Paraguay",
+      "pick": {
+        "teamId": "PAR",
+        "teamCode": "PAR",
+        "teamName": "Paraguay",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Germany vs Paraguay"
+      }
+    },
+    "L-R32-04": {
+      "teamId": "SWE",
+      "teamCode": "SWE",
+      "teamName": "Sweden",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "France vs Sweden",
+      "pick": {
+        "teamId": "SWE",
+        "teamCode": "SWE",
+        "teamName": "Sweden",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "France vs Sweden"
+      }
+    },
+    "L-R32-09": {
+      "teamId": "POR",
+      "teamCode": "POR",
+      "teamName": "Portugal",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "Portugal vs Croatia",
+      "pick": {
+        "teamId": "POR",
+        "teamCode": "POR",
+        "teamName": "Portugal",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Portugal vs Croatia"
+      }
+    },
+    "L-R32-10": {
+      "teamId": "CRO",
+      "teamCode": "CRO",
+      "teamName": "Croatia",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "Portugal vs Croatia",
+      "pick": {
+        "teamId": "CRO",
+        "teamCode": "CRO",
+        "teamName": "Croatia",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Portugal vs Croatia"
+      }
+    },
+    "L-R32-12": {
+      "teamId": "AUT",
+      "teamCode": "AUT",
+      "teamName": "Austria",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "Spain vs Austria",
+      "pick": {
+        "teamId": "AUT",
+        "teamCode": "AUT",
+        "teamName": "Austria",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Spain vs Austria"
+      }
+    },
+    "L-R32-14": {
+      "teamId": "BIH",
+      "teamCode": "BIH",
+      "teamName": "Bosnia and Herzegovina",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "United States vs Bosnia and Herzegovina",
+      "pick": {
+        "teamId": "BIH",
+        "teamCode": "BIH",
+        "teamName": "Bosnia and Herzegovina",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "United States vs Bosnia and Herzegovina"
+      }
+    },
+    "L-R32-16": {
+      "teamId": "SEN",
+      "teamCode": "SEN",
+      "teamName": "Senegal",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "Belgium vs Senegal",
+      "pick": {
+        "teamId": "SEN",
+        "teamCode": "SEN",
+        "teamName": "Senegal",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Belgium vs Senegal"
+      }
+    },
+    "R-R32-06": {
+      "teamId": "ECU",
+      "teamCode": "ECU",
+      "teamName": "Ecuador",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "Mexico vs Ecuador",
+      "pick": {
+        "teamId": "ECU",
+        "teamCode": "ECU",
+        "teamName": "Ecuador",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Mexico vs Ecuador"
+      }
+    },
+    "R-R32-07": {
+      "teamId": "ENG",
+      "teamCode": "ENG",
+      "teamName": "England",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "England vs DR Congo",
+      "pick": {
+        "teamId": "ENG",
+        "teamCode": "ENG",
+        "teamName": "England",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "England vs DR Congo"
+      }
+    },
+    "R-R32-08": {
+      "teamId": "COD",
+      "teamCode": "COD",
+      "teamName": "DR Congo",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "England vs DR Congo",
+      "pick": {
+        "teamId": "COD",
+        "teamCode": "COD",
+        "teamName": "DR Congo",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "England vs DR Congo"
+      }
+    },
+    "R-R32-14": {
+      "teamId": "DZA",
+      "teamCode": "DZA",
+      "teamName": "Algeria",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "Switzerland vs Algeria",
+      "pick": {
+        "teamId": "DZA",
+        "teamCode": "DZA",
+        "teamName": "Algeria",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Switzerland vs Algeria"
+      }
+    },
+    "R-R32-15": {
+      "teamId": "COL",
+      "teamCode": "COL",
+      "teamName": "Colombia",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "Colombia vs Ghana",
+      "pick": {
+        "teamId": "COL",
+        "teamCode": "COL",
+        "teamName": "Colombia",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Colombia vs Ghana"
+      }
+    },
+    "R-R32-16": {
+      "teamId": "GHA",
+      "teamCode": "GHA",
+      "teamName": "Ghana",
+      "source": "site-owned-official-truth-r32-schedule",
+      "sourceLabel": "Colombia vs Ghana",
+      "pick": {
+        "teamId": "GHA",
+        "teamCode": "GHA",
+        "teamName": "Ghana",
+        "source": "site-owned-official-truth-r32-schedule",
+        "sourceLabel": "Colombia vs Ghana"
+      }
     }
-  }
+  },
+  "notes": [
+    "R32 official truth seed slots completed from the official Round of 32 schedule on 2026-06-28."
+  ]
 }
