@@ -954,6 +954,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   }
 
   function setPick(slotId, teamId) {
+    window.BracketeeringPickLockdownPolicy?.assertPickChangeAllowed?.({ slotId, teamId });
     const slot = getSlotDefinition(slotId);
     if (!slot) {
       return { ok: false, reason: "Unknown bracket slot.", cleared: [] };

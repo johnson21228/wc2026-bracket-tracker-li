@@ -1,20 +1,3 @@
 {
-  "schemaVersion": 1,
-  "LockDownTimeZone": "America/New_York",
-  "LockDownTime2": "2026-06-29T13:00:00-04:00",
-  "LockDownTime2Name": "All player picks lock",
-  "PickLockdownPolicy": {
-    "lockdown2Scope": "all-player-owned-picks",
-    "lockedPickBehavior": [
-      "locked picks remain visible",
-      "locked picks cannot be changed, cleared, or replaced",
-      "late UI interactions are blocked",
-      "late model writes are rejected",
-      "admin/site-owned official truth remains outside player-pick lockdown",
-      "LockDown true freezes all player-owned picks immediately",
-      "LockDown false falls back to LockDownTime2"
-    ]
-  },
-  "LockDown": true,
-  "LockDownName": "All player picks locked"
+  "LockDown": false
 }

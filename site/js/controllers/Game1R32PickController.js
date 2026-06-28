@@ -302,6 +302,7 @@ class Game1R32PickController {
   }
 
   setPick({ fifaSlotId, teamId }) {
+    window.BracketeeringPickLockdownPolicy?.assertPickChangeAllowed?.({ slotId: fifaSlotId, teamId });
     const validation = this.validatePick({ fifaSlotId, teamId });
     if (!validation.ok) return validation;
 
@@ -324,6 +325,7 @@ class Game1R32PickController {
   }
 
   clearPick({ fifaSlotId }) {
+    window.BracketeeringPickLockdownPolicy?.assertPickChangeAllowed?.({ slotId: fifaSlotId });
     if (areGroupStagePicksLocked()) return { ok: false, reason: groupStagePicksLockedMessage() };
     const picks = this.readPicks();
     const previous = picks[fifaSlotId] || null;
