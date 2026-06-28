@@ -259,7 +259,8 @@
       {
         "name": "England",
         "abbr": "ENG",
-        "flagEmoji": "🏴"
+        "flagEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
       },
       {
         "name": "Croatia",

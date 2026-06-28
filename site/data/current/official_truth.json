@@ -4,7 +4,7 @@
   "gameId": "game1",
   "source": "site-owned-official-truth",
   "authority": "site-owned-official-truth",
-  "updatedAt": "2026-06-28T01:20:00-04:00",
+  "updatedAt": "2026-06-28T01:55:00-04:00",
   "picksBySlot": {
     "R-R32-05": {
       "slotId": "R-R32-05",
@@ -579,11 +579,13 @@
         "sourceLabel": "England vs DR Congo",
         "kind": "entrant",
         "round": "R32_ENTRANT",
-        "slotId": "R-R32-07"
+        "slotId": "R-R32-07",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
       },
       "kind": "entrant",
       "round": "R32_ENTRANT",
-      "slotId": "R-R32-07"
+      "slotId": "R-R32-07",
+      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
     },
     "R-R32-08": {
       "teamId": "COD",
@@ -676,6 +678,7 @@
     "R32 official truth seed slots completed from the official Round of 32 schedule on 2026-06-28.",
     "R-R32-14 set to Algeria from Switzerland vs Algeria Round of 32 schedule.",
     "R-R32-14 includes full Algeria metadata including flag for Switzerland vs Algeria.",
-    "Official R32 truth records marked as entrant/R32_ENTRANT so runtime hydrator maps them into R32 slots."
+    "Official R32 truth records marked as entrant/R32_ENTRANT so runtime hydrator maps them into R32 slots.",
+    "England flag normalized to full England flag emoji sequence."
   ]
 }

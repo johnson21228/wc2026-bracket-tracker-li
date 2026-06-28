@@ -412,11 +412,12 @@
     {
       "name": "England",
       "abbr": "ENG",
-      "flagEmoji": "🏴",
+      "flagEmoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
       "group": "L",
       "groupSeedFromImage": 1,
       "source": "group_flags_images",
-      "authority": "image-derived; pending official verification"
+      "authority": "image-derived; pending official verification",
+      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
     },
     {
       "name": "Croatia",
