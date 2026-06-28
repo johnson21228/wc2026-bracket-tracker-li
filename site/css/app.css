@@ -2768,3 +2768,54 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 .player-board-viewer {
   z-index: 30000 !important;
 }
+
+/* Trickle-on miss: downstream pick cannot become correct because the team was eliminated earlier. */
+.player-board-viewer-pick.is-unreachable-pick {
+  opacity: .48;
+  filter: grayscale(.7);
+  outline: 1px dashed rgba(255, 255, 255, .42);
+}
+
+.player-board-viewer-pick.is-unreachable-pick .player-board-viewer-pick-value {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.player-board-viewer-eliminated-pick {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.64rem;
+  line-height: 1;
+  color: rgba(255, 214, 130, .92);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* Main gameboard trickle-on miss rendering. */
+.pick-slot-button.is-unreachable-pick {
+  opacity: .52;
+  filter: grayscale(.7);
+  outline: 1px dashed rgba(255, 255, 255, .42);
+}
+
+.pick-slot-button.is-unreachable-pick .picked-cell-code {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.picked-cell-eliminated-truth {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.64rem;
+  line-height: 1;
+  color: rgba(255, 214, 130, .92);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* Direct missed pick: strike through the visible team code when official truth says the pick is wrong. */
+.pick-slot-button.has-official-incorrect-pick .picked-cell-code,
+.player-board-viewer-pick.has-official-incorrect-pick .player-board-viewer-pick-value {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}

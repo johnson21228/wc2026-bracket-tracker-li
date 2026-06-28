@@ -691,6 +691,11 @@ export function createBracketView(root) {
             correct.className = "picked-cell-official-truth";
             correct.textContent = `Correct: ${officialTruthLabel(slot.officialTruthTeam)}`;
             value.append(identity, correct);
+          } else if (slot.officialPickComparison?.state === "unreachable") {
+            const eliminated = document.createElement("span");
+            eliminated.className = "picked-cell-eliminated-truth";
+            eliminated.textContent = "Eliminated";
+            value.append(identity, eliminated);
           } else {
             value.append(identity);
           }
@@ -758,6 +763,11 @@ export function createBracketView(root) {
         if (slot.officialTruthTeam) {
           button.title = `Official result: ${fullTeamLabel(slot.officialTruthTeam)}`;
         }
+      }
+      if (slot.officialPickComparison?.state === "unreachable") {
+        button.classList.add("is-unreachable-pick");
+        button.setAttribute("data-official-pick-state", "unreachable");
+        button.title = "This pick is eliminated because the team can no longer reach this slot.";
       }
 
       if (!pickFillSuppressed && displayTeam && slot.pickValidity?.state === "valid") {

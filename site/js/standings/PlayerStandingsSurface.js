@@ -300,6 +300,72 @@ function pickTeamIdFromRecord(record) {
   return record?.pick?.teamId || record?.teamId || record?.team_id || "";
 }
 
+function paddedSlotNumber(value) {
+  return String(value).padStart(2, "0");
+}
+
+function feederSlotIdsForSlot(slotId) {
+  const id = String(slotId || "").toUpperCase();
+
+  let match = id.match(/^([LR])-R16-(\d{2})$/);
+  if (match) {
+    const side = match[1];
+    const index = Number(match[2]);
+    return [
+      `${side}-R32-${paddedSlotNumber(index * 2 - 1)}`,
+      `${side}-R32-${paddedSlotNumber(index * 2)}`,
+    ];
+  }
+
+  match = id.match(/^([LR])-QF-(\d{2})$/);
+  if (match) {
+    const side = match[1];
+    const index = Number(match[2]);
+    return [
+      `${side}-R16-${paddedSlotNumber(index * 2 - 1)}`,
+      `${side}-R16-${paddedSlotNumber(index * 2)}`,
+    ];
+  }
+
+  match = id.match(/^([LR])-SF-(\d{2})$/);
+  if (match) {
+    const side = match[1];
+    const index = Number(match[2]);
+    return [
+      `${side}-QF-${paddedSlotNumber(index * 2 - 1)}`,
+      `${side}-QF-${paddedSlotNumber(index * 2)}`,
+    ];
+  }
+
+  if (id === "FINAL-LEFT") return ["L-SF-01", "L-SF-02"];
+  if (id === "FINAL-RIGHT") return ["R-SF-01", "R-SF-02"];
+  if (id === "CHAMPION") return ["FINAL-LEFT", "FINAL-RIGHT"];
+
+  return [];
+}
+
+function canTeamStillReachSlot(teamId, slotId, officialTruthPicksBySlot, visiting = new Set()) {
+  const candidateTeamId = String(teamId || "").trim();
+  const currentSlotId = String(slotId || "").toUpperCase();
+
+  if (!candidateTeamId || !currentSlotId) return false;
+  if (visiting.has(currentSlotId)) return false;
+
+  const officialTeamId = pickTeamIdFromRecord(officialTruthPicksBySlot?.[currentSlotId]);
+  if (officialTeamId) return officialTeamId === candidateTeamId;
+
+  const feederSlotIds = feederSlotIdsForSlot(currentSlotId);
+  if (!feederSlotIds.length) return true;
+
+  const nextVisiting = new Set(visiting);
+  nextVisiting.add(currentSlotId);
+
+  return feederSlotIds.some((feederSlotId) => (
+    canTeamStillReachSlot(candidateTeamId, feederSlotId, officialTruthPicksBySlot, nextVisiting)
+  ));
+}
+
+
 function normalizeBoardViewerTeam(teamId, teamById) {
   const id = String(teamId || "").trim();
   if (!id) return null;
@@ -432,6 +498,11 @@ function renderPlayerBoard(panel, { row, assets }) {
     const officialState = officialTeam && team
       ? (officialTeam.id === team.id ? "correct" : "incorrect")
       : "";
+    const isUnreachablePick = Boolean(
+      team
+      && !officialTeam
+      && !canTeamStillReachSlot(team.id, slot.slotId, officialTruthPicksBySlot)
+    );
     const slotLabel = playerFacingSlotLabel(slot);
     const valueLabel = team ? `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id}`.trim() : "Unpicked";
     const fullLabel = team ? `${team.flag ? `${team.flag} ` : ""}${team.name || team.abbr || team.id}`.trim() : "Unpicked";
@@ -439,13 +510,22 @@ function renderPlayerBoard(panel, { row, assets }) {
     const officialMarkup = officialTeam
       ? `<span class="player-board-viewer-official-truth">Official: ${escapeHtml(officialLabel)}</span>`
       : "";
-    const stateClass = officialState ? ` has-official-${officialState}-pick` : "";
-    const ariaOfficial = officialTeam ? ` Official result from ${officialTruthSource || "Admin_/official"}: ${officialLabel}.` : "";
+    const eliminatedMarkup = isUnreachablePick
+      ? `<span class="player-board-viewer-eliminated-pick">Eliminated</span>`
+      : "";
+    const stateClass = [
+      officialState ? `has-official-${officialState}-pick` : "",
+      isUnreachablePick ? "is-unreachable-pick" : "",
+    ].filter(Boolean).map((className) => ` ${className}`).join("");
+    const ariaOfficial = officialTeam
+      ? ` Official result from ${officialTruthSource || "Admin_/official"}: ${officialLabel}.`
+      : (isUnreachablePick ? " This pick is eliminated because the team can no longer reach this slot." : "");
     return `
       <button type="button" class="player-board-viewer-pick ${team ? "has-pick" : "is-unpicked"}${stateClass}" data-player-board-viewer-slot="${escapeHtml(slot.slotId)}" data-official-result-state="${escapeHtml(officialState)}" disabled aria-label="${escapeHtml(`${slotLabel}: ${fullLabel}. Read-only.${ariaOfficial}`)}" style="left:${Number(bounds.x)}px;top:${Number(bounds.y)}px;width:${Number(bounds.width)}px;height:${Number(bounds.height)}px;">
         <span class="player-board-viewer-pick-label">${escapeHtml(slotLabel)}</span>
         <span class="player-board-viewer-pick-value">${escapeHtml(valueLabel)}</span>
         ${officialMarkup}
+        ${eliminatedMarkup}
       </button>
     `;
   }).join("");

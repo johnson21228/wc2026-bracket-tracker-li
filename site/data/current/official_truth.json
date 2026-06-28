@@ -672,6 +672,27 @@
       "kind": "entrant",
       "round": "R32_ENTRANT",
       "slotId": "R-R32-16"
+    },
+    "L-R16-03": {
+      "slotId": "L-R16-03",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "teamCode": "CAN",
+      "pick": {
+        "kind": "team",
+        "teamId": "CAN",
+        "teamCode": "CAN",
+        "teamName": "Canada",
+        "source": "site-owned-official-truth-result",
+        "sourceLabel": "South Africa 0-1 Canada",
+        "round": "R16",
+        "slotId": "L-R16-03"
+      },
+      "source": "site-owned-official-truth-result",
+      "sourceLabel": "South Africa 0-1 Canada",
+      "officialTruth": true,
+      "kind": "winner",
+      "round": "R16"
     }
   },
   "notes": [

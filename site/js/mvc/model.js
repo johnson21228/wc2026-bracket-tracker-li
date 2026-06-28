@@ -547,13 +547,85 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     return persistedOfficialTeam(slotId);
   }
 
+  function paddedSlotNumber(value) {
+    return String(value).padStart(2, "0");
+  }
+
+  function feederSlotIdsForSlot(slotId) {
+    const id = String(slotId || "").toUpperCase();
+
+    let match = id.match(/^([LR])-R16-(\d{2})$/);
+    if (match) {
+      const side = match[1];
+      const index = Number(match[2]);
+      return [
+        `${side}-R32-${paddedSlotNumber(index * 2 - 1)}`,
+        `${side}-R32-${paddedSlotNumber(index * 2)}`,
+      ];
+    }
+
+    match = id.match(/^([LR])-QF-(\d{2})$/);
+    if (match) {
+      const side = match[1];
+      const index = Number(match[2]);
+      return [
+        `${side}-R16-${paddedSlotNumber(index * 2 - 1)}`,
+        `${side}-R16-${paddedSlotNumber(index * 2)}`,
+      ];
+    }
+
+    match = id.match(/^([LR])-SF-(\d{2})$/);
+    if (match) {
+      const side = match[1];
+      const index = Number(match[2]);
+      return [
+        `${side}-QF-${paddedSlotNumber(index * 2 - 1)}`,
+        `${side}-QF-${paddedSlotNumber(index * 2)}`,
+      ];
+    }
+
+    if (id === "FINAL-LEFT") return ["L-SF-01", "L-SF-02"];
+    if (id === "FINAL-RIGHT") return ["R-SF-01", "R-SF-02"];
+    if (id === "CHAMPION") return ["FINAL-LEFT", "FINAL-RIGHT"];
+
+    return [];
+  }
+
+  function canTeamStillReachSlot(teamId, slotId, visiting = new Set()) {
+    const candidateTeamId = String(teamId || "").trim();
+    const currentSlotId = String(slotId || "").toUpperCase();
+
+    if (!candidateTeamId || !currentSlotId) return false;
+    if (visiting.has(currentSlotId)) return false;
+
+    const truthTeam = officialTeam(currentSlotId);
+    if (truthTeam) return truthTeam.id === candidateTeamId;
+
+    const feederSlotIds = feederSlotIdsForSlot(currentSlotId);
+    if (!feederSlotIds.length) return true;
+
+    const nextVisiting = new Set(visiting);
+    nextVisiting.add(currentSlotId);
+
+    return feederSlotIds.some((feederSlotId) => canTeamStillReachSlot(candidateTeamId, feederSlotId, nextVisiting));
+  }
+
   function officialPickComparisonForSlot(slotId, userTeam) {
     const truthTeam = officialTeam(slotId);
-    if (!truthTeam) return null;
-    return {
-      state: userTeam && userTeam.id === truthTeam.id ? "correct" : "incorrect",
-      officialTeam: truthTeam,
-    };
+    if (!userTeam) return null;
+    if (truthTeam) {
+      return {
+        state: userTeam.id === truthTeam.id ? "correct" : "incorrect",
+        officialTeam: truthTeam,
+      };
+    }
+    if (!canTeamStillReachSlot(userTeam.id, slotId)) {
+      return {
+        state: "unreachable",
+        eliminated: true,
+      };
+    }
+    return null;
   }
 
   function isEditingOfficialResults() {
