@@ -28,7 +28,7 @@ def main() -> int:
 
 
     required = [
-        'const JOINED_PICKS_LOADED_MESSAGE = "Saved picks have been loaded.";',
+        'const JOINED_PICKS_LOADED_MESSAGE = "The picks are locked down. Good luck! Press the “Pool” button to see how the pool is doing and to see other player picks.";',
         'const NOT_JOINED_STARTUP_MESSAGE = "Playing Bracketeering requires you to join and sign in to the pool. Tap the button with the person icon to join or sign back in. Tap the button with the “i” to get information about playing the game.";',
         'renderNotice(root, "not-joined", NOT_JOINED_STARTUP_MESSAGE);',
         "function renderNotice(root, state, message)",

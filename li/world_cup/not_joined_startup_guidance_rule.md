@@ -6,6 +6,6 @@ When the site loads and the player is not joined, the Account Save / Join status
 
 Joined players with saved picks should see:
 
-“Saved picks have been loaded.”
+“The picks are locked down. Good luck! Press the “Pool” button to see how the pool is doing and to see other player picks.”
 
 The player-facing status must not expose technical storage language such as localStorage, Supabase, or ignored local draft picks.
