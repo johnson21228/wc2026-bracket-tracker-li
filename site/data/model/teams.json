@@ -2,11 +2,6 @@
   "schemaVersion": 1,
   "idPolicy": "Team.id is uppercase three-letter code and is the canonical team key.",
   "teams": {
-    "ALG": {
-      "id": "ALG",
-      "name": "Algeria",
-      "flag": "🇩🇿"
-    },
     "ARG": {
       "id": "ARG",
       "name": "Argentina",
@@ -241,6 +236,11 @@
       "id": "UZB",
       "name": "Uzbekistan",
       "flag": "🇺🇿"
+    },
+    "DZA": {
+      "id": "DZA",
+      "name": "Algeria",
+      "flag": "🇩🇿"
     }
   }
 }
