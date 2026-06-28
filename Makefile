@@ -126,6 +126,7 @@ verify:
 	python3 tools/verify_wc2026_editable_site_official_truth_json.py
 	python3 tools/verify_wc2026_site_official_truth_runtime_source.py
 	python3 tools/verify_wc2026_official_truth_r32_only_seed.py
+	python3 tools/verify_wc2026_official_truth_r32_schedule_assignments.py
 	python3 tools/verify_wc2026_superseded_admin_official_truth_li.py
 	python3 tools/verify_wc2026_admin_official_results_truth.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
