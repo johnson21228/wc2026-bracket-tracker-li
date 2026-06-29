@@ -4,7 +4,7 @@ const ACCOUNT_SAVE_STATE_ATTRIBUTE = "data-account-save-state";
 const ACCOUNT_PICKS_LOADED_EVENT = "wc2026:account-picks-loaded";
 const AUTOSAVE_DELAY_MS = 650;
 const JOINED_PICKS_LOADED_MESSAGE = "Saved picks have been loaded.";
-const NOT_JOINED_STARTUP_MESSAGE = "Playing Bracketeering requires you to join the pool. Tap the button with the person icon to join. Tap the button with the “i” to get information about playing the game.";
+const NOT_JOINED_STARTUP_MESSAGE = "Sign in to the Pool to load your saved picks and play Bracketeering. Tap the person icon to sign in. Tap the “i” button to learn how to play.";
 
 function pickFingerprintFromDocument(bracketDocument) {
   const picksBySlot = bracketDocument?.picksBySlot || {};
