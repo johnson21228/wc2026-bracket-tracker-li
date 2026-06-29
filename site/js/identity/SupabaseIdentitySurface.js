@@ -76,7 +76,7 @@ function decorateIdentityRoundIconButtons(surface) {
       forceCircularIdentityButton(button);
       button.setAttribute("aria-label", "Join Bracketeering");
       button.setAttribute("title", "Join Bracketeering");
-      button.innerHTML = identityIconSvg("person-add");
+      button.innerHTML = `<img class="identity-icon-svg" src="assets/icons/person-exclamation.svg" alt="" aria-hidden="true">`;
     }
 
     if (isProfileButton) {
