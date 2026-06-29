@@ -145,6 +145,7 @@ verify:
 	python3 tools/verify_wc2026_account_save_action_target.py
 	python3 tools/verify_wc2026_join_first_live_picks_player_ui.py
 	python3 tools/verify_wc2026_player_standings_panel.py
+	python3 tools/verify_wc2026_player_supplied_links_panel.py
 	python3 tools/verify_wc2026_player_standings_no_pick_links.py
 	python3 tools/verify_wc2026_player_standings_scoring_rule.py
 	python3 tools/verify_wc2026_player_standings_max_possible_reachability_rule.py

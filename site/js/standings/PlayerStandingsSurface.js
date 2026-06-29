@@ -17,6 +17,7 @@ function isOfficialStandingsRow(row) {
 const BOARD_VIEWER_GEOMETRY_URL = "data/geometry/gameboard_manifest.json";
 const BOARD_VIEWER_TEAMS_URL = "data/model/teams.json";
 const BOARD_VIEWER_LINEWORK_URL = "assets/playfield/uniform_pick_card_gameboard.svg";
+const PLAYER_SUPPLIED_LINKS_URL = "data/current/PlayerSuppliedLinks.json";
 const BOARD_VIEWER_DEFAULT_SCALE = 0.75;
 const BOARD_VIEWER_MIN_SCALE = 0.5;
 const BOARD_VIEWER_MAX_SCALE = 1.25;
@@ -45,6 +46,43 @@ function safePublicPlayerName(row) {
   ).trim();
 
   return name || "Player";
+}
+
+function normalizePlayerSuppliedLink(rawLink) {
+  if (!rawLink || typeof rawLink !== "object") return null;
+  const url = String(rawLink.url || rawLink.href || rawLink.link || "").trim();
+  if (!url) return null;
+  const title = String(rawLink.title || rawLink.label || rawLink.name || url).trim() || url;
+  const dateAdded = String(rawLink.dateAdded || rawLink.addedAt || rawLink.createdAt || rawLink.date || "").trim();
+  const time = Date.parse(dateAdded);
+  return {
+    title,
+    url,
+    dateAdded,
+    sortTime: Number.isFinite(time) ? time : 0,
+  };
+}
+
+function normalizePlayerSuppliedLinks(payload) {
+  const rawLinks = Array.isArray(payload)
+    ? payload
+    : Array.isArray(payload?.PlayerSuppliedLinks)
+      ? payload.PlayerSuppliedLinks
+      : Array.isArray(payload?.links)
+        ? payload.links
+        : [];
+
+  return rawLinks
+    .map(normalizePlayerSuppliedLink)
+    .filter(Boolean)
+    .sort((a, b) => (b.sortTime - a.sortTime) || a.title.localeCompare(b.title));
+}
+
+function displayPlayerSuppliedLinkDate(link) {
+  if (!link?.dateAdded) return "Date not supplied";
+  const date = new Date(link.dateAdded);
+  if (Number.isNaN(date.getTime())) return link.dateAdded;
+  return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
 }
 
 function normalizeStandingsRow(row) {
@@ -185,8 +223,20 @@ function ensureStandingsPanel(root) {
           <p class="player-standings-kicker">Pool</p>
           <h2 id="player-standings-title">Pool Standings</h2>
         </div>
-        <button type="button" class="player-standings-close" data-player-standings-close aria-label="Close Pool Standings">×</button>
+        <div class="player-standings-header-actions">
+          <button type="button" class="player-supplied-links-button" data-player-supplied-links-open aria-expanded="false" aria-controls="player-supplied-links-panel" aria-label="Open World Cup links"><span aria-hidden="true">🔗</span><span>World Cup Links</span></button>
+          <button type="button" class="player-standings-close" data-player-standings-close aria-label="Close Pool Standings">×</button>
+        </div>
       </header>
+      <section id="player-supplied-links-panel" class="player-supplied-links-panel" data-player-supplied-links-panel hidden>
+        <div class="player-supplied-links-header">
+          <h3>Player Links</h3>
+          <p>Send Steve any links you think the group might appreciate as they follow the World Cup.</p>
+        </div>
+        <div class="player-supplied-links-body" data-player-supplied-links-body>
+          <p class="player-supplied-links-status">Loading links…</p>
+        </div>
+      </section>
       <div class="player-standings-body" data-player-standings-body>
         <p class="player-standings-status">Loading standings…</p>
       </div>
@@ -585,6 +635,57 @@ export function createPlayerStandingsSurface({
     body.innerHTML = `<p class="player-standings-status">${escapeHtml(message)}</p>`;
   }
 
+  function renderPlayerSuppliedLinksStatus(message) {
+    const body = panel.querySelector("[data-player-supplied-links-body]");
+    if (!body) return;
+    body.innerHTML = `<p class="player-supplied-links-status">${escapeHtml(message)}</p>`;
+  }
+
+  function renderPlayerSuppliedLinks(links) {
+    const body = panel.querySelector("[data-player-supplied-links-body]");
+    if (!body) return;
+    if (!links.length) {
+      renderPlayerSuppliedLinksStatus("No player links yet.");
+      return;
+    }
+
+    body.innerHTML = `
+      <ul class="player-supplied-links-list" aria-label="Player supplied links">
+        ${links.map((link) => `
+          <li class="player-supplied-links-item">
+            <a class="player-supplied-links-link" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(link.title)}">
+              <span class="player-supplied-links-title">${escapeHtml(link.title)}</span>
+              <span class="player-supplied-links-date">${escapeHtml(displayPlayerSuppliedLinkDate(link))}</span>
+            </a>
+          </li>
+        `).join("")}
+      </ul>
+    `;
+  }
+
+  async function loadPlayerSuppliedLinks() {
+    renderPlayerSuppliedLinksStatus("Loading links…");
+    try {
+      const response = await fetch(PLAYER_SUPPLIED_LINKS_URL, { cache: "no-cache" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      renderPlayerSuppliedLinks(normalizePlayerSuppliedLinks(payload));
+    } catch (error) {
+      console.warn("[PlayerStandingsSurface] player supplied links unavailable", error);
+      renderPlayerSuppliedLinksStatus("Player links unavailable.");
+    }
+  }
+
+  function setPlayerSuppliedLinksPanelOpen(open) {
+    const linksPanel = panel.querySelector("[data-player-supplied-links-panel]");
+    const linksButton = panel.querySelector("[data-player-supplied-links-open]");
+    if (!linksPanel || !linksButton) return;
+    linksPanel.hidden = !open;
+    linksButton.setAttribute("aria-expanded", open ? "true" : "false");
+    linksButton.classList.toggle("is-open", open);
+    if (open) loadPlayerSuppliedLinks();
+  }
+
   async function refreshStorageReady() {
     if (!isSignedIn(currentAuthState)) {
       storageReady = false;
@@ -723,6 +824,7 @@ export function createPlayerStandingsSurface({
 
   function closePanel() {
     closePlayerBoardViewer({ restoreFocus: false });
+    setPlayerSuppliedLinksPanelOpen(false);
     panel.hidden = true;
     lastOpenButton?.focus();
   }
@@ -734,6 +836,10 @@ export function createPlayerStandingsSurface({
     installBoardViewerDragPan(boardViewerPanel.querySelector("[data-player-board-viewer-scroll]"));
     button.addEventListener("click", openPanel);
     closeButton?.addEventListener("click", closePanel);
+    panel.querySelector("[data-player-supplied-links-open]")?.addEventListener("click", () => {
+      const linksPanel = panel.querySelector("[data-player-supplied-links-panel]");
+      setPlayerSuppliedLinksPanelOpen(Boolean(linksPanel?.hidden));
+    });
     boardViewerCloseButton?.addEventListener("click", () => closePlayerBoardViewer());
 
     boardViewerPanel.querySelector("[data-player-board-viewer-zoom]")?.addEventListener("change", (event) => {

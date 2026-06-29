@@ -2819,3 +2819,111 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
   text-decoration: line-through;
   text-decoration-thickness: 2px;
 }
+
+
+/* Player-supplied Pool links. */
+.player-standings-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-supplied-links-button {
+  min-inline-size: 34px;
+  block-size: 34px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(10, 22, 40, 0.72);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.player-supplied-links-button:hover,
+.player-supplied-links-button:focus-visible,
+.player-supplied-links-button.is-open {
+  background: rgba(31, 61, 99, 0.92);
+}
+
+.player-supplied-links-panel {
+  margin: 0 18px 14px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(5, 12, 24, 0.52);
+}
+
+.player-supplied-links-panel[hidden] {
+  display: none !important;
+}
+
+.player-supplied-links-header {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.player-supplied-links-header h3,
+.player-supplied-links-header p {
+  margin: 0;
+}
+
+.player-supplied-links-header h3 {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.player-supplied-links-header p,
+.player-supplied-links-status,
+.player-supplied-links-date {
+  font-size: 11px;
+  opacity: 0.72;
+}
+
+.player-supplied-links-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.player-supplied-links-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.player-supplied-links-link:hover,
+.player-supplied-links-link:focus-visible {
+  background: rgba(255, 255, 255, 0.13);
+  text-decoration: none;
+}
+
+.player-supplied-links-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.player-supplied-links-date {
+  white-space: nowrap;
+}
