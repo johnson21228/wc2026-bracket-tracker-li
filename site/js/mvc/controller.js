@@ -184,10 +184,14 @@ export function createBracketController({ model, view }) {
   function start() {
     view.renderBoardShell(model.nativeSize);
     view.setHandlers({ onSlotClick, onFinalFourSlotClick: onSlotClick, onTeamPick, onClearPick, onClearAll, onExportPicks, onImportPicks, onCloseMenu, onGroupPanelOpen, onActiveGameChange });
-    window.addEventListener("wc2026:account-picks-loaded", () => {
+    window.addEventListener("wc2026:account-picks-loaded", (event) => {
       activeSlotId = null;
       view.closeMenu();
       redraw();
+      if (event.detail?.reason === "signed-out-picks-cleared") {
+        view.report("Picks are not loaded because you are not signed in.");
+        return;
+      }
       view.report("Loaded your joined picks.");
     });
     redraw();

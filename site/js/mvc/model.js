@@ -380,7 +380,8 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       picks = {};
     }
   } else {
-    picks = pickFromStorage();
+    // Join-required runtime: signed-out players must not see stale cached local picks.
+    picks = {};
   }
 
   officialBracketDocument = normalizeSiteOfficialTruthDocument(officialTruthPayload);
@@ -826,7 +827,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
 
   function persistPicks(reason = "autosave") {
     if (!remotePersistenceActive) {
-      saveToStorage(picks);
+      // Join-required runtime: player picks are not localStorage truth.
       return;
     }
 
@@ -1446,15 +1447,21 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     };
   }
 
-  // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.
-  if (!remotePersistenceActive) {
-    saveToStorage(picks);
+  function clearAccountPicksForSignedOut() {
+    const previousPickCount = Object.keys(picks).length;
+    picks = hydrateOnlySupabaseAdminR32IntoPlayerPicks({});
+    remoteBracketDocument = null;
+    return { ok: true, cleared: previousPickCount };
   }
+
+  // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.
+  // Join-required runtime: do not write local fallback picks on startup.
 
   return {
     nativeSize,
     getAccountSaveBracketDocument,
     importAccountBracketDocument,
+    clearAccountPicksForSignedOut,
     getGroupRail,
     getFinalFourViewModel,
     getSlotViewModels,

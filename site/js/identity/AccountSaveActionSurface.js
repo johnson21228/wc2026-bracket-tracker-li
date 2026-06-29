@@ -3,8 +3,8 @@ import { SupabaseBracketStore } from "../services/SupabaseBracketStore.js";
 const ACCOUNT_SAVE_STATE_ATTRIBUTE = "data-account-save-state";
 const ACCOUNT_PICKS_LOADED_EVENT = "wc2026:account-picks-loaded";
 const AUTOSAVE_DELAY_MS = 650;
-const JOINED_PICKS_LOADED_MESSAGE = "The picks are locked down. Good luck! Press the “Pool” button to see how the pool is doing and to see other player picks.";
-const NOT_JOINED_STARTUP_MESSAGE = "Playing Bracketeering requires you to join and sign in to the pool. Tap the button with the person icon to join or sign back in. Tap the button with the “i” to get information about playing the game.";
+const JOINED_PICKS_LOADED_MESSAGE = "Saved picks have been loaded.";
+const NOT_JOINED_STARTUP_MESSAGE = "Playing Bracketeering requires you to join the pool. Tap the button with the person icon to join. Tap the button with the “i” to get information about playing the game.";
 
 function pickFingerprintFromDocument(bracketDocument) {
   const picksBySlot = bracketDocument?.picksBySlot || {};
@@ -103,7 +103,7 @@ function createAccountSaveActionSurface({
   bracketStore = new SupabaseBracketStore(),
 } = {}) {
   if (!root) throw new Error("AccountSaveActionSurface requires a root element.");
-  if (!model?.getAccountSaveBracketDocument || !model?.importAccountBracketDocument) {
+  if (!model?.getAccountSaveBracketDocument || !model?.importAccountBracketDocument || !model?.clearAccountPicksForSignedOut) {
     throw new Error("AccountSaveActionSurface requires canonical account bracket document methods.");
   }
 
@@ -141,9 +141,9 @@ function createAccountSaveActionSurface({
     return pickFingerprintFromDocument(currentDocument());
   }
 
-  function dispatchLoadedPicks({ automatic = false, imported = 0 } = {}) {
+  function dispatchLoadedPicks({ automatic = false, imported = 0, reason = "loaded" } = {}) {
     window.dispatchEvent(new CustomEvent(ACCOUNT_PICKS_LOADED_EVENT, {
-      detail: { automatic, imported },
+      detail: { automatic, imported, reason },
     }));
   }
 
@@ -217,6 +217,8 @@ function createAccountSaveActionSurface({
       lastJoinedPickFingerprint = "";
       conflictActive = false;
       clearConflict(root);
+      model.clearAccountPicksForSignedOut();
+      dispatchLoadedPicks({ automatic, imported: 0, reason: "signed-out-picks-cleared" });
       if (authSettled) {
         renderNotice(root, "not-joined", NOT_JOINED_STARTUP_MESSAGE);
       }
@@ -262,14 +264,18 @@ function createAccountSaveActionSurface({
   }
 
   async function start() {
-    await reconcileJoinedPicks({ automatic: true });
-
     window.addEventListener("wc2026:picks-changed", scheduleAutosave);
+
+    const initialState = await refreshJoinState();
+    if (authSettled) {
+      await reconcileJoinedPicks({ automatic: true });
+    }
 
     authService?.subscribe?.((state) => {
       joined = state?.status === "signed-in" || Boolean(state?.user?.id);
       playerUserId = state?.user?.id || "";
       authSettled = Boolean(state?.status) && state.status !== "loading" && state.status !== "initializing";
+      if (!authSettled) return;
       if (joined) {
         clearNotice(root, "not-joined");
       }
