@@ -23,8 +23,8 @@ function identityIconSvg(kind) {
 }
 
 const IDENTITY_ICON_BUTTON_ACCESSIBILITY_TOKENS = [
-  'aria-label="Join Bracketeering"',
-  'title="Join Bracketeering"',
+  'aria-label="Sign in to Bracketeering"',
+  'title="Sign in to Bracketeering"',
   'aria-label="Profile"',
   'title="Profile"',
 ];
@@ -74,8 +74,8 @@ function decorateIdentityRoundIconButtons(surface) {
     if (isJoinButton) {
       button.classList.add("identity-icon-button");
       forceCircularIdentityButton(button);
-      button.setAttribute("aria-label", "Join Bracketeering");
-      button.setAttribute("title", "Join Bracketeering");
+      button.setAttribute("aria-label", "Sign in to Bracketeering");
+      button.setAttribute("title", "Sign in to Bracketeering");
       button.innerHTML = `<img class="identity-icon-svg" src="assets/icons/person-exclamation.svg" alt="" aria-hidden="true">`;
     }
 
@@ -153,7 +153,7 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
 
   function persistenceLabel(state) {
     if (state.status === "not-configured") return "Join unavailable";
-    return state.status === "signed-in" ? `Joined as ${profileDisplayName() || "Player"}` : "Join to enter standings.";
+    return state.status === "signed-in" ? `Joined as ${profileDisplayName() || "Player"}` : "Sign in to load your saved picks.";
   }
 
   function panelMessage(state) {
@@ -254,15 +254,15 @@ export function createSupabaseIdentitySurface({ root, authService, profileStore 
           <div class="identity-panel-header">
             <div>
               <p class="identity-kicker">Bracketeering player</p>
-              <h2 id="supabase-identity-panel-title">${isSignedIn ? "Profile" : "Join the Pool"}</h2>
+              <h2 id="supabase-identity-panel-title">${isSignedIn ? "Profile" : "Sign in to the Pool"}</h2>
             </div>
             <button type="button" class="identity-panel-close" data-identity-panel-close aria-label="Close player panel">×</button>
           </div>
-          <p class="identity-panel-intro">${isSignedIn ? "Edit your player name or log out." : "Playing Bracketeering requires you to join the Pool."}</p>
+          <p class="identity-panel-intro">${isSignedIn ? "Edit your player name or log out." : "Sign in to load your saved picks and play in the pool."}</p>
           <p class="identity-local-note">${isSignedIn ? "Edit your player name below, or log out." : "Use Google sign-in to avoid email verification. If you use email, check your spam folder if the sign-in link does not appear in your inbox."}</p>
           <div class="identity-panel-state" data-auth-state="${escapeHtml(state.status)}">
-            <strong>${escapeHtml(isSignedIn ? "Joined status:" : "Not joined yet.")}</strong>
-            <span>${escapeHtml(isSignedIn ? "Joined" : "Sign in with Google, or use email verification.")}</span>
+            <strong>${escapeHtml(isSignedIn ? "Joined status:" : "Not signed in.")}</strong>
+            <span>${escapeHtml(isSignedIn ? "Joined" : "Use Google sign-in, or enter your email to receive a sign-in link.")}</span>
           </div>
           <div class="identity-panel-actions"></div>
         </section>
