@@ -50,6 +50,7 @@ const DATA_URLS = Object.freeze({
   knockoutMatches: "data/current/knockout_matches.json",
   game2FifaFinalR32Assignments: "data/game2_fifa_final_r32_assignments.json",
   officialTruth: "data/current/official_truth.json",
+  officialKnockoutResults: "data/official_knockout_results.json",
 });
 
 async function readJson(url) {
@@ -266,6 +267,49 @@ function normalizeSiteOfficialTruthDocument(payload = {}) {
 }
 
 
+function pickRecordFromOfficialKnockoutResult(result = {}) {
+  const slotId = String(result.siteWinnerSlotId || "").trim();
+  const winnerTeamId = String(result.winnerTeamId || "").trim();
+  if (!slotId || !winnerTeamId) return null;
+
+  return {
+    slotId,
+    teamId: winnerTeamId,
+    teamCode: winnerTeamId,
+    teamName: result.winnerTeamName || winnerTeamId,
+    kind: "winner",
+    round: "OFFICIAL_KNOCKOUT_RESULT",
+    source: "site-owned-official-knockout-results",
+    sourceLabel: result.resultLabel || `${result.winnerTeamName || winnerTeamId} advanced`,
+    officialTruth: true,
+    result,
+    pick: {
+      kind: "team",
+      teamId: winnerTeamId,
+    },
+  };
+}
+
+function mergeOfficialKnockoutResultsIntoDocument(document, resultsPayload = {}) {
+  const matches = Array.isArray(resultsPayload?.matches) ? resultsPayload.matches : [];
+  const resultPicks = {};
+
+  for (const result of matches) {
+    const record = pickRecordFromOfficialKnockoutResult(result);
+    if (record) resultPicks[record.slotId] = record;
+  }
+
+  return {
+    ...document,
+    picksBySlot: {
+      ...(document?.picksBySlot || {}),
+      ...resultPicks,
+    },
+    officialResultsTruthSource: "site/data/official_knockout_results.json",
+  };
+}
+
+
 export async function createBracketModel({
   bracketStore = null,
   officialBracketStore = bracketStore,
@@ -286,6 +330,7 @@ export async function createBracketModel({
     knockoutMatchesPayload,
     game2FifaFinalR32AssignmentsPayload,
     officialTruthPayload,
+    officialKnockoutResultsPayload,
   ] = await Promise.all([
     readJson(DATA_URLS.geometry),
     readJson(DATA_URLS.r32Bridge),
@@ -298,6 +343,7 @@ export async function createBracketModel({
     readJson(DATA_URLS.knockoutMatches),
     readJson(DATA_URLS.game2FifaFinalR32Assignments),
     readJson(DATA_URLS.officialTruth),
+    readJson(DATA_URLS.officialKnockoutResults),
   ]);
 
 const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
@@ -384,7 +430,10 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     picks = {};
   }
 
-  officialBracketDocument = normalizeSiteOfficialTruthDocument(officialTruthPayload);
+  officialBracketDocument = mergeOfficialKnockoutResultsIntoDocument(
+    normalizeSiteOfficialTruthDocument(officialTruthPayload),
+    officialKnockoutResultsPayload
+  );
   officialPicks = clearUnknownTeamPicks(
     legacyPicksFromRemoteBracketDocument(officialBracketDocument),
     "site-owned official truth"

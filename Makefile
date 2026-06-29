@@ -127,6 +127,8 @@ verify:
 	python3 tools/verify_wc2026_official_truth_r32_only_seed.py
 	python3 tools/verify_wc2026_superseded_admin_official_truth_li.py
 	python3 tools/verify_wc2026_admin_official_results_truth.py
+	python3 tools/verify_wc2026_official_knockout_results_append_only.py
+	python3 tools/verify_wc2026_brazil_japan_knockout_result.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
 	python3 tools/verify_wc2026_supabase_sql_rls_finalization.py
 	python3 tools/verify_wc2026_supabase_profiles_and_bracket_saving_target.py

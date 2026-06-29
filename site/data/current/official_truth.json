@@ -4,7 +4,7 @@
   "gameId": "game1",
   "source": "site-owned-official-truth",
   "authority": "site-owned-official-truth",
-  "updatedAt": "2026-06-28T02:05:00-04:00",
+  "updatedAt": "2026-06-29T19:13:55.656642Z",
   "picksBySlot": {
     "R-R32-05": {
       "slotId": "R-R32-05",
@@ -672,27 +672,6 @@
       "kind": "entrant",
       "round": "R32_ENTRANT",
       "slotId": "R-R32-16"
-    },
-    "L-R16-03": {
-      "slotId": "L-R16-03",
-      "teamId": "CAN",
-      "teamName": "Canada",
-      "teamCode": "CAN",
-      "pick": {
-        "kind": "team",
-        "teamId": "CAN",
-        "teamCode": "CAN",
-        "teamName": "Canada",
-        "source": "site-owned-official-truth-result",
-        "sourceLabel": "South Africa 0-1 Canada",
-        "round": "R16",
-        "slotId": "L-R16-03"
-      },
-      "source": "site-owned-official-truth-result",
-      "sourceLabel": "South Africa 0-1 Canada",
-      "officialTruth": true,
-      "kind": "winner",
-      "round": "R16"
     }
   },
   "notes": [
@@ -701,6 +680,7 @@
     "R-R32-14 includes full Algeria metadata including flag for Switzerland vs Algeria.",
     "Official R32 truth records marked as entrant/R32_ENTRANT so runtime hydrator maps them into R32 slots.",
     "England flag normalized to full England flag emoji sequence.",
-    "Algeria normalized to DZA across runtime data so R32 truth maps to rendered team data."
+    "Algeria normalized to DZA across runtime data so R32 truth maps to rendered team data.",
+    "Moved Canada South Africa 0-1 Canada knockout winner out of official_truth.json into official_knockout_results.json so official_truth remains R32 seed only."
   ]
 }

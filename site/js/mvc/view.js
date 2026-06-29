@@ -767,7 +767,7 @@ export function createBracketView(root) {
       if (slot.officialPickComparison?.state === "unreachable") {
         button.classList.add("is-unreachable-pick");
         button.setAttribute("data-official-pick-state", "unreachable");
-        button.title = "This pick is eliminated because the team can no longer reach this slot.";
+        button.title = "Eliminated by an earlier official result";
       }
 
       if (!pickFillSuppressed && displayTeam && slot.pickValidity?.state === "valid") {

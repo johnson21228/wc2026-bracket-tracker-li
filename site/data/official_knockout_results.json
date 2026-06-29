@@ -1,5 +1,45 @@
 {
   "version": "v001",
-  "status": "not_started",
-  "matches": []
+  "status": "in_progress",
+  "matches": [
+    {
+      "resultId": "r32-rsa-can-2026-06-28",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-03",
+      "siteSlotPair": [
+        "L-R32-05",
+        "L-R32-06"
+      ],
+      "homeTeamId": "RSA",
+      "homeTeamName": "South Africa",
+      "homeScore": 0,
+      "awayTeamId": "CAN",
+      "awayTeamName": "Canada",
+      "awayScore": 1,
+      "winnerTeamId": "CAN",
+      "winnerTeamName": "Canada",
+      "resultLabel": "South Africa 0–1 Canada",
+      "resultSource": "migrated-from-site-owned-official-truth"
+    },
+    {
+      "resultId": "r32-bra-jpn-2026-06-29",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-01",
+      "siteSlotPair": [
+        "R-R32-01",
+        "R-R32-02"
+      ],
+      "homeTeamId": "BRA",
+      "homeTeamName": "Brazil",
+      "homeScore": 2,
+      "awayTeamId": "JPN",
+      "awayTeamName": "Japan",
+      "awayScore": 1,
+      "winnerTeamId": "BRA",
+      "winnerTeamName": "Brazil",
+      "resultLabel": "Brazil 2–1 Japan",
+      "resultSource": "user-supplied-knockout-result-2026-06-29"
+    }
+  ],
+  "updatedAt": "2026-06-29T19:15:00.286450Z"
 }
