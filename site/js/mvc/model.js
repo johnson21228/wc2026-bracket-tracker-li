@@ -590,7 +590,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       return officialTeam(slotId) || persistedPlayerTeam(slotId);
     }
 
-    return persistedPlayerTeam(slotId);
+    return persistedPlayerTeam(slotId) || officialTeam(slotId);
   }
 
   function officialTeam(slotId) {
