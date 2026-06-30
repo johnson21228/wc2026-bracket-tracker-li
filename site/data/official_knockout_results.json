@@ -83,28 +83,37 @@
       "notes": "Match finished 1–1 after extra time. Paraguay advanced 4–3 on penalties."
     },
     {
-      "resultId": "R32-NED-MAR-2026-06-29",
+      "resultId": "r32-ned-mar-2026-06-29",
       "matchId": "53452547",
-      "sourceLabel": "Netherlands vs Morocco",
       "round": "R32",
       "status": "final",
+      "resultType": "penalties",
+      "source": "user-corrected-knockout-result-2026-06-30",
+      "siteWinnerSlotId": "L-R16-04",
+      "siteSlotPair": [
+        "L-R32-07",
+        "L-R32-08"
+      ],
       "homeTeamId": "NED",
       "homeTeamCode": "NED",
       "homeTeamName": "Netherlands",
+      "homeScore": 1,
       "awayTeamId": "MAR",
       "awayTeamCode": "MAR",
       "awayTeamName": "Morocco",
-      "homeScore": 2,
-      "awayScore": 2,
+      "awayScore": 1,
       "homePenaltyScore": 2,
       "awayPenaltyScore": 3,
       "winnerTeamId": "MAR",
       "winnerTeamCode": "MAR",
       "winnerTeamName": "Morocco",
       "decidedBy": "penalties",
-      "scoreText": "NED 2–2 MAR; Morocco wins penalties 3–2",
-      "resultText": "Netherlands 2–2 Morocco; Morocco wins penalties 3–2"
+      "sourceLabel": "Netherlands vs Morocco",
+      "resultLabel": "Netherlands 1–1 Morocco; Morocco advances 3–2 on penalties",
+      "scoreText": "NED 1–1 MAR; Morocco wins penalties 3–2",
+      "resultText": "Netherlands 1–1 Morocco; Morocco wins penalties 3–2",
+      "notes": "Match finished 1–1. Morocco advanced 3–2 on penalties."
     }
   ],
-  "updatedAt": "2026-06-29T23:30:40.377072Z"
+  "updatedAt": "2026-06-30T04:06:32.277702Z"
 }
