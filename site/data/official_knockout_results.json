@@ -113,7 +113,26 @@
       "scoreText": "NED 1–1 MAR; Morocco wins penalties 3–2",
       "resultText": "Netherlands 1–1 Morocco; Morocco wins penalties 3–2",
       "notes": "Match finished 1–1. Morocco advanced 3–2 on penalties."
+    },
+    {
+      "resultId": "r32-civ-nor-2026-07-01",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-02",
+      "siteSlotPair": [
+        "R-R32-03",
+        "R-R32-04"
+      ],
+      "homeTeamId": "CIV",
+      "homeTeamName": "Côte d’Ivoire",
+      "homeScore": 1,
+      "awayTeamId": "NOR",
+      "awayTeamName": "Norway",
+      "awayScore": 2,
+      "winnerTeamId": "NOR",
+      "winnerTeamName": "Norway",
+      "resultLabel": "Côte d’Ivoire 1–2 Norway",
+      "resultSource": "user-supplied-knockout-result-2026-06-30"
     }
   ],
-  "updatedAt": "2026-06-30T04:06:32.277702Z"
+  "updatedAt": "2026-06-30T19:00:56.672031Z"
 }
