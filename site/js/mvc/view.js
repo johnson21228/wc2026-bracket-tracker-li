@@ -753,18 +753,29 @@ export function createBracketView(root) {
         button.setAttribute("data-r32-group-panel-shortcut", "true");
         button.title = `${fullTeamLabel(displayTeam)} — Open ${r32GroupShortcutLabel} panel`;
       }
-      if (slot.officialPickComparison?.state === "correct") {
+      const officialPickState = slot.officialPickComparison?.state || "";
+      const slotIdForResultClassification = String(slot.id || slot.slotId || "");
+      const isKnockoutResultSlot = /-R(16|8|4|2|QF|SF|F)-/.test(slotIdForResultClassification)
+        || /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification);
+
+      if (officialPickState && isKnockoutResultSlot) {
+        button.classList.add("is-knockout-result-classified");
+        button.classList.add(`is-knockout-result-${officialPickState}`);
+        button.setAttribute("data-knockout-result-state", officialPickState);
+      }
+
+      if (officialPickState === "correct") {
         button.classList.add("has-official-correct-pick");
         button.setAttribute("data-official-pick-state", "correct");
       }
-      if (slot.officialPickComparison?.state === "incorrect") {
+      if (officialPickState === "incorrect") {
         button.classList.add("has-official-incorrect-pick");
         button.setAttribute("data-official-pick-state", "incorrect");
         if (slot.officialTruthTeam) {
           button.title = `Official result: ${fullTeamLabel(slot.officialTruthTeam)}`;
         }
       }
-      if (slot.officialPickComparison?.state === "unreachable") {
+      if (officialPickState === "unreachable") {
         button.classList.add("is-unreachable-pick");
         button.setAttribute("data-official-pick-state", "unreachable");
         button.title = "Eliminated by an earlier official result";

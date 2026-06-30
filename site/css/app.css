@@ -2927,3 +2927,25 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 .player-supplied-links-date {
   white-space: nowrap;
 }
+
+/* Subtle R16+ knockout result frames.
+   These intentionally override the normal valid-pick green outline/shadow. */
+.pick-slot-button.has-pick.has-valid-pick.is-knockout-result-correct,
+.pick-slot-button.has-pick.has-valid-pick[data-knockout-result-state="correct"],
+.pick-slot-button.has-pick.has-official-correct-pick[data-knockout-result-state="correct"] {
+  outline: 2px solid rgba(96, 190, 132, 0.88) !important;
+  outline-offset: 2px !important;
+  box-shadow:
+    0 0 0 1px rgba(96, 190, 132, 0.42),
+    0 0 10px rgba(96, 190, 132, 0.32) !important;
+}
+
+.pick-slot-button.has-pick.has-valid-pick.is-knockout-result-incorrect,
+.pick-slot-button.has-pick.has-valid-pick[data-knockout-result-state="incorrect"],
+.pick-slot-button.has-pick.has-official-incorrect-pick[data-knockout-result-state="incorrect"] {
+  outline: 1px solid rgba(255, 92, 92, 0.86) !important;
+  outline-offset: 2px !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 92, 92, 0.42),
+    0 0 8px rgba(255, 92, 92, 0.28) !important;
+}
