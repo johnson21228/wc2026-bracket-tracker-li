@@ -81,6 +81,29 @@
         "L-R32-02"
       ],
       "notes": "Match finished 1–1 after extra time. Paraguay advanced 4–3 on penalties."
+    },
+    {
+      "resultId": "R32-NED-MAR-2026-06-29",
+      "matchId": "53452547",
+      "sourceLabel": "Netherlands vs Morocco",
+      "round": "R32",
+      "status": "final",
+      "homeTeamId": "NED",
+      "homeTeamCode": "NED",
+      "homeTeamName": "Netherlands",
+      "awayTeamId": "MAR",
+      "awayTeamCode": "MAR",
+      "awayTeamName": "Morocco",
+      "homeScore": 2,
+      "awayScore": 2,
+      "homePenaltyScore": 2,
+      "awayPenaltyScore": 3,
+      "winnerTeamId": "MAR",
+      "winnerTeamCode": "MAR",
+      "winnerTeamName": "Morocco",
+      "decidedBy": "penalties",
+      "scoreText": "NED 2–2 MAR; Morocco wins penalties 3–2",
+      "resultText": "Netherlands 2–2 Morocco; Morocco wins penalties 3–2"
     }
   ],
   "updatedAt": "2026-06-29T23:30:40.377072Z"
