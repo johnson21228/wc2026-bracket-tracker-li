@@ -132,7 +132,26 @@
       "winnerTeamName": "Norway",
       "resultLabel": "Côte d’Ivoire 1–2 Norway",
       "resultSource": "user-supplied-knockout-result-2026-06-30"
+    },
+    {
+      "resultId": "r32-fra-swe-2026-06-30",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-02",
+      "siteSlotPair": [
+        "L-R32-03",
+        "L-R32-04"
+      ],
+      "homeTeamId": "FRA",
+      "homeTeamName": "France",
+      "homeScore": 3,
+      "awayTeamId": "SWE",
+      "awayTeamName": "Sweden",
+      "awayScore": 0,
+      "winnerTeamId": "FRA",
+      "winnerTeamName": "France",
+      "resultLabel": "France 3–0 Sweden",
+      "resultSource": "Reuters: France 3–0 Sweden, 2026-06-30"
     }
   ],
-  "updatedAt": "2026-06-30T19:00:56.672031Z"
+  "updatedAt": "2026-07-01T00:02:04.455190Z"
 }

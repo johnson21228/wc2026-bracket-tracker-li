@@ -50,6 +50,16 @@ require_result("r32-civ-nor-2026-07-01", {
     "winnerTeamId": "NOR",
 })
 
+require_result("r32-fra-swe-2026-06-30", {
+    "siteWinnerSlotId": "L-R16-02",
+    "homeTeamId": "FRA",
+    "homeScore": 3,
+    "awayTeamId": "SWE",
+    "awayScore": 0,
+    "winnerTeamId": "FRA",
+})
+
+
 model = Path("site/js/mvc/model.js").read_text()
 standings = Path("site/js/standings/SupabasePlayerStandingsStore.js").read_text()
 
