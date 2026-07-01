@@ -170,7 +170,26 @@
       "winnerTeamName": "Mexico",
       "resultLabel": "Mexico 2–0 Ecuador",
       "resultSource": "user-supplied-knockout-result-2026-07-01; corrected bracket slot mapping"
+    },
+    {
+      "resultId": "r32-eng-cod-2026-07-01",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-04",
+      "siteSlotPair": [
+        "R-R32-07",
+        "R-R32-08"
+      ],
+      "homeTeamId": "ENG",
+      "homeTeamName": "England",
+      "homeScore": 2,
+      "awayTeamId": "COD",
+      "awayTeamName": "DR Congo",
+      "awayScore": 1,
+      "winnerTeamId": "ENG",
+      "winnerTeamName": "England",
+      "resultLabel": "England 2–1 DR Congo",
+      "resultSource": "user-supplied-knockout-result-2026-07-01"
     }
   ],
-  "updatedAt": "2026-07-01T05:25:17.097419Z"
+  "updatedAt": "2026-07-01T18:02:25.379910Z"
 }
