@@ -151,7 +151,26 @@
       "winnerTeamName": "France",
       "resultLabel": "France 3–0 Sweden",
       "resultSource": "Reuters: France 3–0 Sweden, 2026-06-30"
+    },
+    {
+      "resultId": "r32-mex-ecu-2026-06-30",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-03",
+      "siteSlotPair": [
+        "R-R32-05",
+        "R-R32-06"
+      ],
+      "homeTeamId": "MEX",
+      "homeTeamName": "Mexico",
+      "homeScore": 2,
+      "awayTeamId": "ECU",
+      "awayTeamName": "Ecuador",
+      "awayScore": 0,
+      "winnerTeamId": "MEX",
+      "winnerTeamName": "Mexico",
+      "resultLabel": "Mexico 2–0 Ecuador",
+      "resultSource": "user-supplied-knockout-result-2026-07-01; corrected bracket slot mapping"
     }
   ],
-  "updatedAt": "2026-07-01T00:02:04.455190Z"
+  "updatedAt": "2026-07-01T05:25:17.097419Z"
 }
