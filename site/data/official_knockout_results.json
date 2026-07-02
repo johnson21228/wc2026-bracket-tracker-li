@@ -189,7 +189,45 @@
       "winnerTeamName": "England",
       "resultLabel": "England 2–1 DR Congo",
       "resultSource": "user-supplied-knockout-result-2026-07-01"
+    },
+    {
+      "resultId": "r32-usa-bih-2026-07-01",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-07",
+      "siteSlotPair": [
+        "L-R32-13",
+        "L-R32-14"
+      ],
+      "homeTeamId": "USA",
+      "homeTeamName": "USA",
+      "homeScore": 2,
+      "awayTeamId": "BIH",
+      "awayTeamName": "Bosnia and Herzegovina",
+      "awayScore": 0,
+      "winnerTeamId": "USA",
+      "winnerTeamName": "USA",
+      "resultLabel": "USA 2–0 Bosnia and Herzegovina",
+      "resultSource": "user-supplied-knockout-result-2026-07-01"
+    },
+    {
+      "resultId": "r32-bel-sen-2026-07-01",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-08",
+      "siteSlotPair": [
+        "L-R32-15",
+        "L-R32-16"
+      ],
+      "homeTeamId": "BEL",
+      "homeTeamName": "Belgium",
+      "homeScore": 3,
+      "awayTeamId": "SEN",
+      "awayTeamName": "Senegal",
+      "awayScore": 2,
+      "winnerTeamId": "BEL",
+      "winnerTeamName": "Belgium",
+      "resultLabel": "Belgium 3–2 Senegal",
+      "resultSource": "user-supplied-knockout-result-2026-07-01"
     }
   ],
-  "updatedAt": "2026-07-01T18:02:25.379910Z"
+  "updatedAt": "2026-07-02T02:42:42.317500Z"
 }
