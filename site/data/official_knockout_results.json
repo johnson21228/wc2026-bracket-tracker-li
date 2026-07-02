@@ -227,7 +227,26 @@
       "winnerTeamName": "Belgium",
       "resultLabel": "Belgium 3–2 Senegal",
       "resultSource": "user-supplied-knockout-result-2026-07-01"
+    },
+    {
+      "resultId": "r32-esp-aut-2026-07-02",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-06",
+      "siteSlotPair": [
+        "L-R32-11",
+        "L-R32-12"
+      ],
+      "homeTeamId": "ESP",
+      "homeTeamName": "Spain",
+      "homeScore": 3,
+      "awayTeamId": "AUT",
+      "awayTeamName": "Austria",
+      "awayScore": 0,
+      "winnerTeamId": "ESP",
+      "winnerTeamName": "Spain",
+      "resultLabel": "Spain 3–0 Austria",
+      "resultSource": "user-supplied-knockout-result-2026-07-02"
     }
   ],
-  "updatedAt": "2026-07-02T02:42:42.317500Z"
+  "updatedAt": "2026-07-02T21:01:39.744993Z"
 }
