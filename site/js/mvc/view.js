@@ -1340,11 +1340,7 @@ export function createBracketView(root) {
     const title = document.createElement("h2");
     title.textContent = groupContext.label || `Group ${groupContext.groupId}`;
 
-    const sourceStatus = document.createElement("p");
-    sourceStatus.className = "group-panel-source-status";
-    sourceStatus.textContent = groupContext.sourceSummary || "Local checked-in standings snapshot.";
-
-    titleBlock.append(title, sourceStatus);
+    titleBlock.append(title);
 
     const close = document.createElement("button");
     close.type = "button";
@@ -1368,12 +1364,6 @@ export function createBracketView(root) {
     panel.append(table);
 
     renderMatchEvidence(panel, "Completed matches", groupContext.completedMatches || [], "No completed matches in the local snapshot yet.");
-    renderMatchEvidence(panel, "Upcoming matches", groupContext.upcomingMatches || [], "No upcoming matches in the local snapshot.");
-
-    const source = document.createElement("p");
-    source.className = "group-panel-source";
-    source.textContent = "Local checked-in model data only. Runtime does not scrape ESPN.";
-    panel.append(source);
 
     layer.append(panel);
 
