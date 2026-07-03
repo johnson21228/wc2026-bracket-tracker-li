@@ -246,7 +246,26 @@
       "winnerTeamName": "Spain",
       "resultLabel": "Spain 3–0 Austria",
       "resultSource": "user-supplied-knockout-result-2026-07-02"
+    },
+    {
+      "resultId": "r32-por-cro-2026-07-02",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-05",
+      "siteSlotPair": [
+        "L-R32-09",
+        "L-R32-10"
+      ],
+      "homeTeamId": "POR",
+      "homeTeamName": "Portugal",
+      "homeScore": 2,
+      "awayTeamId": "CRO",
+      "awayTeamName": "Croatia",
+      "awayScore": 1,
+      "winnerTeamId": "POR",
+      "winnerTeamName": "Portugal",
+      "resultLabel": "Portugal 2–1 Croatia",
+      "resultSource": "user-supplied-knockout-result-2026-07-02"
     }
   ],
-  "updatedAt": "2026-07-02T21:01:39.744993Z"
+  "updatedAt": "2026-07-03T01:13:13.952136Z"
 }
