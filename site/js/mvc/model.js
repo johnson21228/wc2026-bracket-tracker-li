@@ -1375,6 +1375,35 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     }];
   }
 
+  function teamNameForKnockoutSourceSlot(sourceSlotId) {
+    const id = String(sourceSlotId || "").trim();
+    if (!id) return "";
+
+    const directResult = officialKnockoutResultsByWinnerSlotId.get(id);
+    if (directResult?.winnerTeamName) return directResult.winnerTeamName;
+
+    const pick = selectedTeam(id);
+    if (pick?.name) return pick.name;
+    if (pick?.abbr) return pick.abbr;
+
+    return id;
+  }
+
+  function fixtureLabelForKnockoutDisplay(metadata) {
+    if (!metadata) return "";
+
+    const sourceSlots = Array.isArray(metadata.siteSlotPair) ? metadata.siteSlotPair : [];
+    if (sourceSlots.length === 2) {
+      const home = teamNameForKnockoutSourceSlot(sourceSlots[0]);
+      const away = teamNameForKnockoutSourceSlot(sourceSlots[1]);
+      if (home && away && home !== sourceSlots[0] && away !== sourceSlots[1]) {
+        return `${home} vs ${away}`;
+      }
+    }
+
+    return metadata.fixtureLabel || "";
+  }
+
   function knockoutMatchDisplayForSlot(slotId) {
     const metadata = knockoutDisplayMetadataByWinnerSlotId.get(slotId) || null;
     const result = officialKnockoutResultsByWinnerSlotId.get(slotId) || null;
@@ -1385,6 +1414,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       siteWinnerSlotId: slotId,
       completed: Boolean(result),
       result: result || null,
+      fixtureLabel: result?.resultLabel || fixtureLabelForKnockoutDisplay(metadata),
       resultLabel: result?.resultLabel || "",
       winnerTeamId: result?.winnerTeamId || "",
       winnerTeamName: result?.winnerTeamName || "",
@@ -1404,17 +1434,19 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     const choices = getChoices(slotId);
     const currentPick = selectedTeam(slotId);
     const logic = r32LogicByGeometryId.get(slotId);
+    const matchDisplay = knockoutMatchDisplayForSlot(slotId);
+
     return {
       slotId,
       title: sourceTitleForSlot(slotId),
       sourceLabel: logic?.fifaLabel || slotId,
       currentPick,
-      canClear: Boolean(currentPick),
+      canClear: Boolean(currentPick) && !matchDisplay,
       anchorBoundsPx: slot.boundsPx,
-      groups: getGroupedPickChoices(slotId),
-      choices,
-      pickable: choices.length > 0,
-      matchDisplay: knockoutMatchDisplayForSlot(slotId),
+      groups: matchDisplay ? [] : getGroupedPickChoices(slotId),
+      choices: matchDisplay ? [] : choices,
+      pickable: choices.length > 0 || Boolean(matchDisplay),
+      matchDisplay,
     };
   }
 

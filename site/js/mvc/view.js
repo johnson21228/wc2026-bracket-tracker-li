@@ -1157,14 +1157,14 @@ export function createBracketView(root) {
 
     renderKnockoutMatchDisplay(popover, menuModel.matchDisplay);
 
-    if (menuModel.currentPick && !menuModel.matchDisplay?.completed) {
+    if (menuModel.currentPick && !menuModel.matchDisplay) {
       const current = document.createElement("div");
       current.className = "pick-menu-current-pick";
       current.textContent = `Current pick: ${fullTeamLabel(menuModel.currentPick)}`;
       popover.append(current);
     }
 
-    if (menuModel.canClear) {
+    if (menuModel.canClear && !menuModel.matchDisplay) {
       const clear = document.createElement("button");
       clear.type = "button";
       clear.className = "pick-menu-clear-top";

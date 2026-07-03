@@ -2,8 +2,8 @@
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-KNOCKOUT = "assets/board/pub_background_game1.jpeg"
-GROUP = "assets/board/pub_background_game1.jpeg"
+ACTIVE_BACKGROUND = "assets/board/pub_background_game1.jpeg"
+STALE_BACKGROUND = "assets/board/knockout_pub_background.jpeg"
 
 
 def text(path):
@@ -32,9 +32,9 @@ for path in [
     "site/js/mvc/view.js",
     "site/index.html",
 ]:
-    require(path, KNOCKOUT)
-    if GROUP in text(path):
-        raise SystemExit(f"{path} still boots/preloads the group-stage background")
+    require(path, ACTIVE_BACKGROUND)
+    if STALE_BACKGROUND in text(path):
+        raise SystemExit(f"{path} still boots/preloads the stale pre-Game-1 background")
 
 require("site/js/app.js", '"game-1": "assets/board/pub_background_game1.jpeg"')
 require("site/js/app.js", '"game-2": "assets/board/pub_background_game1.jpeg"')

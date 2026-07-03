@@ -2,8 +2,8 @@
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-KNOCKOUT = "assets/board/pub_background_game1.jpeg"
-GROUP = "assets/board/pub_background_game1.jpeg"
+ACTIVE_BACKGROUND = "assets/board/pub_background_game1.jpeg"
+STALE_BACKGROUND = "assets/board/knockout_pub_background.jpeg"
 
 
 def read(path):
@@ -24,9 +24,9 @@ def require(path, token):
 require_file("site/assets/board/pub_background_game1.jpeg")
 require_file("site/assets/board/pub_background_game1.jpeg")
 
-require("site/js/services/assetPaths.js", f'backgroundImage: "{KNOCKOUT}"')
-require("site/js/mvc/view.js", f'src="{KNOCKOUT}"')
-require("site/index.html", f'href="{KNOCKOUT}"')
+require("site/js/services/assetPaths.js", f'backgroundImage: "{ACTIVE_BACKGROUND}"')
+require("site/js/mvc/view.js", f'src="{ACTIVE_BACKGROUND}"')
+require("site/index.html", f'href="{ACTIVE_BACKGROUND}"')
 
 require("site/js/app.js", "ACTIVE_GAME_BACKGROUND_IMAGES")
 require("site/js/app.js", '"game-1": "assets/board/pub_background_game1.jpeg"')
@@ -40,8 +40,8 @@ for path in [
     "site/index.html",
 ]:
     text = read(path)
-    if GROUP in text:
-        raise SystemExit(f"Stale group-stage runtime background remains in {path}")
+    if STALE_BACKGROUND in text:
+        raise SystemExit(f"Stale pre-Game-1 runtime background remains in {path}")
 
 app = read("site/js/app.js")
 start = app.index("function setupActiveGameBackground")

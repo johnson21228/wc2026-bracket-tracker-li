@@ -27,7 +27,13 @@ model = model_path.read_text()
 view = view_path.read_text()
 assert "knockoutMatchDisplayMetadata" in model
 assert "knockoutMatchDisplayForSlot" in model
-assert "matchDisplay: knockoutMatchDisplayForSlot(slotId)" in model
+assert "teamNameForKnockoutSourceSlot" in model
+assert "fixtureLabelForKnockoutDisplay" in model
+assert "const matchDisplay = knockoutMatchDisplayForSlot(slotId)" in model
+assert "pickable: choices.length > 0 || Boolean(matchDisplay)" in model
+assert "groups: matchDisplay ? [] : getGroupedPickChoices(slotId)" in model
+assert "choices: matchDisplay ? [] : choices" in model
+assert "canClear: Boolean(currentPick) && !matchDisplay" in model
 assert "Match result" in view
 assert "Match details" in view
 assert "Extended highlights" in view
