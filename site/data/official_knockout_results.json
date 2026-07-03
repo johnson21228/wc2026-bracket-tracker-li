@@ -265,7 +265,26 @@
       "winnerTeamName": "Portugal",
       "resultLabel": "Portugal 2–1 Croatia",
       "resultSource": "user-supplied-knockout-result-2026-07-02"
+    },
+    {
+      "resultId": "r32-sui-dza-2026-07-02",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-07",
+      "siteSlotPair": [
+        "R-R32-13",
+        "R-R32-14"
+      ],
+      "homeTeamId": "SUI",
+      "homeTeamName": "Switzerland",
+      "homeScore": 2,
+      "awayTeamId": "DZA",
+      "awayTeamName": "Algeria",
+      "awayScore": 0,
+      "winnerTeamId": "SUI",
+      "winnerTeamName": "Switzerland",
+      "resultLabel": "Switzerland 2–0 Algeria",
+      "resultSource": "user-supplied-knockout-result-2026-07-02"
     }
   ],
-  "updatedAt": "2026-07-03T01:13:13.952136Z"
+  "updatedAt": "2026-07-03T11:30:37.185419Z"
 }
