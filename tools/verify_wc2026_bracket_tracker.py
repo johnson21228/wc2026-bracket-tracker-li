@@ -143,7 +143,7 @@ def main() -> int:
     shell_required = [
         '<main id="wc2026-app"',
         '<script type="module" src="js/app.js',
-        'href="assets/board/knockout_pub_background.jpeg"',
+        'href="assets/board/pub_background_game1.jpeg"',
         'href="assets/playfield/uniform_pick_card_gameboard.svg"',
         'href="css/app.css',
         'href="css/board.css',
@@ -172,7 +172,7 @@ def main() -> int:
 
     asset_paths = read("site/js/services/assetPaths.js")
     asset_required = [
-        'backgroundImage: "assets/board/knockout_pub_background.jpeg"',
+        'backgroundImage: "assets/board/pub_background_game1.jpeg"',
         'svgGameboardDefinition: "assets/playfield/uniform_pick_card_gameboard.svg"',
         'geometryManifest: "data/geometry/gameboard_manifest.json"',
     ]

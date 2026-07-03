@@ -49,8 +49,8 @@ const ACTIVE_GAME_BACKGROUND_IMAGES = Object.freeze({
   // Bracketeering is now a knockout-only single-game runtime. Keep the
   // legacy presentation aliases on the same accepted knockout pub calendar
   // so no boot path falls back to the old group-stage background.
-  "game-1": "assets/board/knockout_pub_background.jpeg",
-  "game-2": "assets/board/knockout_pub_background.jpeg",
+  "game-1": "assets/board/pub_background_game1.jpeg",
+  "game-2": "assets/board/pub_background_game1.jpeg",
 });
 
 function selectedDevGameValue(root) {

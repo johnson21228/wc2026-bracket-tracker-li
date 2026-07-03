@@ -87,7 +87,7 @@ def main() -> None:
     evidence_json = ROOT / "source/text/knockout_schedule_evidence_20260618.json"
     manifest_json = ROOT / "source/text/knockout_pub_calendar_background_manifest.json"
     source_image = ROOT / "source/images/wc2026_knockout_pub_calendar_background.jpeg"
-    runtime_image = ROOT / "site/assets/board/knockout_pub_background.jpeg"
+    runtime_image = ROOT / "site/assets/board/pub_background_game1.jpeg"
 
     required_paths = [
         knockout_json,

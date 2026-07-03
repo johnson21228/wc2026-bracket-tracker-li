@@ -19,7 +19,7 @@ for path in [
     "site/js/services/assetPaths.js",
 ]:
     text = (ROOT / path).read_text()
-    if "assets/board/knockout_pub_background.jpeg" not in text:
+    if "assets/board/pub_background_game1.jpeg" not in text:
         raise SystemExit(f"Missing knockout background runtime reference in {path}")
 
 print("OK: knockout pub background is deemphasized through CSS opacity without changing the image asset.")

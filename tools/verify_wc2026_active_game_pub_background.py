@@ -2,7 +2,7 @@
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-KNOCKOUT = "assets/board/knockout_pub_background.jpeg"
+KNOCKOUT = "assets/board/pub_background_game1.jpeg"
 GROUP = "assets/board/pub_background_game1.jpeg"
 
 
@@ -21,7 +21,7 @@ def require(path, token):
         raise SystemExit(f"Missing {token!r} in {path}")
 
 
-require_file("site/assets/board/knockout_pub_background.jpeg")
+require_file("site/assets/board/pub_background_game1.jpeg")
 require_file("site/assets/board/pub_background_game1.jpeg")
 
 require("site/js/services/assetPaths.js", f'backgroundImage: "{KNOCKOUT}"')
@@ -29,8 +29,8 @@ require("site/js/mvc/view.js", f'src="{KNOCKOUT}"')
 require("site/index.html", f'href="{KNOCKOUT}"')
 
 require("site/js/app.js", "ACTIVE_GAME_BACKGROUND_IMAGES")
-require("site/js/app.js", '"game-1": "assets/board/knockout_pub_background.jpeg"')
-require("site/js/app.js", '"game-2": "assets/board/knockout_pub_background.jpeg"')
+require("site/js/app.js", '"game-1": "assets/board/pub_background_game1.jpeg"')
+require("site/js/app.js", '"game-2": "assets/board/pub_background_game1.jpeg"')
 require("site/js/app.js", "setupActiveGameBackground(root);")
 require("site/js/app.js", "syncActiveGameBackground(root);")
 

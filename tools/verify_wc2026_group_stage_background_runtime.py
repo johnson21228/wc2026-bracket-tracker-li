@@ -18,23 +18,23 @@ def require_file(path: str) -> None:
         raise SystemExit(f"Missing required file: {path}")
 
 require_file("site/assets/board/pub_background_game1.jpeg")
-require_file("site/assets/board/knockout_pub_background.jpeg")
+require_file("site/assets/board/pub_background_game1.jpeg")
 
 index = text("site/index.html")
 view = text("site/js/mvc/view.js")
 
-require("site/index.html", 'href="assets/board/knockout_pub_background.jpeg"')
-require("site/js/mvc/view.js", 'src="assets/board/knockout_pub_background.jpeg"')
+require("site/index.html", 'href="assets/board/pub_background_game1.jpeg"')
+require("site/js/mvc/view.js", 'src="assets/board/pub_background_game1.jpeg"')
 
 # Superseded: knockout pub background is now intentionally the active runtime image.
-if 'href="assets/board/knockout_pub_background.jpeg"' not in index:
+if 'href="assets/board/pub_background_game1.jpeg"' not in index:
     raise SystemExit("site/index.html must preload the knockout pub background as the active runtime image")
 # Superseded: knockout pub background is now intentionally rendered by the board view.
-if 'src="assets/board/knockout_pub_background.jpeg"' not in view:
+if 'src="assets/board/pub_background_game1.jpeg"' not in view:
     raise SystemExit("site/js/mvc/view.js must render the knockout pub background as the active runtime image")
 
 if (ROOT / "site/js/services/assetPaths.js").exists():
-    require("site/js/services/assetPaths.js", "assets/board/knockout_pub_background.jpeg")
+    require("site/js/services/assetPaths.js", "assets/board/pub_background_game1.jpeg")
 
 for path, tokens in {
     "li/world_cup/runtime_pub_background_selection_rule.md": [

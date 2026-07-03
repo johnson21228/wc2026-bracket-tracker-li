@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 checks = {
     "prompts/update_knockout_pub_background_image.md": [
         "UPDATE KNOCKOUT PUB BACKGROUND IMAGE",
-        "site/assets/board/knockout_pub_background.jpeg",
+        "site/assets/board/pub_background_game1.jpeg",
         "site/data/current/knockout_matches.json",
         "site/data/current/official_truth.json",
         "Base image",
