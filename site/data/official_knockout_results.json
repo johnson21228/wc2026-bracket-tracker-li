@@ -284,7 +284,27 @@
       "winnerTeamName": "Switzerland",
       "resultLabel": "Switzerland 2–0 Algeria",
       "resultSource": "user-supplied-knockout-result-2026-07-02"
+    },
+    {
+      "resultId": "r32-aus-egy-2026-07-03",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-06",
+      "siteSlotPair": [
+        "R-R32-11",
+        "R-R32-12"
+      ],
+      "homeTeamId": "AUS",
+      "homeTeamName": "Australia",
+      "homeScore": 1,
+      "awayTeamId": "EGY",
+      "awayTeamName": "Egypt",
+      "awayScore": 1,
+      "winnerTeamId": "EGY",
+      "winnerTeamName": "Egypt",
+      "resultLabel": "Australia 1–1 Egypt",
+      "advancementLabel": "Egypt advances on penalty kicks 4–2",
+      "resultSource": "user-supplied-knockout-result-2026-07-03"
     }
   ],
-  "updatedAt": "2026-07-03T11:30:37.185419Z"
+  "updatedAt": "2026-07-03T20:54:07.455217Z"
 }
