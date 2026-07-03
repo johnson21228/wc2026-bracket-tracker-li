@@ -303,8 +303,14 @@
       "winnerTeamName": "Egypt",
       "resultLabel": "Australia 1–1 Egypt",
       "advancementLabel": "Egypt advances on penalty kicks 4–2",
-      "resultSource": "user-supplied-knockout-result-2026-07-03"
+      "resultSource": "user-supplied-knockout-result-2026-07-03",
+      "extendedHighlights": {
+        "provider": "YouTube",
+        "label": "Extended highlights",
+        "url": "https://www.youtube.com/watch?v=EeLUP57yMn4&pp=ygUuZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IEVZR1lQVA%3D%3D",
+        "verificationMode": "user-provided-url"
+      }
     }
   ],
-  "updatedAt": "2026-07-03T20:54:07.455217Z"
+  "updatedAt": "2026-07-03T21:19:37.031835Z"
 }
