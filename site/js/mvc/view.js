@@ -927,11 +927,79 @@ export function createBracketView(root) {
 
 
   function playerFacingPickMenuTitle(menu, slot) {
+    if (menu?.matchDisplay?.completed) return "Match result";
+    if (menu?.matchDisplay) return "Match details";
+
     const title = String(menu?.title || "").trim();
     if (title && !isInternalPickSlotId(title) && isPlayerFacingPickMenuSourceLabel(title)) {
       return title;
     }
     return "Make your pick";
+  }
+
+  function formatKnockoutMatchDate(matchDisplay) {
+    if (matchDisplay?.kickoffIso) {
+      try {
+        return new Date(matchDisplay.kickoffIso).toLocaleString([], {
+          weekday: "short",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+        });
+      } catch {
+        // Fall through to checked-in text fields.
+      }
+    }
+    if (matchDisplay?.date && matchDisplay?.kickoffEt) return `${matchDisplay.date} · ${matchDisplay.kickoffEt} ET`;
+    if (matchDisplay?.date) return matchDisplay.date;
+    return "Date/time TBD";
+  }
+
+  function renderKnockoutMatchDisplay(popover, matchDisplay) {
+    if (!matchDisplay) return;
+
+    const panel = document.createElement("section");
+    panel.className = "pick-menu-match-details";
+
+    const date = document.createElement("div");
+    date.className = "pick-menu-match-date";
+    date.textContent = formatKnockoutMatchDate(matchDisplay);
+    panel.append(date);
+
+    const fixture = document.createElement("div");
+    fixture.className = "pick-menu-match-fixture";
+    fixture.textContent = matchDisplay.completed
+      ? (matchDisplay.resultLabel || "Official result")
+      : (matchDisplay.fixtureLabel || `${matchDisplay.homeSlot || "TBD"} vs ${matchDisplay.awaySlot || "TBD"}`);
+    panel.append(fixture);
+
+    if (matchDisplay.completed && matchDisplay.winnerTeamName) {
+      const winner = document.createElement("div");
+      winner.className = "pick-menu-match-winner";
+      winner.textContent = `Winner: ${matchDisplay.winnerTeamName}`;
+      panel.append(winner);
+    }
+
+    const venueParts = [matchDisplay.venue, matchDisplay.city].filter(Boolean);
+    if (venueParts.length) {
+      const venue = document.createElement("div");
+      venue.className = "pick-menu-match-venue";
+      venue.textContent = venueParts.join(" · ");
+      panel.append(venue);
+    }
+
+    if (matchDisplay.extendedHighlightsUrl) {
+      const link = document.createElement("a");
+      link.className = "pick-menu-highlight-link";
+      link.href = matchDisplay.extendedHighlightsUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Extended highlights ↗";
+      panel.append(link);
+    }
+
+    popover.append(panel);
   }
 
   function visibleBoardViewport() {
@@ -1087,7 +1155,9 @@ export function createBracketView(root) {
     topbar.append(titleBlock, close);
     popover.append(topbar);
 
-    if (menuModel.currentPick) {
+    renderKnockoutMatchDisplay(popover, menuModel.matchDisplay);
+
+    if (menuModel.currentPick && !menuModel.matchDisplay?.completed) {
       const current = document.createElement("div");
       current.className = "pick-menu-current-pick";
       current.textContent = `Current pick: ${fullTeamLabel(menuModel.currentPick)}`;

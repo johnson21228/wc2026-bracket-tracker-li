@@ -2949,3 +2949,30 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
     0 0 0 1px rgba(255, 92, 92, 0.42),
     0 0 8px rgba(255, 92, 92, 0.28) !important;
 }
+
+.pick-menu-match-details {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.75rem 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.75rem;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.pick-menu-match-date,
+.pick-menu-match-venue {
+  font-size: 0.82rem;
+  opacity: 0.82;
+}
+
+.pick-menu-match-fixture,
+.pick-menu-match-winner {
+  font-weight: 700;
+}
+
+.pick-menu-highlight-link {
+  width: fit-content;
+  font-weight: 700;
+}
+

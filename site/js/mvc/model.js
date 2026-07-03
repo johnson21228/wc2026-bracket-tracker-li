@@ -51,6 +51,7 @@ const DATA_URLS = Object.freeze({
   game2FifaFinalR32Assignments: "data/game2_fifa_final_r32_assignments.json",
   officialTruth: "data/current/official_truth.json",
   officialKnockoutResults: "data/official_knockout_results.json",
+  knockoutMatchDisplayMetadata: "data/knockout_match_display_metadata.json",
 });
 
 async function readJson(url) {
@@ -309,6 +310,46 @@ function mergeOfficialKnockoutResultsIntoDocument(document, resultsPayload = {})
   };
 }
 
+function normalizeKnockoutDisplayMetadata(payload = {}) {
+  const byWinnerSlot = new Map();
+  const matches = Array.isArray(payload?.matches) ? payload.matches : [];
+
+  for (const match of matches) {
+    const siteWinnerSlotId = String(match.siteWinnerSlotId || "").trim();
+    if (!siteWinnerSlotId) continue;
+    byWinnerSlot.set(siteWinnerSlotId, {
+      matchId: String(match.matchId || match.matchNumber || "").trim(),
+      matchNumber: Number(match.matchNumber || match.matchId || 0),
+      round: match.round || "",
+      siteWinnerSlotId,
+      siteSlotPair: Array.isArray(match.siteSlotPair) ? match.siteSlotPair : [],
+      fixtureLabel: match.fixtureLabel || "",
+      homeSlot: match.homeSlot || "",
+      awaySlot: match.awaySlot || "",
+      date: match.date || "",
+      kickoffEt: match.kickoffEt || "",
+      kickoffIso: match.kickoffIso || "",
+      venue: match.venue || "",
+      city: match.city || "",
+      extendedHighlightsUrl: typeof match.extendedHighlightsUrl === "string" ? match.extendedHighlightsUrl : "",
+    });
+  }
+
+  return byWinnerSlot;
+}
+
+function normalizeOfficialKnockoutResultsByWinnerSlot(resultsPayload = {}) {
+  const byWinnerSlot = new Map();
+  const matches = Array.isArray(resultsPayload?.matches) ? resultsPayload.matches : [];
+
+  for (const result of matches) {
+    const siteWinnerSlotId = String(result.siteWinnerSlotId || "").trim();
+    if (siteWinnerSlotId) byWinnerSlot.set(siteWinnerSlotId, result);
+  }
+
+  return byWinnerSlot;
+}
+
 
 export async function createBracketModel({
   bracketStore = null,
@@ -331,6 +372,7 @@ export async function createBracketModel({
     game2FifaFinalR32AssignmentsPayload,
     officialTruthPayload,
     officialKnockoutResultsPayload,
+    knockoutMatchDisplayMetadataPayload,
   ] = await Promise.all([
     readJson(DATA_URLS.geometry),
     readJson(DATA_URLS.r32Bridge),
@@ -344,6 +386,7 @@ export async function createBracketModel({
     readJson(DATA_URLS.game2FifaFinalR32Assignments),
     readJson(DATA_URLS.officialTruth),
     readJson(DATA_URLS.officialKnockoutResults),
+    readJson(DATA_URLS.knockoutMatchDisplayMetadata),
   ]);
 
 const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
@@ -371,6 +414,8 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   const currentHighlightsByMatchId = new Map(Object.entries(currentHighlightsPayload.highlights || {}));
   const knockoutMatches = [...(knockoutMatchesPayload.matches || [])];
   const knockoutMatchesById = new Map(knockoutMatches.map((match) => [String(match.match_id || match.matchNumber || match.match_number), match]));
+  const knockoutDisplayMetadataByWinnerSlotId = normalizeKnockoutDisplayMetadata(knockoutMatchDisplayMetadataPayload);
+  const officialKnockoutResultsByWinnerSlotId = normalizeOfficialKnockoutResultsByWinnerSlot(officialKnockoutResultsPayload);
   const r32LogicByGeometryId = new Map();
   const r32LogicByFifaId = new Map((r32Logic.slots || []).map((slot) => [slot.fifaSlotId, slot]));
   for (const bridge of r32Bridge.slots || []) {
@@ -1330,6 +1375,29 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     }];
   }
 
+  function knockoutMatchDisplayForSlot(slotId) {
+    const metadata = knockoutDisplayMetadataByWinnerSlotId.get(slotId) || null;
+    const result = officialKnockoutResultsByWinnerSlotId.get(slotId) || null;
+    if (!metadata && !result) return null;
+
+    return {
+      ...(metadata || {}),
+      siteWinnerSlotId: slotId,
+      completed: Boolean(result),
+      result: result || null,
+      resultLabel: result?.resultLabel || "",
+      winnerTeamId: result?.winnerTeamId || "",
+      winnerTeamName: result?.winnerTeamName || "",
+      homeTeamId: result?.homeTeamId || "",
+      homeTeamName: result?.homeTeamName || "",
+      homeScore: result?.homeScore,
+      awayTeamId: result?.awayTeamId || "",
+      awayTeamName: result?.awayTeamName || "",
+      awayScore: result?.awayScore,
+      extendedHighlightsUrl: metadata?.extendedHighlightsUrl || result?.extendedHighlightsUrl || "",
+    };
+  }
+
   function getPickMenu(slotId) {
     const slot = getSlotDefinition(slotId);
     if (!slot) return null;
@@ -1346,6 +1414,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       groups: getGroupedPickChoices(slotId),
       choices,
       pickable: choices.length > 0,
+      matchDisplay: knockoutMatchDisplayForSlot(slotId),
     };
   }
 
