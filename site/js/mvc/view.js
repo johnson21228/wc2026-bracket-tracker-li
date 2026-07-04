@@ -754,17 +754,21 @@ export function createBracketView(root) {
         button.title = `${fullTeamLabel(displayTeam)} — Open ${r32GroupShortcutLabel} panel`;
       }
       const officialPickState = slot.officialPickComparison?.state || "";
+      const officialTruthMatchedDisplayTeam = Boolean(
+        displayTeam?.id && slot.officialTruthTeam?.id && displayTeam.id === slot.officialTruthTeam.id
+      );
+      const effectiveOfficialPickState = officialPickState || (officialTruthMatchedDisplayTeam ? "correct" : "");
       const slotIdForResultClassification = String(slot.id || slot.slotId || "");
       const isKnockoutResultSlot = /-R(16|8|4|2|QF|SF|F)-/.test(slotIdForResultClassification)
         || /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification);
 
-      if (officialPickState && isKnockoutResultSlot) {
+      if (effectiveOfficialPickState && isKnockoutResultSlot) {
         button.classList.add("is-knockout-result-classified");
-        button.classList.add(`is-knockout-result-${officialPickState}`);
-        button.setAttribute("data-knockout-result-state", officialPickState);
+        button.classList.add(`is-knockout-result-${effectiveOfficialPickState}`);
+        button.setAttribute("data-knockout-result-state", effectiveOfficialPickState);
       }
 
-      if (officialPickState === "correct") {
+      if (effectiveOfficialPickState === "correct") {
         button.classList.add("has-official-correct-pick");
         button.setAttribute("data-official-pick-state", "correct");
       }

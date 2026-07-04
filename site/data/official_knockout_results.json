@@ -351,7 +351,7 @@
     {
       "resultId": "r16-can-mor-2026-07-04",
       "round": "Round of 16",
-      "siteWinnerSlotId": "QF-LEFT-01",
+      "siteWinnerSlotId": "R-QF-01",
       "siteSlotPair": [
         "R-R16-01",
         "R-R16-02"
@@ -370,7 +370,7 @@
     {
       "resultId": "r16-fra-par-2026-07-04",
       "round": "Round of 16",
-      "siteWinnerSlotId": "QF-LEFT-01",
+      "siteWinnerSlotId": "R-QF-02",
       "siteSlotPair": [
         "R-R16-03",
         "R-R16-04"
@@ -387,5 +387,5 @@
       "resultSource": "user-supplied-knockout-result-2026-07-04"
     }
   ],
-  "updatedAt": "2026-07-04T23:01:02.314554Z"
+  "updatedAt": "2026-07-04T23:23:30.244907Z"
 }
