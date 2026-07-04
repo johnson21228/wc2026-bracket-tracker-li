@@ -329,7 +329,27 @@
       "winnerTeamName": "Argentina",
       "resultLabel": "Argentina 2–1 Cabo Verde",
       "resultSource": "user-supplied-knockout-result-2026-07-03"
+    },
+    {
+      "resultId": "r32-col-gha-2026-07-03",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-08",
+      "siteSlotPair": [
+        "R-R32-15",
+        "R-R32-16"
+      ],
+      "homeTeamId": "COL",
+      "homeTeamName": "Colombia",
+      "homeScore": 1,
+      "awayTeamId": "GHA",
+      "awayTeamName": "Ghana",
+      "awayScore": 0,
+      "winnerTeamId": "COL",
+      "winnerTeamName": "Colombia",
+      "resultLabel": "Colombia 1–0 Ghana",
+      "highlightUrl": "https://youtu.be/9TJRhuQOJuE",
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04"
     }
   ],
-  "updatedAt": "2026-07-03T21:19:37.031835Z"
+  "updatedAt": "2026-07-04T11:12:53.124295Z"
 }
