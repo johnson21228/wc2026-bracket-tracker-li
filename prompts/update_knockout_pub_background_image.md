@@ -17,7 +17,7 @@ You are updating the WC2026 Bracketeering knockout pub background image. This is
 The site uses this exact image as the knockout-board pub background:
 
 ```text
-site/assets/board/knockout_pub_background.jpeg
+site/assets/board/pub_background_game1.jpeg
 ```
 
 Generate a replacement for that same path. Do not create a new runtime image path unless explicitly asked.
@@ -31,7 +31,7 @@ The accepted base image for each future update is the latest runtime file.
 Use the current runtime image as the base/reference image:
 
 ```text
-site/assets/board/knockout_pub_background.jpeg
+site/assets/board/pub_background_game1.jpeg
 ```
 
 This matters: future updates should start from the latest accepted calendar image, not from an older draft. Preserve the latest accepted composition, lighting edits, row placement, flag scale, subtle `vs`, subtle `TBD`, and no-footer cleanup.
@@ -141,7 +141,7 @@ Do not rely on memory. Read the current repo files every time before deciding wh
 Create a replacement background image suitable for:
 
 ```text
-site/assets/board/knockout_pub_background.jpeg
+site/assets/board/pub_background_game1.jpeg
 ```
 
 Also produce a small manifest at:

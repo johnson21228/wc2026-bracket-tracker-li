@@ -1,7 +1,7 @@
 {
   "schema": "wc2026.knockout_pub_background_generated.v6",
-  "baseImage": "site/assets/board/knockout_pub_background.jpeg",
-  "outputPath": "site/assets/board/knockout_pub_background.jpeg",
+  "baseImage": "site/assets/board/pub_background_game1.jpeg",
+  "outputPath": "site/assets/board/pub_background_game1.jpeg",
   "styleRule": "preserve the base calendar/poster composition; erase old row content with one seamless card-body patch; place emoji-derived high-resolution flag images directly on top; render unresolved TBD tiny/subtle; render vs tiny/subtle and centered with flags; dim upper-left light bulb/neon sign; do not draw row frames or row boxes; do not draw footer/caption/provenance text under the calendar",
   "dataAuthorities": [
     "site/data/current/knockout_matches.json",
