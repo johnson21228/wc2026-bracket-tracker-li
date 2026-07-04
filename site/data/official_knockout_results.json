@@ -359,10 +359,10 @@
       "homeTeamId": "CAN",
       "homeTeamName": "Canada",
       "homeScore": 0,
-      "awayTeamId": "MOR",
+      "awayTeamId": "MAR",
       "awayTeamName": "Morocco",
       "awayScore": 3,
-      "winnerTeamId": "MOR",
+      "winnerTeamId": "MAR",
       "winnerTeamName": "Morocco",
       "resultLabel": "Morocco 3–0 Canada",
       "resultSource": "user-supplied-knockout-result-2026-07-04"
@@ -387,5 +387,5 @@
       "resultSource": "user-supplied-knockout-result-2026-07-04"
     }
   ],
-  "updatedAt": "2026-07-04T23:23:30.244907Z"
+  "updatedAt": "2026-07-04T23:37:50.690324Z"
 }

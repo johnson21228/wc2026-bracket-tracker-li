@@ -639,7 +639,13 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   }
 
   function officialTeam(slotId) {
-    return persistedOfficialTeam(slotId);
+    const persisted = persistedOfficialTeam(slotId);
+    if (persisted) return persisted;
+
+    const result = officialKnockoutResultsByWinnerSlotId.get(String(slotId || "").trim());
+    if (!result?.winnerTeamId) return null;
+
+    return teamById.get(result.winnerTeamId) || null;
   }
 
   function paddedSlotNumber(value) {
