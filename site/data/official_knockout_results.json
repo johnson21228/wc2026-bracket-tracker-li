@@ -301,15 +301,12 @@
       "awayScore": 1,
       "winnerTeamId": "EGY",
       "winnerTeamName": "Egypt",
-      "resultLabel": "Australia 1–1 Egypt",
+      "resultLabel": "Australia 1–1 Egypt (Egypt 4–2 pens)",
       "advancementLabel": "Egypt advances on penalty kicks 4–2",
-      "resultSource": "user-supplied-knockout-result-2026-07-03",
-      "extendedHighlights": {
-        "provider": "YouTube",
-        "label": "Extended highlights",
-        "url": "https://www.youtube.com/watch?v=EeLUP57yMn4&pp=ygUuZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IEVZR1lQVA%3D%3D",
-        "verificationMode": "user-provided-url"
-      }
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04",
+      "homePenaltyScore": 2,
+      "awayPenaltyScore": 4,
+      "extendedHighlightsUrl": "https://youtu.be/ACWOG7t8Plk"
     },
     {
       "resultId": "r32-arg-cpv-2026-07-03",
@@ -321,14 +318,15 @@
       ],
       "homeTeamId": "ARG",
       "homeTeamName": "Argentina",
-      "homeScore": 2,
+      "homeScore": 3,
       "awayTeamId": "CPV",
       "awayTeamName": "Cabo Verde",
-      "awayScore": 1,
+      "awayScore": 2,
       "winnerTeamId": "ARG",
       "winnerTeamName": "Argentina",
-      "resultLabel": "Argentina 2–1 Cabo Verde",
-      "resultSource": "user-supplied-knockout-result-2026-07-03"
+      "resultLabel": "Argentina 3–2 Cabo Verde",
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04",
+      "extendedHighlightsUrl": "https://youtu.be/EC2jOKluGRI"
     },
     {
       "resultId": "r32-col-gha-2026-07-03",
@@ -351,5 +349,5 @@
       "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04"
     }
   ],
-  "updatedAt": "2026-07-04T11:12:53.124295Z"
+  "updatedAt": "2026-07-04T11:28:46.805504Z"
 }
