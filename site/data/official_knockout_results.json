@@ -310,6 +310,25 @@
         "url": "https://www.youtube.com/watch?v=EeLUP57yMn4&pp=ygUuZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IEVZR1lQVA%3D%3D",
         "verificationMode": "user-provided-url"
       }
+    },
+    {
+      "resultId": "r32-arg-cpv-2026-07-03",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-05",
+      "siteSlotPair": [
+        "R-R32-09",
+        "R-R32-10"
+      ],
+      "homeTeamId": "ARG",
+      "homeTeamName": "Argentina",
+      "homeScore": 2,
+      "awayTeamId": "CPV",
+      "awayTeamName": "Cabo Verde",
+      "awayScore": 1,
+      "winnerTeamId": "ARG",
+      "winnerTeamName": "Argentina",
+      "resultLabel": "Argentina 2–1 Cabo Verde",
+      "resultSource": "user-supplied-knockout-result-2026-07-03"
     }
   ],
   "updatedAt": "2026-07-03T21:19:37.031835Z"
