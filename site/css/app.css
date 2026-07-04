@@ -2882,8 +2882,7 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 }
 
 .player-supplied-links-header p,
-.player-supplied-links-status,
-.player-supplied-links-date {
+.player-supplied-links-status {
   font-size: 11px;
   opacity: 0.72;
 }
@@ -2898,8 +2897,8 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 
 .player-supplied-links-link {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
   align-items: center;
   min-width: 0;
   padding: 8px 10px;
@@ -2922,10 +2921,6 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
   white-space: nowrap;
   font-size: 13px;
   font-weight: 650;
-}
-
-.player-supplied-links-date {
-  white-space: nowrap;
 }
 
 /* Subtle R16+ knockout result frames.
@@ -2976,3 +2971,8 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
   font-weight: 700;
 }
 
+
+
+.player-supplied-links-link > :not(.player-supplied-links-title) {
+  display: none;
+}

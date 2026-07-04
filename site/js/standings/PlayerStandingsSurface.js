@@ -78,13 +78,6 @@ function normalizePlayerSuppliedLinks(payload) {
     .sort((a, b) => (b.sortTime - a.sortTime) || a.title.localeCompare(b.title));
 }
 
-function displayPlayerSuppliedLinkDate(link) {
-  if (!link?.dateAdded) return "Date not supplied";
-  const date = new Date(link.dateAdded);
-  if (Number.isNaN(date.getTime())) return link.dateAdded;
-  return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-}
-
 function normalizeStandingsRow(row) {
   const groupPoints = Number.isFinite(Number(row?.score))
     ? numericScore(row.score)
@@ -655,7 +648,6 @@ export function createPlayerStandingsSurface({
           <li class="player-supplied-links-item">
             <a class="player-supplied-links-link" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(link.title)}">
               <span class="player-supplied-links-title">${escapeHtml(link.title)}</span>
-              <span class="player-supplied-links-date">${escapeHtml(displayPlayerSuppliedLinkDate(link))}</span>
             </a>
           </li>
         `).join("")}
