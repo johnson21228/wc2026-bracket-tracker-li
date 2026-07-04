@@ -347,7 +347,26 @@
       "resultLabel": "Colombia 1–0 Ghana",
       "highlightUrl": "https://youtu.be/9TJRhuQOJuE",
       "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04"
+    },
+    {
+      "resultId": "r16-can-mor-2026-07-04",
+      "round": "Round of 16",
+      "siteWinnerSlotId": "QF-LEFT-01",
+      "siteSlotPair": [
+        "R-R16-01",
+        "R-R16-02"
+      ],
+      "homeTeamId": "CAN",
+      "homeTeamName": "Canada",
+      "homeScore": 0,
+      "awayTeamId": "MOR",
+      "awayTeamName": "Morocco",
+      "awayScore": 3,
+      "winnerTeamId": "MOR",
+      "winnerTeamName": "Morocco",
+      "resultLabel": "Morocco 3–0 Canada",
+      "resultSource": "user-supplied-knockout-result-2026-07-04"
     }
   ],
-  "updatedAt": "2026-07-04T11:28:46.805504Z"
+  "updatedAt": "2026-07-04T22:53:59.404512Z"
 }
