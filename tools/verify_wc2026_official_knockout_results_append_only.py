@@ -72,6 +72,16 @@ require_result("r32-mex-ecu-2026-06-30", {
 })
 
 
+require_result("r16-bra-nor-2026-07-05", {
+    "siteWinnerSlotId": "R-QF-01",
+    "homeTeamId": "BRA",
+    "homeScore": 1,
+    "awayTeamId": "NOR",
+    "awayScore": 2,
+    "winnerTeamId": "NOR",
+})
+
+
 
 truth = json.loads(Path("site/data/current/official_truth.json").read_text())
 truth_picks = truth.get("picksBySlot", {})
