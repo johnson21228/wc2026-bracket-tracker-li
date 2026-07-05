@@ -622,8 +622,6 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
 
   function selectedTeam(slotId) {
     const slot = slotsById.get(slotId);
-    const normalizedSlotId = String(slotId || "").trim();
-    const officialKnockoutResult = officialKnockoutResultsByWinnerSlotId.get(normalizedSlotId) || null;
 
     if (slot?.round === "R32") {
       return officialTeam(slotId) || persistedPlayerTeam(slotId);
@@ -634,10 +632,6 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     }
 
     if (adminOfficialR32EditorActive && isR32DisplaySlot(slotId)) {
-      return officialTeam(slotId) || persistedPlayerTeam(slotId);
-    }
-
-    if (officialKnockoutResult?.winnerTeamId) {
       return officialTeam(slotId) || persistedPlayerTeam(slotId);
     }
 
