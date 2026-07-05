@@ -365,7 +365,8 @@
       "winnerTeamId": "MAR",
       "winnerTeamName": "Morocco",
       "resultLabel": "Morocco 3–0 Canada",
-      "resultSource": "user-supplied-knockout-result-2026-07-04"
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04",
+      "extendedHighlightsUrl": "https://youtu.be/QLFucR6SGr4"
     },
     {
       "resultId": "r16-fra-par-2026-07-04",
@@ -384,7 +385,8 @@
       "winnerTeamId": "FRA",
       "winnerTeamName": "France",
       "resultLabel": "France 1–0 Paraguay",
-      "resultSource": "user-supplied-knockout-result-2026-07-04"
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04",
+      "extendedHighlightsUrl": "https://youtu.be/bQ5Z4Q8VQ8w"
     }
   ],
   "updatedAt": "2026-07-04T23:37:50.690324Z"
