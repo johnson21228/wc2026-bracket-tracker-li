@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 errors = []
+model = Path("site/js/mvc/model.js").read_text()
 
 def read(rel):
     path = ROOT / rel
@@ -59,6 +60,15 @@ for token in [
 
 if "runtime loads official truth from site JSON while player picks remain Supabase-backed" not in runtime_verifier:
     errors.append("runtime verifier must protect site JSON official truth with Supabase-backed player picks")
+
+
+for token in [
+    "const officialKnockoutResult = officialKnockoutResultsByWinnerSlotId.get(normalizedSlotId) || null;",
+    "if (officialKnockoutResult?.winnerTeamId) {",
+    "return officialTeam(slotId) || persistedPlayerTeam(slotId);",
+]:
+    if token not in model:
+        errors.append(f"site/js/mvc/model.js missing official result slot precedence token: {token}")
 
 if errors:
     print("Site-owned official results truth verification failed:")

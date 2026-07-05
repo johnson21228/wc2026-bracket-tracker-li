@@ -351,10 +351,10 @@
     {
       "resultId": "r16-can-mor-2026-07-04",
       "round": "Round of 16",
-      "siteWinnerSlotId": "R-QF-01",
+      "siteWinnerSlotId": "L-QF-02",
       "siteSlotPair": [
-        "R-R16-01",
-        "R-R16-02"
+        "L-R16-03",
+        "L-R16-04"
       ],
       "homeTeamId": "CAN",
       "homeTeamName": "Canada",
@@ -370,10 +370,10 @@
     {
       "resultId": "r16-fra-par-2026-07-04",
       "round": "Round of 16",
-      "siteWinnerSlotId": "R-QF-02",
+      "siteWinnerSlotId": "L-QF-01",
       "siteSlotPair": [
-        "R-R16-03",
-        "R-R16-04"
+        "L-R16-01",
+        "L-R16-02"
       ],
       "homeTeamId": "FRA",
       "homeTeamName": "France",

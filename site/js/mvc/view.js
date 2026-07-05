@@ -757,7 +757,14 @@ export function createBracketView(root) {
       const officialTruthMatchedDisplayTeam = Boolean(
         displayTeam?.id && slot.officialTruthTeam?.id && displayTeam.id === slot.officialTruthTeam.id
       );
-      const effectiveOfficialPickState = officialPickState || (officialTruthMatchedDisplayTeam ? "correct" : "");
+      const renderedTeamMatchesOfficialWinner = officialTruthMatchedDisplayTeam;
+      const effectiveOfficialPickState = officialPickState === "correct" && renderedTeamMatchesOfficialWinner
+        ? "correct"
+        : officialPickState === "incorrect" || officialPickState === "unreachable"
+          ? officialPickState
+          : renderedTeamMatchesOfficialWinner
+            ? "correct"
+            : "";
       const slotIdForResultClassification = String(slot.id || slot.slotId || "");
       const isKnockoutResultSlot = /-R(16|8|4|2|QF|SF|F)-/.test(slotIdForResultClassification)
         || /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification);
