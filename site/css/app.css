@@ -2976,3 +2976,28 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 .player-supplied-links-link > :not(.player-supplied-links-title) {
   display: none;
 }
+
+
+/* POOL_DIALOG_SHORT_SAFE_SCROLL
+   Keep Pool dialog shorter than the visible mobile browser viewport.
+   The board remains map-style/fixed; users scroll inside the Pool card.
+*/
+.player-standings-card {
+  max-height: min(560px, calc(100dvh - 210px));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+@supports not (height: 100dvh) {
+  .player-standings-card {
+    max-height: min(560px, calc(100vh - 230px));
+  }
+}
+
+@media (max-width: 700px) {
+  .player-standings-card {
+    max-height: calc(100dvh - 240px);
+  }
+}

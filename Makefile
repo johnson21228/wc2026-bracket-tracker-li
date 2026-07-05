@@ -1,6 +1,7 @@
 .PHONY: verify pack clean-hygiene open-site publish-pages publish-pages-force check-pages
 
 verify:
+	python3 tools/verify_wc2026_pool_dialog_short_safe_scroll.py
 	python3 tools/verify_wc2026_workbench_easter_egg_button_visible.py
 	python3 tools/verify_wc2026_c64_workbench_loop_easter_egg_tab.py
 	python3 tools/verify_wc2026_official_truth_bracket_hidden_player.py
