@@ -12,7 +12,7 @@ for stale in [
     if stale in source:
         errors.append(f"Stale joined-player conflict UI remains: {stale}")
 
-if "Saved picks have been loaded." not in source:
+if "The picks are locked down. Good luck! Press the “Pool” button to see how the pool is doing and to see other player picks." not in source:
     errors.append("Joined-first UI must use simple player-facing loaded-picks copy.")
 if "Local draft picks are ignored for joined play" in source:
     errors.append("Joined-first UI must not expose local draft technical language.")

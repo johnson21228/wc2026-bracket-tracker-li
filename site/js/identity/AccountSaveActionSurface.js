@@ -3,8 +3,8 @@ import { SupabaseBracketStore } from "../services/SupabaseBracketStore.js";
 const ACCOUNT_SAVE_STATE_ATTRIBUTE = "data-account-save-state";
 const ACCOUNT_PICKS_LOADED_EVENT = "wc2026:account-picks-loaded";
 const AUTOSAVE_DELAY_MS = 650;
-const JOINED_PICKS_LOADED_MESSAGE = "Saved picks have been loaded.";
-const NOT_JOINED_STARTUP_MESSAGE = "Sign in to the Pool to load your saved picks. Tap a match on the bracket to see match time, result details, and highlights when available. Tap the person icon to sign in. Tap the “i” button to learn how to play.";
+const JOINED_PICKS_LOADED_MESSAGE = "The picks are locked down. Good luck! Press the “Pool” button to see how the pool is doing and to see other player picks.";
+const NOT_JOINED_STARTUP_MESSAGE = "Playing Bracketeering requires you to join and sign in to the pool. Tap the button with the person icon to join or sign back in. Tap the button with the “i” to get information about playing the game.";
 
 function pickFingerprintFromDocument(bracketDocument) {
   const picksBySlot = bracketDocument?.picksBySlot || {};

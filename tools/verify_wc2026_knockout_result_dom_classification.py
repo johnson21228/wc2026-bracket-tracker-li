@@ -13,9 +13,9 @@ required_view = [
     "const isKnockoutResultSlot = /-R(16|8|4|2|QF|SF|F)-/.test(slotIdForResultClassification)",
     "|| /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification);",
     "button.classList.add(\"is-knockout-result-classified\");",
-    "button.classList.add(`is-knockout-result-${officialPickState}`);",
-    "button.setAttribute(\"data-knockout-result-state\", officialPickState);",
-    "if (officialPickState === \"correct\")",
+    "button.classList.add(`is-knockout-result-${effectiveOfficialPickState}`);",
+    "button.setAttribute(\"data-knockout-result-state\", effectiveOfficialPickState);",
+    "if (effectiveOfficialPickState === \"correct\")",
     "if (officialPickState === \"incorrect\")",
     "if (officialPickState === \"unreachable\")",
 ]

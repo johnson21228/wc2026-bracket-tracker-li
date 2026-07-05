@@ -22,9 +22,26 @@ function identityIconSvg(kind) {
   return "";
 }
 
+const JOIN_REQUIRED_DIALOG_COPY_TOKENS = [
+  "Join the Pool",
+  "Playing Bracketeering requires you to join the Pool.",
+  "Not joined yet.",
+  "Sign in with Google, or use email verification.",
+];
+
+const IDENTITY_ICON_BUTTON_LEGACY_ACCESSIBILITY_TOKENS = [
+  'aria-label="Join Bracketeering"',
+  'title="Join Bracketeering"',
+];
+
+const IDENTITY_ICON_BUTTON_LEGACY_ATTRIBUTE_TUPLES = [
+  ["aria-label", "Join Bracketeering"],
+  ["title", "Join Bracketeering"],
+];
+
 const IDENTITY_ICON_BUTTON_ACCESSIBILITY_TOKENS = [
-  'aria-label="Sign in to Bracketeering"',
-  'title="Sign in to Bracketeering"',
+  'aria-label="Join the Pool"',
+  'title="Join the Pool"',
   'aria-label="Profile"',
   'title="Profile"',
 ];
@@ -74,8 +91,8 @@ function decorateIdentityRoundIconButtons(surface) {
     if (isJoinButton) {
       button.classList.add("identity-icon-button");
       forceCircularIdentityButton(button);
-      button.setAttribute("aria-label", "Sign in to Bracketeering");
-      button.setAttribute("title", "Sign in to Bracketeering");
+      button.setAttribute("aria-label", "Join the Pool");
+      button.setAttribute("title", "Join the Pool");
       button.innerHTML = `<img class="identity-icon-svg" src="assets/icons/person-exclamation.svg" alt="" aria-hidden="true">`;
     }
 
