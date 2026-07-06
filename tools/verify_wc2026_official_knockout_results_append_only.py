@@ -83,6 +83,16 @@ require_result("r16-bra-nor-2026-07-05", {
 
 
 
+require_result("r16-mex-eng-2026-07-05", {
+    "siteWinnerSlotId": "R-QF-02",
+    "homeTeamId": "MEX",
+    "homeScore": 1,
+    "awayTeamId": "ENG",
+    "awayScore": 2,
+    "winnerTeamId": "ENG",
+})
+
+
 truth = json.loads(Path("site/data/current/official_truth.json").read_text())
 truth_picks = truth.get("picksBySlot", {})
 non_r32 = sorted(slot_id for slot_id in truth_picks if "-R32-" not in slot_id)
