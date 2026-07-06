@@ -427,7 +427,26 @@
       "resultLabel": "Mexico 2-3 England",
       "resultSource": "user-corrected-knockout-result-2026-07-05",
       "extendedHighlightsUrl": "https://youtu.be/n7cA4k6TJbs"
+    },
+    {
+      "resultId": "r16-por-esp-2026-07-06",
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-03",
+      "siteSlotPair": [
+        "L-R16-05",
+        "L-R16-06"
+      ],
+      "homeTeamId": "POR",
+      "homeTeamName": "Portugal",
+      "homeScore": 0,
+      "awayTeamId": "ESP",
+      "awayTeamName": "Spain",
+      "awayScore": 1,
+      "winnerTeamId": "ESP",
+      "winnerTeamName": "Spain",
+      "resultLabel": "Spain 1–0 Portugal",
+      "resultSource": "user-supplied-official-knockout-result-2026-07-06"
     }
   ],
-  "updatedAt": "2026-07-06T03:40:05.926803Z"
+  "updatedAt": "2026-07-06T21:00:00Z"
 }
