@@ -405,7 +405,8 @@
       "winnerTeamId": "NOR",
       "winnerTeamName": "Norway",
       "resultLabel": "Brazil 1–2 Norway",
-      "resultSource": "user-corrected-knockout-result-2026-07-05"
+      "resultSource": "user-corrected-knockout-result-2026-07-05",
+      "extendedHighlightsUrl": "https://youtu.be/vpcukTVSD8Q"
     },
     {
       "resultId": "r16-mex-eng-2026-07-05",
@@ -424,7 +425,8 @@
       "winnerTeamId": "ENG",
       "winnerTeamName": "England",
       "resultLabel": "Mexico 2-3 England",
-      "resultSource": "user-corrected-knockout-result-2026-07-05"
+      "resultSource": "user-corrected-knockout-result-2026-07-05",
+      "extendedHighlightsUrl": "https://youtu.be/n7cA4k6TJbs"
     }
   ],
   "updatedAt": "2026-07-06T03:40:05.926803Z"
