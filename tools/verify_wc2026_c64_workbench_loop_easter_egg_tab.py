@@ -18,11 +18,13 @@ def main():
     require('label: "Story"' in js, "Story tab must remain.", errors)
     require('label: "Workbench"' in js, "Workbench tab must remain.", errors)
     require('label: "C64 Loop"' in js, "C64 Loop tab must be present.", errors)
+    require('label: "Personal Bearocrat"' in js, "Personal Bearocrat tab must be present.", errors)
     require('data-workflow-tabpanel="c64-loop"' in js, "C64 Loop tabpanel must be present.", errors)
 
     require("C64_WORKBENCH_LOOP_IMAGE_SRC" in js, "C64 Loop image source constant must exist.", errors)
     require("c64_workbench_stage0_learning_loop.jpeg" in js, "C64 Loop image path must be referenced.", errors)
     require("The C64 Workbench Loop" in js, "C64 Loop title copy must be present.", errors)
+    require("The C64 is not the point. It is just a tiny world where the rules are visible." in js, "C64 compact metaphor copy must be present.", errors)
 
     for token in [
         "Conversation",
@@ -30,7 +32,7 @@ def main():
         "verification",
         "C64 build",
         "emulator evidence",
-        "capture back",
+        "Capture Back",
         "next lab",
     ]:
         require(token in js, f"C64 loop copy must include: {token}", errors)

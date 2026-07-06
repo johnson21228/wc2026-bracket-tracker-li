@@ -3,23 +3,37 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-REQUIRED_TOKENS = [
+REQUIRED_RUNTIME_TOKENS = [
     "Built with Workbench",
     "This site was built in a new way.",
-    "The old way",
-    "Raw AI assistance",
     "Workbench + AI",
-    "Workbench thesis",
+    "The AI helped make things. The Workbench kept the work coherent.",
     "Story",
     "Workbench",
+    "C64 Loop",
+    "Personal Bearocrat",
     "Workbench is the memory",
-    "Workbench is for any workflow where AI can help produce, revise, verify, and preserve artifacts",
-    "The Workbench is the memory.",
+    "Workbench keeps the middle from disappearing.",
     "Prompts are the interface.",
     "Continuity is the product.",
     "Capture Back is the protocol.",
-    "Language Infrastructure is the compounding business win.",
-    "The Bracketeering site is the product. The Workbench is the factory.",
+    "Language Infrastructure is the compounding win.",
+    "The site is the product. The Workbench is the factory.",
+    "The C64 is not the point. It is just a tiny world where the rules are visible.",
+    "Your Personal Bearocrat",
+    "Every Inference Interface needs one.",
+    "A WB is your personal bearocrat",
+    "Inference Interface asks.",
+    "WB Loop curates.",
+    "Capture Back remembers.",
+]
+
+REQUIRED_SUPPORTING_ARTIFACTS = [
+    "docs/features/workbench_story_easter_egg_copy.md",
+    "captures/CAPTURE_BACK_WORKBENCH_STORY_EASTER_EGG_COPY.md",
+    "cards/284_workbench_story_easter_egg_copy_card.md",
+    "captures/CAPTURE_BACK_EASTER_EGG_HUMAN_EDITOR_COPY_REFRESH.md",
+    "captures/CAPTURE_BACK_EASTER_EGG_BEAROCRAT_TAB_THESIS.md",
 ]
 
 FORBIDDEN_RUNTIME_TOKENS = [
@@ -46,9 +60,6 @@ def main():
     index = read("site/index.html")
     app = read("site/js/app.js")
     css = read("site/css/app.css")
-    doc = read("docs/features/workbench_story_easter_egg_copy.md")
-    capture = read("captures/CAPTURE_BACK_WORKBENCH_STORY_EASTER_EGG_COPY.md")
-    card = read("cards/284_workbench_story_easter_egg_copy_card.md")
     makefile = read("Makefile")
     runtime = workflow + "\n" + index
 
@@ -60,9 +71,11 @@ def main():
     require("workflow-panel-tabs" in css, "Workflow tab styling must exist.", errors)
     require("workflow-panel-tabpanel[hidden]" in css, "Hidden tab panel styling must exist.", errors)
 
-    for token in REQUIRED_TOKENS:
+    for token in REQUIRED_RUNTIME_TOKENS:
         require(token in runtime, f"Runtime missing protected copy: {token}", errors)
-        require(token in (doc + capture + card), f"Docs/capture/card missing protected copy: {token}", errors)
+
+    for rel in REQUIRED_SUPPORTING_ARTIFACTS:
+        require((ROOT / rel).exists(), f"Missing supporting Easter egg artifact: {rel}", errors)
 
     for token in FORBIDDEN_RUNTIME_TOKENS:
         require(token.lower() not in runtime.lower(), f"Workflow panel must not expose/render forbidden runtime material: {token}", errors)
@@ -77,7 +90,7 @@ def main():
         print("Bracketeering workflow Easter egg panel verification failed: " + "; ".join(errors))
         return 1
 
-    print("OK: Workbench Easter egg panel has Story/Workbench tabs, protects thesis copy, and remains text-only.")
+    print("OK: Workbench Easter egg panel has Story/Workbench/C64/Personal Bearocrat tabs and protected human-editor copy.")
     return 0
 
 if __name__ == "__main__":
