@@ -21,10 +21,10 @@ C64 Loop
   The same loop works in a primitive software platform where the rules are visible.
 ```
 
-A new fourth tab should capture the new language:
+A new fourth tab should complete the story by linking the C64 metaphor back to life-scale long learning:
 
 ```text
-Bearocrat
+Personal Bearocrat
 ```
 
 ## Proposed tab
@@ -32,7 +32,7 @@ Bearocrat
 Label:
 
 ```text
-Bearocrat
+Personal Bearocrat
 ```
 
 Heading:
@@ -40,6 +40,13 @@ Heading:
 ```text
 A WB is your personal bearocrat.
 ```
+
+Subheading:
+
+```text
+Every Inference Interface needs one.
+```
+
 
 Core copy:
 
@@ -78,9 +85,31 @@ Workbench
 C64 Loop
   A primitive software world makes the bearocracy of code visible.
 
-Bearocrat
-  AI can operate across bureaucratic language. Workbench keeps the work governed.
+Personal Bearocrat
+  The same loop needed by code is needed across a life of learning and work.
 ```
+
+
+## C64 to life-scale bridge
+
+The C64 tab should make the Workbench loop visible in miniature:
+
+```text
+language -> code -> machine behavior -> emulator proof
+```
+
+The Personal Bearocrat tab should then scale the same pattern back up to human life and long learning:
+
+```text
+language -> decisions -> artifacts -> consequences -> memory/proof
+```
+
+In a tiny C64 machine, the rules are visible: memory, sprites, assembly, emulator, verifier.
+
+In a human life, the rules are harder to see: projects, decisions, evidence, sources, commitments, health observations, family context, creative drafts, repos, domains, and unfinished ideas.
+
+The Workbench is the continuity layer that keeps both loops coherent.
+
 
 ## Protected lines
 
@@ -88,7 +117,7 @@ These lines are good candidates to preserve in the panel:
 
 ```text
 A WB is your personal bearocrat.
-Every II needs a bearocrat.
+Every Inference Interface needs a bearocrat.
 AI is coming for bureaucracy because bureaucracy is language.
 Workbench turns bureaucracy into accountable Language Infrastructure.
 The response to AI bureaucrats should not be unbounded AI agents.
