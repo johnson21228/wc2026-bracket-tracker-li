@@ -65,8 +65,6 @@ const PERSONAL_BEAROCRAT_LOOP_LINES = Object.freeze([
 ]);
 
 
-function paragraphsHtml
-
 function paragraphsHtml(paragraphs = []) {
   return paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("");
 }
