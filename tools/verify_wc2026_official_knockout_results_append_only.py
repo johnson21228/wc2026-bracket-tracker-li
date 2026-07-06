@@ -86,9 +86,9 @@ require_result("r16-bra-nor-2026-07-05", {
 require_result("r16-mex-eng-2026-07-05", {
     "siteWinnerSlotId": "R-QF-02",
     "homeTeamId": "MEX",
-    "homeScore": 1,
+    "homeScore": 2,
     "awayTeamId": "ENG",
-    "awayScore": 2,
+    "awayScore": 3,
     "winnerTeamId": "ENG",
 })
 

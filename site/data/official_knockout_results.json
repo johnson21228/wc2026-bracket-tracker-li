@@ -417,15 +417,15 @@
       ],
       "homeTeamId": "MEX",
       "homeTeamName": "Mexico",
-      "homeScore": 1,
+      "homeScore": 2,
       "awayTeamId": "ENG",
       "awayTeamName": "England",
-      "awayScore": 2,
+      "awayScore": 3,
       "winnerTeamId": "ENG",
       "winnerTeamName": "England",
-      "resultLabel": "Mexico 1-2 England",
-      "resultSource": "user-supplied-knockout-result-2026-07-05"
+      "resultLabel": "Mexico 2-3 England",
+      "resultSource": "user-corrected-knockout-result-2026-07-05"
     }
   ],
-  "updatedAt": "2026-07-06T03:10:18.302341Z"
+  "updatedAt": "2026-07-06T03:40:05.926803Z"
 }
