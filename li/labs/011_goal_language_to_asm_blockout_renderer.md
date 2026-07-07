@@ -190,3 +190,27 @@ perspective pit projection
 
 This is still an SVG/polygon proof, not final C64 bitmap span fill.
 
+
+---
+
+## C64-facing cube span generation
+
+Lab 011 now generates horizontal span rows from the solid red cube face quads.
+
+Artifacts:
+
+```text
+dist/single_cube_polygon_spans.json
+src/generated_single_cube_spans.s
+```
+
+This is the bridge from polygon proof to C64 bitmap fill:
+
+```text
+projected face quads
+  -> horizontal spans
+  -> C64 fill rows
+```
+
+The C64 should not calculate polygon intersections. Workbench generates the span data; the C64 renderer consumes it.
+

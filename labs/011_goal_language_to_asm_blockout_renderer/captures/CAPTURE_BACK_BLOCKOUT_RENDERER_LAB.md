@@ -140,3 +140,23 @@ Updated the single-cube polygon proof to use solid red shaded faces.
 
 This gives a clearer proof that the projection can support shaded cuboid faces before C64 bitmap/span rendering.
 
+
+## Single cube polygon spans
+
+Added generated horizontal spans for the red shaded cube.
+
+Artifacts:
+
+```text
+dist/single_cube_polygon_spans.json
+src/generated_single_cube_spans.s
+```
+
+This confirms the next rendering boundary:
+
+```text
+solid red cube faces
+  -> generated spans
+  -> next: C64 bitmap fill rows
+```
+

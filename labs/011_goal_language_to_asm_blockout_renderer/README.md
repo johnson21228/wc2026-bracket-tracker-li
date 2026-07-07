@@ -92,3 +92,10 @@ Open:
 captures/blockout_single_cube_red_shaded_faces.svg
 ```
 
+
+## Single cube polygon spans
+
+`make spans` generates horizontal span rows from the single red cube face quads.
+
+These spans are the C64-facing rasterization payload.
+
