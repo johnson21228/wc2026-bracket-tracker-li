@@ -72,3 +72,95 @@ Make assembly draw the geometry.
 Make the verifier prove the contract.
 Make the emulator show the artifact.
 ```
+
+
+---
+
+## Projection correction — top-down into the pit
+
+Lab 011 uses a top-down pit view.
+
+The player is looking down into the gameboard, not at the pit from the side.
+
+This means:
+
+```text
+x/y define the visible board opening
+z represents depth into the well
+deeper z levels are drawn as inset rings toward the center
+side walls are implied by rails connecting corresponding perimeter points
+```
+
+The projection source of truth is still:
+
+```text
+labs/011_goal_language_to_asm_blockout_renderer/goal/renderer_intent.json
+```
+
+The SVG and the C64 PRG are both derived from the generated `pit_line_segments`.
+
+The current SVG/PRG view is intentionally a top-down wireframe proof, not final Blockout-quality bitmap graphics.
+
+
+---
+
+## Explicit perspective ring projection
+
+The top-down pit projection is governed by an explicit perspective ring table.
+
+This replaces vague perspective math with inspectable data:
+
+```text
+z=0   largest opening ring
+z=3   smaller guide ring
+z=6   smaller guide ring
+z=9   smaller guide ring
+z=12  deepest visible guide ring
+```
+
+The intent carries ring dimensions directly. The generator interpolates between rings when it needs intermediate z coordinates.
+
+The C64 does not calculate perspective.
+
+Workbench precomputes:
+
+```text
+depth_rings
+  -> projection_table
+  -> pit_line_segments
+  -> SVG preview
+  -> first PRG character-rendering approximation
+```
+
+This is the projection boundary before polygon/cuboid rendering begins.
+
+
+---
+
+## Single cube polygon proof
+
+Before implementing C64 bitmap/span fill, Lab 011 confirms that a single cube in the perspective pit can be decomposed into shaded polygon faces.
+
+The proof artifact is:
+
+```text
+captures/blockout_single_cube_polygon_preview.svg
+```
+
+The generated polygon data is:
+
+```text
+dist/single_cube_polygon_faces.json
+```
+
+This confirms:
+
+```text
+cube cell + z depth
+  -> projected vertices
+  -> face quads
+  -> shaded polygon preview
+```
+
+The C64 does not yet fill these polygons. The next renderer milestone is to convert these face quads into C64 bitmap spans.
+

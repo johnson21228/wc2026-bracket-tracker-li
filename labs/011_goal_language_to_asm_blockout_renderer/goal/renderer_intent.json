@@ -13,29 +13,46 @@
     "height": 12
   },
   "projection": {
-    "type": "fixed_oblique_table",
-    "origin_x": 160,
-    "origin_y": 28,
-    "x_axis": {
-      "dx": 18,
-      "dy": 8
-    },
-    "y_axis": {
-      "dx": -18,
-      "dy": 8
-    },
-    "z_axis": {
-      "dx": 0,
-      "dy": 6
-    }
+    "type": "top_down_perspective_rings",
+    "center_x": 160,
+    "center_y": 96,
+    "depth_rings": [
+      {
+        "z": 0,
+        "width": 176,
+        "height": 132
+      },
+      {
+        "z": 3,
+        "width": 136,
+        "height": 100
+      },
+      {
+        "z": 6,
+        "width": 104,
+        "height": 76
+      },
+      {
+        "z": 9,
+        "width": 78,
+        "height": 56
+      },
+      {
+        "z": 12,
+        "width": 58,
+        "height": 40
+      }
+    ]
   },
   "renderer": {
-    "style": "wireframe_first",
+    "style": "top_down_perspective_wireframe_first",
     "draw_pit": true,
     "draw_active_piece": true,
     "draw_filled_faces": false,
     "draw_order": "far_to_near",
-    "clear_policy": "clear_bitmap_each_frame_for_mvp"
+    "clear_policy": "clear_bitmap_each_frame_for_mvp",
+    "depth_guide_interval": 3,
+    "view": "top_down_perspective_into_pit"
   },
   "piece": {
     "name": "three_cube_corner",

@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import subprocess
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
@@ -13,50 +14,40 @@ def ensure_generated() -> None:
     if not (DIST / "pit_line_segments.json").exists():
         subprocess.run(["python3", "tools/generate_blockout_renderer.py"], cwd=ROOT, check=True)
 
-def svg_line(x1, y1, x2, y2, klass="grid"):
-    return f'<line class="{klass}" x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" />'
-
-def project(intent, x, y, z):
-    p = intent["projection"]
-    return (
-        p["origin_x"] + x*p["x_axis"]["dx"] + y*p["y_axis"]["dx"] + z*p["z_axis"]["dx"],
-        p["origin_y"] + x*p["x_axis"]["dy"] + y*p["y_axis"]["dy"] + z*p["z_axis"]["dy"],
-    )
+def svg_line(x1: int, y1: int, x2: int, y2: int, klass: str = "grid") -> str:
+    return f"<line class={chr(34)}{klass}{chr(34)} x1={chr(34)}{x1}{chr(34)} y1={chr(34)}{y1}{chr(34)} x2={chr(34)}{x2}{chr(34)} y2={chr(34)}{y2}{chr(34)} />"
 
 def main() -> None:
     ensure_generated()
 
     intent = json.loads((ROOT / "goal" / "renderer_intent.json").read_text(encoding="utf-8"))
     segments = json.loads((DIST / "pit_line_segments.json").read_text(encoding="utf-8"))
-    pit = intent["pit"]
-    w, d, h = pit["width"], pit["depth"], pit["height"]
 
-    points = []
-    for z in range(h + 1):
-        for y in range(d + 1):
-            for x in range(w + 1):
-                points.append(project(intent, x, y, z))
+    xs = []
+    ys = []
+    for s in segments:
+        xs.extend([s["x1"], s["x2"]])
+        ys.extend([s["y1"], s["y2"]])
 
-    min_x = min(x for x, y in points) - 24
-    max_x = max(x for x, y in points) + 24
-    min_y = min(y for x, y in points) - 24
-    max_y = max(y for x, y in points) + 28
+    min_x = min(xs) - 24
+    max_x = max(xs) + 24
+    min_y = min(ys) - 24
+    max_y = max(ys) + 32
     width = max_x - min_x
     height = max_y - min_y
 
-    def tx(x): return x - min_x
-    def ty(y): return y - min_y
+    def tx(x: int) -> int:
+        return x - min_x
+
+    def ty(y: int) -> int:
+        return y - min_y
 
     drawn_lines = []
     for s in segments:
         start = tuple(s["start"])
         end = tuple(s["end"])
-        klass = "grid"
 
-        # Visual classes:
-        #   top   = top gameboard grid, z=0
-        #   depth = rails descending into the pit, z changes
-        #   side  = lower z-level projection rings, z is constant below top
+        klass = "grid"
         if start[2] == 0 and end[2] == 0:
             klass = "top"
         elif start[2] != end[2]:
@@ -66,37 +57,32 @@ def main() -> None:
 
         drawn_lines.append(svg_line(tx(s["x1"]), ty(s["y1"]), tx(s["x2"]), ty(s["y2"]), klass))
 
-    cell = [(2,2,0), (3,2,0), (3,3,0), (2,3,0)]
-    cell_points = [project(intent, *p) for p in cell]
-    cell_path = " ".join(f"{tx(x)},{ty(y)}" for x, y in cell_points)
+    projection_type = escape(intent.get("projection", {}).get("type", "unknown"))
 
     svg_parts = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
-        '  <title id="title">Lab 011 gameboard projection preview</title>',
-        '  <desc id="desc">A projected 5 by 5 by 12 pit generated from renderer_intent.json, showing top grid, side/depth rails, and z-level projections.</desc>',
-        '  <style>',
-        '    .bg { fill: #11131a; }',
-        '    .top { stroke: #f7d85c; stroke-width: 2; vector-effect: non-scaling-stroke; }',
-        '    .side { stroke: #66d9ef; stroke-width: 1.3; opacity: 0.78; vector-effect: non-scaling-stroke; }',
-        '    .depth { stroke: #ff7a7a; stroke-width: 1.8; opacity: 0.92; vector-effect: non-scaling-stroke; }',
-        '    .grid { stroke: #9aa0a6; stroke-width: 1; opacity: 0.55; vector-effect: non-scaling-stroke; }',
-        '    .cell { fill: #ffffff; opacity: 0.16; stroke: #ffffff; stroke-width: 1; vector-effect: non-scaling-stroke; }',
-        '    .label { fill: #e8eaed; font: 10px monospace; }',
-        '    .small { fill: #b8bec8; font: 8px monospace; }',
-        '  </style>',
-        f'  <rect class="bg" x="0" y="0" width="{width}" height="{height}" />',
-        f'  <polygon class="cell" points="{cell_path}" />',
+        f"<svg xmlns={chr(34)}http://www.w3.org/2000/svg{chr(34)} width={chr(34)}{width}{chr(34)} height={chr(34)}{height}{chr(34)} viewBox={chr(34)}0 0 {width} {height}{chr(34)} role={chr(34)}img{chr(34)} aria-labelledby={chr(34)}title desc{chr(34)}>",
+        "  <title id=\"title\">Lab 011 gameboard projection preview</title>",
+        "  <desc id=\"desc\">A top-down perspective pit generated from renderer_intent.json through pit_line_segments.json.</desc>",
+        "  <style>",
+        "    .bg { fill: #11131a; }",
+        "    .top { stroke: #f7d85c; stroke-width: 2; vector-effect: non-scaling-stroke; }",
+        "    .side { stroke: #66d9ef; stroke-width: 1.3; opacity: 0.78; vector-effect: non-scaling-stroke; }",
+        "    .depth { stroke: #ff7a7a; stroke-width: 1.8; opacity: 0.92; vector-effect: non-scaling-stroke; }",
+        "    .grid { stroke: #9aa0a6; stroke-width: 1; opacity: 0.55; vector-effect: non-scaling-stroke; }",
+        "    .label { fill: #e8eaed; font: 10px monospace; }",
+        "    .small { fill: #b8bec8; font: 8px monospace; }",
+        "  </style>",
+        f"  <rect class=\"bg\" x=\"0\" y=\"0\" width=\"{width}\" height=\"{height}\" />",
         *["  " + line for line in drawn_lines],
-        '  <text class="label" x="8" y="14">Lab 011 gameboard projection</text>',
-        '  <text class="small" x="8" y="28">5x5x12 pit · top grid + side/depth projections · generated from renderer_intent.json</text>',
-        '</svg>',
-        ''
+        "  <text class=\"label\" x=\"8\" y=\"14\">Lab 011 top-down perspective pit</text>",
+        f"  <text class=\"small\" x=\"8\" y=\"28\">5x5x12 pit · {projection_type} · generated from governed line segments</text>",
+        "</svg>",
+        "",
     ]
-    svg = "\n".join(svg_parts)
 
     CAPTURES.mkdir(parents=True, exist_ok=True)
     out = CAPTURES / "blockout_gameboard_projection.svg"
-    out.write_text(svg, encoding="utf-8")
+    out.write_text(chr(10).join(svg_parts), encoding="utf-8")
     print(f"Wrote {out}")
 
 if __name__ == "__main__":

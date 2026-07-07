@@ -56,3 +56,80 @@ z-level projections
 
 The next renderer milestone is to make the C64 draw these same line segments.
 
+
+## Milestone 3 — First runnable PRG
+
+Added a first runnable C64 PRG:
+
+```text
+dist/blockout_renderer.prg
+```
+
+This first PRG is intentionally crude. It uses a character-screen approximation rather than final bitmap line drawing.
+
+The important Workbench evidence is that the PRG is generated from the same governed line data used by the SVG preview:
+
+```text
+renderer_intent.json
+  -> pit_line_segments.json
+  -> SVG preview
+  -> blockout_renderer.prg
+```
+
+The PRG therefore shows the governed board, not a separately hand-drawn board.
+
+Next renderer milestone:
+
+```text
+replace character-cell approximation with bitmap/pixel line drawing
+```
+
+
+## Projection correction — top-down into the pit
+
+Corrected the Lab 011 gameboard view.
+
+The pit is now rendered as a top-down well:
+
+```text
+x/y = visible board opening
+z = depth into the well
+z guide levels = inset rings
+side walls = rails from top perimeter toward deepest ring
+```
+
+The SVG preview and the first PRG continue to consume the same generated `pit_line_segments`.
+
+This preserves the Workbench evidence chain while correcting the visual model.
+
+
+## Perspective projection milestone
+
+Added explicit top-down perspective rings.
+
+The visual model is now:
+
+```text
+x/y = visible board opening
+z = depth into the well
+depth_rings = governed perspective/inset table
+```
+
+The SVG and PRG are regenerated from the same governed projection data.
+
+This gets the view right before adding polygon/cube rendering.
+
+
+## Single cube shaded polygon proof
+
+Added a proof artifact for one cube in the perspective pit:
+
+```text
+captures/blockout_single_cube_polygon_preview.svg
+dist/single_cube_polygon_faces.json
+```
+
+This confirms that the Workbench projection can produce shaded polygon faces for a cube.
+
+The next C64 milestone is not to invent more math. It is to convert the generated face quads into bitmap spans and draw them on the C64.
+

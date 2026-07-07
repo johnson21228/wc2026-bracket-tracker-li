@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="76" height="72" viewBox="0 0 76 72" role="img" aria-labelledby="title desc">
+  <title id="title">Lab 011 single cube shaded polygon proof</title>
+  <desc id="desc">One projected cube inside the perspective pit, decomposed into shaded polygon faces.</desc>
+  <style>
+    .bg { fill: #11131a; }
+    .cube { stroke: #f8f8f2; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+    .light { fill: #f7d85c; }
+    .mid { fill: #d6b84c; }
+    .mid_dark { fill: #a88d38; }
+    .dark { fill: #7c6729; }
+    .darkest { fill: #55461d; }
+    .label { fill: #e8eaed; font: 9px monospace; }
+  </style>
+  <rect class="bg" x="0" y="0" width="76" height="72" />
+  <polygon class="cube north_wall dark" points="26,25 50,25 52,24 24,24" />
+  <polygon class="cube east_wall mid" points="50,25 50,43 52,44 52,24" />
+  <polygon class="cube south_wall darkest" points="50,43 26,43 24,44 52,44" />
+  <polygon class="cube west_wall mid_dark" points="26,43 26,25 24,24 24,44" />
+  <polygon class="cube top_face light" points="24,24 52,24 52,44 24,44" />
+  <text class="label" x="6" y="12">single cube · shaded polygon faces</text>
+</svg>

@@ -1,0 +1,125 @@
+{
+  "source": "goal/renderer_intent.json",
+  "projection": "top_down_perspective_rings",
+  "purpose": "single cube shaded polygon proof before C64 bitmap/span fill",
+  "cube": {
+    "x": 2,
+    "y": 2,
+    "z": 3,
+    "width": 1,
+    "depth": 1,
+    "height": 1
+  },
+  "faces": [
+    {
+      "name": "north_wall",
+      "shade": "dark",
+      "points": [
+        {
+          "x": 148,
+          "y": 87
+        },
+        {
+          "x": 172,
+          "y": 87
+        },
+        {
+          "x": 174,
+          "y": 86
+        },
+        {
+          "x": 146,
+          "y": 86
+        }
+      ]
+    },
+    {
+      "name": "east_wall",
+      "shade": "mid",
+      "points": [
+        {
+          "x": 172,
+          "y": 87
+        },
+        {
+          "x": 172,
+          "y": 105
+        },
+        {
+          "x": 174,
+          "y": 106
+        },
+        {
+          "x": 174,
+          "y": 86
+        }
+      ]
+    },
+    {
+      "name": "south_wall",
+      "shade": "darkest",
+      "points": [
+        {
+          "x": 172,
+          "y": 105
+        },
+        {
+          "x": 148,
+          "y": 105
+        },
+        {
+          "x": 146,
+          "y": 106
+        },
+        {
+          "x": 174,
+          "y": 106
+        }
+      ]
+    },
+    {
+      "name": "west_wall",
+      "shade": "mid_dark",
+      "points": [
+        {
+          "x": 148,
+          "y": 105
+        },
+        {
+          "x": 148,
+          "y": 87
+        },
+        {
+          "x": 146,
+          "y": 86
+        },
+        {
+          "x": 146,
+          "y": 106
+        }
+      ]
+    },
+    {
+      "name": "top_face",
+      "shade": "light",
+      "points": [
+        {
+          "x": 146,
+          "y": 86
+        },
+        {
+          "x": 174,
+          "y": 86
+        },
+        {
+          "x": 174,
+          "y": 106
+        },
+        {
+          "x": 146,
+          "y": 106
+        }
+      ]
+    }
+  ]
+}
