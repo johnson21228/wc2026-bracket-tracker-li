@@ -81,3 +81,14 @@ This makes the view inspectable and verifiable before adding cube or polygon ren
 
 This confirms the polygon math before C64 bitmap/span rendering.
 
+
+## Solid red shaded cube faces
+
+The single-cube polygon proof now renders with solid red shaded faces.
+
+Open:
+
+```text
+captures/blockout_single_cube_red_shaded_faces.svg
+```
+

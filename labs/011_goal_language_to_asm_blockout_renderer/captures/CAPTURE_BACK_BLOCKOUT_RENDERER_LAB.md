@@ -133,3 +133,10 @@ This confirms that the Workbench projection can produce shaded polygon faces for
 
 The next C64 milestone is not to invent more math. It is to convert the generated face quads into bitmap spans and draw them on the C64.
 
+
+## Solid red shaded cube faces
+
+Updated the single-cube polygon proof to use solid red shaded faces.
+
+This gives a clearer proof that the projection can support shaded cuboid faces before C64 bitmap/span rendering.
+

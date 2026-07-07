@@ -1,19 +1,27 @@
 {
   "source": "goal/renderer_intent.json",
   "projection": "top_down_perspective_rings",
-  "purpose": "single cube shaded polygon proof before C64 bitmap/span fill",
+  "purpose": "single cube solid red shaded polygon proof before C64 bitmap/span fill",
   "cube": {
     "x": 2,
     "y": 2,
     "z": 3,
     "width": 1,
     "depth": 1,
-    "height": 1
+    "height": 1,
+    "palette": "solid_red_shaded"
+  },
+  "palette": {
+    "red_light": "#ff4a3d",
+    "red_mid": "#d92f2b",
+    "red_mid_dark": "#b32124",
+    "red_dark": "#8f171d",
+    "red_deep": "#661016"
   },
   "faces": [
     {
       "name": "north_wall",
-      "shade": "dark",
+      "shade": "red_dark",
       "points": [
         {
           "x": 148,
@@ -35,7 +43,7 @@
     },
     {
       "name": "east_wall",
-      "shade": "mid",
+      "shade": "red_mid",
       "points": [
         {
           "x": 172,
@@ -57,7 +65,7 @@
     },
     {
       "name": "south_wall",
-      "shade": "darkest",
+      "shade": "red_deep",
       "points": [
         {
           "x": 172,
@@ -79,7 +87,7 @@
     },
     {
       "name": "west_wall",
-      "shade": "mid_dark",
+      "shade": "red_mid_dark",
       "points": [
         {
           "x": 148,
@@ -101,7 +109,7 @@
     },
     {
       "name": "top_face",
-      "shade": "light",
+      "shade": "red_light",
       "points": [
         {
           "x": 146,

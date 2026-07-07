@@ -164,3 +164,29 @@ cube cell + z depth
 
 The C64 does not yet fill these polygons. The next renderer milestone is to convert these face quads into C64 bitmap spans.
 
+
+---
+
+## Solid red shaded cube proof
+
+Lab 011 now includes a deliberately visible single-cube proof using solid red shaded faces.
+
+Artifacts:
+
+```text
+captures/blockout_single_cube_polygon_preview.svg
+captures/blockout_single_cube_red_shaded_faces.svg
+dist/single_cube_polygon_faces.json
+```
+
+The red cube proof confirms:
+
+```text
+perspective pit projection
+  -> projected cube vertices
+  -> five face quads
+  -> solid shaded visual faces
+```
+
+This is still an SVG/polygon proof, not final C64 bitmap span fill.
+
