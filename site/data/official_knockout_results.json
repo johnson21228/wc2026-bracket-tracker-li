@@ -446,7 +446,26 @@
       "winnerTeamName": "Spain",
       "resultLabel": "Spain 1–0 Portugal",
       "resultSource": "user-supplied-official-knockout-result-2026-07-06"
+    },
+    {
+      "resultId": "r16-usa-bel-2026-07-06",
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-04",
+      "siteSlotPair": [
+        "L-R16-07",
+        "L-R16-08"
+      ],
+      "homeTeamId": "USA",
+      "homeTeamName": "United States",
+      "homeScore": 1,
+      "awayTeamId": "BEL",
+      "awayTeamName": "Belgium",
+      "awayScore": 4,
+      "winnerTeamId": "BEL",
+      "winnerTeamName": "Belgium",
+      "resultLabel": "Belgium 4–1 United States",
+      "resultSource": "user-supplied-official-knockout-result-2026-07-06"
     }
   ],
-  "updatedAt": "2026-07-06T21:00:00Z"
+  "updatedAt": "2026-07-07T02:05:00Z"
 }
