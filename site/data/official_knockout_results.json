@@ -465,7 +465,36 @@
       "winnerTeamName": "Belgium",
       "resultLabel": "Belgium 4–1 United States",
       "resultSource": "user-supplied-official-knockout-result-2026-07-06"
+    },
+    {
+      "resultId": "r16-arg-egy-2026-07-07",
+      "matchId": "53452521",
+      "round": "Round of 16",
+      "status": "final",
+      "resultType": "regulation",
+      "siteWinnerSlotId": "R-QF-03",
+      "siteSlotPair": [
+        "R-R16-05",
+        "R-R16-06"
+      ],
+      "homeTeamId": "ARG",
+      "homeTeamCode": "ARG",
+      "homeTeamName": "Argentina",
+      "homeScore": 3,
+      "awayTeamId": "EGY",
+      "awayTeamCode": "EGY",
+      "awayTeamName": "Egypt",
+      "awayScore": 2,
+      "winnerTeamId": "ARG",
+      "winnerTeamCode": "ARG",
+      "winnerTeamName": "Argentina",
+      "resultLabel": "Argentina 3–2 Egypt",
+      "scoreText": "ARG 3–2 EGY",
+      "resultText": "Argentina 3–2 Egypt",
+      "resultSource": "user-supplied-knockout-result-2026-07-07",
+      "source": "user-supplied-knockout-result-2026-07-07",
+      "notes": "User supplied final Round of 16 result: Argentina 3, Egypt 2. Argentina advances."
     }
   ],
-  "updatedAt": "2026-07-07T02:05:00Z"
+  "updatedAt": "2026-07-07T18:10:00Z"
 }

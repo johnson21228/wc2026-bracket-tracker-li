@@ -133,6 +133,7 @@ verify:
 	python3 tools/verify_wc2026_germany_paraguay_knockout_result.py
 	python3 tools/verify_wc2026_knockout_result_dom_classification.py
 	python3 tools/verify_wc2026_july_04_r16_extended_highlights.py
+	python3 tools/verify_wc2026_argentina_egypt_r16_result.py
 	python3 tools/verify_wc2026_spain_portugal_r16_result.py
 	python3 tools/verify_wc2026_usa_belgium_r16_result.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
