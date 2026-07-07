@@ -1,0 +1,66 @@
+{
+  "artifact": "c64_blockout_style_renderer",
+  "target": "commodore_64_6502_asm",
+  "screen_mode": "hires_bitmap",
+  "lab": {
+    "id": "011",
+    "name": "goal_language_to_asm_blockout_renderer",
+    "purpose": "Generate deterministic 6502 ASM for a constrained projected pit renderer."
+  },
+  "pit": {
+    "width": 5,
+    "depth": 5,
+    "height": 12
+  },
+  "projection": {
+    "type": "fixed_oblique_table",
+    "origin_x": 160,
+    "origin_y": 28,
+    "x_axis": {
+      "dx": 18,
+      "dy": 8
+    },
+    "y_axis": {
+      "dx": -18,
+      "dy": 8
+    },
+    "z_axis": {
+      "dx": 0,
+      "dy": 6
+    }
+  },
+  "renderer": {
+    "style": "wireframe_first",
+    "draw_pit": true,
+    "draw_active_piece": true,
+    "draw_filled_faces": false,
+    "draw_order": "far_to_near",
+    "clear_policy": "clear_bitmap_each_frame_for_mvp"
+  },
+  "piece": {
+    "name": "three_cube_corner",
+    "cubes": [
+      {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      }
+    ],
+    "start": {
+      "x": 2,
+      "y": 2,
+      "z": 0
+    },
+    "orientations": "precomputed"
+  }
+}
