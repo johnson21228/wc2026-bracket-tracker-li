@@ -494,6 +494,44 @@
       "resultSource": "user-supplied-knockout-result-2026-07-07",
       "source": "user-supplied-knockout-result-2026-07-07",
       "notes": "User supplied final Round of 16 result: Argentina 3, Egypt 2. Argentina advances."
+    },
+    {
+      "resultId": "r16-sui-col-2026-07-07",
+      "matchId": "96",
+      "matchNumber": 96,
+      "round": "Round of 16",
+      "status": "final",
+      "resultType": "penalties",
+      "source": "user-supplied-knockout-result-2026-07-07",
+      "resultSource": "user-supplied-knockout-result-2026-07-07",
+      "siteWinnerSlotId": "R-QF-04",
+      "siteSlotPair": [
+        "R-R16-07",
+        "R-R16-08"
+      ],
+      "homeTeamId": "SUI",
+      "homeTeamCode": "SUI",
+      "homeTeamName": "Switzerland",
+      "homeScore": 0,
+      "awayTeamId": "COL",
+      "awayTeamCode": "COL",
+      "awayTeamName": "Colombia",
+      "awayScore": 0,
+      "homePenaltyScore": 4,
+      "awayPenaltyScore": 3,
+      "penaltyScoreByTeamId": {
+        "SUI": 4,
+        "COL": 3
+      },
+      "winnerTeamId": "SUI",
+      "winnerTeamCode": "SUI",
+      "winnerTeamName": "Switzerland",
+      "decidedBy": "penalties",
+      "sourceLabel": "Switzerland vs Colombia",
+      "resultLabel": "Switzerland 0–0 Colombia; Switzerland advances 4–3 on penalties",
+      "scoreText": "SUI 0–0 COL; Switzerland wins penalties 4–3",
+      "resultText": "Switzerland 0–0 Colombia; Switzerland wins penalties 4–3",
+      "notes": "Match finished 0–0. Switzerland advanced 4–3 on penalties."
     }
   ],
   "updatedAt": "2026-07-07T18:10:00Z"
