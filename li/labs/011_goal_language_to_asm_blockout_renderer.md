@@ -1011,3 +1011,6 @@ labs/011_goal_language_to_asm_blockout_renderer/source/blockout_pose_rules.json
 ## Companion LI
 
 - [Active piece payload pipeline](011_goal_language_to_asm_blockout_renderer_active_piece_pipeline.md)
+## Companion LI++
+
+- [LI++ lean runtime doctrine](011_goal_language_to_asm_blockout_renderer_li_plus_plus_runtime_doctrine.md)

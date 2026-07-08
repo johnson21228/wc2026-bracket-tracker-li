@@ -315,3 +315,19 @@ See:
 - `captures/CAPTURE_BACK_ACTIVE_PIECE_PIPELINE_AND_LOCKED_OCCUPANCY.md`
 - `source/blockout_runtime_pipeline_contract.json`
 - `tools/verify_blockout_runtime_pipeline_contract.py`
+
+## LI++ lean runtime doctrine
+
+Lab 011 captures a lean-runtime doctrine:
+
+- the intelligence lives upstream;
+- the runtime stays lean;
+- the payload is the contract;
+- the screen is the proof;
+- the C64 executes current payload records instead of reasoning about Blockout geometry.
+
+See:
+
+- `captures/CAPTURE_BACK_LI_PLUS_PLUS_LEAN_RUNTIME_DOCTRINE.md`
+- `source/blockout_li_plus_plus_runtime_doctrine.json`
+- `tools/verify_blockout_li_plus_plus_runtime_doctrine.py`
