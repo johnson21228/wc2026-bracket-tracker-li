@@ -1,0 +1,16 @@
+{
+  "load_addr": "$0801",
+  "code_addr": "$080d",
+  "bitmap_addr": "$2000",
+  "screen_addr": "$0400",
+  "source_spans": "dist/single_cube_polygon_spans.json",
+  "source_pit_segments": "dist/pit_line_segments.json",
+  "cube_context": "off_side_cube_in_perspective_pit",
+  "total_spans": 71,
+  "pit_line_segments": 48,
+  "mode": "C64 standard hi-res bitmap span-fill proof with pit context",
+  "bitmap_bytes": 8000,
+  "screen_bytes": 1000,
+  "color_ram_bytes": 1000,
+  "program_bytes": 24335
+}

@@ -1,0 +1,13 @@
+{
+  "mode": "C64 moving cube byte-span animation proof",
+  "source": "dist/moving_cube_same_depth_byte_spans.json",
+  "load_addr": "$0801",
+  "code_addr": "$080d",
+  "bitmap_addr": "$2000",
+  "frame_count": 4,
+  "union_clear_offsets": 328,
+  "max_frame_byte_records": 194,
+  "generated_code_bytes": 10307,
+  "program_bytes": 32527,
+  "timing_note": "This is emulator-visible byte-span animation. Next milestone should add raster/timer instrumentation for cycle measurement."
+}

@@ -1,0 +1,2132 @@
+{
+  "source": "goal/renderer_intent.json",
+  "purpose": "same-depth moving cube span payload and realtime-boundary estimate",
+  "movement": "x changes, y/z/depth/height held constant",
+  "frame_count": 4,
+  "max_spans_per_frame": 71,
+  "max_pixels_per_frame": 1107,
+  "total_span_records": 284,
+  "c64_realtime_estimate": {
+    "assumption": "conservative naive pixel set plus span setup estimate",
+    "estimated_frame_cycles": 37470,
+    "approx_1mhz_60hz_budget": 16667,
+    "approx_1mhz_50hz_budget": 20000,
+    "within_60hz_budget": false,
+    "within_50hz_budget": false,
+    "note": "This estimates span drawing only, not full game logic. Bitmap double-buffering or optimized byte-span masks are likely needed for polished realtime."
+  },
+  "frames": [
+    {
+      "frame_index": 0,
+      "cube": {
+        "x": 0,
+        "y": 1,
+        "z": 3,
+        "width": 1,
+        "depth": 1,
+        "height": 2,
+        "palette": "solid_red_shaded"
+      },
+      "faces": [
+        {
+          "name": "north_wall",
+          "shade": "red_dark",
+          "points": [
+            {
+              "x": 102,
+              "y": 71
+            },
+            {
+              "x": 126,
+              "y": 71
+            },
+            {
+              "x": 119,
+              "y": 66
+            },
+            {
+              "x": 92,
+              "y": 66
+            }
+          ]
+        },
+        {
+          "name": "east_wall",
+          "shade": "red_mid",
+          "points": [
+            {
+              "x": 126,
+              "y": 71
+            },
+            {
+              "x": 126,
+              "y": 88
+            },
+            {
+              "x": 119,
+              "y": 86
+            },
+            {
+              "x": 119,
+              "y": 66
+            }
+          ]
+        },
+        {
+          "name": "south_wall",
+          "shade": "red_deep",
+          "points": [
+            {
+              "x": 126,
+              "y": 88
+            },
+            {
+              "x": 102,
+              "y": 88
+            },
+            {
+              "x": 92,
+              "y": 86
+            },
+            {
+              "x": 119,
+              "y": 86
+            }
+          ]
+        },
+        {
+          "name": "west_wall",
+          "shade": "red_mid_dark",
+          "points": [
+            {
+              "x": 102,
+              "y": 88
+            },
+            {
+              "x": 102,
+              "y": 71
+            },
+            {
+              "x": 92,
+              "y": 66
+            },
+            {
+              "x": 92,
+              "y": 86
+            }
+          ]
+        },
+        {
+          "name": "top_face",
+          "shade": "red_light",
+          "points": [
+            {
+              "x": 92,
+              "y": 66
+            },
+            {
+              "x": 119,
+              "y": 66
+            },
+            {
+              "x": 119,
+              "y": 86
+            },
+            {
+              "x": 92,
+              "y": 86
+            }
+          ]
+        }
+      ],
+      "span_faces": [
+        {
+          "face_index": 0,
+          "face_name": "north_wall",
+          "shade": "red_dark",
+          "color_id": 11,
+          "span_count": 5,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 67,
+              "x_start": 94,
+              "x_end": 120
+            },
+            {
+              "y": 68,
+              "x_start": 96,
+              "x_end": 122
+            },
+            {
+              "y": 69,
+              "x_start": 98,
+              "x_end": 123
+            },
+            {
+              "y": 70,
+              "x_start": 100,
+              "x_end": 125
+            }
+          ]
+        },
+        {
+          "face_index": 1,
+          "face_name": "east_wall",
+          "shade": "red_mid",
+          "color_id": 8,
+          "span_count": 22,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 119,
+              "x_end": 119
+            },
+            {
+              "y": 67,
+              "x_start": 119,
+              "x_end": 120
+            },
+            {
+              "y": 68,
+              "x_start": 119,
+              "x_end": 122
+            },
+            {
+              "y": 69,
+              "x_start": 119,
+              "x_end": 123
+            },
+            {
+              "y": 70,
+              "x_start": 119,
+              "x_end": 125
+            },
+            {
+              "y": 71,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 72,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 73,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 74,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 75,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 76,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 77,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 78,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 79,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 80,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 81,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 82,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 83,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 84,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 85,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 86,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 87,
+              "x_start": 122,
+              "x_end": 126
+            }
+          ]
+        },
+        {
+          "face_index": 2,
+          "face_name": "south_wall",
+          "shade": "red_deep",
+          "color_id": 0,
+          "span_count": 2,
+          "spans": [
+            {
+              "y": 86,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 87,
+              "x_start": 97,
+              "x_end": 122
+            }
+          ]
+        },
+        {
+          "face_index": 3,
+          "face_name": "west_wall",
+          "shade": "red_mid_dark",
+          "color_id": 9,
+          "span_count": 22,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 92,
+              "x_end": 92
+            },
+            {
+              "y": 67,
+              "x_start": 92,
+              "x_end": 94
+            },
+            {
+              "y": 68,
+              "x_start": 92,
+              "x_end": 96
+            },
+            {
+              "y": 69,
+              "x_start": 92,
+              "x_end": 98
+            },
+            {
+              "y": 70,
+              "x_start": 92,
+              "x_end": 100
+            },
+            {
+              "y": 71,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 72,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 73,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 74,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 75,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 76,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 77,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 78,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 79,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 80,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 81,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 82,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 83,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 84,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 85,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 86,
+              "x_start": 92,
+              "x_end": 102
+            },
+            {
+              "y": 87,
+              "x_start": 97,
+              "x_end": 102
+            }
+          ]
+        },
+        {
+          "face_index": 4,
+          "face_name": "top_face",
+          "shade": "red_light",
+          "color_id": 2,
+          "span_count": 20,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 67,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 68,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 69,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 70,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 71,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 72,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 73,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 74,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 75,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 76,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 77,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 78,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 79,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 80,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 81,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 82,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 83,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 84,
+              "x_start": 92,
+              "x_end": 119
+            },
+            {
+              "y": 85,
+              "x_start": 92,
+              "x_end": 119
+            }
+          ]
+        }
+      ],
+      "total_spans": 71,
+      "total_pixels": 1107
+    },
+    {
+      "frame_index": 1,
+      "cube": {
+        "x": 1,
+        "y": 1,
+        "z": 3,
+        "width": 1,
+        "depth": 1,
+        "height": 2,
+        "palette": "solid_red_shaded"
+      },
+      "faces": [
+        {
+          "name": "north_wall",
+          "shade": "red_dark",
+          "points": [
+            {
+              "x": 126,
+              "y": 71
+            },
+            {
+              "x": 148,
+              "y": 71
+            },
+            {
+              "x": 146,
+              "y": 66
+            },
+            {
+              "x": 119,
+              "y": 66
+            }
+          ]
+        },
+        {
+          "name": "east_wall",
+          "shade": "red_mid",
+          "points": [
+            {
+              "x": 148,
+              "y": 71
+            },
+            {
+              "x": 148,
+              "y": 88
+            },
+            {
+              "x": 146,
+              "y": 86
+            },
+            {
+              "x": 146,
+              "y": 66
+            }
+          ]
+        },
+        {
+          "name": "south_wall",
+          "shade": "red_deep",
+          "points": [
+            {
+              "x": 148,
+              "y": 88
+            },
+            {
+              "x": 126,
+              "y": 88
+            },
+            {
+              "x": 119,
+              "y": 86
+            },
+            {
+              "x": 146,
+              "y": 86
+            }
+          ]
+        },
+        {
+          "name": "west_wall",
+          "shade": "red_mid_dark",
+          "points": [
+            {
+              "x": 126,
+              "y": 88
+            },
+            {
+              "x": 126,
+              "y": 71
+            },
+            {
+              "x": 119,
+              "y": 66
+            },
+            {
+              "x": 119,
+              "y": 86
+            }
+          ]
+        },
+        {
+          "name": "top_face",
+          "shade": "red_light",
+          "points": [
+            {
+              "x": 119,
+              "y": 66
+            },
+            {
+              "x": 146,
+              "y": 66
+            },
+            {
+              "x": 146,
+              "y": 86
+            },
+            {
+              "x": 119,
+              "y": 86
+            }
+          ]
+        }
+      ],
+      "span_faces": [
+        {
+          "face_index": 0,
+          "face_name": "north_wall",
+          "shade": "red_dark",
+          "color_id": 11,
+          "span_count": 5,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 67,
+              "x_start": 120,
+              "x_end": 146
+            },
+            {
+              "y": 68,
+              "x_start": 122,
+              "x_end": 147
+            },
+            {
+              "y": 69,
+              "x_start": 123,
+              "x_end": 147
+            },
+            {
+              "y": 70,
+              "x_start": 125,
+              "x_end": 148
+            }
+          ]
+        },
+        {
+          "face_index": 1,
+          "face_name": "east_wall",
+          "shade": "red_mid",
+          "color_id": 8,
+          "span_count": 22,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 146,
+              "x_end": 146
+            },
+            {
+              "y": 67,
+              "x_start": 146,
+              "x_end": 146
+            },
+            {
+              "y": 68,
+              "x_start": 146,
+              "x_end": 147
+            },
+            {
+              "y": 69,
+              "x_start": 146,
+              "x_end": 147
+            },
+            {
+              "y": 70,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 71,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 72,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 73,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 74,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 75,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 76,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 77,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 78,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 79,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 80,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 81,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 82,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 83,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 84,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 85,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 86,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 87,
+              "x_start": 147,
+              "x_end": 148
+            }
+          ]
+        },
+        {
+          "face_index": 2,
+          "face_name": "south_wall",
+          "shade": "red_deep",
+          "color_id": 0,
+          "span_count": 2,
+          "spans": [
+            {
+              "y": 86,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 87,
+              "x_start": 122,
+              "x_end": 147
+            }
+          ]
+        },
+        {
+          "face_index": 3,
+          "face_name": "west_wall",
+          "shade": "red_mid_dark",
+          "color_id": 9,
+          "span_count": 22,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 119,
+              "x_end": 119
+            },
+            {
+              "y": 67,
+              "x_start": 119,
+              "x_end": 120
+            },
+            {
+              "y": 68,
+              "x_start": 119,
+              "x_end": 122
+            },
+            {
+              "y": 69,
+              "x_start": 119,
+              "x_end": 123
+            },
+            {
+              "y": 70,
+              "x_start": 119,
+              "x_end": 125
+            },
+            {
+              "y": 71,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 72,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 73,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 74,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 75,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 76,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 77,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 78,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 79,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 80,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 81,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 82,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 83,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 84,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 85,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 86,
+              "x_start": 119,
+              "x_end": 126
+            },
+            {
+              "y": 87,
+              "x_start": 122,
+              "x_end": 126
+            }
+          ]
+        },
+        {
+          "face_index": 4,
+          "face_name": "top_face",
+          "shade": "red_light",
+          "color_id": 2,
+          "span_count": 20,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 67,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 68,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 69,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 70,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 71,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 72,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 73,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 74,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 75,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 76,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 77,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 78,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 79,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 80,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 81,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 82,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 83,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 84,
+              "x_start": 119,
+              "x_end": 146
+            },
+            {
+              "y": 85,
+              "x_start": 119,
+              "x_end": 146
+            }
+          ]
+        }
+      ],
+      "total_spans": 71,
+      "total_pixels": 955
+    },
+    {
+      "frame_index": 2,
+      "cube": {
+        "x": 2,
+        "y": 1,
+        "z": 3,
+        "width": 1,
+        "depth": 1,
+        "height": 2,
+        "palette": "solid_red_shaded"
+      },
+      "faces": [
+        {
+          "name": "north_wall",
+          "shade": "red_dark",
+          "points": [
+            {
+              "x": 148,
+              "y": 71
+            },
+            {
+              "x": 172,
+              "y": 71
+            },
+            {
+              "x": 174,
+              "y": 66
+            },
+            {
+              "x": 146,
+              "y": 66
+            }
+          ]
+        },
+        {
+          "name": "east_wall",
+          "shade": "red_mid",
+          "points": [
+            {
+              "x": 172,
+              "y": 71
+            },
+            {
+              "x": 172,
+              "y": 88
+            },
+            {
+              "x": 174,
+              "y": 86
+            },
+            {
+              "x": 174,
+              "y": 66
+            }
+          ]
+        },
+        {
+          "name": "south_wall",
+          "shade": "red_deep",
+          "points": [
+            {
+              "x": 172,
+              "y": 88
+            },
+            {
+              "x": 148,
+              "y": 88
+            },
+            {
+              "x": 146,
+              "y": 86
+            },
+            {
+              "x": 174,
+              "y": 86
+            }
+          ]
+        },
+        {
+          "name": "west_wall",
+          "shade": "red_mid_dark",
+          "points": [
+            {
+              "x": 148,
+              "y": 88
+            },
+            {
+              "x": 148,
+              "y": 71
+            },
+            {
+              "x": 146,
+              "y": 66
+            },
+            {
+              "x": 146,
+              "y": 86
+            }
+          ]
+        },
+        {
+          "name": "top_face",
+          "shade": "red_light",
+          "points": [
+            {
+              "x": 146,
+              "y": 66
+            },
+            {
+              "x": 174,
+              "y": 66
+            },
+            {
+              "x": 174,
+              "y": 86
+            },
+            {
+              "x": 146,
+              "y": 86
+            }
+          ]
+        }
+      ],
+      "span_faces": [
+        {
+          "face_index": 0,
+          "face_name": "north_wall",
+          "shade": "red_dark",
+          "color_id": 11,
+          "span_count": 5,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 67,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 68,
+              "x_start": 147,
+              "x_end": 173
+            },
+            {
+              "y": 69,
+              "x_start": 147,
+              "x_end": 173
+            },
+            {
+              "y": 70,
+              "x_start": 148,
+              "x_end": 172
+            }
+          ]
+        },
+        {
+          "face_index": 1,
+          "face_name": "east_wall",
+          "shade": "red_mid",
+          "color_id": 8,
+          "span_count": 22,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 174,
+              "x_end": 174
+            },
+            {
+              "y": 67,
+              "x_start": 174,
+              "x_end": 174
+            },
+            {
+              "y": 68,
+              "x_start": 173,
+              "x_end": 174
+            },
+            {
+              "y": 69,
+              "x_start": 173,
+              "x_end": 174
+            },
+            {
+              "y": 70,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 71,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 72,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 73,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 74,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 75,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 76,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 77,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 78,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 79,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 80,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 81,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 82,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 83,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 84,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 85,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 86,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 87,
+              "x_start": 172,
+              "x_end": 173
+            }
+          ]
+        },
+        {
+          "face_index": 2,
+          "face_name": "south_wall",
+          "shade": "red_deep",
+          "color_id": 0,
+          "span_count": 2,
+          "spans": [
+            {
+              "y": 86,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 87,
+              "x_start": 147,
+              "x_end": 173
+            }
+          ]
+        },
+        {
+          "face_index": 3,
+          "face_name": "west_wall",
+          "shade": "red_mid_dark",
+          "color_id": 9,
+          "span_count": 22,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 146,
+              "x_end": 146
+            },
+            {
+              "y": 67,
+              "x_start": 146,
+              "x_end": 146
+            },
+            {
+              "y": 68,
+              "x_start": 146,
+              "x_end": 147
+            },
+            {
+              "y": 69,
+              "x_start": 146,
+              "x_end": 147
+            },
+            {
+              "y": 70,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 71,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 72,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 73,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 74,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 75,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 76,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 77,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 78,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 79,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 80,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 81,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 82,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 83,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 84,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 85,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 86,
+              "x_start": 146,
+              "x_end": 148
+            },
+            {
+              "y": 87,
+              "x_start": 147,
+              "x_end": 148
+            }
+          ]
+        },
+        {
+          "face_index": 4,
+          "face_name": "top_face",
+          "shade": "red_light",
+          "color_id": 2,
+          "span_count": 20,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 67,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 68,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 69,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 70,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 71,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 72,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 73,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 74,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 75,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 76,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 77,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 78,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 79,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 80,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 81,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 82,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 83,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 84,
+              "x_start": 146,
+              "x_end": 174
+            },
+            {
+              "y": 85,
+              "x_start": 146,
+              "x_end": 174
+            }
+          ]
+        }
+      ],
+      "total_spans": 71,
+      "total_pixels": 891
+    },
+    {
+      "frame_index": 3,
+      "cube": {
+        "x": 3,
+        "y": 1,
+        "z": 3,
+        "width": 1,
+        "depth": 1,
+        "height": 2,
+        "palette": "solid_red_shaded"
+      },
+      "faces": [
+        {
+          "name": "north_wall",
+          "shade": "red_dark",
+          "points": [
+            {
+              "x": 172,
+              "y": 71
+            },
+            {
+              "x": 194,
+              "y": 71
+            },
+            {
+              "x": 201,
+              "y": 66
+            },
+            {
+              "x": 174,
+              "y": 66
+            }
+          ]
+        },
+        {
+          "name": "east_wall",
+          "shade": "red_mid",
+          "points": [
+            {
+              "x": 194,
+              "y": 71
+            },
+            {
+              "x": 194,
+              "y": 88
+            },
+            {
+              "x": 201,
+              "y": 86
+            },
+            {
+              "x": 201,
+              "y": 66
+            }
+          ]
+        },
+        {
+          "name": "south_wall",
+          "shade": "red_deep",
+          "points": [
+            {
+              "x": 194,
+              "y": 88
+            },
+            {
+              "x": 172,
+              "y": 88
+            },
+            {
+              "x": 174,
+              "y": 86
+            },
+            {
+              "x": 201,
+              "y": 86
+            }
+          ]
+        },
+        {
+          "name": "west_wall",
+          "shade": "red_mid_dark",
+          "points": [
+            {
+              "x": 172,
+              "y": 88
+            },
+            {
+              "x": 172,
+              "y": 71
+            },
+            {
+              "x": 174,
+              "y": 66
+            },
+            {
+              "x": 174,
+              "y": 86
+            }
+          ]
+        },
+        {
+          "name": "top_face",
+          "shade": "red_light",
+          "points": [
+            {
+              "x": 174,
+              "y": 66
+            },
+            {
+              "x": 201,
+              "y": 66
+            },
+            {
+              "x": 201,
+              "y": 86
+            },
+            {
+              "x": 174,
+              "y": 86
+            }
+          ]
+        }
+      ],
+      "span_faces": [
+        {
+          "face_index": 0,
+          "face_name": "north_wall",
+          "shade": "red_dark",
+          "color_id": 11,
+          "span_count": 5,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 67,
+              "x_start": 174,
+              "x_end": 200
+            },
+            {
+              "y": 68,
+              "x_start": 173,
+              "x_end": 198
+            },
+            {
+              "y": 69,
+              "x_start": 173,
+              "x_end": 197
+            },
+            {
+              "y": 70,
+              "x_start": 172,
+              "x_end": 195
+            }
+          ]
+        },
+        {
+          "face_index": 1,
+          "face_name": "east_wall",
+          "shade": "red_mid",
+          "color_id": 8,
+          "span_count": 22,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 201,
+              "x_end": 201
+            },
+            {
+              "y": 67,
+              "x_start": 200,
+              "x_end": 201
+            },
+            {
+              "y": 68,
+              "x_start": 198,
+              "x_end": 201
+            },
+            {
+              "y": 69,
+              "x_start": 197,
+              "x_end": 201
+            },
+            {
+              "y": 70,
+              "x_start": 195,
+              "x_end": 201
+            },
+            {
+              "y": 71,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 72,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 73,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 74,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 75,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 76,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 77,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 78,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 79,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 80,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 81,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 82,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 83,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 84,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 85,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 86,
+              "x_start": 194,
+              "x_end": 201
+            },
+            {
+              "y": 87,
+              "x_start": 194,
+              "x_end": 198
+            }
+          ]
+        },
+        {
+          "face_index": 2,
+          "face_name": "south_wall",
+          "shade": "red_deep",
+          "color_id": 0,
+          "span_count": 2,
+          "spans": [
+            {
+              "y": 86,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 87,
+              "x_start": 173,
+              "x_end": 198
+            }
+          ]
+        },
+        {
+          "face_index": 3,
+          "face_name": "west_wall",
+          "shade": "red_mid_dark",
+          "color_id": 9,
+          "span_count": 22,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 174,
+              "x_end": 174
+            },
+            {
+              "y": 67,
+              "x_start": 174,
+              "x_end": 174
+            },
+            {
+              "y": 68,
+              "x_start": 173,
+              "x_end": 174
+            },
+            {
+              "y": 69,
+              "x_start": 173,
+              "x_end": 174
+            },
+            {
+              "y": 70,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 71,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 72,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 73,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 74,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 75,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 76,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 77,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 78,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 79,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 80,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 81,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 82,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 83,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 84,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 85,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 86,
+              "x_start": 172,
+              "x_end": 174
+            },
+            {
+              "y": 87,
+              "x_start": 172,
+              "x_end": 173
+            }
+          ]
+        },
+        {
+          "face_index": 4,
+          "face_name": "top_face",
+          "shade": "red_light",
+          "color_id": 2,
+          "span_count": 20,
+          "spans": [
+            {
+              "y": 66,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 67,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 68,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 69,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 70,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 71,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 72,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 73,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 74,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 75,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 76,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 77,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 78,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 79,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 80,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 81,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 82,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 83,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 84,
+              "x_start": 174,
+              "x_end": 201
+            },
+            {
+              "y": 85,
+              "x_start": 174,
+              "x_end": 201
+            }
+          ]
+        }
+      ],
+      "total_spans": 71,
+      "total_pixels": 955
+    }
+  ]
+}

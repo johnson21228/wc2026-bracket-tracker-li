@@ -1,0 +1,71 @@
+{
+  "mode": "C64 pit-only compact-payload projection tuning proof",
+  "pit": {
+    "width": 5,
+    "height": 5,
+    "visual_depth": 10,
+    "target_style": "Blockout_like_5x5x10"
+  },
+  "projection_viewport": {
+    "playfield": "left_square_max_height",
+    "x_min": 30,
+    "x_max": 226,
+    "y_min": 2,
+    "y_max": 198,
+    "hud": "right_reserved_256_319",
+    "square": true,
+    "height_pixels": 196,
+    "near_square_pixels": 196,
+    "far_square_pixels": 72,
+    "depth_bands": 10,
+    "visible_rings": 11,
+    "drawn_ring_count": 9,
+    "visible_ring_zs": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      10
+    ],
+    "ring_density": "skip_some_far_bottom_rings",
+    "depth_spacing": "strong_explicit_near_rows_larger",
+    "depth_t_by_z": [
+      0.0,
+      0.34,
+      0.56,
+      0.71,
+      0.81,
+      0.88,
+      0.93,
+      0.96,
+      0.98,
+      0.99,
+      1.0
+    ],
+    "wall_grid_guides": "all_5x5_boundary_divisions",
+    "top_plane_clutter": "none",
+    "straight_depth_guides": true
+  },
+  "active_piece_render": "disabled_pit_tuning",
+  "payload_strategy": "compact_nonzero_bitmap_byte_records",
+  "memory_layout": {
+    "vic_bank": 1,
+    "vic_bank_range": "$4000-$7fff",
+    "screen_addr": "$4400",
+    "bitmap_addr": "$6000",
+    "reason": "avoid compact-record table overlap with bitmap memory"
+  },
+  "removed_payloads": [
+    "full_8000_byte_pit_bitmap_source",
+    "1000_byte_screen_source",
+    "1000_byte_color_source"
+  ],
+  "pit_record_count": 2394,
+  "pit_record_payload_bytes": 7182,
+  "program_bytes": 7717,
+  "note": "PIT-ONLY OPTIMIZED: the PRG no longer embeds a full 8000-byte pit bitmap plus screen/color source, and VIC display memory is moved to bank 1 to avoid compact-record overlap. It clears bitmap memory, fills screen/color at startup, then draws compact nonzero pit byte records once."
+}

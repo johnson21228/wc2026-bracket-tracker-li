@@ -1,0 +1,6712 @@
+{
+  "source": "dist/moving_cube_same_depth_frames.json",
+  "purpose": "optimized byte/mask span payload for same-depth moving cube",
+  "frame_count": 4,
+  "total_byte_records": 732,
+  "max_byte_records_per_frame": 194,
+  "optimized_c64_realtime_estimate": {
+    "assumption": "precomputed bitmap byte offsets and masks; C64 writes bytes instead of looping pixels",
+    "max_estimated_frame_cycles": 5906,
+    "approx_1mhz_60hz_budget": 16667,
+    "approx_1mhz_50hz_budget": 20000,
+    "within_60hz_budget": true,
+    "within_50hz_budget": true,
+    "note": "Planning estimate only. Next proof should time the loop in C64/VICE."
+  },
+  "frame_estimates": [
+    {
+      "frame_index": 0,
+      "byte_record_count": 192,
+      "estimated_cycles": 5820,
+      "within_60hz_budget": true,
+      "within_50hz_budget": true
+    },
+    {
+      "frame_index": 1,
+      "byte_record_count": 194,
+      "estimated_cycles": 5906,
+      "within_60hz_budget": true,
+      "within_50hz_budget": true
+    },
+    {
+      "frame_index": 2,
+      "byte_record_count": 152,
+      "estimated_cycles": 4716,
+      "within_60hz_budget": true,
+      "within_50hz_budget": true
+    },
+    {
+      "frame_index": 3,
+      "byte_record_count": 194,
+      "estimated_cycles": 5906,
+      "within_60hz_budget": true,
+      "within_50hz_budget": true
+    }
+  ],
+  "frames": [
+    {
+      "frame_index": 0,
+      "cube": {
+        "x": 0,
+        "y": 1,
+        "z": 3,
+        "width": 1,
+        "depth": 1,
+        "height": 2,
+        "palette": "solid_red_shaded"
+      },
+      "source_total_spans": 71,
+      "source_total_pixels": 1107,
+      "byte_record_count": 192,
+      "full_byte_writes": 78,
+      "masked_byte_writes": 114,
+      "records": [
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 11,
+          "bitmap_offset": 2650,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 12,
+          "bitmap_offset": 2658,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 13,
+          "bitmap_offset": 2666,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 14,
+          "bitmap_offset": 2674,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 11,
+          "bitmap_offset": 2651,
+          "mask": 3
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 12,
+          "bitmap_offset": 2659,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 13,
+          "bitmap_offset": 2667,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 14,
+          "bitmap_offset": 2675,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 15,
+          "bitmap_offset": 2683,
+          "mask": 128
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 12,
+          "bitmap_offset": 2660,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 13,
+          "bitmap_offset": 2668,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 14,
+          "bitmap_offset": 2676,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 15,
+          "bitmap_offset": 2684,
+          "mask": 224
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 12,
+          "bitmap_offset": 2661,
+          "mask": 63
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 13,
+          "bitmap_offset": 2669,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 14,
+          "bitmap_offset": 2677,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 15,
+          "bitmap_offset": 2685,
+          "mask": 240
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 12,
+          "bitmap_offset": 2662,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 13,
+          "bitmap_offset": 2670,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 14,
+          "bitmap_offset": 2678,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 15,
+          "bitmap_offset": 2686,
+          "mask": 252
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 66,
+          "byte_x": 14,
+          "bitmap_offset": 2674,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 67,
+          "byte_x": 14,
+          "bitmap_offset": 2675,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 67,
+          "byte_x": 15,
+          "bitmap_offset": 2683,
+          "mask": 128
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 68,
+          "byte_x": 14,
+          "bitmap_offset": 2676,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 68,
+          "byte_x": 15,
+          "bitmap_offset": 2684,
+          "mask": 224
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 69,
+          "byte_x": 14,
+          "bitmap_offset": 2677,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 69,
+          "byte_x": 15,
+          "bitmap_offset": 2685,
+          "mask": 240
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 70,
+          "byte_x": 14,
+          "bitmap_offset": 2678,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 70,
+          "byte_x": 15,
+          "bitmap_offset": 2686,
+          "mask": 252
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 71,
+          "byte_x": 14,
+          "bitmap_offset": 2679,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 71,
+          "byte_x": 15,
+          "bitmap_offset": 2687,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 72,
+          "byte_x": 14,
+          "bitmap_offset": 2992,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 72,
+          "byte_x": 15,
+          "bitmap_offset": 3000,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 73,
+          "byte_x": 14,
+          "bitmap_offset": 2993,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 73,
+          "byte_x": 15,
+          "bitmap_offset": 3001,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 74,
+          "byte_x": 14,
+          "bitmap_offset": 2994,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 74,
+          "byte_x": 15,
+          "bitmap_offset": 3002,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 75,
+          "byte_x": 14,
+          "bitmap_offset": 2995,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 75,
+          "byte_x": 15,
+          "bitmap_offset": 3003,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 76,
+          "byte_x": 14,
+          "bitmap_offset": 2996,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 76,
+          "byte_x": 15,
+          "bitmap_offset": 3004,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 77,
+          "byte_x": 14,
+          "bitmap_offset": 2997,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 77,
+          "byte_x": 15,
+          "bitmap_offset": 3005,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 78,
+          "byte_x": 14,
+          "bitmap_offset": 2998,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 78,
+          "byte_x": 15,
+          "bitmap_offset": 3006,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 79,
+          "byte_x": 14,
+          "bitmap_offset": 2999,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 79,
+          "byte_x": 15,
+          "bitmap_offset": 3007,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 80,
+          "byte_x": 14,
+          "bitmap_offset": 3312,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 80,
+          "byte_x": 15,
+          "bitmap_offset": 3320,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 81,
+          "byte_x": 14,
+          "bitmap_offset": 3313,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 81,
+          "byte_x": 15,
+          "bitmap_offset": 3321,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 82,
+          "byte_x": 14,
+          "bitmap_offset": 3314,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 82,
+          "byte_x": 15,
+          "bitmap_offset": 3322,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 83,
+          "byte_x": 14,
+          "bitmap_offset": 3315,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 83,
+          "byte_x": 15,
+          "bitmap_offset": 3323,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 84,
+          "byte_x": 14,
+          "bitmap_offset": 3316,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 84,
+          "byte_x": 15,
+          "bitmap_offset": 3324,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 85,
+          "byte_x": 14,
+          "bitmap_offset": 3317,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 85,
+          "byte_x": 15,
+          "bitmap_offset": 3325,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 86,
+          "byte_x": 14,
+          "bitmap_offset": 3318,
+          "mask": 1
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 86,
+          "byte_x": 15,
+          "bitmap_offset": 3326,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 87,
+          "byte_x": 15,
+          "bitmap_offset": 3327,
+          "mask": 62
+        },
+        {
+          "frame_index": 0,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 11,
+          "bitmap_offset": 3294,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 12,
+          "bitmap_offset": 3302,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 13,
+          "bitmap_offset": 3310,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 14,
+          "bitmap_offset": 3318,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 12,
+          "bitmap_offset": 3303,
+          "mask": 127
+        },
+        {
+          "frame_index": 0,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 13,
+          "bitmap_offset": 3311,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 14,
+          "bitmap_offset": 3319,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 15,
+          "bitmap_offset": 3327,
+          "mask": 224
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 66,
+          "byte_x": 11,
+          "bitmap_offset": 2650,
+          "mask": 8
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 67,
+          "byte_x": 11,
+          "bitmap_offset": 2651,
+          "mask": 14
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 68,
+          "byte_x": 11,
+          "bitmap_offset": 2652,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 68,
+          "byte_x": 12,
+          "bitmap_offset": 2660,
+          "mask": 128
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 69,
+          "byte_x": 11,
+          "bitmap_offset": 2653,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 69,
+          "byte_x": 12,
+          "bitmap_offset": 2661,
+          "mask": 224
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 70,
+          "byte_x": 11,
+          "bitmap_offset": 2654,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 70,
+          "byte_x": 12,
+          "bitmap_offset": 2662,
+          "mask": 248
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 71,
+          "byte_x": 11,
+          "bitmap_offset": 2655,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 71,
+          "byte_x": 12,
+          "bitmap_offset": 2663,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 72,
+          "byte_x": 11,
+          "bitmap_offset": 2968,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 72,
+          "byte_x": 12,
+          "bitmap_offset": 2976,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 73,
+          "byte_x": 11,
+          "bitmap_offset": 2969,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 73,
+          "byte_x": 12,
+          "bitmap_offset": 2977,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 74,
+          "byte_x": 11,
+          "bitmap_offset": 2970,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 74,
+          "byte_x": 12,
+          "bitmap_offset": 2978,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 75,
+          "byte_x": 11,
+          "bitmap_offset": 2971,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 75,
+          "byte_x": 12,
+          "bitmap_offset": 2979,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 76,
+          "byte_x": 11,
+          "bitmap_offset": 2972,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 76,
+          "byte_x": 12,
+          "bitmap_offset": 2980,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 77,
+          "byte_x": 11,
+          "bitmap_offset": 2973,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 77,
+          "byte_x": 12,
+          "bitmap_offset": 2981,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 78,
+          "byte_x": 11,
+          "bitmap_offset": 2974,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 78,
+          "byte_x": 12,
+          "bitmap_offset": 2982,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 79,
+          "byte_x": 11,
+          "bitmap_offset": 2975,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 79,
+          "byte_x": 12,
+          "bitmap_offset": 2983,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 80,
+          "byte_x": 11,
+          "bitmap_offset": 3288,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 80,
+          "byte_x": 12,
+          "bitmap_offset": 3296,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 81,
+          "byte_x": 11,
+          "bitmap_offset": 3289,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 81,
+          "byte_x": 12,
+          "bitmap_offset": 3297,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 82,
+          "byte_x": 11,
+          "bitmap_offset": 3290,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 82,
+          "byte_x": 12,
+          "bitmap_offset": 3298,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 83,
+          "byte_x": 11,
+          "bitmap_offset": 3291,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 83,
+          "byte_x": 12,
+          "bitmap_offset": 3299,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 84,
+          "byte_x": 11,
+          "bitmap_offset": 3292,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 84,
+          "byte_x": 12,
+          "bitmap_offset": 3300,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 85,
+          "byte_x": 11,
+          "bitmap_offset": 3293,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 85,
+          "byte_x": 12,
+          "bitmap_offset": 3301,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 86,
+          "byte_x": 11,
+          "bitmap_offset": 3294,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 86,
+          "byte_x": 12,
+          "bitmap_offset": 3302,
+          "mask": 254
+        },
+        {
+          "frame_index": 0,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 87,
+          "byte_x": 12,
+          "bitmap_offset": 3303,
+          "mask": 126
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 11,
+          "bitmap_offset": 2650,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 12,
+          "bitmap_offset": 2658,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 13,
+          "bitmap_offset": 2666,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 14,
+          "bitmap_offset": 2674,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 11,
+          "bitmap_offset": 2651,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 12,
+          "bitmap_offset": 2659,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 13,
+          "bitmap_offset": 2667,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 14,
+          "bitmap_offset": 2675,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 11,
+          "bitmap_offset": 2652,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 12,
+          "bitmap_offset": 2660,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 13,
+          "bitmap_offset": 2668,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 14,
+          "bitmap_offset": 2676,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 11,
+          "bitmap_offset": 2653,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 12,
+          "bitmap_offset": 2661,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 13,
+          "bitmap_offset": 2669,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 14,
+          "bitmap_offset": 2677,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 11,
+          "bitmap_offset": 2654,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 12,
+          "bitmap_offset": 2662,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 13,
+          "bitmap_offset": 2670,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 14,
+          "bitmap_offset": 2678,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 11,
+          "bitmap_offset": 2655,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 12,
+          "bitmap_offset": 2663,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 13,
+          "bitmap_offset": 2671,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 14,
+          "bitmap_offset": 2679,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 11,
+          "bitmap_offset": 2968,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 12,
+          "bitmap_offset": 2976,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 13,
+          "bitmap_offset": 2984,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 14,
+          "bitmap_offset": 2992,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 11,
+          "bitmap_offset": 2969,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 12,
+          "bitmap_offset": 2977,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 13,
+          "bitmap_offset": 2985,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 14,
+          "bitmap_offset": 2993,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 11,
+          "bitmap_offset": 2970,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 12,
+          "bitmap_offset": 2978,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 13,
+          "bitmap_offset": 2986,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 14,
+          "bitmap_offset": 2994,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 11,
+          "bitmap_offset": 2971,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 12,
+          "bitmap_offset": 2979,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 13,
+          "bitmap_offset": 2987,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 14,
+          "bitmap_offset": 2995,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 11,
+          "bitmap_offset": 2972,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 12,
+          "bitmap_offset": 2980,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 13,
+          "bitmap_offset": 2988,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 14,
+          "bitmap_offset": 2996,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 11,
+          "bitmap_offset": 2973,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 12,
+          "bitmap_offset": 2981,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 13,
+          "bitmap_offset": 2989,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 14,
+          "bitmap_offset": 2997,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 11,
+          "bitmap_offset": 2974,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 12,
+          "bitmap_offset": 2982,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 13,
+          "bitmap_offset": 2990,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 14,
+          "bitmap_offset": 2998,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 11,
+          "bitmap_offset": 2975,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 12,
+          "bitmap_offset": 2983,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 13,
+          "bitmap_offset": 2991,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 14,
+          "bitmap_offset": 2999,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 11,
+          "bitmap_offset": 3288,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 12,
+          "bitmap_offset": 3296,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 13,
+          "bitmap_offset": 3304,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 14,
+          "bitmap_offset": 3312,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 11,
+          "bitmap_offset": 3289,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 12,
+          "bitmap_offset": 3297,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 13,
+          "bitmap_offset": 3305,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 14,
+          "bitmap_offset": 3313,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 11,
+          "bitmap_offset": 3290,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 12,
+          "bitmap_offset": 3298,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 13,
+          "bitmap_offset": 3306,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 14,
+          "bitmap_offset": 3314,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 11,
+          "bitmap_offset": 3291,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 12,
+          "bitmap_offset": 3299,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 13,
+          "bitmap_offset": 3307,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 14,
+          "bitmap_offset": 3315,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 11,
+          "bitmap_offset": 3292,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 12,
+          "bitmap_offset": 3300,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 13,
+          "bitmap_offset": 3308,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 14,
+          "bitmap_offset": 3316,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 11,
+          "bitmap_offset": 3293,
+          "mask": 15
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 12,
+          "bitmap_offset": 3301,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 13,
+          "bitmap_offset": 3309,
+          "mask": 255
+        },
+        {
+          "frame_index": 0,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 14,
+          "bitmap_offset": 3317,
+          "mask": 255
+        }
+      ]
+    },
+    {
+      "frame_index": 1,
+      "cube": {
+        "x": 1,
+        "y": 1,
+        "z": 3,
+        "width": 1,
+        "depth": 1,
+        "height": 2,
+        "palette": "solid_red_shaded"
+      },
+      "source_total_spans": 71,
+      "source_total_pixels": 955,
+      "byte_record_count": 194,
+      "full_byte_writes": 77,
+      "masked_byte_writes": 117,
+      "records": [
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 14,
+          "bitmap_offset": 2674,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 15,
+          "bitmap_offset": 2682,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 16,
+          "bitmap_offset": 2690,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 17,
+          "bitmap_offset": 2698,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 18,
+          "bitmap_offset": 2706,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 15,
+          "bitmap_offset": 2683,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 16,
+          "bitmap_offset": 2691,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 17,
+          "bitmap_offset": 2699,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 18,
+          "bitmap_offset": 2707,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 15,
+          "bitmap_offset": 2684,
+          "mask": 63
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 16,
+          "bitmap_offset": 2692,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 17,
+          "bitmap_offset": 2700,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 18,
+          "bitmap_offset": 2708,
+          "mask": 240
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 15,
+          "bitmap_offset": 2685,
+          "mask": 31
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 16,
+          "bitmap_offset": 2693,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 17,
+          "bitmap_offset": 2701,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 18,
+          "bitmap_offset": 2709,
+          "mask": 240
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 15,
+          "bitmap_offset": 2686,
+          "mask": 7
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 16,
+          "bitmap_offset": 2694,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 17,
+          "bitmap_offset": 2702,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 18,
+          "bitmap_offset": 2710,
+          "mask": 248
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 66,
+          "byte_x": 18,
+          "bitmap_offset": 2706,
+          "mask": 32
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 67,
+          "byte_x": 18,
+          "bitmap_offset": 2707,
+          "mask": 32
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 68,
+          "byte_x": 18,
+          "bitmap_offset": 2708,
+          "mask": 48
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 69,
+          "byte_x": 18,
+          "bitmap_offset": 2709,
+          "mask": 48
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 70,
+          "byte_x": 18,
+          "bitmap_offset": 2710,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 71,
+          "byte_x": 18,
+          "bitmap_offset": 2711,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 72,
+          "byte_x": 18,
+          "bitmap_offset": 3024,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 73,
+          "byte_x": 18,
+          "bitmap_offset": 3025,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 74,
+          "byte_x": 18,
+          "bitmap_offset": 3026,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 75,
+          "byte_x": 18,
+          "bitmap_offset": 3027,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 76,
+          "byte_x": 18,
+          "bitmap_offset": 3028,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 77,
+          "byte_x": 18,
+          "bitmap_offset": 3029,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 78,
+          "byte_x": 18,
+          "bitmap_offset": 3030,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 79,
+          "byte_x": 18,
+          "bitmap_offset": 3031,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 80,
+          "byte_x": 18,
+          "bitmap_offset": 3344,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 81,
+          "byte_x": 18,
+          "bitmap_offset": 3345,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 82,
+          "byte_x": 18,
+          "bitmap_offset": 3346,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 83,
+          "byte_x": 18,
+          "bitmap_offset": 3347,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 84,
+          "byte_x": 18,
+          "bitmap_offset": 3348,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 85,
+          "byte_x": 18,
+          "bitmap_offset": 3349,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 86,
+          "byte_x": 18,
+          "bitmap_offset": 3350,
+          "mask": 56
+        },
+        {
+          "frame_index": 1,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 87,
+          "byte_x": 18,
+          "bitmap_offset": 3351,
+          "mask": 24
+        },
+        {
+          "frame_index": 1,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 14,
+          "bitmap_offset": 3318,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 15,
+          "bitmap_offset": 3326,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 16,
+          "bitmap_offset": 3334,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 17,
+          "bitmap_offset": 3342,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 18,
+          "bitmap_offset": 3350,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 15,
+          "bitmap_offset": 3327,
+          "mask": 63
+        },
+        {
+          "frame_index": 1,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 16,
+          "bitmap_offset": 3335,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 17,
+          "bitmap_offset": 3343,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 18,
+          "bitmap_offset": 3351,
+          "mask": 240
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 66,
+          "byte_x": 14,
+          "bitmap_offset": 2674,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 67,
+          "byte_x": 14,
+          "bitmap_offset": 2675,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 67,
+          "byte_x": 15,
+          "bitmap_offset": 2683,
+          "mask": 128
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 68,
+          "byte_x": 14,
+          "bitmap_offset": 2676,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 68,
+          "byte_x": 15,
+          "bitmap_offset": 2684,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 69,
+          "byte_x": 14,
+          "bitmap_offset": 2677,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 69,
+          "byte_x": 15,
+          "bitmap_offset": 2685,
+          "mask": 240
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 70,
+          "byte_x": 14,
+          "bitmap_offset": 2678,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 70,
+          "byte_x": 15,
+          "bitmap_offset": 2686,
+          "mask": 252
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 71,
+          "byte_x": 14,
+          "bitmap_offset": 2679,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 71,
+          "byte_x": 15,
+          "bitmap_offset": 2687,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 72,
+          "byte_x": 14,
+          "bitmap_offset": 2992,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 72,
+          "byte_x": 15,
+          "bitmap_offset": 3000,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 73,
+          "byte_x": 14,
+          "bitmap_offset": 2993,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 73,
+          "byte_x": 15,
+          "bitmap_offset": 3001,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 74,
+          "byte_x": 14,
+          "bitmap_offset": 2994,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 74,
+          "byte_x": 15,
+          "bitmap_offset": 3002,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 75,
+          "byte_x": 14,
+          "bitmap_offset": 2995,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 75,
+          "byte_x": 15,
+          "bitmap_offset": 3003,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 76,
+          "byte_x": 14,
+          "bitmap_offset": 2996,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 76,
+          "byte_x": 15,
+          "bitmap_offset": 3004,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 77,
+          "byte_x": 14,
+          "bitmap_offset": 2997,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 77,
+          "byte_x": 15,
+          "bitmap_offset": 3005,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 78,
+          "byte_x": 14,
+          "bitmap_offset": 2998,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 78,
+          "byte_x": 15,
+          "bitmap_offset": 3006,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 79,
+          "byte_x": 14,
+          "bitmap_offset": 2999,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 79,
+          "byte_x": 15,
+          "bitmap_offset": 3007,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 80,
+          "byte_x": 14,
+          "bitmap_offset": 3312,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 80,
+          "byte_x": 15,
+          "bitmap_offset": 3320,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 81,
+          "byte_x": 14,
+          "bitmap_offset": 3313,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 81,
+          "byte_x": 15,
+          "bitmap_offset": 3321,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 82,
+          "byte_x": 14,
+          "bitmap_offset": 3314,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 82,
+          "byte_x": 15,
+          "bitmap_offset": 3322,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 83,
+          "byte_x": 14,
+          "bitmap_offset": 3315,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 83,
+          "byte_x": 15,
+          "bitmap_offset": 3323,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 84,
+          "byte_x": 14,
+          "bitmap_offset": 3316,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 84,
+          "byte_x": 15,
+          "bitmap_offset": 3324,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 85,
+          "byte_x": 14,
+          "bitmap_offset": 3317,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 85,
+          "byte_x": 15,
+          "bitmap_offset": 3325,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 86,
+          "byte_x": 14,
+          "bitmap_offset": 3318,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 86,
+          "byte_x": 15,
+          "bitmap_offset": 3326,
+          "mask": 254
+        },
+        {
+          "frame_index": 1,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 87,
+          "byte_x": 15,
+          "bitmap_offset": 3327,
+          "mask": 62
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 14,
+          "bitmap_offset": 2674,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 15,
+          "bitmap_offset": 2682,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 16,
+          "bitmap_offset": 2690,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 17,
+          "bitmap_offset": 2698,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 18,
+          "bitmap_offset": 2706,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 14,
+          "bitmap_offset": 2675,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 15,
+          "bitmap_offset": 2683,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 16,
+          "bitmap_offset": 2691,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 17,
+          "bitmap_offset": 2699,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 18,
+          "bitmap_offset": 2707,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 14,
+          "bitmap_offset": 2676,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 15,
+          "bitmap_offset": 2684,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 16,
+          "bitmap_offset": 2692,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 17,
+          "bitmap_offset": 2700,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 18,
+          "bitmap_offset": 2708,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 14,
+          "bitmap_offset": 2677,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 15,
+          "bitmap_offset": 2685,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 16,
+          "bitmap_offset": 2693,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 17,
+          "bitmap_offset": 2701,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 18,
+          "bitmap_offset": 2709,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 14,
+          "bitmap_offset": 2678,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 15,
+          "bitmap_offset": 2686,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 16,
+          "bitmap_offset": 2694,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 17,
+          "bitmap_offset": 2702,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 18,
+          "bitmap_offset": 2710,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 14,
+          "bitmap_offset": 2679,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 15,
+          "bitmap_offset": 2687,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 16,
+          "bitmap_offset": 2695,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 17,
+          "bitmap_offset": 2703,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 18,
+          "bitmap_offset": 2711,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 14,
+          "bitmap_offset": 2992,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 15,
+          "bitmap_offset": 3000,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 16,
+          "bitmap_offset": 3008,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 17,
+          "bitmap_offset": 3016,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 18,
+          "bitmap_offset": 3024,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 14,
+          "bitmap_offset": 2993,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 15,
+          "bitmap_offset": 3001,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 16,
+          "bitmap_offset": 3009,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 17,
+          "bitmap_offset": 3017,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 18,
+          "bitmap_offset": 3025,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 14,
+          "bitmap_offset": 2994,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 15,
+          "bitmap_offset": 3002,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 16,
+          "bitmap_offset": 3010,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 17,
+          "bitmap_offset": 3018,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 18,
+          "bitmap_offset": 3026,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 14,
+          "bitmap_offset": 2995,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 15,
+          "bitmap_offset": 3003,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 16,
+          "bitmap_offset": 3011,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 17,
+          "bitmap_offset": 3019,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 18,
+          "bitmap_offset": 3027,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 14,
+          "bitmap_offset": 2996,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 15,
+          "bitmap_offset": 3004,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 16,
+          "bitmap_offset": 3012,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 17,
+          "bitmap_offset": 3020,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 18,
+          "bitmap_offset": 3028,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 14,
+          "bitmap_offset": 2997,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 15,
+          "bitmap_offset": 3005,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 16,
+          "bitmap_offset": 3013,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 17,
+          "bitmap_offset": 3021,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 18,
+          "bitmap_offset": 3029,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 14,
+          "bitmap_offset": 2998,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 15,
+          "bitmap_offset": 3006,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 16,
+          "bitmap_offset": 3014,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 17,
+          "bitmap_offset": 3022,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 18,
+          "bitmap_offset": 3030,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 14,
+          "bitmap_offset": 2999,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 15,
+          "bitmap_offset": 3007,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 16,
+          "bitmap_offset": 3015,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 17,
+          "bitmap_offset": 3023,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 18,
+          "bitmap_offset": 3031,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 14,
+          "bitmap_offset": 3312,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 15,
+          "bitmap_offset": 3320,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 16,
+          "bitmap_offset": 3328,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 17,
+          "bitmap_offset": 3336,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 18,
+          "bitmap_offset": 3344,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 14,
+          "bitmap_offset": 3313,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 15,
+          "bitmap_offset": 3321,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 16,
+          "bitmap_offset": 3329,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 17,
+          "bitmap_offset": 3337,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 18,
+          "bitmap_offset": 3345,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 14,
+          "bitmap_offset": 3314,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 15,
+          "bitmap_offset": 3322,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 16,
+          "bitmap_offset": 3330,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 17,
+          "bitmap_offset": 3338,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 18,
+          "bitmap_offset": 3346,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 14,
+          "bitmap_offset": 3315,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 15,
+          "bitmap_offset": 3323,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 16,
+          "bitmap_offset": 3331,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 17,
+          "bitmap_offset": 3339,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 18,
+          "bitmap_offset": 3347,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 14,
+          "bitmap_offset": 3316,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 15,
+          "bitmap_offset": 3324,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 16,
+          "bitmap_offset": 3332,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 17,
+          "bitmap_offset": 3340,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 18,
+          "bitmap_offset": 3348,
+          "mask": 224
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 14,
+          "bitmap_offset": 3317,
+          "mask": 1
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 15,
+          "bitmap_offset": 3325,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 16,
+          "bitmap_offset": 3333,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 17,
+          "bitmap_offset": 3341,
+          "mask": 255
+        },
+        {
+          "frame_index": 1,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 18,
+          "bitmap_offset": 3349,
+          "mask": 224
+        }
+      ]
+    },
+    {
+      "frame_index": 2,
+      "cube": {
+        "x": 2,
+        "y": 1,
+        "z": 3,
+        "width": 1,
+        "depth": 1,
+        "height": 2,
+        "palette": "solid_red_shaded"
+      },
+      "source_total_spans": 71,
+      "source_total_pixels": 891,
+      "byte_record_count": 152,
+      "full_byte_writes": 54,
+      "masked_byte_writes": 98,
+      "records": [
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 18,
+          "bitmap_offset": 2706,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 19,
+          "bitmap_offset": 2714,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 20,
+          "bitmap_offset": 2722,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 21,
+          "bitmap_offset": 2730,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 18,
+          "bitmap_offset": 2707,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 19,
+          "bitmap_offset": 2715,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 20,
+          "bitmap_offset": 2723,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 21,
+          "bitmap_offset": 2731,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 18,
+          "bitmap_offset": 2708,
+          "mask": 31
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 19,
+          "bitmap_offset": 2716,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 20,
+          "bitmap_offset": 2724,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 21,
+          "bitmap_offset": 2732,
+          "mask": 252
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 18,
+          "bitmap_offset": 2709,
+          "mask": 31
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 19,
+          "bitmap_offset": 2717,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 20,
+          "bitmap_offset": 2725,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 21,
+          "bitmap_offset": 2733,
+          "mask": 252
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 18,
+          "bitmap_offset": 2710,
+          "mask": 15
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 19,
+          "bitmap_offset": 2718,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 20,
+          "bitmap_offset": 2726,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 21,
+          "bitmap_offset": 2734,
+          "mask": 248
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 66,
+          "byte_x": 21,
+          "bitmap_offset": 2730,
+          "mask": 2
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 67,
+          "byte_x": 21,
+          "bitmap_offset": 2731,
+          "mask": 2
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 68,
+          "byte_x": 21,
+          "bitmap_offset": 2732,
+          "mask": 6
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 69,
+          "byte_x": 21,
+          "bitmap_offset": 2733,
+          "mask": 6
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 70,
+          "byte_x": 21,
+          "bitmap_offset": 2734,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 71,
+          "byte_x": 21,
+          "bitmap_offset": 2735,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 72,
+          "byte_x": 21,
+          "bitmap_offset": 3048,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 73,
+          "byte_x": 21,
+          "bitmap_offset": 3049,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 74,
+          "byte_x": 21,
+          "bitmap_offset": 3050,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 75,
+          "byte_x": 21,
+          "bitmap_offset": 3051,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 76,
+          "byte_x": 21,
+          "bitmap_offset": 3052,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 77,
+          "byte_x": 21,
+          "bitmap_offset": 3053,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 78,
+          "byte_x": 21,
+          "bitmap_offset": 3054,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 79,
+          "byte_x": 21,
+          "bitmap_offset": 3055,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 80,
+          "byte_x": 21,
+          "bitmap_offset": 3368,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 81,
+          "byte_x": 21,
+          "bitmap_offset": 3369,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 82,
+          "byte_x": 21,
+          "bitmap_offset": 3370,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 83,
+          "byte_x": 21,
+          "bitmap_offset": 3371,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 84,
+          "byte_x": 21,
+          "bitmap_offset": 3372,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 85,
+          "byte_x": 21,
+          "bitmap_offset": 3373,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 86,
+          "byte_x": 21,
+          "bitmap_offset": 3374,
+          "mask": 14
+        },
+        {
+          "frame_index": 2,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 87,
+          "byte_x": 21,
+          "bitmap_offset": 3375,
+          "mask": 12
+        },
+        {
+          "frame_index": 2,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 18,
+          "bitmap_offset": 3350,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 19,
+          "bitmap_offset": 3358,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 20,
+          "bitmap_offset": 3366,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 21,
+          "bitmap_offset": 3374,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 18,
+          "bitmap_offset": 3351,
+          "mask": 31
+        },
+        {
+          "frame_index": 2,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 19,
+          "bitmap_offset": 3359,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 20,
+          "bitmap_offset": 3367,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 21,
+          "bitmap_offset": 3375,
+          "mask": 252
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 66,
+          "byte_x": 18,
+          "bitmap_offset": 2706,
+          "mask": 32
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 67,
+          "byte_x": 18,
+          "bitmap_offset": 2707,
+          "mask": 32
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 68,
+          "byte_x": 18,
+          "bitmap_offset": 2708,
+          "mask": 48
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 69,
+          "byte_x": 18,
+          "bitmap_offset": 2709,
+          "mask": 48
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 70,
+          "byte_x": 18,
+          "bitmap_offset": 2710,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 71,
+          "byte_x": 18,
+          "bitmap_offset": 2711,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 72,
+          "byte_x": 18,
+          "bitmap_offset": 3024,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 73,
+          "byte_x": 18,
+          "bitmap_offset": 3025,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 74,
+          "byte_x": 18,
+          "bitmap_offset": 3026,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 75,
+          "byte_x": 18,
+          "bitmap_offset": 3027,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 76,
+          "byte_x": 18,
+          "bitmap_offset": 3028,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 77,
+          "byte_x": 18,
+          "bitmap_offset": 3029,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 78,
+          "byte_x": 18,
+          "bitmap_offset": 3030,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 79,
+          "byte_x": 18,
+          "bitmap_offset": 3031,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 80,
+          "byte_x": 18,
+          "bitmap_offset": 3344,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 81,
+          "byte_x": 18,
+          "bitmap_offset": 3345,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 82,
+          "byte_x": 18,
+          "bitmap_offset": 3346,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 83,
+          "byte_x": 18,
+          "bitmap_offset": 3347,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 84,
+          "byte_x": 18,
+          "bitmap_offset": 3348,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 85,
+          "byte_x": 18,
+          "bitmap_offset": 3349,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 86,
+          "byte_x": 18,
+          "bitmap_offset": 3350,
+          "mask": 56
+        },
+        {
+          "frame_index": 2,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 87,
+          "byte_x": 18,
+          "bitmap_offset": 3351,
+          "mask": 24
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 18,
+          "bitmap_offset": 2706,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 19,
+          "bitmap_offset": 2714,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 20,
+          "bitmap_offset": 2722,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 21,
+          "bitmap_offset": 2730,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 18,
+          "bitmap_offset": 2707,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 19,
+          "bitmap_offset": 2715,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 20,
+          "bitmap_offset": 2723,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 21,
+          "bitmap_offset": 2731,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 18,
+          "bitmap_offset": 2708,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 19,
+          "bitmap_offset": 2716,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 20,
+          "bitmap_offset": 2724,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 21,
+          "bitmap_offset": 2732,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 18,
+          "bitmap_offset": 2709,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 19,
+          "bitmap_offset": 2717,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 20,
+          "bitmap_offset": 2725,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 21,
+          "bitmap_offset": 2733,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 18,
+          "bitmap_offset": 2710,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 19,
+          "bitmap_offset": 2718,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 20,
+          "bitmap_offset": 2726,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 21,
+          "bitmap_offset": 2734,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 18,
+          "bitmap_offset": 2711,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 19,
+          "bitmap_offset": 2719,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 20,
+          "bitmap_offset": 2727,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 21,
+          "bitmap_offset": 2735,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 18,
+          "bitmap_offset": 3024,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 19,
+          "bitmap_offset": 3032,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 20,
+          "bitmap_offset": 3040,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 21,
+          "bitmap_offset": 3048,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 18,
+          "bitmap_offset": 3025,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 19,
+          "bitmap_offset": 3033,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 20,
+          "bitmap_offset": 3041,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 21,
+          "bitmap_offset": 3049,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 18,
+          "bitmap_offset": 3026,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 19,
+          "bitmap_offset": 3034,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 20,
+          "bitmap_offset": 3042,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 21,
+          "bitmap_offset": 3050,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 18,
+          "bitmap_offset": 3027,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 19,
+          "bitmap_offset": 3035,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 20,
+          "bitmap_offset": 3043,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 21,
+          "bitmap_offset": 3051,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 18,
+          "bitmap_offset": 3028,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 19,
+          "bitmap_offset": 3036,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 20,
+          "bitmap_offset": 3044,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 21,
+          "bitmap_offset": 3052,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 18,
+          "bitmap_offset": 3029,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 19,
+          "bitmap_offset": 3037,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 20,
+          "bitmap_offset": 3045,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 21,
+          "bitmap_offset": 3053,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 18,
+          "bitmap_offset": 3030,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 19,
+          "bitmap_offset": 3038,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 20,
+          "bitmap_offset": 3046,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 21,
+          "bitmap_offset": 3054,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 18,
+          "bitmap_offset": 3031,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 19,
+          "bitmap_offset": 3039,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 20,
+          "bitmap_offset": 3047,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 21,
+          "bitmap_offset": 3055,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 18,
+          "bitmap_offset": 3344,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 19,
+          "bitmap_offset": 3352,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 20,
+          "bitmap_offset": 3360,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 21,
+          "bitmap_offset": 3368,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 18,
+          "bitmap_offset": 3345,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 19,
+          "bitmap_offset": 3353,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 20,
+          "bitmap_offset": 3361,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 21,
+          "bitmap_offset": 3369,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 18,
+          "bitmap_offset": 3346,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 19,
+          "bitmap_offset": 3354,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 20,
+          "bitmap_offset": 3362,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 21,
+          "bitmap_offset": 3370,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 18,
+          "bitmap_offset": 3347,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 19,
+          "bitmap_offset": 3355,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 20,
+          "bitmap_offset": 3363,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 21,
+          "bitmap_offset": 3371,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 18,
+          "bitmap_offset": 3348,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 19,
+          "bitmap_offset": 3356,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 20,
+          "bitmap_offset": 3364,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 21,
+          "bitmap_offset": 3372,
+          "mask": 254
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 18,
+          "bitmap_offset": 3349,
+          "mask": 63
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 19,
+          "bitmap_offset": 3357,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 20,
+          "bitmap_offset": 3365,
+          "mask": 255
+        },
+        {
+          "frame_index": 2,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 21,
+          "bitmap_offset": 3373,
+          "mask": 254
+        }
+      ]
+    },
+    {
+      "frame_index": 3,
+      "cube": {
+        "x": 3,
+        "y": 1,
+        "z": 3,
+        "width": 1,
+        "depth": 1,
+        "height": 2,
+        "palette": "solid_red_shaded"
+      },
+      "source_total_spans": 71,
+      "source_total_pixels": 955,
+      "byte_record_count": 194,
+      "full_byte_writes": 77,
+      "masked_byte_writes": 117,
+      "records": [
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 21,
+          "bitmap_offset": 2730,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 22,
+          "bitmap_offset": 2738,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 23,
+          "bitmap_offset": 2746,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 24,
+          "bitmap_offset": 2754,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 66,
+          "byte_x": 25,
+          "bitmap_offset": 2762,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 21,
+          "bitmap_offset": 2731,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 22,
+          "bitmap_offset": 2739,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 23,
+          "bitmap_offset": 2747,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 24,
+          "bitmap_offset": 2755,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 67,
+          "byte_x": 25,
+          "bitmap_offset": 2763,
+          "mask": 128
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 21,
+          "bitmap_offset": 2732,
+          "mask": 7
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 22,
+          "bitmap_offset": 2740,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 23,
+          "bitmap_offset": 2748,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 68,
+          "byte_x": 24,
+          "bitmap_offset": 2756,
+          "mask": 254
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 21,
+          "bitmap_offset": 2733,
+          "mask": 7
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 22,
+          "bitmap_offset": 2741,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 23,
+          "bitmap_offset": 2749,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 69,
+          "byte_x": 24,
+          "bitmap_offset": 2757,
+          "mask": 252
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 21,
+          "bitmap_offset": 2734,
+          "mask": 15
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 22,
+          "bitmap_offset": 2742,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 23,
+          "bitmap_offset": 2750,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 0,
+          "color_id": 11,
+          "y": 70,
+          "byte_x": 24,
+          "bitmap_offset": 2758,
+          "mask": 240
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 66,
+          "byte_x": 25,
+          "bitmap_offset": 2762,
+          "mask": 64
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 67,
+          "byte_x": 25,
+          "bitmap_offset": 2763,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 68,
+          "byte_x": 24,
+          "bitmap_offset": 2756,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 68,
+          "byte_x": 25,
+          "bitmap_offset": 2764,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 69,
+          "byte_x": 24,
+          "bitmap_offset": 2757,
+          "mask": 7
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 69,
+          "byte_x": 25,
+          "bitmap_offset": 2765,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 70,
+          "byte_x": 24,
+          "bitmap_offset": 2758,
+          "mask": 31
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 70,
+          "byte_x": 25,
+          "bitmap_offset": 2766,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 71,
+          "byte_x": 24,
+          "bitmap_offset": 2759,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 71,
+          "byte_x": 25,
+          "bitmap_offset": 2767,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 72,
+          "byte_x": 24,
+          "bitmap_offset": 3072,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 72,
+          "byte_x": 25,
+          "bitmap_offset": 3080,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 73,
+          "byte_x": 24,
+          "bitmap_offset": 3073,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 73,
+          "byte_x": 25,
+          "bitmap_offset": 3081,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 74,
+          "byte_x": 24,
+          "bitmap_offset": 3074,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 74,
+          "byte_x": 25,
+          "bitmap_offset": 3082,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 75,
+          "byte_x": 24,
+          "bitmap_offset": 3075,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 75,
+          "byte_x": 25,
+          "bitmap_offset": 3083,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 76,
+          "byte_x": 24,
+          "bitmap_offset": 3076,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 76,
+          "byte_x": 25,
+          "bitmap_offset": 3084,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 77,
+          "byte_x": 24,
+          "bitmap_offset": 3077,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 77,
+          "byte_x": 25,
+          "bitmap_offset": 3085,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 78,
+          "byte_x": 24,
+          "bitmap_offset": 3078,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 78,
+          "byte_x": 25,
+          "bitmap_offset": 3086,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 79,
+          "byte_x": 24,
+          "bitmap_offset": 3079,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 79,
+          "byte_x": 25,
+          "bitmap_offset": 3087,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 80,
+          "byte_x": 24,
+          "bitmap_offset": 3392,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 80,
+          "byte_x": 25,
+          "bitmap_offset": 3400,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 81,
+          "byte_x": 24,
+          "bitmap_offset": 3393,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 81,
+          "byte_x": 25,
+          "bitmap_offset": 3401,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 82,
+          "byte_x": 24,
+          "bitmap_offset": 3394,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 82,
+          "byte_x": 25,
+          "bitmap_offset": 3402,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 83,
+          "byte_x": 24,
+          "bitmap_offset": 3395,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 83,
+          "byte_x": 25,
+          "bitmap_offset": 3403,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 84,
+          "byte_x": 24,
+          "bitmap_offset": 3396,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 84,
+          "byte_x": 25,
+          "bitmap_offset": 3404,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 85,
+          "byte_x": 24,
+          "bitmap_offset": 3397,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 85,
+          "byte_x": 25,
+          "bitmap_offset": 3405,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 86,
+          "byte_x": 24,
+          "bitmap_offset": 3398,
+          "mask": 63
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 86,
+          "byte_x": 25,
+          "bitmap_offset": 3406,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 1,
+          "color_id": 8,
+          "y": 87,
+          "byte_x": 24,
+          "bitmap_offset": 3399,
+          "mask": 62
+        },
+        {
+          "frame_index": 3,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 21,
+          "bitmap_offset": 3374,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 22,
+          "bitmap_offset": 3382,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 23,
+          "bitmap_offset": 3390,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 24,
+          "bitmap_offset": 3398,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 86,
+          "byte_x": 25,
+          "bitmap_offset": 3406,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 21,
+          "bitmap_offset": 3375,
+          "mask": 7
+        },
+        {
+          "frame_index": 3,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 22,
+          "bitmap_offset": 3383,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 23,
+          "bitmap_offset": 3391,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 2,
+          "color_id": 0,
+          "y": 87,
+          "byte_x": 24,
+          "bitmap_offset": 3399,
+          "mask": 254
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 66,
+          "byte_x": 21,
+          "bitmap_offset": 2730,
+          "mask": 2
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 67,
+          "byte_x": 21,
+          "bitmap_offset": 2731,
+          "mask": 2
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 68,
+          "byte_x": 21,
+          "bitmap_offset": 2732,
+          "mask": 6
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 69,
+          "byte_x": 21,
+          "bitmap_offset": 2733,
+          "mask": 6
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 70,
+          "byte_x": 21,
+          "bitmap_offset": 2734,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 71,
+          "byte_x": 21,
+          "bitmap_offset": 2735,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 72,
+          "byte_x": 21,
+          "bitmap_offset": 3048,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 73,
+          "byte_x": 21,
+          "bitmap_offset": 3049,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 74,
+          "byte_x": 21,
+          "bitmap_offset": 3050,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 75,
+          "byte_x": 21,
+          "bitmap_offset": 3051,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 76,
+          "byte_x": 21,
+          "bitmap_offset": 3052,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 77,
+          "byte_x": 21,
+          "bitmap_offset": 3053,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 78,
+          "byte_x": 21,
+          "bitmap_offset": 3054,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 79,
+          "byte_x": 21,
+          "bitmap_offset": 3055,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 80,
+          "byte_x": 21,
+          "bitmap_offset": 3368,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 81,
+          "byte_x": 21,
+          "bitmap_offset": 3369,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 82,
+          "byte_x": 21,
+          "bitmap_offset": 3370,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 83,
+          "byte_x": 21,
+          "bitmap_offset": 3371,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 84,
+          "byte_x": 21,
+          "bitmap_offset": 3372,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 85,
+          "byte_x": 21,
+          "bitmap_offset": 3373,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 86,
+          "byte_x": 21,
+          "bitmap_offset": 3374,
+          "mask": 14
+        },
+        {
+          "frame_index": 3,
+          "face_index": 3,
+          "color_id": 9,
+          "y": 87,
+          "byte_x": 21,
+          "bitmap_offset": 3375,
+          "mask": 12
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 21,
+          "bitmap_offset": 2730,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 22,
+          "bitmap_offset": 2738,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 23,
+          "bitmap_offset": 2746,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 24,
+          "bitmap_offset": 2754,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 66,
+          "byte_x": 25,
+          "bitmap_offset": 2762,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 21,
+          "bitmap_offset": 2731,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 22,
+          "bitmap_offset": 2739,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 23,
+          "bitmap_offset": 2747,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 24,
+          "bitmap_offset": 2755,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 67,
+          "byte_x": 25,
+          "bitmap_offset": 2763,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 21,
+          "bitmap_offset": 2732,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 22,
+          "bitmap_offset": 2740,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 23,
+          "bitmap_offset": 2748,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 24,
+          "bitmap_offset": 2756,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 68,
+          "byte_x": 25,
+          "bitmap_offset": 2764,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 21,
+          "bitmap_offset": 2733,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 22,
+          "bitmap_offset": 2741,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 23,
+          "bitmap_offset": 2749,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 24,
+          "bitmap_offset": 2757,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 69,
+          "byte_x": 25,
+          "bitmap_offset": 2765,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 21,
+          "bitmap_offset": 2734,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 22,
+          "bitmap_offset": 2742,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 23,
+          "bitmap_offset": 2750,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 24,
+          "bitmap_offset": 2758,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 70,
+          "byte_x": 25,
+          "bitmap_offset": 2766,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 21,
+          "bitmap_offset": 2735,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 22,
+          "bitmap_offset": 2743,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 23,
+          "bitmap_offset": 2751,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 24,
+          "bitmap_offset": 2759,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 71,
+          "byte_x": 25,
+          "bitmap_offset": 2767,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 21,
+          "bitmap_offset": 3048,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 22,
+          "bitmap_offset": 3056,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 23,
+          "bitmap_offset": 3064,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 24,
+          "bitmap_offset": 3072,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 72,
+          "byte_x": 25,
+          "bitmap_offset": 3080,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 21,
+          "bitmap_offset": 3049,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 22,
+          "bitmap_offset": 3057,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 23,
+          "bitmap_offset": 3065,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 24,
+          "bitmap_offset": 3073,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 73,
+          "byte_x": 25,
+          "bitmap_offset": 3081,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 21,
+          "bitmap_offset": 3050,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 22,
+          "bitmap_offset": 3058,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 23,
+          "bitmap_offset": 3066,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 24,
+          "bitmap_offset": 3074,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 74,
+          "byte_x": 25,
+          "bitmap_offset": 3082,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 21,
+          "bitmap_offset": 3051,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 22,
+          "bitmap_offset": 3059,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 23,
+          "bitmap_offset": 3067,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 24,
+          "bitmap_offset": 3075,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 75,
+          "byte_x": 25,
+          "bitmap_offset": 3083,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 21,
+          "bitmap_offset": 3052,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 22,
+          "bitmap_offset": 3060,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 23,
+          "bitmap_offset": 3068,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 24,
+          "bitmap_offset": 3076,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 76,
+          "byte_x": 25,
+          "bitmap_offset": 3084,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 21,
+          "bitmap_offset": 3053,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 22,
+          "bitmap_offset": 3061,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 23,
+          "bitmap_offset": 3069,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 24,
+          "bitmap_offset": 3077,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 77,
+          "byte_x": 25,
+          "bitmap_offset": 3085,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 21,
+          "bitmap_offset": 3054,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 22,
+          "bitmap_offset": 3062,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 23,
+          "bitmap_offset": 3070,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 24,
+          "bitmap_offset": 3078,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 78,
+          "byte_x": 25,
+          "bitmap_offset": 3086,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 21,
+          "bitmap_offset": 3055,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 22,
+          "bitmap_offset": 3063,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 23,
+          "bitmap_offset": 3071,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 24,
+          "bitmap_offset": 3079,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 79,
+          "byte_x": 25,
+          "bitmap_offset": 3087,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 21,
+          "bitmap_offset": 3368,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 22,
+          "bitmap_offset": 3376,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 23,
+          "bitmap_offset": 3384,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 24,
+          "bitmap_offset": 3392,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 80,
+          "byte_x": 25,
+          "bitmap_offset": 3400,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 21,
+          "bitmap_offset": 3369,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 22,
+          "bitmap_offset": 3377,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 23,
+          "bitmap_offset": 3385,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 24,
+          "bitmap_offset": 3393,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 81,
+          "byte_x": 25,
+          "bitmap_offset": 3401,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 21,
+          "bitmap_offset": 3370,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 22,
+          "bitmap_offset": 3378,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 23,
+          "bitmap_offset": 3386,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 24,
+          "bitmap_offset": 3394,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 82,
+          "byte_x": 25,
+          "bitmap_offset": 3402,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 21,
+          "bitmap_offset": 3371,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 22,
+          "bitmap_offset": 3379,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 23,
+          "bitmap_offset": 3387,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 24,
+          "bitmap_offset": 3395,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 83,
+          "byte_x": 25,
+          "bitmap_offset": 3403,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 21,
+          "bitmap_offset": 3372,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 22,
+          "bitmap_offset": 3380,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 23,
+          "bitmap_offset": 3388,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 24,
+          "bitmap_offset": 3396,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 84,
+          "byte_x": 25,
+          "bitmap_offset": 3404,
+          "mask": 192
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 21,
+          "bitmap_offset": 3373,
+          "mask": 3
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 22,
+          "bitmap_offset": 3381,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 23,
+          "bitmap_offset": 3389,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 24,
+          "bitmap_offset": 3397,
+          "mask": 255
+        },
+        {
+          "frame_index": 3,
+          "face_index": 4,
+          "color_id": 2,
+          "y": 85,
+          "byte_x": 25,
+          "bitmap_offset": 3405,
+          "mask": 192
+        }
+      ]
+    }
+  ]
+}

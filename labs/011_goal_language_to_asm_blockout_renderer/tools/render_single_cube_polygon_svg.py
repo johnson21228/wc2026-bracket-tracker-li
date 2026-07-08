@@ -54,28 +54,26 @@ def svg_poly(points: list[dict], klass: str) -> str:
     pts = " ".join(f"{p['x']},{p['y']}" for p in points)
     return f'<polygon class="{klass}" points="{pts}" />'
 
-def main() -> None:
-    ensure_generated()
+def svg_line(x1: int, y1: int, x2: int, y2: int, klass: str) -> str:
+    return f'<line class="{klass}" x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" />'
 
-    intent = json.loads((ROOT / "goal" / "renderer_intent.json").read_text(encoding="utf-8"))
-    if intent["projection"].get("type") != "top_down_perspective_rings":
-        raise SystemExit("Single-cube polygon proof requires top_down_perspective_rings")
-
-    # One red cube inside the pit. It occupies one board cell and one depth step.
+def cube_faces(intent: dict) -> tuple[dict, list[dict]]:
+    # Off-side cube proof: placed left/front-ish in the pit and given 2 z-units
+    # so the side faces are visible in the perspective preview and C64 proof.
     cube = {
-        "x": 2,
-        "y": 2,
+        "x": 0,
+        "y": 1,
         "z": 3,
         "width": 1,
         "depth": 1,
-        "height": 1,
+        "height": 2,
         "palette": "solid_red_shaded",
+        "positioning": "off_side_left_visible_faces",
     }
 
     x0, y0, z0 = cube["x"], cube["y"], cube["z"]
     x1, y1, z1 = x0 + cube["width"], y0 + cube["depth"], z0 + cube["height"]
 
-    # Top face at shallower z. Bottom face at deeper z.
     a = project(intent, x0, y0, z0)
     b = project(intent, x1, y0, z0)
     c = project(intent, x1, y1, z0)
@@ -93,70 +91,138 @@ def main() -> None:
         face([h, e, a, d], "west_wall", "red_mid_dark"),
         face([a, b, c, d], "top_face", "red_light"),
     ]
+    return cube, faces
 
-    xs = []
-    ys = []
-    for one_face in faces:
-        for p in one_face["points"]:
-            xs.append(p["x"])
-            ys.append(p["y"])
+def class_for_segment(segment: dict) -> str:
+    start = tuple(segment["start"])
+    end = tuple(segment["end"])
+    if start[2] == 0 and end[2] == 0:
+        return "pit_top"
+    if start[2] != end[2]:
+        return "pit_depth"
+    if start[2] == end[2] and start[2] > 0:
+        return "pit_side"
+    return "pit_grid"
 
-    min_x = min(xs) - 28
-    max_x = max(xs) + 28
-    min_y = min(ys) - 28
-    max_y = max(ys) + 32
-    width = max_x - min_x
-    height = max_y - min_y
+def shifted_points(points: list[dict], min_x: int, min_y: int) -> list[dict]:
+    return [{"x": p["x"] - min_x, "y": p["y"] - min_y} for p in points]
 
-    def shifted(face_data: dict) -> dict:
-        return {
-            **face_data,
-            "points": [{"x": p["x"] - min_x, "y": p["y"] - min_y} for p in face_data["points"]],
-        }
+def write_cube_only_svg(faces: list[dict]) -> None:
+    xs = [p["x"] for f in faces for p in f["points"]]
+    ys = [p["y"] for f in faces for p in f["points"]]
+    min_x, max_x = min(xs) - 28, max(xs) + 28
+    min_y, max_y = min(ys) - 28, max(ys) + 32
+    width, height = max_x - min_x, max_y - min_y
 
-    shifted_faces = [shifted(f) for f in faces]
-
-    # Draw far/side faces first, top face last.
     polygons = []
-    for fdata in shifted_faces:
-        polygons.append(svg_poly(fdata["points"], f"cube {fdata['name']} {fdata['shade']}"))
+    for fdata in faces:
+        pts = shifted_points(fdata["points"], min_x, min_y)
+        polygons.append(svg_poly(pts, f"cube {fdata['name']} {fdata['shade']}"))
 
-    svg_parts = [
+    svg_parts = svg_document(
+        width,
+        height,
+        polygons,
+        "Lab 011 off-side solid red cube proof",
+        "off-side cube · solid red shaded faces",
+    )
+
+    svg_text = "\n".join(svg_parts)
+    (CAPTURES / "blockout_single_cube_polygon_preview.svg").write_text(svg_text, encoding="utf-8")
+    (CAPTURES / "blockout_single_cube_red_shaded_faces.svg").write_text(svg_text, encoding="utf-8")
+
+def svg_document(width: int, height: int, body: list[str], title: str, label: str) -> list[str]:
+    return [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
-        '  <title id="title">Lab 011 single cube solid red shaded polygon proof</title>',
-        '  <desc id="desc">One projected cube inside the perspective pit, decomposed into solid red shaded polygon faces.</desc>',
+        f'  <title id="title">{title}</title>',
+        '  <desc id="desc">A top-down perspective pit with a solid red shaded cube face proof.</desc>',
         '  <style>',
         '    .bg { fill: #11131a; }',
+        '    .pit_top { stroke: #f7d85c; stroke-width: 1.6; opacity: 0.85; vector-effect: non-scaling-stroke; }',
+        '    .pit_side { stroke: #66d9ef; stroke-width: 1.1; opacity: 0.55; vector-effect: non-scaling-stroke; }',
+        '    .pit_depth { stroke: #ff7a7a; stroke-width: 1.2; opacity: 0.75; vector-effect: non-scaling-stroke; }',
+        '    .pit_grid { stroke: #9aa0a6; stroke-width: 1; opacity: 0.45; vector-effect: non-scaling-stroke; }',
         '    .cube { stroke: #ffcccc; stroke-width: 1.2; vector-effect: non-scaling-stroke; }',
         '    .red_light { fill: #ff4a3d; }',
         '    .red_mid { fill: #d92f2b; }',
         '    .red_mid_dark { fill: #b32124; }',
         '    .red_dark { fill: #8f171d; }',
         '    .red_deep { fill: #661016; }',
-        '    .label { fill: #ffe3e3; font: 9px monospace; }',
+        '    .label { fill: #ffe3e3; font: 10px monospace; }',
+        '    .small { fill: #b8bec8; font: 8px monospace; }',
         '  </style>',
         f'  <rect class="bg" x="0" y="0" width="{width}" height="{height}" />',
-        *["  " + poly for poly in polygons],
-        '  <text class="label" x="6" y="12">single cube · solid red shaded faces</text>',
+        *["  " + item for item in body],
+        f'  <text class="label" x="8" y="14">{label}</text>',
+        '  <text class="small" x="8" y="28">cube is off-center in the governed perspective pit</text>',
         '</svg>',
         '',
     ]
 
+def write_pit_with_cube_svg(faces: list[dict], segments: list[dict]) -> None:
+    xs = []
+    ys = []
+    for s in segments:
+        xs.extend([s["x1"], s["x2"]])
+        ys.extend([s["y1"], s["y2"]])
+    for f in faces:
+        for p in f["points"]:
+            xs.append(p["x"])
+            ys.append(p["y"])
+
+    min_x, max_x = min(xs) - 24, max(xs) + 24
+    min_y, max_y = min(ys) - 24, max(ys) + 34
+    width, height = max_x - min_x, max_y - min_y
+
+    body: list[str] = []
+
+    # Pit context first.
+    for s in segments:
+        body.append(svg_line(
+            s["x1"] - min_x,
+            s["y1"] - min_y,
+            s["x2"] - min_x,
+            s["y2"] - min_y,
+            class_for_segment(s),
+        ))
+
+    # Then cube faces over the pit.
+    for fdata in faces:
+        pts = shifted_points(fdata["points"], min_x, min_y)
+        body.append(svg_poly(pts, f"cube {fdata['name']} {fdata['shade']}"))
+
+    svg_parts = svg_document(
+        width,
+        height,
+        body,
+        "Lab 011 off-side cube in perspective pit",
+        "off-side cube in perspective pit",
+    )
+
+    (CAPTURES / "blockout_pit_with_red_cube.svg").write_text("\n".join(svg_parts), encoding="utf-8")
+
+def main() -> None:
+    ensure_generated()
+
+    intent = json.loads((ROOT / "goal" / "renderer_intent.json").read_text(encoding="utf-8"))
+    segments = json.loads((DIST / "pit_line_segments.json").read_text(encoding="utf-8"))
+
+    if intent["projection"].get("type") != "top_down_perspective_rings":
+        raise SystemExit("Single-cube polygon proof requires top_down_perspective_rings")
+
+    cube, faces = cube_faces(intent)
+
     CAPTURES.mkdir(parents=True, exist_ok=True)
     DIST.mkdir(parents=True, exist_ok=True)
 
-    svg_path = CAPTURES / "blockout_single_cube_polygon_preview.svg"
-    red_svg_path = CAPTURES / "blockout_single_cube_red_shaded_faces.svg"
+    write_cube_only_svg(faces)
+    write_pit_with_cube_svg(faces, segments)
+
     json_path = DIST / "single_cube_polygon_faces.json"
-
-    svg_text = "\n".join(svg_parts)
-    svg_path.write_text(svg_text, encoding="utf-8")
-    red_svg_path.write_text(svg_text, encoding="utf-8")
-
     json_path.write_text(json.dumps({
         "source": "goal/renderer_intent.json",
         "projection": intent["projection"]["type"],
-        "purpose": "single cube solid red shaded polygon proof before C64 bitmap/span fill",
+        "purpose": "off-side single cube solid red shaded polygon proof in perspective pit before C64 bitmap/span fill",
         "cube": cube,
         "palette": {
             "red_light": "#ff4a3d",
@@ -166,12 +232,14 @@ def main() -> None:
             "red_deep": "#661016",
         },
         "faces": faces,
+        "context_svg": "captures/blockout_pit_with_red_cube.svg",
     }, indent=2) + "\n", encoding="utf-8")
 
-    print(f"Wrote {svg_path}")
-    print(f"Wrote {red_svg_path}")
+    print("Wrote captures/blockout_single_cube_polygon_preview.svg")
+    print("Wrote captures/blockout_single_cube_red_shaded_faces.svg")
+    print("Wrote captures/blockout_pit_with_red_cube.svg")
     print(f"Wrote {json_path}")
-    print("Generated one solid red shaded cube as polygon faces.")
+    print("Generated off-side solid red shaded cube in perspective pit.")
 
 if __name__ == "__main__":
     main()

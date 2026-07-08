@@ -1,15 +1,16 @@
 {
   "source": "goal/renderer_intent.json",
   "projection": "top_down_perspective_rings",
-  "purpose": "single cube solid red shaded polygon proof before C64 bitmap/span fill",
+  "purpose": "off-side single cube solid red shaded polygon proof in perspective pit before C64 bitmap/span fill",
   "cube": {
-    "x": 2,
-    "y": 2,
+    "x": 0,
+    "y": 1,
     "z": 3,
     "width": 1,
     "depth": 1,
-    "height": 1,
-    "palette": "solid_red_shaded"
+    "height": 2,
+    "palette": "solid_red_shaded",
+    "positioning": "off_side_left_visible_faces"
   },
   "palette": {
     "red_light": "#ff4a3d",
@@ -24,20 +25,20 @@
       "shade": "red_dark",
       "points": [
         {
-          "x": 148,
-          "y": 87
+          "x": 102,
+          "y": 71
         },
         {
-          "x": 172,
-          "y": 87
+          "x": 126,
+          "y": 71
         },
         {
-          "x": 174,
-          "y": 86
+          "x": 119,
+          "y": 66
         },
         {
-          "x": 146,
-          "y": 86
+          "x": 92,
+          "y": 66
         }
       ]
     },
@@ -46,20 +47,20 @@
       "shade": "red_mid",
       "points": [
         {
-          "x": 172,
-          "y": 87
+          "x": 126,
+          "y": 71
         },
         {
-          "x": 172,
-          "y": 105
+          "x": 126,
+          "y": 88
         },
         {
-          "x": 174,
-          "y": 106
-        },
-        {
-          "x": 174,
+          "x": 119,
           "y": 86
+        },
+        {
+          "x": 119,
+          "y": 66
         }
       ]
     },
@@ -68,20 +69,20 @@
       "shade": "red_deep",
       "points": [
         {
-          "x": 172,
-          "y": 105
+          "x": 126,
+          "y": 88
         },
         {
-          "x": 148,
-          "y": 105
+          "x": 102,
+          "y": 88
         },
         {
-          "x": 146,
-          "y": 106
+          "x": 92,
+          "y": 86
         },
         {
-          "x": 174,
-          "y": 106
+          "x": 119,
+          "y": 86
         }
       ]
     },
@@ -90,20 +91,20 @@
       "shade": "red_mid_dark",
       "points": [
         {
-          "x": 148,
-          "y": 105
+          "x": 102,
+          "y": 88
         },
         {
-          "x": 148,
-          "y": 87
+          "x": 102,
+          "y": 71
         },
         {
-          "x": 146,
+          "x": 92,
+          "y": 66
+        },
+        {
+          "x": 92,
           "y": 86
-        },
-        {
-          "x": 146,
-          "y": 106
         }
       ]
     },
@@ -112,22 +113,23 @@
       "shade": "red_light",
       "points": [
         {
-          "x": 146,
+          "x": 92,
+          "y": 66
+        },
+        {
+          "x": 119,
+          "y": 66
+        },
+        {
+          "x": 119,
           "y": 86
         },
         {
-          "x": 174,
+          "x": 92,
           "y": 86
-        },
-        {
-          "x": 174,
-          "y": 106
-        },
-        {
-          "x": 146,
-          "y": 106
         }
       ]
     }
-  ]
+  ],
+  "context_svg": "captures/blockout_pit_with_red_cube.svg"
 }

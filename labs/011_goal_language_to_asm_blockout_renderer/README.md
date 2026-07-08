@@ -99,3 +99,204 @@ captures/blockout_single_cube_red_shaded_faces.svg
 
 These spans are the C64-facing rasterization payload.
 
+
+## C64 bitmap/span-fill proof
+
+`make span-prg` builds a runnable C64 PRG from the generated red cube spans.
+
+`make run-span-prg` opens the span-fill PRG in VICE when available.
+
+
+## Off-side cube in pit context
+
+The red cube proof is now placed to one side of the pit.
+
+Open:
+
+```text
+captures/blockout_pit_with_red_cube.svg
+```
+
+Run:
+
+```text
+make run-span-prg
+```
+
+to see the C64 bitmap/span-fill proof with pit context.
+
+
+## Same-depth moving cube
+
+`make moving-cube` generates several same-depth red cube positions and C64-facing span payloads.
+
+Open:
+
+```text
+captures/blockout_moving_cube_same_depth_preview.svg
+```
+
+
+## Moving cube byte-span PRG
+
+`make moving-byte-prg` builds a runnable C64 PRG that cycles the cube through same-depth byte-span frames.
+
+`make run-moving-byte-prg` opens it in VICE when available.
+
+
+## WASD 5x5 grid PRG
+
+`make wasd-grid-prg` builds the interactive 5x5 fixed-depth cube-control PRG.
+
+`make run-wasd-grid-prg` opens it in VICE. Use A/D/W/S and SPACE.
+
+## Active white-wireframe PRG
+
+`make wasd-grid-prg` now builds a white-wireframe active-piece proof. The moving red solid cube path is deprecated for active control.
+
+## Option B green grid / white piece
+
+`make wasd-grid-prg` targets a green-ish pit wireframe tunnel with a white active wireframe piece. Red/solid moving-piece rendering remains removed.
+
+## Clean tunnel pit filter
+
+The Option B WASD proof now filters the pit background to keep the tunnel readable:
+
+```text
+green clean tunnel wireframe
+white active wireframe piece
+no top-plane helper clutter
+```
+
+## Active 2x1 piece
+
+`make wasd-grid-prg` now builds a 2x1 white-wireframe active piece. WASD movement is clamped so the full piece stays inside the 5x5 pit. Rotation is not implemented yet; rotation must recompute extent bounds.
+
+
+## Full-height pit plus right HUD
+
+The Blockout proof should maximize the pit vertically and reserve the right side for scoring/status.
+
+```text
+screen: 320x200
+pit/playfield: left ~256x200
+HUD/scoring: right ~64x200
+```
+
+The current 2x1 movement must stay inside its 20 legal states:
+
+```text
+x = 0..3
+y = 0..4
+index = y * 4 + x
+index = 0..19
+```
+
+Any down movement that breaks the screen is a hard renderer/indexing bug.
+
+## Full-height runtime correction
+
+The active 2x1 WASD proof refits the pit to a left full-height playfield and reserves the right edge for HUD/scoring. Runtime movement is guarded so the 20-state frame table fails closed instead of selecting an invalid frame.
+
+## Square pit viewport correction
+
+The pit projection is square inside the left playfield:
+
+```text
+x = 36..218
+y = 10..192
+size = 182 x 182
+```
+
+The right side remains reserved for HUD/scoring.
+
+## Maximum square pit height
+
+The pit projection now uses a near-full-height square viewport:
+
+```text
+x = 30..226
+y = 2..198
+size = 196 x 196
+```
+
+The right side remains reserved for HUD/scoring.
+
+## Blockout-style 5x5x12 pit visual
+
+The WASD proof now draws a direct 5x5x12 tunnel:
+
+```text
+near/top square: 196 x 196
+far/bottom square: 96 x 96
+visible depth rings: 12
+```
+
+The active piece remains a 2x1 white wireframe block.
+
+## Pit-only tuning mode
+
+`make wasd-grid-prg` currently builds a pit-only projection tuning proof. The active 2x1 piece is disabled until the pit projection is accepted.
+
+## Pit compact payload optimization
+
+The pit-only PRG now uses compact nonzero bitmap byte records instead of embedding a full 8000-byte pit bitmap plus 2000 bytes of screen/color source.
+
+
+## Pit rendering contract and source pipeline
+
+The current accepted pit proof is:
+
+```text
+pit: 5 x 5 x 10
+viewport: square, x=30..226, y=2..198
+near square: 196 x 196
+far square: 72 x 72
+visible rings: 0,1,2,3,4,5,6,8,10
+wall guides: all 5x5 boundary divisions on all four walls
+top-plane clutter: none
+VIC bank: 1
+screen: $4400
+bitmap: $6000
+payload: compact nonzero bitmap byte records
+```
+
+The LI governs the rules, but the PRG should compile from a structured renderer source spec. The Python builder is currently acting as both source and generator; the next architectural step is to split those roles.
+
+
+## Four-cube starter piece set
+
+The piece source now limits pieces to 1..4 face-contiguous cubes.
+
+```text
+P01_MONO
+P02_DOMINO
+P03_LINE
+P03_ELBOW
+P04_SQUARE
+P04_T
+P04_L
+P04_S
+P04_CORNER_3D
+```
+
+No rotation may exceed extent 3 on any axis, and no rotation may occupy a 3x3 footprint in the pit plane.
+
+
+## Pose and rotation rules
+
+Pose rules are now source data:
+
+```text
+source/blockout_pose_rules.json
+tools/verify_blockout_pose_rules.py
+```
+
+A pose is:
+
+```text
+pieceId + rotationId + x/y/z
+```
+
+Rotation is selected from precomputed normalized cube occupancies. The C64 runtime should not do matrix rotation math.
+
