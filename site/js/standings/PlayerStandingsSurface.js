@@ -1,4 +1,5 @@
 import { areGroupStagePicksLocked, GROUP_STAGE_PICKS_LOCK_AT_MS, GROUP_STAGE_PICKS_LOCK_TIMER_MAX_MS, playerResultsHiddenUntilLockMessage } from "../config/gameLocks.js";
+import { getSharedSupabaseClient } from "../services/SupabaseClient.js";
 
 const STANDINGS_PANEL_OPEN_EVENT = "wc2026:standings-panel-opened";
 const OFFICIAL_RESULTS_PLAYER_NAMES = new Set(["Admin_", "Official Results"]);
@@ -19,7 +20,11 @@ const BOARD_VIEWER_TEAMS_URL = "data/model/teams.json";
 const BOARD_VIEWER_LINEWORK_URL = "assets/playfield/uniform_pick_card_gameboard.svg";
 const PLAYER_SUPPLIED_LINKS_URL = "data/current/PlayerSuppliedLinks.json";
 const POOL_CHAT_SESSION_STORAGE_KEY = "wc2026.poolChat.sessionMessages.v1";
+const POOL_CHAT_SESSION_ID_KEY = "wc2026.poolChat.sessionId.v1";
+const POOL_CHAT_CHANNEL_NAME = "pool-chat:bracketeering-pub";
+const POOL_CHAT_BROADCAST_EVENT = "pool-chat-message";
 const POOL_CHAT_MAX_MESSAGE_LENGTH = 280;
+const POOL_CHAT_MAX_SESSION_MESSAGES = 100;
 const BOARD_VIEWER_DEFAULT_SCALE = 0.75;
 const BOARD_VIEWER_MIN_SCALE = 0.5;
 const BOARD_VIEWER_MAX_SCALE = 1.25;
@@ -81,6 +86,18 @@ function normalizePlayerSuppliedLinks(payload) {
 }
 
 
+function getPoolChatSessionId() {
+  try {
+    const existing = window.sessionStorage?.getItem(POOL_CHAT_SESSION_ID_KEY);
+    if (existing) return existing;
+    const generated = `pool-chat-session-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    window.sessionStorage?.setItem(POOL_CHAT_SESSION_ID_KEY, generated);
+    return generated;
+  } catch (_error) {
+    return `pool-chat-session-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  }
+}
+
 function safePoolChatMessage(rawMessage) {
   if (!rawMessage || typeof rawMessage !== "object") return null;
   const body = String(rawMessage.body || "").trim().slice(0, POOL_CHAT_MAX_MESSAGE_LENGTH);
@@ -92,6 +109,7 @@ function safePoolChatMessage(rawMessage) {
     userId: String(rawMessage.userId || "local-session"),
     displayName: String(rawMessage.displayName || "Player").trim() || "Player",
     body,
+    sourceSessionId: String(rawMessage.sourceSessionId || ""),
     createdAt: Number.isFinite(time) ? new Date(time).toISOString() : new Date().toISOString(),
   };
 }
@@ -109,7 +127,7 @@ function readPoolChatMessages() {
 
 function writePoolChatMessages(messages) {
   try {
-    window.sessionStorage?.setItem(POOL_CHAT_SESSION_STORAGE_KEY, JSON.stringify(messages.slice(-100)));
+    window.sessionStorage?.setItem(POOL_CHAT_SESSION_STORAGE_KEY, JSON.stringify(messages.slice(-POOL_CHAT_MAX_SESSION_MESSAGES)));
   } catch (error) {
     console.warn("[PlayerStandingsSurface] pool chat session storage write failed", error);
   }
@@ -268,7 +286,8 @@ function ensureStandingsPanel(root) {
       <section id="pool-chat-panel" class="pool-chat-panel" data-pool-chat-panel hidden>
         <div class="pool-chat-header">
           <h3>Pool Chat</h3>
-          <p>Session-only chat for signed-in pool members. Messages stay in this browser session for now.</p>
+          <p>Live session chat for currently connected pool members. Messages are broadcast only and are not saved as chat history.</p>
+          <p class="pool-chat-status" data-pool-chat-status>Local session ready. Open chat to join live broadcast.</p>
         </div>
         <div class="pool-chat-messages" data-pool-chat-messages aria-live="polite">
           <p class="pool-chat-empty">No chat messages yet.</p>
@@ -655,6 +674,9 @@ export function createPlayerStandingsSurface({
   let lastPlayerBoardViewerButton = null;
   let boardViewerAssetsPromise = null;
   let groupStagePicksLockTimer = null;
+  let poolChatChannel = null;
+  let poolChatBroadcastStatus = "idle";
+  const poolChatSessionId = getPoolChatSessionId();
 
   const button = ensureStandingsButton(root);
   const panel = ensureStandingsPanel(root);
@@ -741,12 +763,18 @@ export function createPlayerStandingsSurface({
     return publicNameFromAuthState(currentAuthState, currentProfileState);
   }
 
+  function renderPoolChatStatus(message) {
+    const status = panel.querySelector("[data-pool-chat-status]");
+    if (!status) return;
+    status.textContent = message;
+  }
+
   function renderPoolChatMessages() {
     const body = panel.querySelector("[data-pool-chat-messages]");
     if (!body) return;
     const messages = readPoolChatMessages();
     if (!messages.length) {
-      body.innerHTML = `<p class="pool-chat-empty">No chat messages yet.</p>`;
+      body.innerHTML = `<p class="pool-chat-empty">No chat messages yet. Messages appear only while players have the site open.</p>`;
       return;
     }
 
@@ -759,19 +787,77 @@ export function createPlayerStandingsSurface({
     body.scrollTop = body.scrollHeight;
   }
 
-  function addPoolChatMessage(body) {
-    const message = safePoolChatMessage({
+  function appendPoolChatMessage(rawMessage, { render = true } = {}) {
+    const message = safePoolChatMessage(rawMessage);
+    if (!message) return null;
+    const messages = readPoolChatMessages();
+    if (messages.some((existing) => existing.id === message.id)) return message;
+    messages.push(message);
+    writePoolChatMessages(messages);
+    if (render) renderPoolChatMessages();
+    return message;
+  }
+
+  function ensurePoolChatBroadcastChannel() {
+    if (poolChatChannel) return poolChatChannel;
+    const supabase = getSharedSupabaseClient?.();
+    if (!supabase) {
+      renderPoolChatStatus("Live broadcast unavailable. Messages stay in this browser session.");
+      return null;
+    }
+
+    poolChatChannel = supabase.channel(POOL_CHAT_CHANNEL_NAME, {
+      config: { broadcast: { self: false } },
+    });
+
+    poolChatChannel.on("broadcast", { event: POOL_CHAT_BROADCAST_EVENT }, ({ payload }) => {
+      const message = safePoolChatMessage(payload);
+      if (!message) return;
+      if (message.sourceSessionId && message.sourceSessionId === poolChatSessionId) return;
+      appendPoolChatMessage(message);
+    });
+
+    poolChatChannel.subscribe((status) => {
+      poolChatBroadcastStatus = status;
+      if (status === "SUBSCRIBED") {
+        renderPoolChatStatus("Live broadcast connected. Messages are not saved as chat history.");
+      } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
+        renderPoolChatStatus("Live broadcast disconnected. New messages may stay local until reconnect.");
+      } else {
+        renderPoolChatStatus("Connecting live broadcast…");
+      }
+    });
+
+    renderPoolChatStatus("Connecting live broadcast…");
+    return poolChatChannel;
+  }
+
+  async function broadcastPoolChatMessage(message) {
+    const channel = ensurePoolChatBroadcastChannel();
+    if (!channel) return;
+    try {
+      await channel.send({
+        type: "broadcast",
+        event: POOL_CHAT_BROADCAST_EVENT,
+        payload: message,
+      });
+    } catch (error) {
+      console.warn("[PlayerStandingsSurface] pool chat broadcast failed", error);
+      renderPoolChatStatus("Message shown locally. Live broadcast failed for this send.");
+    }
+  }
+
+  async function addPoolChatMessage(body) {
+    const message = appendPoolChatMessage({
       id: `chat-${Date.now()}-${Math.random().toString(36).slice(2)}`,
       userId: currentAuthState?.user?.id || "local-session",
       displayName: currentPoolChatDisplayName(),
       body,
+      sourceSessionId: poolChatSessionId,
       createdAt: new Date().toISOString(),
     });
     if (!message) return;
-    const messages = readPoolChatMessages();
-    messages.push(message);
-    writePoolChatMessages(messages);
-    renderPoolChatMessages();
+    await broadcastPoolChatMessage(message);
   }
 
   function setPoolChatPanelOpen(open) {
@@ -782,6 +868,7 @@ export function createPlayerStandingsSurface({
     chatButton.setAttribute("aria-expanded", open ? "true" : "false");
     chatButton.classList.toggle("is-open", open);
     if (open) {
+      ensurePoolChatBroadcastChannel();
       renderPoolChatMessages();
       panel.querySelector("[data-pool-chat-input]")?.focus();
     }
@@ -942,13 +1029,13 @@ export function createPlayerStandingsSurface({
       const chatPanel = panel.querySelector("[data-pool-chat-panel]");
       setPoolChatPanelOpen(Boolean(chatPanel?.hidden));
     });
-    panel.querySelector("[data-pool-chat-form]")?.addEventListener("submit", (event) => {
+    panel.querySelector("[data-pool-chat-form]")?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const input = panel.querySelector("[data-pool-chat-input]");
       const value = String(input?.value || "").trim();
       if (!value) return;
-      addPoolChatMessage(value);
       input.value = "";
+      await addPoolChatMessage(value);
       input.focus();
     });
     panel.querySelector("[data-player-supplied-links-open]")?.addEventListener("click", () => {
@@ -994,6 +1081,12 @@ export function createPlayerStandingsSurface({
     authService?.subscribe?.((state) => {
       currentAuthState = state;
       currentProfileState = null;
+      if (!isSignedIn(currentAuthState) && poolChatChannel) {
+        getSharedSupabaseClient?.()?.removeChannel?.(poolChatChannel);
+        poolChatChannel = null;
+        poolChatBroadcastStatus = "idle";
+        renderPoolChatStatus("Sign in and open Pool Chat to join live broadcast.");
+      }
       storageReady = false;
       storageReadyChecked = false;
       syncStandingsButtonState();

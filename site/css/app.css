@@ -3032,9 +3032,14 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 }
 
 .pool-chat-header p,
+.pool-chat-status,
 .pool-chat-empty {
   font-size: 11px;
   opacity: 0.72;
+}
+
+.pool-chat-status {
+  color: #d7f7e4;
 }
 
 .pool-chat-messages {
