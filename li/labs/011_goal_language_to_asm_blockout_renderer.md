@@ -1008,3 +1008,6 @@ Pose rules source:
 labs/011_goal_language_to_asm_blockout_renderer/source/blockout_pose_rules.json
 ```
 
+## Companion LI
+
+- [Active piece payload pipeline](011_goal_language_to_asm_blockout_renderer_active_piece_pipeline.md)

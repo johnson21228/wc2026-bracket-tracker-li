@@ -300,3 +300,18 @@ pieceId + rotationId + x/y/z
 
 Rotation is selected from precomputed normalized cube occupancies. The C64 runtime should not do matrix rotation math.
 
+## Active piece payload pipeline
+
+Lab 011 defines an active-piece / locked-occupancy boundary:
+
+- active pieces are dynamic white outlined pieces only;
+- locking expands the active piece into occupied cells and discards the piece instance;
+- locked occupancy is cell-first, not locked-piece-first;
+- per-piece payloads are generated offline and only the current payload is loaded/copied into the active runtime slot;
+- sprites may support HUD/effects, but the main active piece remains bitmap dirty-overlay rendered.
+
+See:
+
+- `captures/CAPTURE_BACK_ACTIVE_PIECE_PIPELINE_AND_LOCKED_OCCUPANCY.md`
+- `source/blockout_runtime_pipeline_contract.json`
+- `tools/verify_blockout_runtime_pipeline_contract.py`
