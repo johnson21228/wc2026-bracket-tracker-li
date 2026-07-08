@@ -18,6 +18,8 @@ const BOARD_VIEWER_GEOMETRY_URL = "data/geometry/gameboard_manifest.json";
 const BOARD_VIEWER_TEAMS_URL = "data/model/teams.json";
 const BOARD_VIEWER_LINEWORK_URL = "assets/playfield/uniform_pick_card_gameboard.svg";
 const PLAYER_SUPPLIED_LINKS_URL = "data/current/PlayerSuppliedLinks.json";
+const POOL_CHAT_SESSION_STORAGE_KEY = "wc2026.poolChat.sessionMessages.v1";
+const POOL_CHAT_MAX_MESSAGE_LENGTH = 280;
 const BOARD_VIEWER_DEFAULT_SCALE = 0.75;
 const BOARD_VIEWER_MIN_SCALE = 0.5;
 const BOARD_VIEWER_MAX_SCALE = 1.25;
@@ -76,6 +78,47 @@ function normalizePlayerSuppliedLinks(payload) {
     .map(normalizePlayerSuppliedLink)
     .filter(Boolean)
     .sort((a, b) => (b.sortTime - a.sortTime) || a.title.localeCompare(b.title));
+}
+
+
+function safePoolChatMessage(rawMessage) {
+  if (!rawMessage || typeof rawMessage !== "object") return null;
+  const body = String(rawMessage.body || "").trim().slice(0, POOL_CHAT_MAX_MESSAGE_LENGTH);
+  if (!body) return null;
+  const createdAt = String(rawMessage.createdAt || new Date().toISOString());
+  const time = Date.parse(createdAt);
+  return {
+    id: String(rawMessage.id || `chat-${time || Date.now()}-${Math.random().toString(36).slice(2)}`),
+    userId: String(rawMessage.userId || "local-session"),
+    displayName: String(rawMessage.displayName || "Player").trim() || "Player",
+    body,
+    createdAt: Number.isFinite(time) ? new Date(time).toISOString() : new Date().toISOString(),
+  };
+}
+
+function readPoolChatMessages() {
+  try {
+    const raw = window.sessionStorage?.getItem(POOL_CHAT_SESSION_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.map(safePoolChatMessage).filter(Boolean) : [];
+  } catch (error) {
+    console.warn("[PlayerStandingsSurface] pool chat session storage unavailable", error);
+    return [];
+  }
+}
+
+function writePoolChatMessages(messages) {
+  try {
+    window.sessionStorage?.setItem(POOL_CHAT_SESSION_STORAGE_KEY, JSON.stringify(messages.slice(-100)));
+  } catch (error) {
+    console.warn("[PlayerStandingsSurface] pool chat session storage write failed", error);
+  }
+}
+
+function formatPoolChatTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "now";
+  return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 }
 
 function normalizeStandingsRow(row) {
@@ -217,10 +260,25 @@ function ensureStandingsPanel(root) {
           <h2 id="player-standings-title">Pool Standings</h2>
         </div>
         <div class="player-standings-header-actions">
+          <button type="button" class="pool-chat-button" data-pool-chat-open aria-expanded="false" aria-controls="pool-chat-panel" aria-label="Open Pool Chat"><span aria-hidden="true">💬</span><span>Chat</span></button>
           <button type="button" class="player-supplied-links-button" data-player-supplied-links-open aria-expanded="false" aria-controls="player-supplied-links-panel" aria-label="Open World Cup links"><span aria-hidden="true">🔗</span><span>World Cup Links</span></button>
           <button type="button" class="player-standings-close" data-player-standings-close aria-label="Close Pool Standings">×</button>
         </div>
       </header>
+      <section id="pool-chat-panel" class="pool-chat-panel" data-pool-chat-panel hidden>
+        <div class="pool-chat-header">
+          <h3>Pool Chat</h3>
+          <p>Session-only chat for signed-in pool members. Messages stay in this browser session for now.</p>
+        </div>
+        <div class="pool-chat-messages" data-pool-chat-messages aria-live="polite">
+          <p class="pool-chat-empty">No chat messages yet.</p>
+        </div>
+        <form class="pool-chat-form" data-pool-chat-form>
+          <label class="visually-hidden" for="pool-chat-message">Message</label>
+          <input id="pool-chat-message" data-pool-chat-input maxlength="280" autocomplete="off" placeholder="Type a pool message…">
+          <button type="submit">Send</button>
+        </form>
+      </section>
       <section id="player-supplied-links-panel" class="player-supplied-links-panel" data-player-supplied-links-panel hidden>
         <div class="player-supplied-links-header">
           <h3>Player Links</h3>
@@ -678,6 +736,57 @@ export function createPlayerStandingsSurface({
     if (open) loadPlayerSuppliedLinks();
   }
 
+
+  function currentPoolChatDisplayName() {
+    return publicNameFromAuthState(currentAuthState, currentProfileState);
+  }
+
+  function renderPoolChatMessages() {
+    const body = panel.querySelector("[data-pool-chat-messages]");
+    if (!body) return;
+    const messages = readPoolChatMessages();
+    if (!messages.length) {
+      body.innerHTML = `<p class="pool-chat-empty">No chat messages yet.</p>`;
+      return;
+    }
+
+    body.innerHTML = messages.map((message) => `
+      <article class="pool-chat-message">
+        <header><strong>${escapeHtml(message.displayName)}</strong><time datetime="${escapeHtml(message.createdAt)}">${escapeHtml(formatPoolChatTime(message.createdAt))}</time></header>
+        <p>${escapeHtml(message.body)}</p>
+      </article>
+    `).join("");
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function addPoolChatMessage(body) {
+    const message = safePoolChatMessage({
+      id: `chat-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      userId: currentAuthState?.user?.id || "local-session",
+      displayName: currentPoolChatDisplayName(),
+      body,
+      createdAt: new Date().toISOString(),
+    });
+    if (!message) return;
+    const messages = readPoolChatMessages();
+    messages.push(message);
+    writePoolChatMessages(messages);
+    renderPoolChatMessages();
+  }
+
+  function setPoolChatPanelOpen(open) {
+    const chatPanel = panel.querySelector("[data-pool-chat-panel]");
+    const chatButton = panel.querySelector("[data-pool-chat-open]");
+    if (!chatPanel || !chatButton) return;
+    chatPanel.hidden = !open;
+    chatButton.setAttribute("aria-expanded", open ? "true" : "false");
+    chatButton.classList.toggle("is-open", open);
+    if (open) {
+      renderPoolChatMessages();
+      panel.querySelector("[data-pool-chat-input]")?.focus();
+    }
+  }
+
   async function refreshStorageReady() {
     if (!isSignedIn(currentAuthState)) {
       storageReady = false;
@@ -816,6 +925,7 @@ export function createPlayerStandingsSurface({
 
   function closePanel() {
     closePlayerBoardViewer({ restoreFocus: false });
+    setPoolChatPanelOpen(false);
     setPlayerSuppliedLinksPanelOpen(false);
     panel.hidden = true;
     lastOpenButton?.focus();
@@ -828,6 +938,19 @@ export function createPlayerStandingsSurface({
     installBoardViewerDragPan(boardViewerPanel.querySelector("[data-player-board-viewer-scroll]"));
     button.addEventListener("click", openPanel);
     closeButton?.addEventListener("click", closePanel);
+    panel.querySelector("[data-pool-chat-open]")?.addEventListener("click", () => {
+      const chatPanel = panel.querySelector("[data-pool-chat-panel]");
+      setPoolChatPanelOpen(Boolean(chatPanel?.hidden));
+    });
+    panel.querySelector("[data-pool-chat-form]")?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const input = panel.querySelector("[data-pool-chat-input]");
+      const value = String(input?.value || "").trim();
+      if (!value) return;
+      addPoolChatMessage(value);
+      input.value = "";
+      input.focus();
+    });
     panel.querySelector("[data-player-supplied-links-open]")?.addEventListener("click", () => {
       const linksPanel = panel.querySelector("[data-player-supplied-links-panel]");
       setPlayerSuppliedLinksPanelOpen(Boolean(linksPanel?.hidden));

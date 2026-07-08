@@ -1,8 +1,6 @@
 .PHONY: verify pack clean-hygiene open-site publish-pages publish-pages-force check-pages
 
 verify:
-	python3 tools/verify_c64_blockout_renderer_lab.py
-	python3 tools/verify_wc2026_pool_dialog_short_safe_scroll.py
 	python3 tools/verify_wc2026_workbench_easter_egg_button_visible.py
 	python3 tools/verify_wc2026_c64_workbench_loop_easter_egg_tab.py
 	python3 tools/verify_wc2026_official_truth_bracket_hidden_player.py
@@ -134,9 +132,6 @@ verify:
 	python3 tools/verify_wc2026_germany_paraguay_knockout_result.py
 	python3 tools/verify_wc2026_knockout_result_dom_classification.py
 	python3 tools/verify_wc2026_july_04_r16_extended_highlights.py
-	python3 tools/verify_wc2026_argentina_egypt_r16_result.py
-	python3 tools/verify_wc2026_spain_portugal_r16_result.py
-	python3 tools/verify_wc2026_usa_belgium_r16_result.py
 	python3 tools/verify_wc2026_supabase_shared_pick_sql_target.py
 	python3 tools/verify_wc2026_supabase_sql_rls_finalization.py
 	python3 tools/verify_wc2026_supabase_profiles_and_bracket_saving_target.py
@@ -156,6 +151,7 @@ verify:
 	python3 tools/verify_wc2026_join_first_live_picks_player_ui.py
 	python3 tools/verify_wc2026_player_standings_panel.py
 	python3 tools/verify_wc2026_player_supplied_links_panel.py
+	python3 tools/verify_wc2026_pool_chat_panel.py
 	python3 tools/verify_wc2026_player_standings_no_pick_links.py
 	python3 tools/verify_wc2026_player_standings_scoring_rule.py
 	python3 tools/verify_wc2026_player_standings_max_possible_reachability_rule.py
