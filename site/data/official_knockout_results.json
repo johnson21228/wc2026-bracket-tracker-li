@@ -534,7 +534,29 @@
       "resultText": "Switzerland 0–0 Colombia; Switzerland wins penalties 4–3",
       "notes": "Match finished 0–0. Switzerland advanced 4–3 on penalties.",
       "extendedHighlightsUrl": "https://youtu.be/_uEzppRKcd0"
+    },
+    {
+      "resultId": "qf-fra-mar-2026-07-09",
+      "round": "Quarterfinal",
+      "siteWinnerSlotId": "FRA",
+      "siteSlotPair": [
+        "L-QF-01",
+        "L-QF-02"
+      ],
+      "homeTeamId": "FRA",
+      "homeTeamName": "France",
+      "homeScore": 2,
+      "awayTeamId": "MAR",
+      "awayTeamName": "Morocco",
+      "awayScore": 0,
+      "winnerTeamId": "FRA",
+      "winnerTeamName": "France",
+      "resultLabel": "France 2–0 Morocco",
+      "resultText": "France 2–0 Morocco",
+      "notes": "France defeated Morocco 2–0 and advanced from the quarterfinal.",
+      "resultSource": "user-supplied-knockout-result-2026-07-09",
+      "espnGameId": "53452525"
     }
   ],
-  "updatedAt": "2026-07-07T18:10:00Z"
+  "updatedAt": "2026-07-09T22:10:00Z"
 }
