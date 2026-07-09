@@ -38,6 +38,7 @@ else:
         "awayScore": 0,
         "winnerTeamId": "FRA",
         "winnerTeamName": "France",
+        "siteWinnerSlotId": "L-SF-01",
         "resultLabel": "France 2–0 Morocco",
         "resultText": "France 2–0 Morocco",
         "espnGameId": "53452525",
@@ -45,6 +46,9 @@ else:
     for key, value in expected.items():
         if r.get(key) != value:
             errors.append(f"{key} must be {value!r}; found {r.get(key)!r}")
+
+    if r.get("siteSlotPair") != ["L-QF-01", "L-QF-02"]:
+        errors.append(f"siteSlotPair must feed from ['L-QF-01', 'L-QF-02']; found {r.get('siteSlotPair')!r}")
 
 ids = {}
 for r in results:
@@ -79,4 +83,4 @@ if errors:
         print(f"- {error}")
     sys.exit(1)
 
-print("OK: France-Morocco QF result is qf-fra-mar-2026-07-09, FRA 2-0 MAR, France advances, and official_truth remains R32-only.")
+print("OK: France-Morocco QF result is qf-fra-mar-2026-07-09, FRA 2-0 MAR, France feeds L-SF-01 as the first semifinalist, and official_truth remains R32-only.")

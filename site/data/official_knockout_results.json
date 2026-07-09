@@ -538,7 +538,7 @@
     {
       "resultId": "qf-fra-mar-2026-07-09",
       "round": "Quarterfinal",
-      "siteWinnerSlotId": "FRA",
+      "siteWinnerSlotId": "L-SF-01",
       "siteSlotPair": [
         "L-QF-01",
         "L-QF-02"
@@ -553,10 +553,10 @@
       "winnerTeamName": "France",
       "resultLabel": "France 2–0 Morocco",
       "resultText": "France 2–0 Morocco",
-      "notes": "France defeated Morocco 2–0 and advanced from the quarterfinal.",
-      "resultSource": "user-supplied-knockout-result-2026-07-09",
+      "notes": "France defeated Morocco 2–0 and advanced to the first semifinal slot.",
+      "resultSource": "user-supplied-knockout-result-2026-07-09-first-semifinalist",
       "espnGameId": "53452525"
     }
   ],
-  "updatedAt": "2026-07-09T22:10:00Z"
+  "updatedAt": "2026-07-09T22:25:00Z"
 }
