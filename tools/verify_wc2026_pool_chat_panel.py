@@ -2,55 +2,53 @@
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
-js = (root / "site/js/standings/PlayerStandingsSurface.js").read_text()
-css = (root / "site/css/app.css").read_text()
-makefile = (root / "Makefile").read_text()
+js = (root / "site/js/standings/PlayerStandingsSurface.js").read_text(encoding="utf-8")
+css = (root / "site/css/app.css").read_text(encoding="utf-8")
+makefile = (root / "Makefile").read_text(encoding="utf-8")
+
+start_marker = "panel.innerHTML = `"
+end_marker = '<section id="player-supplied-links-panel"'
+
+if start_marker not in js:
+    raise SystemExit("Could not find Pool panel render markup start")
+if end_marker not in js:
+    raise SystemExit("Could not find Player Links panel marker")
+
+rendered_header = js.split(start_marker, 1)[1].split(end_marker, 1)[0]
 
 required_js = [
-    'data-pool-chat-open aria-expanded="false" aria-controls="pool-chat-panel"',
+    'Pool Chat hidden until broadcast, storage, and visibility rules are explicitly governed.',
     'data-player-supplied-links-open aria-expanded="false" aria-controls="player-supplied-links-panel"',
-    'data-pool-chat-form',
-    'window.sessionStorage?.setItem(POOL_CHAT_SESSION_STORAGE_KEY',
-    'import { getSharedSupabaseClient } from "../services/SupabaseClient.js";',
-    'const POOL_CHAT_CHANNEL_NAME = "pool-chat:bracketeering-pub";',
-    'const POOL_CHAT_BROADCAST_EVENT = "pool-chat-message";',
-    'supabase.channel(POOL_CHAT_CHANNEL_NAME',
-    'poolChatChannel.on("broadcast", { event: POOL_CHAT_BROADCAST_EVENT }',
-    'await channel.send({',
-    'type: "broadcast"',
-    'Messages are broadcast only and are not saved as chat history.',
 ]
 
 for marker in required_js:
     if marker not in js:
-        raise SystemExit(f"Missing Pool Chat runtime marker: {marker}")
-
-if js.index('data-pool-chat-open') > js.index('data-player-supplied-links-open'):
-    raise SystemExit("Pool Chat button must remain before Player Links in the Pool header")
+        raise SystemExit(f"Missing Pool panel chat hiding marker: {marker}")
 
 for forbidden in [
-    'pool_chat_messages',
-    '.from("pool_chat_messages")',
-    ".from('pool_chat_messages')",
-    '.insert({ body',
-    '.insert([{ body',
+    'class="pool-chat-button"',
+    'data-pool-chat-open',
+    '<section id="pool-chat-panel"',
+    'data-pool-chat-panel hidden',
+    'data-pool-chat-form',
+    'data-pool-chat-input maxlength="280"',
+    '<h3>Pool Chat</h3>',
+    'Open Pool Chat',
 ]:
-    if forbidden in js:
-        raise SystemExit(f"Pool Chat must not persist chat messages through Supabase tables: {forbidden}")
+    if forbidden in rendered_header:
+        raise SystemExit(f"Pool Chat UI marker must not render: {forbidden}")
 
-required_css = [
+for forbidden in [
     '.pool-chat-button',
     '.pool-chat-panel',
     '.pool-chat-status',
     '.pool-chat-messages',
     '.pool-chat-form',
-]
-
-for marker in required_css:
-    if marker not in css:
-        raise SystemExit(f"Missing Pool Chat CSS marker: {marker}")
+]:
+    if forbidden in css:
+        raise SystemExit(f"Pool Chat CSS marker must not remain: {forbidden}")
 
 if 'python3 tools/verify_wc2026_pool_chat_panel.py' not in makefile:
-    raise SystemExit("Makefile verify target must include Pool Chat verifier")
+    raise SystemExit("Makefile verify target must include Pool Chat hiding verifier")
 
-print("OK: Pool panel includes ephemeral live broadcast chat before Player Links without storing chat messages in Supabase.")
+print("OK: Pool panel hides Pool Chat UI while preserving governed Pool links and standings.")
