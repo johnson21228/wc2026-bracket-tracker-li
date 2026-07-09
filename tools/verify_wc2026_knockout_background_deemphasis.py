@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 css = (ROOT / "site/css/board.css").read_text()
 required = [
     ".board-background-layer",
-    "opacity: .32;",
+    "opacity: .20;",
 ]
 missing = [token for token in required if token not in css]
 if missing:
