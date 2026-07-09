@@ -6,7 +6,7 @@ import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js?v
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js?v=remove-old-saved-board-choice-1782492355";
 import { createAccountSaveActionSurface } from "./identity/AccountSaveActionSurface.js?v=remove-old-saved-board-choice-1782492355";
 import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js?v=remove-old-saved-board-choice-1782492355";
-import { createPlayerStandingsSurface } from "./standings/PlayerStandingsSurface.js?v=hide-pool-chat-button-20260709";
+import { createPlayerStandingsSurface } from "./standings/PlayerStandingsSurface.js?v=ephemeral-pool-chat-broadcast-20260708";
 import { createSupabasePlayerStandingsStore } from "./standings/SupabasePlayerStandingsStore.js?v=remove-old-saved-board-choice-1782492355";
 import { createSupabaseBracketStore } from "./services/SupabaseBracketStore.js?v=remove-old-saved-board-choice-1782492355";
 
