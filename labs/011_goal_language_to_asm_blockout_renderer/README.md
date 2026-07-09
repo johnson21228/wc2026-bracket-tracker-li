@@ -331,3 +331,23 @@ See:
 - `captures/CAPTURE_BACK_LI_PLUS_PLUS_LEAN_RUNTIME_DOCTRINE.md`
 - `source/blockout_li_plus_plus_runtime_doctrine.json`
 - `tools/verify_blockout_li_plus_plus_runtime_doctrine.py`
+
+## P02_DOMINO payload report
+
+Lab 011 begins the per-piece payload pipeline with a report-only target:
+
+- `P02_DOMINO`
+- `x_axis` and `y_axis` rotations only
+- all legal `x/y/z` poses
+- no `z_axis`
+- no runtime drawing
+- no binary payload yet
+
+Generated artifacts:
+
+- `dist/pieces/P02_DOMINO.payload_report.json`
+- `dist/pieces_manifest.json`
+
+Verifier:
+
+- `tools/verify_blockout_p02_domino_payload_report.py`

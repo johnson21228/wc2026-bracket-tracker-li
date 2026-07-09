@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "manifestType": "blockout_piece_payload_manifest",
+  "pieces": [
+    {
+      "pieceId": "P02_DOMINO",
+      "report": "pieces/P02_DOMINO.payload_report.json",
+      "binaryPayload": null,
+      "includedRotations": [
+        "x_axis",
+        "y_axis"
+      ],
+      "excludedRotations": [
+        "z_axis"
+      ],
+      "poseCount": 400,
+      "estimatedTotalPayloadBytes": 265108,
+      "decisionClassification": "CONFLICT"
+    }
+  ]
+}
