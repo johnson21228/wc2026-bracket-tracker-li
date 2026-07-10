@@ -278,26 +278,10 @@ function ensureStandingsPanel(root) {
           <h2 id="player-standings-title">Pool Standings</h2>
         </div>
         <div class="player-standings-header-actions">
-          <button type="button" class="pool-chat-button" data-pool-chat-open aria-expanded="false" aria-controls="pool-chat-panel" aria-label="Open Pool Chat"><span aria-hidden="true">💬</span><span>Chat</span></button>
           <button type="button" class="player-supplied-links-button" data-player-supplied-links-open aria-expanded="false" aria-controls="player-supplied-links-panel" aria-label="Open World Cup links"><span aria-hidden="true">🔗</span><span>World Cup Links</span></button>
           <button type="button" class="player-standings-close" data-player-standings-close aria-label="Close Pool Standings">×</button>
         </div>
       </header>
-      <section id="pool-chat-panel" class="pool-chat-panel" data-pool-chat-panel hidden>
-        <div class="pool-chat-header">
-          <h3>Pool Chat</h3>
-          <p>Live session chat for currently connected pool members. Messages are broadcast only and are not saved as chat history.</p>
-          <p class="pool-chat-status" data-pool-chat-status>Local session ready. Open chat to join live broadcast.</p>
-        </div>
-        <div class="pool-chat-messages" data-pool-chat-messages aria-live="polite">
-          <p class="pool-chat-empty">No chat messages yet.</p>
-        </div>
-        <form class="pool-chat-form" data-pool-chat-form>
-          <label class="visually-hidden" for="pool-chat-message">Message</label>
-          <input id="pool-chat-message" data-pool-chat-input maxlength="280" autocomplete="off" placeholder="Type a pool message…">
-          <button type="submit">Send</button>
-        </form>
-      </section>
       <section id="player-supplied-links-panel" class="player-supplied-links-panel" data-player-supplied-links-panel hidden>
         <div class="player-supplied-links-header">
           <h3>Player Links</h3>
@@ -860,20 +844,6 @@ export function createPlayerStandingsSurface({
     await broadcastPoolChatMessage(message);
   }
 
-  function setPoolChatPanelOpen(open) {
-    const chatPanel = panel.querySelector("[data-pool-chat-panel]");
-    const chatButton = panel.querySelector("[data-pool-chat-open]");
-    if (!chatPanel || !chatButton) return;
-    chatPanel.hidden = !open;
-    chatButton.setAttribute("aria-expanded", open ? "true" : "false");
-    chatButton.classList.toggle("is-open", open);
-    if (open) {
-      ensurePoolChatBroadcastChannel();
-      renderPoolChatMessages();
-      panel.querySelector("[data-pool-chat-input]")?.focus();
-    }
-  }
-
   async function refreshStorageReady() {
     if (!isSignedIn(currentAuthState)) {
       storageReady = false;
@@ -1025,19 +995,7 @@ export function createPlayerStandingsSurface({
     installBoardViewerDragPan(boardViewerPanel.querySelector("[data-player-board-viewer-scroll]"));
     button.addEventListener("click", openPanel);
     closeButton?.addEventListener("click", closePanel);
-    panel.querySelector("[data-pool-chat-open]")?.addEventListener("click", () => {
-      const chatPanel = panel.querySelector("[data-pool-chat-panel]");
-      setPoolChatPanelOpen(Boolean(chatPanel?.hidden));
-    });
-    panel.querySelector("[data-pool-chat-form]")?.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const input = panel.querySelector("[data-pool-chat-input]");
-      const value = String(input?.value || "").trim();
-      if (!value) return;
-      input.value = "";
-      await addPoolChatMessage(value);
-      input.focus();
-    });
+
     panel.querySelector("[data-player-supplied-links-open]")?.addEventListener("click", () => {
       const linksPanel = panel.querySelector("[data-player-supplied-links-panel]");
       setPlayerSuppliedLinksPanelOpen(Boolean(linksPanel?.hidden));
@@ -1085,7 +1043,6 @@ export function createPlayerStandingsSurface({
         getSharedSupabaseClient?.()?.removeChannel?.(poolChatChannel);
         poolChatChannel = null;
         poolChatBroadcastStatus = "idle";
-        renderPoolChatStatus("Sign in and open Pool Chat to join live broadcast.");
       }
       storageReady = false;
       storageReadyChecked = false;
