@@ -556,7 +556,27 @@
       "notes": "France defeated Morocco 2–0 and advanced to the first semifinal slot.",
       "resultSource": "user-supplied-knockout-result-2026-07-09-first-semifinalist",
       "espnGameId": "53452525"
+    },
+    {
+      "resultId": "qf-esp-bel-2026-07-10",
+      "round": "Quarter-final",
+      "siteWinnerSlotId": "L-SF-02",
+      "siteSlotPair": [
+        "L-QF-03",
+        "L-QF-04"
+      ],
+      "homeTeamId": "ESP",
+      "homeTeamName": "Spain",
+      "homeScore": 2,
+      "awayTeamId": "BEL",
+      "awayTeamName": "Belgium",
+      "awayScore": 1,
+      "winnerTeamId": "ESP",
+      "winnerTeamName": "Spain",
+      "resultLabel": "Spain 2–1 Belgium",
+      "advancementLabel": "Spain advances to face France in the semifinal",
+      "resultSource": "user-supplied-knockout-result-2026-07-10"
     }
   ],
-  "updatedAt": "2026-07-09T22:25:00Z"
+  "updatedAt": "2026-07-10T21:05:28.058495Z"
 }

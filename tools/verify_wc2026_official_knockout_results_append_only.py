@@ -105,6 +105,19 @@ require_result("r16-sui-col-2026-07-07", {
     "homePenaltyScore": 4,
     "awayPenaltyScore": 3,
 })
+require_result("qf-esp-bel-2026-07-10", {
+    "round": "Quarter-final",
+    "siteWinnerSlotId": "L-SF-02",
+    "siteSlotPair": ["L-QF-03", "L-QF-04"],
+    "homeTeamId": "ESP",
+    "homeScore": 2,
+    "awayTeamId": "BEL",
+    "awayScore": 1,
+    "winnerTeamId": "ESP",
+    "resultLabel": "Spain 2–1 Belgium",
+    "advancementLabel": "Spain advances to face France in the semifinal",
+})
+
 
 truth = json.loads(Path("site/data/current/official_truth.json").read_text())
 truth_picks = truth.get("picksBySlot", {})
