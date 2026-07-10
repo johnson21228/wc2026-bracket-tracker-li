@@ -982,7 +982,6 @@ export function createPlayerStandingsSurface({
 
   function closePanel() {
     closePlayerBoardViewer({ restoreFocus: false });
-    setPoolChatPanelOpen(false);
     setPlayerSuppliedLinksPanelOpen(false);
     panel.hidden = true;
     lastOpenButton?.focus();

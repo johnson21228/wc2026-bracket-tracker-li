@@ -38,4 +38,27 @@ for allowed_runtime_marker in [
 if "verify_wc2026_pool_chat_panel.py" not in makefile:
     raise SystemExit("Makefile verify target must include Pool Chat hidden verifier")
 
-print("OK: Pool panel hides Pool Chat UI while preserving governed Pool links and standings.")
+surface = Path(
+    "site/js/standings/PlayerStandingsSurface.js"
+).read_text(encoding="utf-8")
+
+if "setPoolChatPanelOpen(false)" in surface:
+    raise SystemExit(
+        "Pool close path must not call removed Pool Chat UI functions."
+    )
+
+close_panel_markers = [
+    "function closePanel()",
+    "setPlayerSuppliedLinksPanelOpen(false);",
+    "panel.hidden = true;",
+]
+missing_close_markers = [
+    marker for marker in close_panel_markers if marker not in surface
+]
+if missing_close_markers:
+    raise SystemExit(
+        "Pool close path must close links and hide the Pool panel; "
+        f"missing: {missing_close_markers}"
+    )
+
+print("OK: Pool panel hides Pool Chat UI and its close path no longer calls removed chat functions.")
