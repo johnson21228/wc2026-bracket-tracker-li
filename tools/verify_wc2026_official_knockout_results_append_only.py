@@ -119,6 +119,34 @@ require_result("qf-esp-bel-2026-07-10", {
 })
 
 
+require_result("qf-nor-eng-2026-07-11", {
+    "matchId": "53452529",
+    "round": "Quarterfinal",
+    "status": "final",
+    "resultType": "extra_time",
+    "siteWinnerSlotId": "R-SF-01",
+    "siteSlotPair": ["R-QF-01", "R-QF-02"],
+    "homeTeamId": "NOR",
+    "homeScore": 1,
+    "awayTeamId": "ENG",
+    "awayScore": 2,
+    "winnerTeamId": "ENG",
+})
+
+require_result("qf-arg-sui-2026-07-11", {
+    "matchId": "53452531",
+    "round": "Quarterfinal",
+    "status": "final",
+    "resultType": "extra_time",
+    "siteWinnerSlotId": "R-SF-02",
+    "siteSlotPair": ["R-QF-03", "R-QF-04"],
+    "homeTeamId": "ARG",
+    "homeScore": 3,
+    "awayTeamId": "SUI",
+    "awayScore": 1,
+    "winnerTeamId": "ARG",
+})
+
 truth = json.loads(Path("site/data/current/official_truth.json").read_text())
 truth_picks = truth.get("picksBySlot", {})
 non_r32 = sorted(slot_id for slot_id in truth_picks if "-R32-" not in slot_id)
@@ -131,4 +159,4 @@ if errors:
         print(f"- {error}")
     raise SystemExit(1)
 
-print("OK: official knockout results preserve CAN/RSA, include BRA/JPN, avoid duplicates, and keep official_truth R32-only.")
+print("OK: official knockout results preserve protected rows through the July 11 quarterfinals, avoid duplicates, and keep official_truth R32-only.")

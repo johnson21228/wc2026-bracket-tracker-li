@@ -576,7 +576,55 @@
       "resultLabel": "Spain 2–1 Belgium",
       "advancementLabel": "Spain advances to face France in the semifinal",
       "resultSource": "user-supplied-knockout-result-2026-07-10"
+    },
+    {
+      "resultId": "qf-nor-eng-2026-07-11",
+      "matchId": "53452529",
+      "round": "Quarterfinal",
+      "status": "final",
+      "resultType": "extra_time",
+      "siteWinnerSlotId": "R-SF-01",
+      "siteSlotPair": [
+        "R-QF-01",
+        "R-QF-02"
+      ],
+      "homeTeamId": "NOR",
+      "homeTeamName": "Norway",
+      "homeScore": 1,
+      "awayTeamId": "ENG",
+      "awayTeamName": "England",
+      "awayScore": 2,
+      "winnerTeamId": "ENG",
+      "winnerTeamName": "England",
+      "resultLabel": "Norway 1–2 England",
+      "advancementLabel": "England advances to face Argentina in the semifinal",
+      "resultSource": "user-supplied-knockout-result-2026-07-11",
+      "notes": "England won after extra time."
+    },
+    {
+      "resultId": "qf-arg-sui-2026-07-11",
+      "matchId": "53452531",
+      "round": "Quarterfinal",
+      "status": "final",
+      "resultType": "extra_time",
+      "siteWinnerSlotId": "R-SF-02",
+      "siteSlotPair": [
+        "R-QF-03",
+        "R-QF-04"
+      ],
+      "homeTeamId": "ARG",
+      "homeTeamName": "Argentina",
+      "homeScore": 3,
+      "awayTeamId": "SUI",
+      "awayTeamName": "Switzerland",
+      "awayScore": 1,
+      "winnerTeamId": "ARG",
+      "winnerTeamName": "Argentina",
+      "resultLabel": "Argentina 3–1 Switzerland",
+      "advancementLabel": "Argentina advances to face England in the semifinal",
+      "resultSource": "user-supplied-knockout-result-2026-07-11",
+      "notes": "Argentina won after extra time."
     }
   ],
-  "updatedAt": "2026-07-10T21:05:28.058495Z"
+  "updatedAt": "2026-07-12T03:51:58.722235Z"
 }
