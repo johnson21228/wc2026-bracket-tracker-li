@@ -128,6 +128,7 @@ verify:
 	python3 tools/verify_wc2026_superseded_admin_official_truth_li.py
 	python3 tools/verify_wc2026_admin_official_results_truth.py
 	python3 tools/verify_wc2026_official_knockout_results_append_only.py
+	python3 tools/verify_wc2026_spain_france_sf_result.py
 	python3 tools/verify_wc2026_france_morocco_qf_result.py
 	python3 tools/verify_wc2026_brazil_japan_knockout_result.py
 	python3 tools/verify_wc2026_germany_paraguay_knockout_result.py

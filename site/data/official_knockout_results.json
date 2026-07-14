@@ -624,7 +624,30 @@
       "advancementLabel": "Argentina advances to face England in the semifinal",
       "resultSource": "user-supplied-knockout-result-2026-07-11",
       "notes": "Argentina won after extra time."
+    },
+    {
+      "resultId": "sf-fra-esp-2026-07-14",
+      "matchId": "53452533",
+      "matchNumber": 101,
+      "round": "Semi-final",
+      "status": "final",
+      "siteWinnerSlotId": "FINAL-LEFT",
+      "siteSlotPair": [
+        "L-SF-01",
+        "L-SF-02"
+      ],
+      "homeTeamId": "FRA",
+      "homeTeamName": "France",
+      "homeScore": 0,
+      "awayTeamId": "ESP",
+      "awayTeamName": "Spain",
+      "awayScore": 2,
+      "winnerTeamId": "ESP",
+      "winnerTeamName": "Spain",
+      "resultLabel": "France 0–2 Spain",
+      "advancementLabel": "Spain advances to the World Cup Final; France advances to the third-place playoff",
+      "resultSource": "user-supplied-knockout-result-2026-07-14"
     }
   ],
-  "updatedAt": "2026-07-12T03:51:58.722235Z"
+  "updatedAt": "2026-07-14T21:21:34.858720Z"
 }
