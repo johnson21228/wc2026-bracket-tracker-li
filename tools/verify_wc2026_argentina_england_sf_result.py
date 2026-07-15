@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 RESULTS_PATH = Path("site/data/official_knockout_results.json")
-RESULT_ID = "sf-fra-esp-2026-07-14"
+RESULT_ID = "sf-eng-arg-2026-07-15"
 
 data = json.loads(RESULTS_PATH.read_text(encoding="utf-8"))
 matches = data.get("matches")
@@ -22,23 +22,21 @@ assert len(matching) == 1, (
 )
 
 result = matching[0]
-
 expected = {
-    "matchId": "53452533",
-    "matchNumber": 101,
+    "matchNumber": 102,
     "round": "Semi-final",
     "status": "final",
-    "siteWinnerSlotId": "FINAL-LEFT",
-    "siteSlotPair": ["L-SF-01", "L-SF-02"],
-    "homeTeamId": "FRA",
-    "homeTeamName": "France",
-    "homeScore": 0,
-    "awayTeamId": "ESP",
-    "awayTeamName": "Spain",
+    "siteWinnerSlotId": "FINAL-RIGHT",
+    "siteSlotPair": ["R-SF-01", "R-SF-02"],
+    "homeTeamId": "ENG",
+    "homeTeamName": "England",
+    "homeScore": 1,
+    "awayTeamId": "ARG",
+    "awayTeamName": "Argentina",
     "awayScore": 2,
-    "winnerTeamId": "ESP",
-    "winnerTeamName": "Spain",
-    "resultLabel": "France 0–2 Spain",
+    "winnerTeamId": "ARG",
+    "winnerTeamName": "Argentina",
+    "resultLabel": "England 1–2 Argentina",
 }
 
 for key, expected_value in expected.items():
@@ -57,16 +55,19 @@ result_ids = [
     if isinstance(match, dict)
 ]
 
-assert "qf-fra-mar-2026-07-09" in result_ids
-assert "qf-esp-bel-2026-07-10" in result_ids
-assert result_ids.index("qf-fra-mar-2026-07-09") < result_ids.index(RESULT_ID)
-assert result_ids.index("qf-esp-bel-2026-07-10") < result_ids.index(RESULT_ID)
+assert result_ids[-1] == RESULT_ID, (
+    f"{RESULT_ID} must be the newest append-only result"
+)
 
-argentina_semifinal_id = "sf-eng-arg-2026-07-15"
-if argentina_semifinal_id in result_ids:
-    assert result_ids.index(RESULT_ID) < result_ids.index(argentina_semifinal_id)
+for feeder_id in (
+    "qf-nor-eng-2026-07-11",
+    "qf-arg-sui-2026-07-11",
+    "sf-fra-esp-2026-07-14",
+):
+    assert feeder_id in result_ids
+    assert result_ids.index(feeder_id) < result_ids.index(RESULT_ID)
 
 print(
-    "OK: Spain defeated France 2–0 in semifinal 101, "
-    "Spain advances to FINAL-LEFT, and official truth remains append-only."
+    "OK: Argentina defeated England 2–1 in semifinal 102, "
+    "Argentina advances to FINAL-RIGHT, and official truth remains append-only."
 )

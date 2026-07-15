@@ -647,7 +647,29 @@
       "resultLabel": "France 0–2 Spain",
       "advancementLabel": "Spain advances to the World Cup Final; France advances to the third-place playoff",
       "resultSource": "user-supplied-knockout-result-2026-07-14"
+    },
+    {
+      "resultId": "sf-eng-arg-2026-07-15",
+      "matchNumber": 102,
+      "round": "Semi-final",
+      "status": "final",
+      "siteWinnerSlotId": "FINAL-RIGHT",
+      "siteSlotPair": [
+        "R-SF-01",
+        "R-SF-02"
+      ],
+      "homeTeamId": "ENG",
+      "homeTeamName": "England",
+      "homeScore": 1,
+      "awayTeamId": "ARG",
+      "awayTeamName": "Argentina",
+      "awayScore": 2,
+      "winnerTeamId": "ARG",
+      "winnerTeamName": "Argentina",
+      "resultLabel": "England 1–2 Argentina",
+      "advancementLabel": "Argentina advances to the World Cup Final; England advances to the third-place playoff",
+      "resultSource": "user-supplied-knockout-result-2026-07-15"
     }
   ],
-  "updatedAt": "2026-07-14T21:21:34.858720Z"
+  "updatedAt": "2026-07-15T21:19:12Z"
 }
