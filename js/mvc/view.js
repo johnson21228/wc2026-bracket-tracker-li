@@ -845,9 +845,7 @@ export function createBracketView(root) {
       line.className = "final-four-semi-row";
       const teams = (row.teams || []).map((team) => team.abbr || team.id).join(" / ") || "waiting";
       const winner = row.winner ? `${row.winner.flag || ""} ${row.winner.abbr || row.winner.id}`.trim() : "pick";
-      line.textContent = row.matchDisplay?.completed && row.matchDisplay.resultLabel
-        ? `${row.label}: ${row.matchDisplay.resultLabel}`
-        : `${row.label}: ${teams} → ${winner}`;
+      line.textContent = `${row.label}: ${teams} → ${winner}`;
       semifinalSummary.append(line);
     }
     panel.append(semifinalSummary);
@@ -878,11 +876,7 @@ export function createBracketView(root) {
 
       const value = document.createElement("span");
       value.className = "final-four-pick-value";
-      if (pick.matchDisplay?.completed && pick.matchDisplay.resultLabel) {
-        value.textContent = pick.matchDisplay.resultLabel;
-        button.classList.add("has-pick", "has-official-result");
-        button.setAttribute("aria-label", `${pick.label}: ${pick.matchDisplay.resultLabel}`);
-      } else if (pick.selectedTeam) {
+      if (pick.selectedTeam) {
         value.textContent = `${pick.selectedTeam.flag || ""} ${pick.selectedTeam.abbr || pick.selectedTeam.id}`.trim();
         button.classList.add("has-pick");
       } else {

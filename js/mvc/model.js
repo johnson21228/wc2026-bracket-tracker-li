@@ -1495,7 +1495,6 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       feederSlotIds: [...(slot.sourceSlotIds || [])],
       label: slot.displayLabel || slotId,
       finalFourRole: slotId,
-      matchDisplay: knockoutMatchDisplayForSlot(slotId),
     };
   }
 
@@ -1515,14 +1514,12 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
           teams: teamsFromSlotIds(["L-SF-01", "L-SF-02"]),
           winner: selectedTeam("FINAL-LEFT"),
           loser: loserFromSemifinal("FINAL-LEFT", ["L-SF-01", "L-SF-02"]),
-          matchDisplay: knockoutMatchDisplayForSlot("FINAL-LEFT"),
         },
         {
           label: "Right SF",
           teams: teamsFromSlotIds(["R-SF-01", "R-SF-02"]),
           winner: selectedTeam("FINAL-RIGHT"),
           loser: loserFromSemifinal("FINAL-RIGHT", ["R-SF-01", "R-SF-02"]),
-          matchDisplay: knockoutMatchDisplayForSlot("FINAL-RIGHT"),
         },
       ],
       picks,
