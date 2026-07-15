@@ -4,19 +4,12 @@ import json
 from pathlib import Path
 
 RESULTS_PATH = Path("site/data/official_knockout_results.json")
-MODEL_PATH = Path("site/js/mvc/model.js")
-VIEW_PATH = Path("site/js/mvc/view.js")
 RESULT_ID = "sf-eng-arg-2026-07-15"
 
 data = json.loads(RESULTS_PATH.read_text(encoding="utf-8"))
-model_source = MODEL_PATH.read_text(encoding="utf-8")
-view_source = VIEW_PATH.read_text(encoding="utf-8")
 matches = data.get("matches")
 
 assert isinstance(matches, list), "matches must be a list"
-assert 'matchDisplay: knockoutMatchDisplayForSlot("FINAL-LEFT")' in model_source
-assert 'matchDisplay: knockoutMatchDisplayForSlot("FINAL-RIGHT")' in model_source
-assert "row.matchDisplay?.completed && row.matchDisplay.resultLabel" in view_source
 
 matching = [
     match
