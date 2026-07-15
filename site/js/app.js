@@ -1,5 +1,5 @@
-import { createBracketModel } from "./mvc/model.js?v=semifinal-results-20260715";
-import { createBracketView } from "./mvc/view.js?v=semifinal-results-20260715";
+import { createBracketModel } from "./mvc/model.js?v=remove-old-saved-board-choice-1782492355";
+import { createBracketView } from "./mvc/view.js?v=remove-old-saved-board-choice-1782492355";
 import { createBracketController } from "./mvc/controller.js?v=remove-old-saved-board-choice-1782492355";
 import { createSupabaseAuthService } from "./services/SupabaseAuthService.js?v=remove-old-saved-board-choice-1782492355";
 import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js?v=remove-old-saved-board-choice-1782492355";
@@ -164,4 +164,5 @@ if (new URLSearchParams(window.location.search).get("devSupabaseBracketSmoke") =
       console.error("[SupabaseBracketStoreSmokeTest] module load failed", error);
     });
 }
+
 
