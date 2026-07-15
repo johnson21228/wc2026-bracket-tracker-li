@@ -1495,6 +1495,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       feederSlotIds: [...(slot.sourceSlotIds || [])],
       label: slot.displayLabel || slotId,
       finalFourRole: slotId,
+      matchDisplay: knockoutMatchDisplayForSlot(slotId),
     };
   }
 
