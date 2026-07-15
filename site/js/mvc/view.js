@@ -845,7 +845,9 @@ export function createBracketView(root) {
       line.className = "final-four-semi-row";
       const teams = (row.teams || []).map((team) => team.abbr || team.id).join(" / ") || "waiting";
       const winner = row.winner ? `${row.winner.flag || ""} ${row.winner.abbr || row.winner.id}`.trim() : "pick";
-      line.textContent = `${row.label}: ${teams} → ${winner}`;
+      line.textContent = row.matchDisplay?.completed && row.matchDisplay.resultLabel
+        ? `${row.label}: ${row.matchDisplay.resultLabel}`
+        : `${row.label}: ${teams} → ${winner}`;
       semifinalSummary.append(line);
     }
     panel.append(semifinalSummary);
