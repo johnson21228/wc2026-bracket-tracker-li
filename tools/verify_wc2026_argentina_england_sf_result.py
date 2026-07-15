@@ -7,12 +7,16 @@ RESULTS_PATH = Path("site/data/official_knockout_results.json")
 MODEL_PATH = Path("site/js/mvc/model.js")
 VIEW_PATH = Path("site/js/mvc/view.js")
 BOARD_CSS_PATH = Path("site/css/board.css")
+APP_PATH = Path("site/js/app.js")
+INDEX_PATH = Path("site/index.html")
 RESULT_ID = "sf-eng-arg-2026-07-15"
 
 data = json.loads(RESULTS_PATH.read_text(encoding="utf-8"))
 model_source = MODEL_PATH.read_text(encoding="utf-8")
 view_source = VIEW_PATH.read_text(encoding="utf-8")
 board_css_source = BOARD_CSS_PATH.read_text(encoding="utf-8")
+app_source = APP_PATH.read_text(encoding="utf-8")
+index_source = INDEX_PATH.read_text(encoding="utf-8")
 matches = data.get("matches")
 
 assert isinstance(matches, list), "matches must be a list"
@@ -22,6 +26,9 @@ assert "row.matchDisplay?.completed && row.matchDisplay.resultLabel" in view_sou
 assert "pick.matchDisplay?.completed && pick.matchDisplay.resultLabel" in view_source
 assert "value.textContent = pick.matchDisplay.resultLabel" in view_source
 assert ".final-four-pick-row.has-official-result .final-four-pick-value" in board_css_source
+assert "./mvc/model.js?v=semifinal-results-20260715" in app_source
+assert "./mvc/view.js?v=semifinal-results-20260715" in app_source
+assert "js/app.js?v=semifinal-results-20260715" in index_source
 
 matching = [
     match
