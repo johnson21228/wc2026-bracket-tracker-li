@@ -15,6 +15,26 @@ const ADMIN_OFFICIAL_USER_ID = "Admin_/official";
 const ADMIN_OFFICIAL_SUPABASE_USER_ID = "1e02144a-082e-481a-98b3-2c062250407b";
 const ADMIN_OFFICIAL_AUTHORITY_SOURCE = "Supabase:Admin_/official";
 const TABLE_NAME = "user_brackets";
+const SITE_PROPERTIES_URL = "data/current/site_properties.json";
+
+let sitePropertiesPromise = null;
+
+async function loadSiteProperties() {
+  if (sitePropertiesPromise) return sitePropertiesPromise;
+
+  sitePropertiesPromise = fetch(new URL(SITE_PROPERTIES_URL, document.baseURI).href, {
+    cache: "no-store",
+  })
+    .then((response) => response.ok ? response.json() : {})
+    .catch(() => ({}));
+
+  return sitePropertiesPromise;
+}
+
+async function playerSupabasePickWritesLocked() {
+  const properties = await loadSiteProperties();
+  return Boolean(properties?.LockDown);
+}
 
 const REQUIRED_BRACKET_DOCUMENT_KEYS = Object.freeze([
   "schemaVersion",
@@ -441,6 +461,16 @@ class SupabaseBracketStore extends BracketStorageAdapter {
       },
       userId: user.id,
     });
+
+    if (await playerSupabasePickWritesLocked()) {
+      console.warn("[WC2026 SupabaseBracketStore] skipped player bracket pick save because LockDown is true.", {
+        userId: user.id,
+        tournamentId: canonicalBracketDocument.tournamentId,
+        gameId: canonicalGameId(),
+        pickCount: Object.keys(canonicalBracketDocument.picksBySlot || {}).length,
+      });
+      return canonicalBracketDocument;
+    }
 
     const supabase = this.ensureClient();
     const { data, error } = await supabase

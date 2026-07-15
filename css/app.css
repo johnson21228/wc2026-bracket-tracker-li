@@ -2685,3 +2685,430 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
   pointer-events: none;
 }
 
+/* Pool/Standings button must stay behind transient panels and menus.
+   The button remains clickable when no panel/menu is open, but never wins
+   the stacking contest over pick menus, group panels, sign-in/profile UI,
+   or Workbench/Easter Egg panels. */
+.top-right-player-controls,
+.player-standings-control,
+.player-standings-button,
+#player-standings-button,
+[data-player-standings-button],
+.player-standings-control .standings-icon-button,
+.player-standings-control .standings-icon-button.is-join-required,
+.player-standings-control .standings-icon-button:disabled {
+  z-index: 120 !important;
+}
+
+.pick-menu,
+.pick-menu-layer,
+.r32-pick-menu,
+.group-panel,
+.group-standings-panel,
+.board-floating-surface,
+.floating-surface,
+.sign-in-panel,
+.profile-panel,
+.account-panel,
+.workbench-easter-egg-panel,
+.bracketeering-workflow-panel,
+[data-floating-surface],
+[data-pick-menu],
+[data-group-panel],
+[data-workbench-easter-egg-panel],
+[data-bracketeering-workflow-panel] {
+  z-index: 13200 !important;
+}
+
+
+/* Final override: Pool/Standings never overlays Workbench/Easter Egg. */
+.top-right-player-controls,
+.player-standings-control,
+.player-standings-control *,
+.player-standings-button,
+#player-standings-button,
+[data-player-standings-button],
+[data-player-standings-button] * {
+  z-index: 120 !important;
+}
+
+/* Workbench/Easter Egg must be above all top chrome controls. */
+.workbench-easter-egg-panel,
+.bracketeering-workflow-panel,
+[data-workbench-easter-egg-panel],
+[data-bracketeering-workflow-panel],
+#workbench-easter-egg-panel,
+#bracketeering-workflow-panel {
+  position: fixed !important;
+  z-index: 25000 !important;
+}
+
+.player-standings-player-picks-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.player-standings-player-picks-button:hover,
+.player-standings-player-picks-button:focus-visible {
+  color: #fff;
+}
+
+/* Player picks read-only board viewer must sit above the Pool standings panel. */
+.player-board-viewer-panel,
+[data-player-board-viewer-panel],
+[data-player-board-viewer],
+.player-board-viewer {
+  z-index: 30000 !important;
+}
+
+/* Trickle-on miss: downstream pick cannot become correct because the team was eliminated earlier. */
+.player-board-viewer-pick.is-unreachable-pick {
+  opacity: .48;
+  filter: grayscale(.7);
+  outline: 1px dashed rgba(255, 255, 255, .42);
+}
+
+.player-board-viewer-pick.is-unreachable-pick .player-board-viewer-pick-value {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.player-board-viewer-eliminated-pick {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.64rem;
+  line-height: 1;
+  color: rgba(255, 214, 130, .92);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* Main gameboard trickle-on miss rendering. */
+.pick-slot-button.is-unreachable-pick {
+  opacity: .52;
+  filter: grayscale(.7);
+  outline: 1px dashed rgba(255, 255, 255, .42);
+}
+
+.pick-slot-button.is-unreachable-pick .picked-cell-code {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.picked-cell-eliminated-truth {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.64rem;
+  line-height: 1;
+  color: rgba(255, 214, 130, .92);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* Direct missed pick: strike through the visible team code when official truth says the pick is wrong. */
+.pick-slot-button.has-official-incorrect-pick .picked-cell-code,
+.player-board-viewer-pick.has-official-incorrect-pick .player-board-viewer-pick-value {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+
+/* Player-supplied Pool links. */
+.player-standings-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-supplied-links-button {
+  min-inline-size: 34px;
+  block-size: 34px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(10, 22, 40, 0.72);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.player-supplied-links-button:hover,
+.player-supplied-links-button:focus-visible,
+.player-supplied-links-button.is-open {
+  background: rgba(31, 61, 99, 0.92);
+}
+
+.player-supplied-links-panel {
+  margin: 0 18px 14px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(5, 12, 24, 0.52);
+}
+
+.player-supplied-links-panel[hidden] {
+  display: none !important;
+}
+
+.player-supplied-links-header {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.player-supplied-links-header h3,
+.player-supplied-links-header p {
+  margin: 0;
+}
+
+.player-supplied-links-header h3 {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.player-supplied-links-header p,
+.player-supplied-links-status {
+  font-size: 11px;
+  opacity: 0.72;
+}
+
+.player-supplied-links-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.player-supplied-links-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.player-supplied-links-link:hover,
+.player-supplied-links-link:focus-visible {
+  background: rgba(255, 255, 255, 0.13);
+  text-decoration: none;
+}
+
+.player-supplied-links-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+/* Subtle R16+ knockout result frames.
+   These intentionally override the normal valid-pick green outline/shadow. */
+.pick-slot-button.has-pick.has-valid-pick.is-knockout-result-correct,
+.pick-slot-button.has-pick.has-valid-pick[data-knockout-result-state="correct"],
+.pick-slot-button.has-pick.has-official-correct-pick[data-knockout-result-state="correct"] {
+  outline: 2px solid rgba(96, 190, 132, 0.88) !important;
+  outline-offset: 2px !important;
+  box-shadow:
+    0 0 0 1px rgba(96, 190, 132, 0.42),
+    0 0 10px rgba(96, 190, 132, 0.32) !important;
+}
+
+.pick-slot-button.has-pick.has-valid-pick.is-knockout-result-incorrect,
+.pick-slot-button.has-pick.has-valid-pick[data-knockout-result-state="incorrect"],
+.pick-slot-button.has-pick.has-official-incorrect-pick[data-knockout-result-state="incorrect"] {
+  outline: 1px solid rgba(255, 92, 92, 0.86) !important;
+  outline-offset: 2px !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 92, 92, 0.42),
+    0 0 8px rgba(255, 92, 92, 0.28) !important;
+}
+
+.pick-menu-match-details {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.75rem 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.75rem;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.pick-menu-match-date,
+.pick-menu-match-venue {
+  font-size: 0.82rem;
+  opacity: 0.82;
+}
+
+.pick-menu-match-fixture,
+.pick-menu-match-winner {
+  font-weight: 700;
+}
+
+.pick-menu-highlight-link {
+  width: fit-content;
+  font-weight: 700;
+}
+
+
+
+.player-supplied-links-link > :not(.player-supplied-links-title) {
+  display: none;
+}
+
+/* Pool session chat inside the Pool panel. */
+.pool-chat-button {
+  min-inline-size: 34px;
+  block-size: 34px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(38, 23, 52, 0.72);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pool-chat-button:hover,
+.pool-chat-button:focus-visible,
+.pool-chat-button.is-open {
+  background: rgba(76, 45, 105, 0.94);
+}
+
+.pool-chat-panel {
+  margin: 0 18px 14px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(18, 10, 28, 0.56);
+}
+
+.pool-chat-panel[hidden] {
+  display: none !important;
+}
+
+.pool-chat-header {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.pool-chat-header h3,
+.pool-chat-header p {
+  margin: 0;
+}
+
+.pool-chat-header h3 {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pool-chat-header p,
+.pool-chat-status,
+.pool-chat-empty {
+  font-size: 11px;
+  opacity: 0.72;
+}
+
+.pool-chat-status {
+  color: #d7f7e4;
+}
+
+.pool-chat-messages {
+  display: grid;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 4px 2px 8px;
+}
+
+.pool-chat-message {
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pool-chat-message header {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+  color: #fff8f1;
+  font-size: 12px;
+}
+
+.pool-chat-message time {
+  opacity: 0.62;
+  white-space: nowrap;
+}
+
+.pool-chat-message p {
+  margin: 0;
+  color: #f0e5dc;
+  font-size: 13px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.pool-chat-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.pool-chat-form input {
+  min-width: 0;
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.26);
+  color: inherit;
+  padding: 9px 11px;
+}
+
+.pool-chat-form input::placeholder {
+  color: rgba(248, 242, 236, 0.58);
+}
+
+.pool-chat-form button {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: inherit;
+  padding: 9px 12px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.pool-chat-form button:hover,
+.pool-chat-form button:focus-visible {
+  background: rgba(255, 255, 255, 0.2);
+}

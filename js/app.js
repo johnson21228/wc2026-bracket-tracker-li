@@ -6,7 +6,7 @@ import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js?v
 import { createSupabaseIdentitySurface } from "./identity/SupabaseIdentitySurface.js?v=remove-old-saved-board-choice-1782492355";
 import { createAccountSaveActionSurface } from "./identity/AccountSaveActionSurface.js?v=remove-old-saved-board-choice-1782492355";
 import { setupBracketeeringWorkflowPanel } from "./workflow/BracketeeringWorkflowPanel.js?v=remove-old-saved-board-choice-1782492355";
-import { createPlayerStandingsSurface } from "./standings/PlayerStandingsSurface.js?v=remove-old-saved-board-choice-1782492355";
+import { createPlayerStandingsSurface } from "./standings/PlayerStandingsSurface.js?v=pool-close-fix-20260710";
 import { createSupabasePlayerStandingsStore } from "./standings/SupabasePlayerStandingsStore.js?v=remove-old-saved-board-choice-1782492355";
 import { createSupabaseBracketStore } from "./services/SupabaseBracketStore.js?v=remove-old-saved-board-choice-1782492355";
 
@@ -49,8 +49,8 @@ const ACTIVE_GAME_BACKGROUND_IMAGES = Object.freeze({
   // Bracketeering is now a knockout-only single-game runtime. Keep the
   // legacy presentation aliases on the same accepted knockout pub calendar
   // so no boot path falls back to the old group-stage background.
-  "game-1": "assets/board/knockout_pub_background.jpeg",
-  "game-2": "assets/board/knockout_pub_background.jpeg",
+  "game-1": "assets/board/pub_background_game1.jpeg",
+  "game-2": "assets/board/pub_background_game1.jpeg",
 });
 
 function selectedDevGameValue(root) {

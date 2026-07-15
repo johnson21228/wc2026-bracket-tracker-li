@@ -99,16 +99,12 @@ function normalizePicks(raw) {
 }
 
 function readLocalPicks(storageKey = GAME1_R32_PICK_STORAGE_KEY) {
-  try {
-    const raw = window.localStorage.getItem(storageKey);
-    return normalizePicks(raw ? JSON.parse(raw) : {});
-  } catch {
-    return {};
-  }
+  // Join-required runtime: signed-out players must not see stale cached projection picks.
+  return {};
 }
 
 function writeLocalPicks(picks, storageKey = GAME1_R32_PICK_STORAGE_KEY) {
-  window.localStorage.setItem(storageKey, JSON.stringify(normalizePicks(picks), null, 2));
+  // Join-required runtime: do not persist player picks to localStorage fallback.
 }
 
 function lifecycleStateFrom(lifecycle) {
@@ -302,6 +298,7 @@ class Game1R32PickController {
   }
 
   setPick({ fifaSlotId, teamId }) {
+    window.BracketeeringPickLockdownPolicy?.assertPickChangeAllowed?.({ slotId: fifaSlotId, teamId });
     const validation = this.validatePick({ fifaSlotId, teamId });
     if (!validation.ok) return validation;
 
@@ -324,6 +321,7 @@ class Game1R32PickController {
   }
 
   clearPick({ fifaSlotId }) {
+    window.BracketeeringPickLockdownPolicy?.assertPickChangeAllowed?.({ slotId: fifaSlotId });
     if (areGroupStagePicksLocked()) return { ok: false, reason: groupStagePicksLockedMessage() };
     const picks = this.readPicks();
     const previous = picks[fifaSlotId] || null;

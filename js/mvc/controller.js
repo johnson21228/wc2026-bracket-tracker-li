@@ -1,5 +1,6 @@
 export function createBracketController({ model, view }) {
   let activeSlotId = null;
+  let playerPicksLoaded = false;
 
   function currentState() {
     return {
@@ -72,6 +73,12 @@ export function createBracketController({ model, view }) {
     }
     if (!slotAllowedForActiveGame(slot)) {
       reportBlockedPick(slot);
+      return;
+    }
+    if (!playerPicksLoaded && !slotIsR32(slot)) {
+      activeSlotId = null;
+      view.closeMenu();
+      view.report("Picks are not loaded because you are not signed in.");
       return;
     }
     if (!slot.pickable) {
@@ -184,10 +191,16 @@ export function createBracketController({ model, view }) {
   function start() {
     view.renderBoardShell(model.nativeSize);
     view.setHandlers({ onSlotClick, onFinalFourSlotClick: onSlotClick, onTeamPick, onClearPick, onClearAll, onExportPicks, onImportPicks, onCloseMenu, onGroupPanelOpen, onActiveGameChange });
-    window.addEventListener("wc2026:account-picks-loaded", () => {
+    window.addEventListener("wc2026:account-picks-loaded", (event) => {
       activeSlotId = null;
       view.closeMenu();
       redraw();
+      if (event.detail?.reason === "signed-out-picks-cleared") {
+        playerPicksLoaded = false;
+        view.report("Picks are not loaded because you are not signed in.");
+        return;
+      }
+      playerPicksLoaded = true;
       view.report("Loaded your joined picks.");
     });
     redraw();

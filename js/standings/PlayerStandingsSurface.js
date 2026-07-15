@@ -1,4 +1,5 @@
 import { areGroupStagePicksLocked, GROUP_STAGE_PICKS_LOCK_AT_MS, GROUP_STAGE_PICKS_LOCK_TIMER_MAX_MS, playerResultsHiddenUntilLockMessage } from "../config/gameLocks.js";
+import { getSharedSupabaseClient } from "../services/SupabaseClient.js";
 
 const STANDINGS_PANEL_OPEN_EVENT = "wc2026:standings-panel-opened";
 const OFFICIAL_RESULTS_PLAYER_NAMES = new Set(["Admin_", "Official Results"]);
@@ -17,6 +18,13 @@ function isOfficialStandingsRow(row) {
 const BOARD_VIEWER_GEOMETRY_URL = "data/geometry/gameboard_manifest.json";
 const BOARD_VIEWER_TEAMS_URL = "data/model/teams.json";
 const BOARD_VIEWER_LINEWORK_URL = "assets/playfield/uniform_pick_card_gameboard.svg";
+const PLAYER_SUPPLIED_LINKS_URL = "data/current/PlayerSuppliedLinks.json";
+const POOL_CHAT_SESSION_STORAGE_KEY = "wc2026.poolChat.sessionMessages.v1";
+const POOL_CHAT_SESSION_ID_KEY = "wc2026.poolChat.sessionId.v1";
+const POOL_CHAT_CHANNEL_NAME = "pool-chat:bracketeering-pub";
+const POOL_CHAT_BROADCAST_EVENT = "pool-chat-message";
+const POOL_CHAT_MAX_MESSAGE_LENGTH = 280;
+const POOL_CHAT_MAX_SESSION_MESSAGES = 100;
 const BOARD_VIEWER_DEFAULT_SCALE = 0.75;
 const BOARD_VIEWER_MIN_SCALE = 0.5;
 const BOARD_VIEWER_MAX_SCALE = 1.25;
@@ -47,6 +55,90 @@ function safePublicPlayerName(row) {
   return name || "Player";
 }
 
+function normalizePlayerSuppliedLink(rawLink) {
+  if (!rawLink || typeof rawLink !== "object") return null;
+  const url = String(rawLink.url || rawLink.href || rawLink.link || "").trim();
+  if (!url) return null;
+  const title = String(rawLink.title || rawLink.label || rawLink.name || url).trim() || url;
+  const dateAdded = String(rawLink.dateAdded || rawLink.addedAt || rawLink.createdAt || rawLink.date || "").trim();
+  const time = Date.parse(dateAdded);
+  return {
+    title,
+    url,
+    dateAdded,
+    sortTime: Number.isFinite(time) ? time : 0,
+  };
+}
+
+function normalizePlayerSuppliedLinks(payload) {
+  const rawLinks = Array.isArray(payload)
+    ? payload
+    : Array.isArray(payload?.PlayerSuppliedLinks)
+      ? payload.PlayerSuppliedLinks
+      : Array.isArray(payload?.links)
+        ? payload.links
+        : [];
+
+  return rawLinks
+    .map(normalizePlayerSuppliedLink)
+    .filter(Boolean)
+    .sort((a, b) => (b.sortTime - a.sortTime) || a.title.localeCompare(b.title));
+}
+
+
+function getPoolChatSessionId() {
+  try {
+    const existing = window.sessionStorage?.getItem(POOL_CHAT_SESSION_ID_KEY);
+    if (existing) return existing;
+    const generated = `pool-chat-session-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    window.sessionStorage?.setItem(POOL_CHAT_SESSION_ID_KEY, generated);
+    return generated;
+  } catch (_error) {
+    return `pool-chat-session-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  }
+}
+
+function safePoolChatMessage(rawMessage) {
+  if (!rawMessage || typeof rawMessage !== "object") return null;
+  const body = String(rawMessage.body || "").trim().slice(0, POOL_CHAT_MAX_MESSAGE_LENGTH);
+  if (!body) return null;
+  const createdAt = String(rawMessage.createdAt || new Date().toISOString());
+  const time = Date.parse(createdAt);
+  return {
+    id: String(rawMessage.id || `chat-${time || Date.now()}-${Math.random().toString(36).slice(2)}`),
+    userId: String(rawMessage.userId || "local-session"),
+    displayName: String(rawMessage.displayName || "Player").trim() || "Player",
+    body,
+    sourceSessionId: String(rawMessage.sourceSessionId || ""),
+    createdAt: Number.isFinite(time) ? new Date(time).toISOString() : new Date().toISOString(),
+  };
+}
+
+function readPoolChatMessages() {
+  try {
+    const raw = window.sessionStorage?.getItem(POOL_CHAT_SESSION_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.map(safePoolChatMessage).filter(Boolean) : [];
+  } catch (error) {
+    console.warn("[PlayerStandingsSurface] pool chat session storage unavailable", error);
+    return [];
+  }
+}
+
+function writePoolChatMessages(messages) {
+  try {
+    window.sessionStorage?.setItem(POOL_CHAT_SESSION_STORAGE_KEY, JSON.stringify(messages.slice(-POOL_CHAT_MAX_SESSION_MESSAGES)));
+  } catch (error) {
+    console.warn("[PlayerStandingsSurface] pool chat session storage write failed", error);
+  }
+}
+
+function formatPoolChatTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "now";
+  return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+}
+
 function normalizeStandingsRow(row) {
   const groupPoints = Number.isFinite(Number(row?.score))
     ? numericScore(row.score)
@@ -70,6 +162,7 @@ function normalizeStandingsRow(row) {
     : {};
 
   return {
+    userId: row?.userId || row?.user_id || row?.ownerUserId || row?.owner_user_id || row?.playerUserId || row?.player_user_id || "",
     publicPlayerName: safePublicPlayerName(row),
     picksBySlot,
     picksCount,
@@ -184,8 +277,20 @@ function ensureStandingsPanel(root) {
           <p class="player-standings-kicker">Pool</p>
           <h2 id="player-standings-title">Pool Standings</h2>
         </div>
-        <button type="button" class="player-standings-close" data-player-standings-close aria-label="Close Pool Standings">×</button>
+        <div class="player-standings-header-actions">
+          <button type="button" class="player-supplied-links-button" data-player-supplied-links-open aria-expanded="false" aria-controls="player-supplied-links-panel" aria-label="Open World Cup links"><span aria-hidden="true">🔗</span><span>World Cup Links</span></button>
+          <button type="button" class="player-standings-close" data-player-standings-close aria-label="Close Pool Standings">×</button>
+        </div>
       </header>
+      <section id="player-supplied-links-panel" class="player-supplied-links-panel" data-player-supplied-links-panel hidden>
+        <div class="player-supplied-links-header">
+          <h3>Player Links</h3>
+          <p>Send Steve any links you think the group might appreciate as they follow the World Cup.</p>
+        </div>
+        <div class="player-supplied-links-body" data-player-supplied-links-body>
+          <p class="player-supplied-links-status">Loading links…</p>
+        </div>
+      </section>
       <div class="player-standings-body" data-player-standings-body>
         <p class="player-standings-status">Loading standings…</p>
       </div>
@@ -240,27 +345,35 @@ function ensurePlayerBoardViewerPanel(root) {
   return panel;
 }
 
-function renderStandingsRows(panel, rows) {
+function renderStandingsRows(panel, rows, { authState = null, profileState = null } = {}) {
   const body = panel.querySelector("[data-player-standings-body]");
   const sortedRows = sortPlayerStandingsRows(rows);
+  const currentUserId = authState?.user?.id || authState?.userId || profileState?.userId || profileState?.profile?.user_id || profileState?.id || null;
 
   if (!sortedRows.length) {
     body.innerHTML = `<p class="player-standings-status">No players yet</p>`;
     return [];
   }
 
-  const rowMarkup = sortedRows.map((row, index) => `
+  const rowMarkup = sortedRows.map((row, index) => {
+    const canViewPicks = true;
+    const nameMarkup = canViewPicks
+      ? `<button type="button" class="player-standings-player-name player-standings-player-picks-button" data-player-standings-row="${index}" title="View ${escapeHtml(row.publicPlayerName)}'s picks">${escapeHtml(row.publicPlayerName)}</button>`
+      : `<span class="player-standings-player-name">${escapeHtml(row.publicPlayerName)}</span>`;
+
+    return `
     <tr>
       <td class="player-standings-rank">${index + 1}</td>
       <td class="player-standings-player">
         <div class="player-standings-player-summary">
-          <span class="player-standings-player-name">${escapeHtml(row.publicPlayerName)}</span>
+          ${nameMarkup}
         </div>
       </td>
       <td class="player-standings-score">${row.score ?? row.groupPoints ?? 0}</td>
       <td class="player-standings-max-possible">${row.maxPossible ?? row.knockoutPoints ?? 0}</td>
     </tr>
-  `).join("");
+  `;
+  }).join("");
 
   body.innerHTML = `
     <table class="player-standings-table" aria-label="Player standings">
@@ -290,6 +403,72 @@ function pickTeamIdFromRecord(record) {
   if (!record || typeof record !== "object") return "";
   return record?.pick?.teamId || record?.teamId || record?.team_id || "";
 }
+
+function paddedSlotNumber(value) {
+  return String(value).padStart(2, "0");
+}
+
+function feederSlotIdsForSlot(slotId) {
+  const id = String(slotId || "").toUpperCase();
+
+  let match = id.match(/^([LR])-R16-(\d{2})$/);
+  if (match) {
+    const side = match[1];
+    const index = Number(match[2]);
+    return [
+      `${side}-R32-${paddedSlotNumber(index * 2 - 1)}`,
+      `${side}-R32-${paddedSlotNumber(index * 2)}`,
+    ];
+  }
+
+  match = id.match(/^([LR])-QF-(\d{2})$/);
+  if (match) {
+    const side = match[1];
+    const index = Number(match[2]);
+    return [
+      `${side}-R16-${paddedSlotNumber(index * 2 - 1)}`,
+      `${side}-R16-${paddedSlotNumber(index * 2)}`,
+    ];
+  }
+
+  match = id.match(/^([LR])-SF-(\d{2})$/);
+  if (match) {
+    const side = match[1];
+    const index = Number(match[2]);
+    return [
+      `${side}-QF-${paddedSlotNumber(index * 2 - 1)}`,
+      `${side}-QF-${paddedSlotNumber(index * 2)}`,
+    ];
+  }
+
+  if (id === "FINAL-LEFT") return ["L-SF-01", "L-SF-02"];
+  if (id === "FINAL-RIGHT") return ["R-SF-01", "R-SF-02"];
+  if (id === "CHAMPION") return ["FINAL-LEFT", "FINAL-RIGHT"];
+
+  return [];
+}
+
+function canTeamStillReachSlot(teamId, slotId, officialTruthPicksBySlot, visiting = new Set()) {
+  const candidateTeamId = String(teamId || "").trim();
+  const currentSlotId = String(slotId || "").toUpperCase();
+
+  if (!candidateTeamId || !currentSlotId) return false;
+  if (visiting.has(currentSlotId)) return false;
+
+  const officialTeamId = pickTeamIdFromRecord(officialTruthPicksBySlot?.[currentSlotId]);
+  if (officialTeamId) return officialTeamId === candidateTeamId;
+
+  const feederSlotIds = feederSlotIdsForSlot(currentSlotId);
+  if (!feederSlotIds.length) return true;
+
+  const nextVisiting = new Set(visiting);
+  nextVisiting.add(currentSlotId);
+
+  return feederSlotIds.some((feederSlotId) => (
+    canTeamStillReachSlot(candidateTeamId, feederSlotId, officialTruthPicksBySlot, nextVisiting)
+  ));
+}
+
 
 function normalizeBoardViewerTeam(teamId, teamById) {
   const id = String(teamId || "").trim();
@@ -416,11 +595,18 @@ function renderPlayerBoard(panel, { row, assets }) {
   const nativeHeight = Number(nativeSize.height || nativeSize.h || 1024);
   const slotMarkup = slots.map((slot) => {
     const bounds = slot.boundsPx;
-    const team = normalizeBoardViewerTeam(pickTeamIdFromRecord(picksBySlot[slot.slotId]), teamById);
-    const officialTeam = normalizeBoardViewerTeam(pickTeamIdFromRecord(officialTruthPicksBySlot[slot.slotId]), teamById);
+    const playerTeamId = pickTeamIdFromRecord(picksBySlot[slot.slotId]);
+    const officialTeamId = pickTeamIdFromRecord(officialTruthPicksBySlot[slot.slotId]);
+    const team = normalizeBoardViewerTeam(playerTeamId || (slot.round === "R32" ? officialTeamId : null), teamById);
+    const officialTeam = normalizeBoardViewerTeam(officialTeamId, teamById);
     const officialState = officialTeam && team
       ? (officialTeam.id === team.id ? "correct" : "incorrect")
       : "";
+    const isUnreachablePick = Boolean(
+      team
+      && !officialTeam
+      && !canTeamStillReachSlot(team.id, slot.slotId, officialTruthPicksBySlot)
+    );
     const slotLabel = playerFacingSlotLabel(slot);
     const valueLabel = team ? `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id}`.trim() : "Unpicked";
     const fullLabel = team ? `${team.flag ? `${team.flag} ` : ""}${team.name || team.abbr || team.id}`.trim() : "Unpicked";
@@ -428,13 +614,22 @@ function renderPlayerBoard(panel, { row, assets }) {
     const officialMarkup = officialTeam
       ? `<span class="player-board-viewer-official-truth">Official: ${escapeHtml(officialLabel)}</span>`
       : "";
-    const stateClass = officialState ? ` has-official-${officialState}-pick` : "";
-    const ariaOfficial = officialTeam ? ` Official result from ${officialTruthSource || "Admin_/official"}: ${officialLabel}.` : "";
+    const eliminatedMarkup = isUnreachablePick
+      ? `<span class="player-board-viewer-eliminated-pick">Eliminated</span>`
+      : "";
+    const stateClass = [
+      officialState ? `has-official-${officialState}-pick` : "",
+      isUnreachablePick ? "is-unreachable-pick" : "",
+    ].filter(Boolean).map((className) => ` ${className}`).join("");
+    const ariaOfficial = officialTeam
+      ? ` Official result from ${officialTruthSource || "Admin_/official"}: ${officialLabel}.`
+      : (isUnreachablePick ? " This pick is eliminated because the team can no longer reach this slot." : "");
     return `
       <button type="button" class="player-board-viewer-pick ${team ? "has-pick" : "is-unpicked"}${stateClass}" data-player-board-viewer-slot="${escapeHtml(slot.slotId)}" data-official-result-state="${escapeHtml(officialState)}" disabled aria-label="${escapeHtml(`${slotLabel}: ${fullLabel}. Read-only.${ariaOfficial}`)}" style="left:${Number(bounds.x)}px;top:${Number(bounds.y)}px;width:${Number(bounds.width)}px;height:${Number(bounds.height)}px;">
         <span class="player-board-viewer-pick-label">${escapeHtml(slotLabel)}</span>
         <span class="player-board-viewer-pick-value">${escapeHtml(valueLabel)}</span>
         ${officialMarkup}
+        ${eliminatedMarkup}
       </button>
     `;
   }).join("");
@@ -463,6 +658,9 @@ export function createPlayerStandingsSurface({
   let lastPlayerBoardViewerButton = null;
   let boardViewerAssetsPromise = null;
   let groupStagePicksLockTimer = null;
+  let poolChatChannel = null;
+  let poolChatBroadcastStatus = "idle";
+  const poolChatSessionId = getPoolChatSessionId();
 
   const button = ensureStandingsButton(root);
   const panel = ensureStandingsPanel(root);
@@ -492,6 +690,158 @@ export function createPlayerStandingsSurface({
   function renderStatus(message) {
     const body = panel.querySelector("[data-player-standings-body]");
     body.innerHTML = `<p class="player-standings-status">${escapeHtml(message)}</p>`;
+  }
+
+  function renderPlayerSuppliedLinksStatus(message) {
+    const body = panel.querySelector("[data-player-supplied-links-body]");
+    if (!body) return;
+    body.innerHTML = `<p class="player-supplied-links-status">${escapeHtml(message)}</p>`;
+  }
+
+  function renderPlayerSuppliedLinks(links) {
+    const body = panel.querySelector("[data-player-supplied-links-body]");
+    if (!body) return;
+    if (!links.length) {
+      renderPlayerSuppliedLinksStatus("No player links yet.");
+      return;
+    }
+
+    body.innerHTML = `
+      <ul class="player-supplied-links-list" aria-label="Player supplied links">
+        ${links.map((link) => `
+          <li class="player-supplied-links-item">
+            <a class="player-supplied-links-link" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(link.title)}">
+              <span class="player-supplied-links-title">${escapeHtml(link.title)}</span>
+            </a>
+          </li>
+        `).join("")}
+      </ul>
+    `;
+  }
+
+  async function loadPlayerSuppliedLinks() {
+    renderPlayerSuppliedLinksStatus("Loading links…");
+    try {
+      const response = await fetch(PLAYER_SUPPLIED_LINKS_URL, { cache: "no-cache" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      renderPlayerSuppliedLinks(normalizePlayerSuppliedLinks(payload));
+    } catch (error) {
+      console.warn("[PlayerStandingsSurface] player supplied links unavailable", error);
+      renderPlayerSuppliedLinksStatus("Player links unavailable.");
+    }
+  }
+
+  function setPlayerSuppliedLinksPanelOpen(open) {
+    const linksPanel = panel.querySelector("[data-player-supplied-links-panel]");
+    const linksButton = panel.querySelector("[data-player-supplied-links-open]");
+    if (!linksPanel || !linksButton) return;
+    linksPanel.hidden = !open;
+    linksButton.setAttribute("aria-expanded", open ? "true" : "false");
+    linksButton.classList.toggle("is-open", open);
+    if (open) loadPlayerSuppliedLinks();
+  }
+
+
+  function currentPoolChatDisplayName() {
+    return publicNameFromAuthState(currentAuthState, currentProfileState);
+  }
+
+  function renderPoolChatStatus(message) {
+    const status = panel.querySelector("[data-pool-chat-status]");
+    if (!status) return;
+    status.textContent = message;
+  }
+
+  function renderPoolChatMessages() {
+    const body = panel.querySelector("[data-pool-chat-messages]");
+    if (!body) return;
+    const messages = readPoolChatMessages();
+    if (!messages.length) {
+      body.innerHTML = `<p class="pool-chat-empty">No chat messages yet. Messages appear only while players have the site open.</p>`;
+      return;
+    }
+
+    body.innerHTML = messages.map((message) => `
+      <article class="pool-chat-message">
+        <header><strong>${escapeHtml(message.displayName)}</strong><time datetime="${escapeHtml(message.createdAt)}">${escapeHtml(formatPoolChatTime(message.createdAt))}</time></header>
+        <p>${escapeHtml(message.body)}</p>
+      </article>
+    `).join("");
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function appendPoolChatMessage(rawMessage, { render = true } = {}) {
+    const message = safePoolChatMessage(rawMessage);
+    if (!message) return null;
+    const messages = readPoolChatMessages();
+    if (messages.some((existing) => existing.id === message.id)) return message;
+    messages.push(message);
+    writePoolChatMessages(messages);
+    if (render) renderPoolChatMessages();
+    return message;
+  }
+
+  function ensurePoolChatBroadcastChannel() {
+    if (poolChatChannel) return poolChatChannel;
+    const supabase = getSharedSupabaseClient?.();
+    if (!supabase) {
+      renderPoolChatStatus("Live broadcast unavailable. Messages stay in this browser session.");
+      return null;
+    }
+
+    poolChatChannel = supabase.channel(POOL_CHAT_CHANNEL_NAME, {
+      config: { broadcast: { self: false } },
+    });
+
+    poolChatChannel.on("broadcast", { event: POOL_CHAT_BROADCAST_EVENT }, ({ payload }) => {
+      const message = safePoolChatMessage(payload);
+      if (!message) return;
+      if (message.sourceSessionId && message.sourceSessionId === poolChatSessionId) return;
+      appendPoolChatMessage(message);
+    });
+
+    poolChatChannel.subscribe((status) => {
+      poolChatBroadcastStatus = status;
+      if (status === "SUBSCRIBED") {
+        renderPoolChatStatus("Live broadcast connected. Messages are not saved as chat history.");
+      } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
+        renderPoolChatStatus("Live broadcast disconnected. New messages may stay local until reconnect.");
+      } else {
+        renderPoolChatStatus("Connecting live broadcast…");
+      }
+    });
+
+    renderPoolChatStatus("Connecting live broadcast…");
+    return poolChatChannel;
+  }
+
+  async function broadcastPoolChatMessage(message) {
+    const channel = ensurePoolChatBroadcastChannel();
+    if (!channel) return;
+    try {
+      await channel.send({
+        type: "broadcast",
+        event: POOL_CHAT_BROADCAST_EVENT,
+        payload: message,
+      });
+    } catch (error) {
+      console.warn("[PlayerStandingsSurface] pool chat broadcast failed", error);
+      renderPoolChatStatus("Message shown locally. Live broadcast failed for this send.");
+    }
+  }
+
+  async function addPoolChatMessage(body) {
+    const message = appendPoolChatMessage({
+      id: `chat-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      userId: currentAuthState?.user?.id || "local-session",
+      displayName: currentPoolChatDisplayName(),
+      body,
+      sourceSessionId: poolChatSessionId,
+      createdAt: new Date().toISOString(),
+    });
+    if (!message) return;
+    await broadcastPoolChatMessage(message);
   }
 
   async function refreshStorageReady() {
@@ -579,7 +929,7 @@ export function createPlayerStandingsSurface({
         return;
       }
 
-      currentStandingsRows = renderStandingsRows(panel, rows);
+      currentStandingsRows = renderStandingsRows(panel, rows, { authState: currentAuthState, profileState: currentProfileState });
     } catch (error) {
       console.error("[PlayerStandingsSurface] standings unavailable", error);
       renderStatus("Standings unavailable");
@@ -632,6 +982,7 @@ export function createPlayerStandingsSurface({
 
   function closePanel() {
     closePlayerBoardViewer({ restoreFocus: false });
+    setPlayerSuppliedLinksPanelOpen(false);
     panel.hidden = true;
     lastOpenButton?.focus();
   }
@@ -643,6 +994,11 @@ export function createPlayerStandingsSurface({
     installBoardViewerDragPan(boardViewerPanel.querySelector("[data-player-board-viewer-scroll]"));
     button.addEventListener("click", openPanel);
     closeButton?.addEventListener("click", closePanel);
+
+    panel.querySelector("[data-player-supplied-links-open]")?.addEventListener("click", () => {
+      const linksPanel = panel.querySelector("[data-player-supplied-links-panel]");
+      setPlayerSuppliedLinksPanelOpen(Boolean(linksPanel?.hidden));
+    });
     boardViewerCloseButton?.addEventListener("click", () => closePlayerBoardViewer());
 
     boardViewerPanel.querySelector("[data-player-board-viewer-zoom]")?.addEventListener("change", (event) => {
@@ -656,6 +1012,13 @@ export function createPlayerStandingsSurface({
     });
 
     panel.addEventListener("click", (event) => {
+      const picksButton = event.target instanceof HTMLElement
+        ? event.target.closest("[data-player-standings-row]")
+        : null;
+      if (picksButton) {
+        openPlayerBoardViewer(picksButton);
+        return;
+      }
       if (event.target === panel) closePanel();
     });
 
@@ -675,6 +1038,11 @@ export function createPlayerStandingsSurface({
     authService?.subscribe?.((state) => {
       currentAuthState = state;
       currentProfileState = null;
+      if (!isSignedIn(currentAuthState) && poolChatChannel) {
+        getSharedSupabaseClient?.()?.removeChannel?.(poolChatChannel);
+        poolChatChannel = null;
+        poolChatBroadcastStatus = "idle";
+      }
       storageReady = false;
       storageReadyChecked = false;
       syncStandingsButtonState();

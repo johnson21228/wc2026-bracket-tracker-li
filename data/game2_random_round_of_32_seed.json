@@ -223,7 +223,7 @@
         "name": "England",
         "display": "England",
         "abbr": "ENG",
-        "flag": "🏴",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
         "group": "L"
       },
       "source": "random_seed_placeholder",
@@ -297,7 +297,7 @@
       "team": {
         "name": "Algeria",
         "display": "Algeria",
-        "abbr": "ALG",
+        "abbr": "DZA",
         "flag": "🇩🇿",
         "group": "J"
       },

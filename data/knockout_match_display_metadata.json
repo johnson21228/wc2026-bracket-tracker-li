@@ -1,0 +1,616 @@
+{
+  "schema": "wc2026.knockout_match_display_metadata.v1",
+  "description": "Player-facing knockout match display metadata keyed by board winner slot. Official scores remain in site/data/official_knockout_results.json.",
+  "sourceSchedule": "site/data/current/knockout_matches.json",
+  "sourceBridge": "site/data/geometry/game1_fifa_slot_geometry_map.json",
+  "matches": [
+    {
+      "matchId": "73",
+      "matchNumber": 73,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-03",
+      "siteSlotPair": [
+        "L-R32-05",
+        "L-R32-06"
+      ],
+      "fixtureLabel": "2A vs 2B",
+      "homeSlot": "2A",
+      "awaySlot": "2B",
+      "date": "2026-06-28",
+      "kickoffEt": "15:00",
+      "kickoffIso": "2026-06-28T12:00:00-07:00",
+      "venue": "Los Angeles Stadium",
+      "city": "Los Angeles",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=uv-FSqzHXAo&pp=ygVBZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IENhbmFkYSAx4oCTMCBTb3V0aCBBZnJpY2E%3D"
+    },
+    {
+      "matchId": "74",
+      "matchNumber": 74,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-01",
+      "siteSlotPair": [
+        "L-R32-01",
+        "L-R32-02"
+      ],
+      "fixtureLabel": "1E vs 3A/B/C/D/F",
+      "homeSlot": "1E",
+      "awaySlot": "3A/B/C/D/F",
+      "date": "2026-06-29",
+      "kickoffEt": "16:30",
+      "kickoffIso": "2026-06-29T16:30:00-04:00",
+      "venue": "Boston Stadium",
+      "city": "Foxborough",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=Gw6vNwAvkTs&pp=ygU_ZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IFBhcmFndWF5IDHigJMxIEdlcm1hbnks"
+    },
+    {
+      "matchId": "75",
+      "matchNumber": 75,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-04",
+      "siteSlotPair": [
+        "L-R32-07",
+        "L-R32-08"
+      ],
+      "fixtureLabel": "1F vs 2C",
+      "homeSlot": "1F",
+      "awaySlot": "2C",
+      "date": "2026-06-29",
+      "kickoffEt": "21:00",
+      "kickoffIso": "2026-06-29T19:00:00-06:00",
+      "venue": "Monterrey Stadium",
+      "city": "Guadalupe",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=vdnhUnGHwco&pp=ygVBZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IE1vcm9jY28gMeKAkzEgTmV0aGVybGFuZHPSBwkJTgsBhyohjO8%3D"
+    },
+    {
+      "matchId": "76",
+      "matchNumber": 76,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-01",
+      "siteSlotPair": [
+        "R-R32-01",
+        "R-R32-02"
+      ],
+      "fixtureLabel": "1C vs 2F",
+      "homeSlot": "1C",
+      "awaySlot": "2F",
+      "date": "2026-06-29",
+      "kickoffEt": "13:00",
+      "kickoffIso": "2026-06-29T12:00:00-05:00",
+      "venue": "Houston Stadium",
+      "city": "Houston",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=Fd_KYjbmws4&pp=ygU6ZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IEJyYXppbCAy4oCTMSBKYXBhbg%3D%3D"
+    },
+    {
+      "matchId": "77",
+      "matchNumber": 77,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-02",
+      "siteSlotPair": [
+        "L-R32-03",
+        "L-R32-04"
+      ],
+      "fixtureLabel": "1I vs 3C/D/F/G/H",
+      "homeSlot": "1I",
+      "awaySlot": "3C/D/F/G/H",
+      "date": "2026-06-30",
+      "kickoffEt": "17:00",
+      "kickoffIso": "2026-06-30T17:00:00-04:00",
+      "venue": "New York New Jersey Stadium",
+      "city": "East Rutherford",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=A7pgChEIFTg&pp=ygU7ZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IEZyYW5jZSAz4oCTMCBTd2VkZW4%3D"
+    },
+    {
+      "matchId": "78",
+      "matchNumber": 78,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-02",
+      "siteSlotPair": [
+        "R-R32-03",
+        "R-R32-04"
+      ],
+      "fixtureLabel": "2E vs 2I",
+      "homeSlot": "2E",
+      "awaySlot": "2I",
+      "date": "2026-06-30",
+      "kickoffEt": "13:00",
+      "kickoffIso": "2026-06-30T12:00:00-05:00",
+      "venue": "Dallas Stadium",
+      "city": "Arlington",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=rPebJKCPjK0&pp=ygVAZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IE5vcndheSAy4oCTMSBJdm9yeSBDb2FzdA%3D%3D"
+    },
+    {
+      "matchId": "79",
+      "matchNumber": 79,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-03",
+      "siteSlotPair": [
+        "R-R32-05",
+        "R-R32-06"
+      ],
+      "fixtureLabel": "1A vs 3C/E/F/H/I",
+      "homeSlot": "1A",
+      "awaySlot": "3C/E/F/H/I",
+      "date": "2026-06-30",
+      "kickoffEt": "21:00",
+      "kickoffIso": "2026-06-30T19:00:00-06:00",
+      "venue": "Mexico City Stadium",
+      "city": "Mexico City",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=t-miz8tN7Qw&pp=ygU8ZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IE1leGljbyAy4oCTMCBFY3VhZG9y"
+    },
+    {
+      "matchId": "80",
+      "matchNumber": 80,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-04",
+      "siteSlotPair": [
+        "R-R32-07",
+        "R-R32-08"
+      ],
+      "fixtureLabel": "1L vs 3E/H/I/J/K",
+      "homeSlot": "1L",
+      "awaySlot": "3E/H/I/J/K",
+      "date": "2026-07-01",
+      "kickoffEt": "12:00",
+      "kickoffIso": "2026-07-01T12:00:00-04:00",
+      "venue": "Atlanta Stadium",
+      "city": "Atlanta",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=T6MYUQgpCv8&pp=ygU-ZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IEVuZ2xhbmQgMuKAkzEgRFIgQ29uZ28%3D"
+    },
+    {
+      "matchId": "81",
+      "matchNumber": 81,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-07",
+      "siteSlotPair": [
+        "L-R32-13",
+        "L-R32-14"
+      ],
+      "fixtureLabel": "1D vs 3B/E/F/I/J",
+      "homeSlot": "1D",
+      "awaySlot": "3B/E/F/I/J",
+      "date": "2026-07-01",
+      "kickoffEt": "20:00",
+      "kickoffIso": "2026-07-01T17:00:00-07:00",
+      "venue": "San Francisco Bay Stadium",
+      "city": "Santa Clara",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=SGQpzA9qcwk&pp=ygVSZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IFVuaXRlZCBTdGF0ZXMgMuKAkzAgQm9zbmlhIGFuZCBIZXJ6ZWdvdmluYQ%3D%3D"
+    },
+    {
+      "matchId": "82",
+      "matchNumber": 82,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-08",
+      "siteSlotPair": [
+        "L-R32-15",
+        "L-R32-16"
+      ],
+      "fixtureLabel": "1G vs 3A/E/H/I/J",
+      "homeSlot": "1G",
+      "awaySlot": "3A/E/H/I/J",
+      "date": "2026-07-01",
+      "kickoffEt": "16:00",
+      "kickoffIso": "2026-07-01T13:00:00-07:00",
+      "venue": "Seattle Stadium",
+      "city": "Seattle",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=PsPQkfngzV8&pp=ygU9ZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IEJlbGdpdW0gM-KAkzIgU2VuZWdhbA%3D%3D"
+    },
+    {
+      "matchId": "83",
+      "matchNumber": 83,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-05",
+      "siteSlotPair": [
+        "L-R32-09",
+        "L-R32-10"
+      ],
+      "fixtureLabel": "2K vs 2L",
+      "homeSlot": "2K",
+      "awaySlot": "2L",
+      "date": "2026-07-02",
+      "kickoffEt": "19:00",
+      "kickoffIso": "2026-07-02T19:00:00-04:00",
+      "venue": "Toronto Stadium",
+      "city": "Toronto",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=J9yS7PsoEck&pp=ygU-ZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IFBvcnR1Z2FsIDLigJMxIENyb2F0aWE%3D"
+    },
+    {
+      "matchId": "84",
+      "matchNumber": 84,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-06",
+      "siteSlotPair": [
+        "L-R32-11",
+        "L-R32-12"
+      ],
+      "fixtureLabel": "1H vs 2J",
+      "homeSlot": "1H",
+      "awaySlot": "2J",
+      "date": "2026-07-02",
+      "kickoffEt": "15:00",
+      "kickoffIso": "2026-07-02T12:00:00-07:00",
+      "venue": "Los Angeles Stadium",
+      "city": "Los Angeles",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=J9SxUH5VCSU&pp=ygU7ZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IFNwYWluIDPigJMwIEF1c3RyaWE%3D"
+    },
+    {
+      "matchId": "85",
+      "matchNumber": 85,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-07",
+      "siteSlotPair": [
+        "R-R32-13",
+        "R-R32-14"
+      ],
+      "fixtureLabel": "1B vs 3E/F/G/I/J",
+      "homeSlot": "1B",
+      "awaySlot": "3E/F/G/I/J",
+      "date": "2026-07-02",
+      "kickoffEt": "23:00",
+      "kickoffIso": "2026-07-02T20:00:00-07:00",
+      "venue": "BC Place Vancouver",
+      "city": "Vancouver",
+      "extendedHighlightsUrl": "https://www.youtube.com/watch?v=bSZEbYXssBI&t=7s&pp=ygVBZXh0ZW5kZWQgaGlnaGxpZ2h0cyBmaWZhIHdvcmxkIGN1cCAyMDI2IFN3aXR6ZXJsYW5kIDLigJMwIEFsZ2VyaWHSBwkJTgsBhyohjO8%3D"
+    },
+    {
+      "matchId": "86",
+      "matchNumber": 86,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-05",
+      "siteSlotPair": [
+        "R-R32-09",
+        "R-R32-10"
+      ],
+      "fixtureLabel": "1J vs 2H",
+      "homeSlot": "1J",
+      "awaySlot": "2H",
+      "date": "2026-07-03",
+      "kickoffEt": "18:00",
+      "kickoffIso": "2026-07-03T18:00:00-04:00",
+      "venue": "Miami Stadium",
+      "city": "Miami",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "87",
+      "matchNumber": 87,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-08",
+      "siteSlotPair": [
+        "R-R32-15",
+        "R-R32-16"
+      ],
+      "fixtureLabel": "1K vs 3D/E/I/J/L",
+      "homeSlot": "1K",
+      "awaySlot": "3D/E/I/J/L",
+      "date": "2026-07-03",
+      "kickoffEt": "21:30",
+      "kickoffIso": "2026-07-03T20:30:00-05:00",
+      "venue": "Kansas City Stadium",
+      "city": "Kansas City",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "88",
+      "matchNumber": 88,
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-06",
+      "siteSlotPair": [
+        "R-R32-11",
+        "R-R32-12"
+      ],
+      "fixtureLabel": "2D vs 2G",
+      "homeSlot": "2D",
+      "awaySlot": "2G",
+      "date": "2026-07-03",
+      "kickoffEt": "14:00",
+      "kickoffIso": "2026-07-03T13:00:00-05:00",
+      "venue": "Dallas Stadium",
+      "city": "Arlington",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "89",
+      "matchNumber": 89,
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-01",
+      "siteSlotPair": [
+        "L-R16-01",
+        "L-R16-02"
+      ],
+      "fixtureLabel": "W74 vs W77",
+      "homeSlot": "W74",
+      "awaySlot": "W77",
+      "date": "2026-07-04",
+      "kickoffEt": "17:00",
+      "kickoffIso": "2026-07-04T17:00:00-04:00",
+      "venue": "Philadelphia Stadium",
+      "city": "Philadelphia",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "90",
+      "matchNumber": 90,
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-02",
+      "siteSlotPair": [
+        "L-R16-03",
+        "L-R16-04"
+      ],
+      "fixtureLabel": "W73 vs W75",
+      "homeSlot": "W73",
+      "awaySlot": "W75",
+      "date": "2026-07-04",
+      "kickoffEt": "13:00",
+      "kickoffIso": "2026-07-04T12:00:00-05:00",
+      "venue": "Houston Stadium",
+      "city": "Houston",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "91",
+      "matchNumber": 91,
+      "round": "Round of 16",
+      "siteWinnerSlotId": "R-QF-01",
+      "siteSlotPair": [
+        "R-R16-01",
+        "R-R16-02"
+      ],
+      "fixtureLabel": "W76 vs W78",
+      "homeSlot": "W76",
+      "awaySlot": "W78",
+      "date": "2026-07-05",
+      "kickoffEt": "16:00",
+      "kickoffIso": "2026-07-05T16:00:00-04:00",
+      "venue": "New York New Jersey Stadium",
+      "city": "East Rutherford",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "92",
+      "matchNumber": 92,
+      "round": "Round of 16",
+      "siteWinnerSlotId": "R-QF-02",
+      "siteSlotPair": [
+        "R-R16-03",
+        "R-R16-04"
+      ],
+      "fixtureLabel": "W79 vs W80",
+      "homeSlot": "W79",
+      "awaySlot": "W80",
+      "date": "2026-07-05",
+      "kickoffEt": "20:00",
+      "kickoffIso": "2026-07-05T18:00:00-06:00",
+      "venue": "Mexico City Stadium",
+      "city": "Mexico City",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "93",
+      "matchNumber": 93,
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-03",
+      "siteSlotPair": [
+        "L-R16-05",
+        "L-R16-06"
+      ],
+      "fixtureLabel": "W83 vs W84",
+      "homeSlot": "W83",
+      "awaySlot": "W84",
+      "date": "2026-07-06",
+      "kickoffEt": "15:00",
+      "kickoffIso": "2026-07-06T14:00:00-05:00",
+      "venue": "Dallas Stadium",
+      "city": "Arlington",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "94",
+      "matchNumber": 94,
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-04",
+      "siteSlotPair": [
+        "L-R16-07",
+        "L-R16-08"
+      ],
+      "fixtureLabel": "W81 vs W82",
+      "homeSlot": "W81",
+      "awaySlot": "W82",
+      "date": "2026-07-06",
+      "kickoffEt": "20:00",
+      "kickoffIso": "2026-07-06T17:00:00-07:00",
+      "venue": "Seattle Stadium",
+      "city": "Seattle",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "95",
+      "matchNumber": 95,
+      "round": "Round of 16",
+      "siteWinnerSlotId": "R-QF-03",
+      "siteSlotPair": [
+        "R-R16-05",
+        "R-R16-06"
+      ],
+      "fixtureLabel": "W86 vs W88",
+      "homeSlot": "W86",
+      "awaySlot": "W88",
+      "date": "2026-07-07",
+      "kickoffEt": "12:00",
+      "kickoffIso": "2026-07-07T12:00:00-04:00",
+      "venue": "Atlanta Stadium",
+      "city": "Atlanta",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "96",
+      "matchNumber": 96,
+      "round": "Round of 16",
+      "siteWinnerSlotId": "R-QF-04",
+      "siteSlotPair": [
+        "R-R16-07",
+        "R-R16-08"
+      ],
+      "fixtureLabel": "W85 vs W87",
+      "homeSlot": "W85",
+      "awaySlot": "W87",
+      "date": "2026-07-07",
+      "kickoffEt": "16:00",
+      "kickoffIso": "2026-07-07T13:00:00-07:00",
+      "venue": "BC Place Vancouver",
+      "city": "Vancouver",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "97",
+      "matchNumber": 97,
+      "round": "Quarter-final",
+      "siteWinnerSlotId": "L-SF-01",
+      "siteSlotPair": [
+        "L-QF-01",
+        "L-QF-02"
+      ],
+      "fixtureLabel": "W89 vs W90",
+      "homeSlot": "W89",
+      "awaySlot": "W90",
+      "date": "2026-07-09",
+      "kickoffEt": "16:00",
+      "kickoffIso": "2026-07-09T16:00:00-04:00",
+      "venue": "Boston Stadium",
+      "city": "Foxborough",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "98",
+      "matchNumber": 98,
+      "round": "Quarter-final",
+      "siteWinnerSlotId": "L-SF-02",
+      "siteSlotPair": [
+        "L-QF-03",
+        "L-QF-04"
+      ],
+      "fixtureLabel": "W93 vs W94",
+      "homeSlot": "W93",
+      "awaySlot": "W94",
+      "date": "2026-07-10",
+      "kickoffEt": "15:00",
+      "kickoffIso": "2026-07-10T12:00:00-07:00",
+      "venue": "Los Angeles Stadium",
+      "city": "Los Angeles",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "99",
+      "matchNumber": 99,
+      "round": "Quarter-final",
+      "siteWinnerSlotId": "R-SF-01",
+      "siteSlotPair": [
+        "R-QF-01",
+        "R-QF-02"
+      ],
+      "fixtureLabel": "W91 vs W92",
+      "homeSlot": "W91",
+      "awaySlot": "W92",
+      "date": "2026-07-11",
+      "kickoffEt": "17:00",
+      "kickoffIso": "2026-07-11T17:00:00-04:00",
+      "venue": "Miami Stadium",
+      "city": "Miami",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "100",
+      "matchNumber": 100,
+      "round": "Quarter-final",
+      "siteWinnerSlotId": "R-SF-02",
+      "siteSlotPair": [
+        "R-QF-03",
+        "R-QF-04"
+      ],
+      "fixtureLabel": "W95 vs W96",
+      "homeSlot": "W95",
+      "awaySlot": "W96",
+      "date": "2026-07-11",
+      "kickoffEt": "21:00",
+      "kickoffIso": "2026-07-11T20:00:00-05:00",
+      "venue": "Kansas City Stadium",
+      "city": "Kansas City",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "101",
+      "matchNumber": 101,
+      "round": "Semi-final",
+      "siteWinnerSlotId": "FINAL-LEFT",
+      "siteSlotPair": [
+        "L-SF-01",
+        "L-SF-02"
+      ],
+      "fixtureLabel": "W97 vs W98",
+      "homeSlot": "W97",
+      "awaySlot": "W98",
+      "date": "2026-07-14",
+      "kickoffEt": "15:00",
+      "kickoffIso": "2026-07-14T14:00:00-05:00",
+      "venue": "Dallas Stadium",
+      "city": "Arlington",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "102",
+      "matchNumber": 102,
+      "round": "Semi-final",
+      "siteWinnerSlotId": "FINAL-RIGHT",
+      "siteSlotPair": [
+        "R-SF-01",
+        "R-SF-02"
+      ],
+      "fixtureLabel": "W99 vs W100",
+      "homeSlot": "W99",
+      "awaySlot": "W100",
+      "date": "2026-07-15",
+      "kickoffEt": "15:00",
+      "kickoffIso": "2026-07-15T15:00:00-04:00",
+      "venue": "Atlanta Stadium",
+      "city": "Atlanta",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "103",
+      "matchNumber": 103,
+      "round": "Third-place match",
+      "siteWinnerSlotId": "THIRD-PLACE-WINNER",
+      "siteSlotPair": [
+        "FINAL-LEFT",
+        "FINAL-RIGHT"
+      ],
+      "fixtureLabel": "L101 vs L102",
+      "homeSlot": "L101",
+      "awaySlot": "L102",
+      "date": "2026-07-18",
+      "kickoffEt": "17:00",
+      "kickoffIso": "2026-07-18T17:00:00-04:00",
+      "venue": "Miami Stadium",
+      "city": "Miami",
+      "extendedHighlightsUrl": ""
+    },
+    {
+      "matchId": "104",
+      "matchNumber": 104,
+      "round": "Final",
+      "siteWinnerSlotId": "CHAMPION",
+      "siteSlotPair": [
+        "FINAL-LEFT",
+        "FINAL-RIGHT"
+      ],
+      "fixtureLabel": "W101 vs W102",
+      "homeSlot": "W101",
+      "awaySlot": "W102",
+      "date": "2026-07-19",
+      "kickoffEt": "15:00",
+      "kickoffIso": "2026-07-19T15:00:00-04:00",
+      "venue": "New York New Jersey Stadium",
+      "city": "East Rutherford",
+      "extendedHighlightsUrl": ""
+    }
+  ]
+}

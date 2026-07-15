@@ -1,5 +1,675 @@
 {
   "version": "v001",
-  "status": "not_started",
-  "matches": []
+  "status": "in_progress",
+  "matches": [
+    {
+      "resultId": "r32-rsa-can-2026-06-28",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-03",
+      "siteSlotPair": [
+        "L-R32-05",
+        "L-R32-06"
+      ],
+      "homeTeamId": "RSA",
+      "homeTeamName": "South Africa",
+      "homeScore": 0,
+      "awayTeamId": "CAN",
+      "awayTeamName": "Canada",
+      "awayScore": 1,
+      "winnerTeamId": "CAN",
+      "winnerTeamName": "Canada",
+      "resultLabel": "South Africa 0–1 Canada",
+      "resultSource": "migrated-from-site-owned-official-truth"
+    },
+    {
+      "resultId": "r32-bra-jpn-2026-06-29",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-01",
+      "siteSlotPair": [
+        "R-R32-01",
+        "R-R32-02"
+      ],
+      "homeTeamId": "BRA",
+      "homeTeamName": "Brazil",
+      "homeScore": 2,
+      "awayTeamId": "JPN",
+      "awayTeamName": "Japan",
+      "awayScore": 1,
+      "winnerTeamId": "BRA",
+      "winnerTeamName": "Brazil",
+      "resultLabel": "Brazil 2–1 Japan",
+      "resultSource": "user-supplied-knockout-result-2026-06-29"
+    },
+    {
+      "resultId": "r32-ger-par-2026-06-29",
+      "round": "R32",
+      "status": "final",
+      "resultType": "penalties",
+      "source": "user-supplied-knockout-result-2026-06-29",
+      "resultLabel": "Germany 1–1 Paraguay; Paraguay advances 4–3 on penalties",
+      "teams": [
+        {
+          "teamId": "GER",
+          "teamName": "Germany",
+          "regulationScore": 1,
+          "extraTimeScore": 1,
+          "penaltyScore": 3,
+          "siteSlotId": "L-R32-01"
+        },
+        {
+          "teamId": "PAR",
+          "teamName": "Paraguay",
+          "regulationScore": 1,
+          "extraTimeScore": 1,
+          "penaltyScore": 4,
+          "siteSlotId": "L-R32-02"
+        }
+      ],
+      "scoreByTeamId": {
+        "GER": 1,
+        "PAR": 1
+      },
+      "penaltyScoreByTeamId": {
+        "GER": 3,
+        "PAR": 4
+      },
+      "winnerTeamId": "PAR",
+      "winnerTeamName": "Paraguay",
+      "siteWinnerSlotId": "L-R16-01",
+      "siteSlotPair": [
+        "L-R32-01",
+        "L-R32-02"
+      ],
+      "notes": "Match finished 1–1 after extra time. Paraguay advanced 4–3 on penalties."
+    },
+    {
+      "resultId": "r32-ned-mar-2026-06-29",
+      "matchId": "53452547",
+      "round": "R32",
+      "status": "final",
+      "resultType": "penalties",
+      "source": "user-corrected-knockout-result-2026-06-30",
+      "siteWinnerSlotId": "L-R16-04",
+      "siteSlotPair": [
+        "L-R32-07",
+        "L-R32-08"
+      ],
+      "homeTeamId": "NED",
+      "homeTeamCode": "NED",
+      "homeTeamName": "Netherlands",
+      "homeScore": 1,
+      "awayTeamId": "MAR",
+      "awayTeamCode": "MAR",
+      "awayTeamName": "Morocco",
+      "awayScore": 1,
+      "homePenaltyScore": 2,
+      "awayPenaltyScore": 3,
+      "winnerTeamId": "MAR",
+      "winnerTeamCode": "MAR",
+      "winnerTeamName": "Morocco",
+      "decidedBy": "penalties",
+      "sourceLabel": "Netherlands vs Morocco",
+      "resultLabel": "Netherlands 1–1 Morocco; Morocco advances 3–2 on penalties",
+      "scoreText": "NED 1–1 MAR; Morocco wins penalties 3–2",
+      "resultText": "Netherlands 1–1 Morocco; Morocco wins penalties 3–2",
+      "notes": "Match finished 1–1. Morocco advanced 3–2 on penalties."
+    },
+    {
+      "resultId": "r32-civ-nor-2026-07-01",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-02",
+      "siteSlotPair": [
+        "R-R32-03",
+        "R-R32-04"
+      ],
+      "homeTeamId": "CIV",
+      "homeTeamName": "Côte d’Ivoire",
+      "homeScore": 1,
+      "awayTeamId": "NOR",
+      "awayTeamName": "Norway",
+      "awayScore": 2,
+      "winnerTeamId": "NOR",
+      "winnerTeamName": "Norway",
+      "resultLabel": "Côte d’Ivoire 1–2 Norway",
+      "resultSource": "user-supplied-knockout-result-2026-06-30"
+    },
+    {
+      "resultId": "r32-fra-swe-2026-06-30",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-02",
+      "siteSlotPair": [
+        "L-R32-03",
+        "L-R32-04"
+      ],
+      "homeTeamId": "FRA",
+      "homeTeamName": "France",
+      "homeScore": 3,
+      "awayTeamId": "SWE",
+      "awayTeamName": "Sweden",
+      "awayScore": 0,
+      "winnerTeamId": "FRA",
+      "winnerTeamName": "France",
+      "resultLabel": "France 3–0 Sweden",
+      "resultSource": "Reuters: France 3–0 Sweden, 2026-06-30"
+    },
+    {
+      "resultId": "r32-mex-ecu-2026-06-30",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-03",
+      "siteSlotPair": [
+        "R-R32-05",
+        "R-R32-06"
+      ],
+      "homeTeamId": "MEX",
+      "homeTeamName": "Mexico",
+      "homeScore": 2,
+      "awayTeamId": "ECU",
+      "awayTeamName": "Ecuador",
+      "awayScore": 0,
+      "winnerTeamId": "MEX",
+      "winnerTeamName": "Mexico",
+      "resultLabel": "Mexico 2–0 Ecuador",
+      "resultSource": "user-supplied-knockout-result-2026-07-01; corrected bracket slot mapping"
+    },
+    {
+      "resultId": "r32-eng-cod-2026-07-01",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-04",
+      "siteSlotPair": [
+        "R-R32-07",
+        "R-R32-08"
+      ],
+      "homeTeamId": "ENG",
+      "homeTeamName": "England",
+      "homeScore": 2,
+      "awayTeamId": "COD",
+      "awayTeamName": "DR Congo",
+      "awayScore": 1,
+      "winnerTeamId": "ENG",
+      "winnerTeamName": "England",
+      "resultLabel": "England 2–1 DR Congo",
+      "resultSource": "user-supplied-knockout-result-2026-07-01"
+    },
+    {
+      "resultId": "r32-usa-bih-2026-07-01",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-07",
+      "siteSlotPair": [
+        "L-R32-13",
+        "L-R32-14"
+      ],
+      "homeTeamId": "USA",
+      "homeTeamName": "USA",
+      "homeScore": 2,
+      "awayTeamId": "BIH",
+      "awayTeamName": "Bosnia and Herzegovina",
+      "awayScore": 0,
+      "winnerTeamId": "USA",
+      "winnerTeamName": "USA",
+      "resultLabel": "USA 2–0 Bosnia and Herzegovina",
+      "resultSource": "user-supplied-knockout-result-2026-07-01"
+    },
+    {
+      "resultId": "r32-bel-sen-2026-07-01",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-08",
+      "siteSlotPair": [
+        "L-R32-15",
+        "L-R32-16"
+      ],
+      "homeTeamId": "BEL",
+      "homeTeamName": "Belgium",
+      "homeScore": 3,
+      "awayTeamId": "SEN",
+      "awayTeamName": "Senegal",
+      "awayScore": 2,
+      "winnerTeamId": "BEL",
+      "winnerTeamName": "Belgium",
+      "resultLabel": "Belgium 3–2 Senegal",
+      "resultSource": "user-supplied-knockout-result-2026-07-01"
+    },
+    {
+      "resultId": "r32-esp-aut-2026-07-02",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-06",
+      "siteSlotPair": [
+        "L-R32-11",
+        "L-R32-12"
+      ],
+      "homeTeamId": "ESP",
+      "homeTeamName": "Spain",
+      "homeScore": 3,
+      "awayTeamId": "AUT",
+      "awayTeamName": "Austria",
+      "awayScore": 0,
+      "winnerTeamId": "ESP",
+      "winnerTeamName": "Spain",
+      "resultLabel": "Spain 3–0 Austria",
+      "resultSource": "user-supplied-knockout-result-2026-07-02"
+    },
+    {
+      "resultId": "r32-por-cro-2026-07-02",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "L-R16-05",
+      "siteSlotPair": [
+        "L-R32-09",
+        "L-R32-10"
+      ],
+      "homeTeamId": "POR",
+      "homeTeamName": "Portugal",
+      "homeScore": 2,
+      "awayTeamId": "CRO",
+      "awayTeamName": "Croatia",
+      "awayScore": 1,
+      "winnerTeamId": "POR",
+      "winnerTeamName": "Portugal",
+      "resultLabel": "Portugal 2–1 Croatia",
+      "resultSource": "user-supplied-knockout-result-2026-07-02"
+    },
+    {
+      "resultId": "r32-sui-dza-2026-07-02",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-07",
+      "siteSlotPair": [
+        "R-R32-13",
+        "R-R32-14"
+      ],
+      "homeTeamId": "SUI",
+      "homeTeamName": "Switzerland",
+      "homeScore": 2,
+      "awayTeamId": "DZA",
+      "awayTeamName": "Algeria",
+      "awayScore": 0,
+      "winnerTeamId": "SUI",
+      "winnerTeamName": "Switzerland",
+      "resultLabel": "Switzerland 2–0 Algeria",
+      "resultSource": "user-supplied-knockout-result-2026-07-02"
+    },
+    {
+      "resultId": "r32-aus-egy-2026-07-03",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-06",
+      "siteSlotPair": [
+        "R-R32-11",
+        "R-R32-12"
+      ],
+      "homeTeamId": "AUS",
+      "homeTeamName": "Australia",
+      "homeScore": 1,
+      "awayTeamId": "EGY",
+      "awayTeamName": "Egypt",
+      "awayScore": 1,
+      "winnerTeamId": "EGY",
+      "winnerTeamName": "Egypt",
+      "resultLabel": "Australia 1–1 Egypt (Egypt 4–2 pens)",
+      "advancementLabel": "Egypt advances on penalty kicks 4–2",
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04",
+      "homePenaltyScore": 2,
+      "awayPenaltyScore": 4,
+      "extendedHighlightsUrl": "https://youtu.be/ACWOG7t8Plk"
+    },
+    {
+      "resultId": "r32-arg-cpv-2026-07-03",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-05",
+      "siteSlotPair": [
+        "R-R32-09",
+        "R-R32-10"
+      ],
+      "homeTeamId": "ARG",
+      "homeTeamName": "Argentina",
+      "homeScore": 3,
+      "awayTeamId": "CPV",
+      "awayTeamName": "Cabo Verde",
+      "awayScore": 2,
+      "winnerTeamId": "ARG",
+      "winnerTeamName": "Argentina",
+      "resultLabel": "Argentina 3–2 Cabo Verde",
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04",
+      "extendedHighlightsUrl": "https://youtu.be/EC2jOKluGRI"
+    },
+    {
+      "resultId": "r32-col-gha-2026-07-03",
+      "round": "Round of 32",
+      "siteWinnerSlotId": "R-R16-08",
+      "siteSlotPair": [
+        "R-R32-15",
+        "R-R32-16"
+      ],
+      "homeTeamId": "COL",
+      "homeTeamName": "Colombia",
+      "homeScore": 1,
+      "awayTeamId": "GHA",
+      "awayTeamName": "Ghana",
+      "awayScore": 0,
+      "winnerTeamId": "COL",
+      "winnerTeamName": "Colombia",
+      "resultLabel": "Colombia 1–0 Ghana",
+      "highlightUrl": "https://youtu.be/9TJRhuQOJuE",
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04"
+    },
+    {
+      "resultId": "r16-can-mor-2026-07-04",
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-02",
+      "siteSlotPair": [
+        "L-R16-03",
+        "L-R16-04"
+      ],
+      "homeTeamId": "CAN",
+      "homeTeamName": "Canada",
+      "homeScore": 0,
+      "awayTeamId": "MAR",
+      "awayTeamName": "Morocco",
+      "awayScore": 3,
+      "winnerTeamId": "MAR",
+      "winnerTeamName": "Morocco",
+      "resultLabel": "Morocco 3–0 Canada",
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04",
+      "extendedHighlightsUrl": "https://youtu.be/QLFucR6SGr4"
+    },
+    {
+      "resultId": "r16-fra-par-2026-07-04",
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-01",
+      "siteSlotPair": [
+        "L-R16-01",
+        "L-R16-02"
+      ],
+      "homeTeamId": "FRA",
+      "homeTeamName": "France",
+      "homeScore": 1,
+      "awayTeamId": "PAR",
+      "awayTeamName": "Paraguay",
+      "awayScore": 0,
+      "winnerTeamId": "FRA",
+      "winnerTeamName": "France",
+      "resultLabel": "France 1–0 Paraguay",
+      "resultSource": "user-supplied-knockout-result-and-highlight-2026-07-04",
+      "extendedHighlightsUrl": "https://youtu.be/bQ5Z4Q8VQ8w"
+    },
+    {
+      "resultId": "r16-bra-nor-2026-07-05",
+      "round": "Round of 16",
+      "siteWinnerSlotId": "R-QF-01",
+      "siteSlotPair": [
+        "R-R16-01",
+        "R-R16-02"
+      ],
+      "homeTeamId": "BRA",
+      "homeTeamName": "Brazil",
+      "homeScore": 1,
+      "awayTeamId": "NOR",
+      "awayTeamName": "Norway",
+      "awayScore": 2,
+      "winnerTeamId": "NOR",
+      "winnerTeamName": "Norway",
+      "resultLabel": "Brazil 1–2 Norway",
+      "resultSource": "user-corrected-knockout-result-2026-07-05",
+      "extendedHighlightsUrl": "https://youtu.be/vpcukTVSD8Q"
+    },
+    {
+      "resultId": "r16-mex-eng-2026-07-05",
+      "round": "Round of 16",
+      "siteWinnerSlotId": "R-QF-02",
+      "siteSlotPair": [
+        "R-R16-03",
+        "R-R16-04"
+      ],
+      "homeTeamId": "MEX",
+      "homeTeamName": "Mexico",
+      "homeScore": 2,
+      "awayTeamId": "ENG",
+      "awayTeamName": "England",
+      "awayScore": 3,
+      "winnerTeamId": "ENG",
+      "winnerTeamName": "England",
+      "resultLabel": "Mexico 2-3 England",
+      "resultSource": "user-corrected-knockout-result-2026-07-05",
+      "extendedHighlightsUrl": "https://youtu.be/n7cA4k6TJbs"
+    },
+    {
+      "resultId": "r16-por-esp-2026-07-06",
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-03",
+      "siteSlotPair": [
+        "L-R16-05",
+        "L-R16-06"
+      ],
+      "homeTeamId": "POR",
+      "homeTeamName": "Portugal",
+      "homeScore": 0,
+      "awayTeamId": "ESP",
+      "awayTeamName": "Spain",
+      "awayScore": 1,
+      "winnerTeamId": "ESP",
+      "winnerTeamName": "Spain",
+      "resultLabel": "Spain 1–0 Portugal",
+      "resultSource": "user-supplied-official-knockout-result-2026-07-06"
+    },
+    {
+      "resultId": "r16-usa-bel-2026-07-06",
+      "round": "Round of 16",
+      "siteWinnerSlotId": "L-QF-04",
+      "siteSlotPair": [
+        "L-R16-07",
+        "L-R16-08"
+      ],
+      "homeTeamId": "USA",
+      "homeTeamName": "United States",
+      "homeScore": 1,
+      "awayTeamId": "BEL",
+      "awayTeamName": "Belgium",
+      "awayScore": 4,
+      "winnerTeamId": "BEL",
+      "winnerTeamName": "Belgium",
+      "resultLabel": "Belgium 4–1 United States",
+      "resultSource": "user-supplied-official-knockout-result-2026-07-06"
+    },
+    {
+      "resultId": "r16-arg-egy-2026-07-07",
+      "matchId": "53452521",
+      "round": "Round of 16",
+      "status": "final",
+      "resultType": "regulation",
+      "siteWinnerSlotId": "R-QF-03",
+      "siteSlotPair": [
+        "R-R16-05",
+        "R-R16-06"
+      ],
+      "homeTeamId": "ARG",
+      "homeTeamCode": "ARG",
+      "homeTeamName": "Argentina",
+      "homeScore": 3,
+      "awayTeamId": "EGY",
+      "awayTeamCode": "EGY",
+      "awayTeamName": "Egypt",
+      "awayScore": 2,
+      "winnerTeamId": "ARG",
+      "winnerTeamCode": "ARG",
+      "winnerTeamName": "Argentina",
+      "resultLabel": "Argentina 3–2 Egypt",
+      "scoreText": "ARG 3–2 EGY",
+      "resultText": "Argentina 3–2 Egypt",
+      "resultSource": "user-supplied-knockout-result-2026-07-07",
+      "source": "user-supplied-knockout-result-2026-07-07",
+      "notes": "User supplied final Round of 16 result: Argentina 3, Egypt 2. Argentina advances.",
+      "extendedHighlightsUrl": "https://youtu.be/BE_ErCFdKW4"
+    },
+    {
+      "resultId": "r16-sui-col-2026-07-07",
+      "matchId": "96",
+      "matchNumber": 96,
+      "round": "Round of 16",
+      "status": "final",
+      "resultType": "penalties",
+      "source": "user-supplied-knockout-result-2026-07-07",
+      "resultSource": "user-supplied-knockout-result-2026-07-07",
+      "siteWinnerSlotId": "R-QF-04",
+      "siteSlotPair": [
+        "R-R16-07",
+        "R-R16-08"
+      ],
+      "homeTeamId": "SUI",
+      "homeTeamCode": "SUI",
+      "homeTeamName": "Switzerland",
+      "homeScore": 0,
+      "awayTeamId": "COL",
+      "awayTeamCode": "COL",
+      "awayTeamName": "Colombia",
+      "awayScore": 0,
+      "homePenaltyScore": 4,
+      "awayPenaltyScore": 3,
+      "penaltyScoreByTeamId": {
+        "SUI": 4,
+        "COL": 3
+      },
+      "winnerTeamId": "SUI",
+      "winnerTeamCode": "SUI",
+      "winnerTeamName": "Switzerland",
+      "decidedBy": "penalties",
+      "sourceLabel": "Switzerland vs Colombia",
+      "resultLabel": "Switzerland 0–0 Colombia; Switzerland advances 4–3 on penalties",
+      "scoreText": "SUI 0–0 COL; Switzerland wins penalties 4–3",
+      "resultText": "Switzerland 0–0 Colombia; Switzerland wins penalties 4–3",
+      "notes": "Match finished 0–0. Switzerland advanced 4–3 on penalties.",
+      "extendedHighlightsUrl": "https://youtu.be/_uEzppRKcd0"
+    },
+    {
+      "resultId": "qf-fra-mar-2026-07-09",
+      "round": "Quarterfinal",
+      "siteWinnerSlotId": "L-SF-01",
+      "siteSlotPair": [
+        "L-QF-01",
+        "L-QF-02"
+      ],
+      "homeTeamId": "FRA",
+      "homeTeamName": "France",
+      "homeScore": 2,
+      "awayTeamId": "MAR",
+      "awayTeamName": "Morocco",
+      "awayScore": 0,
+      "winnerTeamId": "FRA",
+      "winnerTeamName": "France",
+      "resultLabel": "France 2–0 Morocco",
+      "resultText": "France 2–0 Morocco",
+      "notes": "France defeated Morocco 2–0 and advanced to the first semifinal slot.",
+      "resultSource": "user-supplied-knockout-result-2026-07-09-first-semifinalist",
+      "espnGameId": "53452525"
+    },
+    {
+      "resultId": "qf-esp-bel-2026-07-10",
+      "round": "Quarter-final",
+      "siteWinnerSlotId": "L-SF-02",
+      "siteSlotPair": [
+        "L-QF-03",
+        "L-QF-04"
+      ],
+      "homeTeamId": "ESP",
+      "homeTeamName": "Spain",
+      "homeScore": 2,
+      "awayTeamId": "BEL",
+      "awayTeamName": "Belgium",
+      "awayScore": 1,
+      "winnerTeamId": "ESP",
+      "winnerTeamName": "Spain",
+      "resultLabel": "Spain 2–1 Belgium",
+      "advancementLabel": "Spain advances to face France in the semifinal",
+      "resultSource": "user-supplied-knockout-result-2026-07-10"
+    },
+    {
+      "resultId": "qf-nor-eng-2026-07-11",
+      "matchId": "53452529",
+      "round": "Quarterfinal",
+      "status": "final",
+      "resultType": "extra_time",
+      "siteWinnerSlotId": "R-SF-01",
+      "siteSlotPair": [
+        "R-QF-01",
+        "R-QF-02"
+      ],
+      "homeTeamId": "NOR",
+      "homeTeamName": "Norway",
+      "homeScore": 1,
+      "awayTeamId": "ENG",
+      "awayTeamName": "England",
+      "awayScore": 2,
+      "winnerTeamId": "ENG",
+      "winnerTeamName": "England",
+      "resultLabel": "Norway 1–2 England",
+      "advancementLabel": "England advances to face Argentina in the semifinal",
+      "resultSource": "user-supplied-knockout-result-2026-07-11",
+      "notes": "England won after extra time."
+    },
+    {
+      "resultId": "qf-arg-sui-2026-07-11",
+      "matchId": "53452531",
+      "round": "Quarterfinal",
+      "status": "final",
+      "resultType": "extra_time",
+      "siteWinnerSlotId": "R-SF-02",
+      "siteSlotPair": [
+        "R-QF-03",
+        "R-QF-04"
+      ],
+      "homeTeamId": "ARG",
+      "homeTeamName": "Argentina",
+      "homeScore": 3,
+      "awayTeamId": "SUI",
+      "awayTeamName": "Switzerland",
+      "awayScore": 1,
+      "winnerTeamId": "ARG",
+      "winnerTeamName": "Argentina",
+      "resultLabel": "Argentina 3–1 Switzerland",
+      "advancementLabel": "Argentina advances to face England in the semifinal",
+      "resultSource": "user-supplied-knockout-result-2026-07-11",
+      "notes": "Argentina won after extra time."
+    },
+    {
+      "resultId": "sf-fra-esp-2026-07-14",
+      "matchId": "53452533",
+      "matchNumber": 101,
+      "round": "Semi-final",
+      "status": "final",
+      "siteWinnerSlotId": "FINAL-LEFT",
+      "siteSlotPair": [
+        "L-SF-01",
+        "L-SF-02"
+      ],
+      "homeTeamId": "FRA",
+      "homeTeamName": "France",
+      "homeScore": 0,
+      "awayTeamId": "ESP",
+      "awayTeamName": "Spain",
+      "awayScore": 2,
+      "winnerTeamId": "ESP",
+      "winnerTeamName": "Spain",
+      "resultLabel": "France 0–2 Spain",
+      "advancementLabel": "Spain advances to the World Cup Final; France advances to the third-place playoff",
+      "resultSource": "user-supplied-knockout-result-2026-07-14"
+    },
+    {
+      "resultId": "sf-eng-arg-2026-07-15",
+      "matchNumber": 102,
+      "round": "Semi-final",
+      "status": "final",
+      "siteWinnerSlotId": "FINAL-RIGHT",
+      "siteSlotPair": [
+        "R-SF-01",
+        "R-SF-02"
+      ],
+      "homeTeamId": "ENG",
+      "homeTeamName": "England",
+      "homeScore": 1,
+      "awayTeamId": "ARG",
+      "awayTeamName": "Argentina",
+      "awayScore": 2,
+      "winnerTeamId": "ARG",
+      "winnerTeamName": "Argentina",
+      "resultLabel": "England 1–2 Argentina",
+      "advancementLabel": "Argentina advances to the World Cup Final; England advances to the third-place playoff",
+      "resultSource": "user-supplied-knockout-result-2026-07-15"
+    }
+  ],
+  "updatedAt": "2026-07-15T21:19:12Z"
 }

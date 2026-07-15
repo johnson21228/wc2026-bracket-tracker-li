@@ -1,25 +1,3 @@
 {
-  "schemaVersion": 1,
-  "LockDownTimeZone": "America/New_York",
-  "LockDownTime1": "2026-06-28T15:00:00-04:00",
-  "LockDownTime2": "2026-06-29T13:00:00-04:00",
-  "LockDownTime1Name": "Canada vs South Africa pick lock",
-  "LockDownTime2Name": "All remaining picks lock",
-  "LockDownTime1SlotIds": [
-    "R-R32-01"
-  ],
-  "LockDownTime1TeamIds": [
-    "CAN",
-    "RSA"
-  ],
-  "PickLockdownPolicy": {
-    "lockdown1Scope": "canada-south-africa-r32-pick-only",
-    "lockdown2Scope": "all-player-owned-picks",
-    "lockedPickBehavior": [
-      "locked picks remain visible",
-      "locked picks cannot be changed, cleared, or replaced",
-      "late UI interactions are blocked",
-      "admin/site-owned official truth remains outside player-pick lockdown"
-    ]
-  }
+  "LockDown": true
 }

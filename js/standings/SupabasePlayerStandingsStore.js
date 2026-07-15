@@ -3,7 +3,9 @@ import { getSharedSupabaseClient } from "../services/SupabaseClient.js";
 const USER_BRACKETS_TABLE = "user_brackets";
 const PROFILES_TABLE = "profiles";
 const SITE_OFFICIAL_TRUTH_URL = "data/current/official_truth.json";
+const SITE_OFFICIAL_KNOCKOUT_RESULTS_URL = "data/official_knockout_results.json";
 const SITE_OFFICIAL_TRUTH_SOURCE = "site/data/current/official_truth.json";
+const SITE_OFFICIAL_KNOCKOUT_RESULTS_SOURCE = "site/data/official_knockout_results.json";
 
 function safeText(value, fallback = "") {
   const text = String(value || "").trim().replace(/\s+/g, " ");
@@ -19,6 +21,40 @@ function picksBySlotFromBracket(bracketJson) {
   return picksBySlot && typeof picksBySlot === "object" && !Array.isArray(picksBySlot)
     ? picksBySlot
     : {};
+}
+
+
+function pickRecordFromOfficialKnockoutResult(result = {}) {
+  const slotId = String(result.siteWinnerSlotId || "").trim();
+  const winnerTeamId = String(result.winnerTeamId || "").trim();
+  if (!slotId || !winnerTeamId) return null;
+
+  return {
+    slotId,
+    teamId: winnerTeamId,
+    teamCode: winnerTeamId,
+    teamName: result.winnerTeamName || winnerTeamId,
+    kind: "winner",
+    round: "OFFICIAL_KNOCKOUT_RESULT",
+    source: SITE_OFFICIAL_KNOCKOUT_RESULTS_SOURCE,
+    sourceLabel: result.resultLabel || `${result.winnerTeamName || winnerTeamId} advanced`,
+    officialTruth: true,
+    result,
+    pick: {
+      kind: "team",
+      teamId: winnerTeamId,
+    },
+  };
+}
+
+function picksBySlotFromOfficialKnockoutResults(resultsPayload = {}) {
+  const matches = Array.isArray(resultsPayload?.matches) ? resultsPayload.matches : [];
+  const picksBySlot = {};
+  for (const result of matches) {
+    const record = pickRecordFromOfficialKnockoutResult(result);
+    if (record) picksBySlot[record.slotId] = record;
+  }
+  return picksBySlot;
 }
 
 function pickTeamIdFromRecord(record) {
@@ -159,13 +195,24 @@ function scoreAgainstOfficialTruth(playerPicksBySlot, officialTruthPicksBySlot) 
 }
 
 async function loadSiteOfficialTruth() {
-  const response = await fetch(SITE_OFFICIAL_TRUTH_URL, { cache: "no-cache" });
-  if (!response.ok) {
-    throw new Error(`Could not load site official truth: ${response.status}`);
+  const [truthResponse, resultsResponse] = await Promise.all([
+    fetch(SITE_OFFICIAL_TRUTH_URL, { cache: "no-cache" }),
+    fetch(SITE_OFFICIAL_KNOCKOUT_RESULTS_URL, { cache: "no-cache" }),
+  ]);
+
+  if (!truthResponse.ok) {
+    throw new Error(`Could not load site official truth: ${truthResponse.status}`);
+  }
+  if (!resultsResponse.ok) {
+    throw new Error(`Could not load site official knockout results: ${resultsResponse.status}`);
   }
 
-  const truth = await response.json();
-  const picksBySlot = picksBySlotFromBracket(truth);
+  const truth = await truthResponse.json();
+  const results = await resultsResponse.json();
+  const picksBySlot = {
+    ...picksBySlotFromBracket(truth),
+    ...picksBySlotFromOfficialKnockoutResults(results),
+  };
 
   return {
     schemaVersion: Number(truth?.schemaVersion || 1),
@@ -175,7 +222,7 @@ async function loadSiteOfficialTruth() {
     gameId: truth?.gameId || "game1",
     picksBySlot,
     source: SITE_OFFICIAL_TRUTH_SOURCE,
-    officialResultsTruthSource: SITE_OFFICIAL_TRUTH_SOURCE,
+    officialResultsTruthSource: SITE_OFFICIAL_KNOCKOUT_RESULTS_SOURCE,
     partialOfficialTruthAllowed: true,
   };
 }

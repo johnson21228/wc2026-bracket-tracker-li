@@ -50,6 +50,8 @@ const DATA_URLS = Object.freeze({
   knockoutMatches: "data/current/knockout_matches.json",
   game2FifaFinalR32Assignments: "data/game2_fifa_final_r32_assignments.json",
   officialTruth: "data/current/official_truth.json",
+  officialKnockoutResults: "data/official_knockout_results.json",
+  knockoutMatchDisplayMetadata: "data/knockout_match_display_metadata.json",
 });
 
 async function readJson(url) {
@@ -266,6 +268,89 @@ function normalizeSiteOfficialTruthDocument(payload = {}) {
 }
 
 
+function pickRecordFromOfficialKnockoutResult(result = {}) {
+  const slotId = String(result.siteWinnerSlotId || "").trim();
+  const winnerTeamId = String(result.winnerTeamId || "").trim();
+  if (!slotId || !winnerTeamId) return null;
+
+  return {
+    slotId,
+    teamId: winnerTeamId,
+    teamCode: winnerTeamId,
+    teamName: result.winnerTeamName || winnerTeamId,
+    kind: "winner",
+    round: "OFFICIAL_KNOCKOUT_RESULT",
+    source: "site-owned-official-knockout-results",
+    sourceLabel: result.resultLabel || `${result.winnerTeamName || winnerTeamId} advanced`,
+    officialTruth: true,
+    result,
+    pick: {
+      kind: "team",
+      teamId: winnerTeamId,
+    },
+  };
+}
+
+function mergeOfficialKnockoutResultsIntoDocument(document, resultsPayload = {}) {
+  const matches = Array.isArray(resultsPayload?.matches) ? resultsPayload.matches : [];
+  const resultPicks = {};
+
+  for (const result of matches) {
+    const record = pickRecordFromOfficialKnockoutResult(result);
+    if (record) resultPicks[record.slotId] = record;
+  }
+
+  return {
+    ...document,
+    picksBySlot: {
+      ...(document?.picksBySlot || {}),
+      ...resultPicks,
+    },
+    officialResultsTruthSource: "site/data/official_knockout_results.json",
+  };
+}
+
+function normalizeKnockoutDisplayMetadata(payload = {}) {
+  const byWinnerSlot = new Map();
+  const matches = Array.isArray(payload?.matches) ? payload.matches : [];
+
+  for (const match of matches) {
+    const siteWinnerSlotId = String(match.siteWinnerSlotId || "").trim();
+    if (!siteWinnerSlotId) continue;
+    byWinnerSlot.set(siteWinnerSlotId, {
+      matchId: String(match.matchId || match.matchNumber || "").trim(),
+      matchNumber: Number(match.matchNumber || match.matchId || 0),
+      round: match.round || "",
+      siteWinnerSlotId,
+      siteSlotPair: Array.isArray(match.siteSlotPair) ? match.siteSlotPair : [],
+      fixtureLabel: match.fixtureLabel || "",
+      homeSlot: match.homeSlot || "",
+      awaySlot: match.awaySlot || "",
+      date: match.date || "",
+      kickoffEt: match.kickoffEt || "",
+      kickoffIso: match.kickoffIso || "",
+      venue: match.venue || "",
+      city: match.city || "",
+      extendedHighlightsUrl: typeof match.extendedHighlightsUrl === "string" ? match.extendedHighlightsUrl : "",
+    });
+  }
+
+  return byWinnerSlot;
+}
+
+function normalizeOfficialKnockoutResultsByWinnerSlot(resultsPayload = {}) {
+  const byWinnerSlot = new Map();
+  const matches = Array.isArray(resultsPayload?.matches) ? resultsPayload.matches : [];
+
+  for (const result of matches) {
+    const siteWinnerSlotId = String(result.siteWinnerSlotId || "").trim();
+    if (siteWinnerSlotId) byWinnerSlot.set(siteWinnerSlotId, result);
+  }
+
+  return byWinnerSlot;
+}
+
+
 export async function createBracketModel({
   bracketStore = null,
   officialBracketStore = bracketStore,
@@ -286,6 +371,8 @@ export async function createBracketModel({
     knockoutMatchesPayload,
     game2FifaFinalR32AssignmentsPayload,
     officialTruthPayload,
+    officialKnockoutResultsPayload,
+    knockoutMatchDisplayMetadataPayload,
   ] = await Promise.all([
     readJson(DATA_URLS.geometry),
     readJson(DATA_URLS.r32Bridge),
@@ -298,6 +385,8 @@ export async function createBracketModel({
     readJson(DATA_URLS.knockoutMatches),
     readJson(DATA_URLS.game2FifaFinalR32Assignments),
     readJson(DATA_URLS.officialTruth),
+    readJson(DATA_URLS.officialKnockoutResults),
+    readJson(DATA_URLS.knockoutMatchDisplayMetadata),
   ]);
 
 const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
@@ -325,6 +414,8 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   const currentHighlightsByMatchId = new Map(Object.entries(currentHighlightsPayload.highlights || {}));
   const knockoutMatches = [...(knockoutMatchesPayload.matches || [])];
   const knockoutMatchesById = new Map(knockoutMatches.map((match) => [String(match.match_id || match.matchNumber || match.match_number), match]));
+  const knockoutDisplayMetadataByWinnerSlotId = normalizeKnockoutDisplayMetadata(knockoutMatchDisplayMetadataPayload);
+  const officialKnockoutResultsByWinnerSlotId = normalizeOfficialKnockoutResultsByWinnerSlot(officialKnockoutResultsPayload);
   const r32LogicByGeometryId = new Map();
   const r32LogicByFifaId = new Map((r32Logic.slots || []).map((slot) => [slot.fifaSlotId, slot]));
   for (const bridge of r32Bridge.slots || []) {
@@ -380,10 +471,14 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       picks = {};
     }
   } else {
-    picks = pickFromStorage();
+    // Join-required runtime: signed-out players must not see stale cached local picks.
+    picks = {};
   }
 
-  officialBracketDocument = normalizeSiteOfficialTruthDocument(officialTruthPayload);
+  officialBracketDocument = mergeOfficialKnockoutResultsIntoDocument(
+    normalizeSiteOfficialTruthDocument(officialTruthPayload),
+    officialKnockoutResultsPayload
+  );
   officialPicks = clearUnknownTeamPicks(
     legacyPicksFromRemoteBracketDocument(officialBracketDocument),
     "site-owned official truth"
@@ -540,20 +635,98 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       return officialTeam(slotId) || persistedPlayerTeam(slotId);
     }
 
-    return persistedPlayerTeam(slotId);
+    return persistedPlayerTeam(slotId) || officialTeam(slotId);
   }
 
   function officialTeam(slotId) {
-    return persistedOfficialTeam(slotId);
+    const persisted = persistedOfficialTeam(slotId);
+    if (persisted) return persisted;
+
+    const result = officialKnockoutResultsByWinnerSlotId.get(String(slotId || "").trim());
+    if (!result?.winnerTeamId) return null;
+
+    return teamById.get(result.winnerTeamId) || null;
+  }
+
+  function paddedSlotNumber(value) {
+    return String(value).padStart(2, "0");
+  }
+
+  function feederSlotIdsForSlot(slotId) {
+    const id = String(slotId || "").toUpperCase();
+
+    let match = id.match(/^([LR])-R16-(\d{2})$/);
+    if (match) {
+      const side = match[1];
+      const index = Number(match[2]);
+      return [
+        `${side}-R32-${paddedSlotNumber(index * 2 - 1)}`,
+        `${side}-R32-${paddedSlotNumber(index * 2)}`,
+      ];
+    }
+
+    match = id.match(/^([LR])-QF-(\d{2})$/);
+    if (match) {
+      const side = match[1];
+      const index = Number(match[2]);
+      return [
+        `${side}-R16-${paddedSlotNumber(index * 2 - 1)}`,
+        `${side}-R16-${paddedSlotNumber(index * 2)}`,
+      ];
+    }
+
+    match = id.match(/^([LR])-SF-(\d{2})$/);
+    if (match) {
+      const side = match[1];
+      const index = Number(match[2]);
+      return [
+        `${side}-QF-${paddedSlotNumber(index * 2 - 1)}`,
+        `${side}-QF-${paddedSlotNumber(index * 2)}`,
+      ];
+    }
+
+    if (id === "FINAL-LEFT") return ["L-SF-01", "L-SF-02"];
+    if (id === "FINAL-RIGHT") return ["R-SF-01", "R-SF-02"];
+    if (id === "CHAMPION") return ["FINAL-LEFT", "FINAL-RIGHT"];
+
+    return [];
+  }
+
+  function canTeamStillReachSlot(teamId, slotId, visiting = new Set()) {
+    const candidateTeamId = String(teamId || "").trim();
+    const currentSlotId = String(slotId || "").toUpperCase();
+
+    if (!candidateTeamId || !currentSlotId) return false;
+    if (visiting.has(currentSlotId)) return false;
+
+    const truthTeam = officialTeam(currentSlotId);
+    if (truthTeam) return truthTeam.id === candidateTeamId;
+
+    const feederSlotIds = feederSlotIdsForSlot(currentSlotId);
+    if (!feederSlotIds.length) return true;
+
+    const nextVisiting = new Set(visiting);
+    nextVisiting.add(currentSlotId);
+
+    return feederSlotIds.some((feederSlotId) => canTeamStillReachSlot(candidateTeamId, feederSlotId, nextVisiting));
   }
 
   function officialPickComparisonForSlot(slotId, userTeam) {
     const truthTeam = officialTeam(slotId);
-    if (!truthTeam) return null;
-    return {
-      state: userTeam && userTeam.id === truthTeam.id ? "correct" : "incorrect",
-      officialTeam: truthTeam,
-    };
+    if (!userTeam) return null;
+    if (truthTeam) {
+      return {
+        state: userTeam.id === truthTeam.id ? "correct" : "incorrect",
+        officialTeam: truthTeam,
+      };
+    }
+    if (!canTeamStillReachSlot(userTeam.id, slotId)) {
+      return {
+        state: "unreachable",
+        eliminated: true,
+      };
+    }
+    return null;
   }
 
   function isEditingOfficialResults() {
@@ -754,7 +927,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
 
   function persistPicks(reason = "autosave") {
     if (!remotePersistenceActive) {
-      saveToStorage(picks);
+      // Join-required runtime: player picks are not localStorage truth.
       return;
     }
 
@@ -954,6 +1127,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   }
 
   function setPick(slotId, teamId) {
+    window.BracketeeringPickLockdownPolicy?.assertPickChangeAllowed?.({ slotId, teamId });
     const slot = getSlotDefinition(slotId);
     if (!slot) {
       return { ok: false, reason: "Unknown bracket slot.", cleared: [] };
@@ -1207,22 +1381,78 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     }];
   }
 
+  function teamNameForKnockoutSourceSlot(sourceSlotId) {
+    const id = String(sourceSlotId || "").trim();
+    if (!id) return "";
+
+    const directResult = officialKnockoutResultsByWinnerSlotId.get(id);
+    if (directResult?.winnerTeamName) return directResult.winnerTeamName;
+
+    const pick = selectedTeam(id);
+    if (pick?.name) return pick.name;
+    if (pick?.abbr) return pick.abbr;
+
+    return id;
+  }
+
+  function fixtureLabelForKnockoutDisplay(metadata) {
+    if (!metadata) return "";
+
+    const sourceSlots = Array.isArray(metadata.siteSlotPair) ? metadata.siteSlotPair : [];
+    if (sourceSlots.length === 2) {
+      const home = teamNameForKnockoutSourceSlot(sourceSlots[0]);
+      const away = teamNameForKnockoutSourceSlot(sourceSlots[1]);
+      if (home && away && home !== sourceSlots[0] && away !== sourceSlots[1]) {
+        return `${home} vs ${away}`;
+      }
+    }
+
+    return metadata.fixtureLabel || "";
+  }
+
+  function knockoutMatchDisplayForSlot(slotId) {
+    const metadata = knockoutDisplayMetadataByWinnerSlotId.get(slotId) || null;
+    const result = officialKnockoutResultsByWinnerSlotId.get(slotId) || null;
+    if (!metadata && !result) return null;
+
+    return {
+      ...(metadata || {}),
+      siteWinnerSlotId: slotId,
+      completed: Boolean(result),
+      result: result || null,
+      fixtureLabel: result?.resultLabel || fixtureLabelForKnockoutDisplay(metadata),
+      resultLabel: result?.resultLabel || "",
+      winnerTeamId: result?.winnerTeamId || "",
+      winnerTeamName: result?.winnerTeamName || "",
+      homeTeamId: result?.homeTeamId || "",
+      homeTeamName: result?.homeTeamName || "",
+      homeScore: result?.homeScore,
+      awayTeamId: result?.awayTeamId || "",
+      awayTeamName: result?.awayTeamName || "",
+      awayScore: result?.awayScore,
+      extendedHighlightsUrl: metadata?.extendedHighlightsUrl || result?.extendedHighlightsUrl || "",
+    };
+  }
+
   function getPickMenu(slotId) {
     const slot = getSlotDefinition(slotId);
     if (!slot) return null;
     const choices = getChoices(slotId);
     const currentPick = selectedTeam(slotId);
     const logic = r32LogicByGeometryId.get(slotId);
+    const matchDisplay = knockoutMatchDisplayForSlot(slotId);
+
     return {
       slotId,
       title: sourceTitleForSlot(slotId),
       sourceLabel: logic?.fifaLabel || slotId,
       currentPick,
-      canClear: Boolean(currentPick),
+      canClear: Boolean(currentPick) && !matchDisplay,
       anchorBoundsPx: slot.boundsPx,
-      groups: getGroupedPickChoices(slotId),
-      choices,
-      pickable: choices.length > 0,
+      groups: matchDisplay ? [] : getGroupedPickChoices(slotId),
+      choices: matchDisplay ? [] : choices,
+      pickable: choices.length > 0 || Boolean(matchDisplay),
+      matchDisplay,
     };
   }
 
@@ -1373,15 +1603,21 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
     };
   }
 
-  // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.
-  if (!remotePersistenceActive) {
-    saveToStorage(picks);
+  function clearAccountPicksForSignedOut() {
+    const previousPickCount = Object.keys(picks).length;
+    picks = hydrateOnlySupabaseAdminR32IntoPlayerPicks({});
+    remoteBracketDocument = null;
+    return { ok: true, cleared: previousPickCount };
   }
+
+  // Card 205: preserve invalid picks; render pick validity instead of auto-clearing.
+  // Join-required runtime: do not write local fallback picks on startup.
 
   return {
     nativeSize,
     getAccountSaveBracketDocument,
     importAccountBracketDocument,
+    clearAccountPicksForSignedOut,
     getGroupRail,
     getFinalFourViewModel,
     getSlotViewModels,

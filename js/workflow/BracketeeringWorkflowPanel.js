@@ -2,89 +2,66 @@ const WORKFLOW_PANEL_TITLE = "Built with Workbench";
 
 const STORY_SECTIONS = Object.freeze([
   {
-    heading: "The old way",
+    heading: "This site was built in a new way.",
     paragraphs: [
-      "This site was built in a new way.",
-      "Bracketeering could have been built the old way. A contractor, a senior full-stack developer, or a small product team could have taken the idea, written a specification, turned it into tickets, built the app, tested it, and deployed it. That path works, but it costs time, money, and coordination.",
-    ],
-  },
-  {
-    heading: "Raw AI assistance",
-    paragraphs: [
-      "It also could have been built with raw AI assistance. A tool like Copilot or ChatGPT can generate code quickly and produce an impressive first version. But without durable rules, source truth, tests, and memory, the project can slip. One fix can create another bug. The AI can follow the latest prompt instead of the lasting product model.",
-    ],
-  },
-  {
-    heading: "Workbench + AI",
-    paragraphs: [
-      "Bracketeering was built a third way.",
-      "It was built with Workbench + AI.",
-      "The Workbench turns plain-language intent into a disciplined production loop:",
-    ],
-    steps: [
-      "Intent becomes a card.",
-      "The card changes the artifact.",
-      "The artifact is verified.",
-      "The verifier protects the rule.",
-      "The result is captured back into project memory.",
-      "The next session starts from source truth.",
-    ],
-    after: [
-      "For Bracketeering, the artifact was software: a real browser-based gameboard with picks, saved brackets, player standings, Supabase login, shared visibility rules, private-write permissions, publishing, verification, and repair loops.",
-    ],
-  },
-  {
-    heading: "Workbench thesis",
-    paragraphs: [
-      "AI can generate output, but generation is not enough.",
-      "The Workbench is the missing layer between human intent and durable change. It gives AI a governed place to work: source truth, rules, tests, memory, verification, and product judgment.",
-      "And Workbench is not just for coding. It is for any workflow where AI can help produce, revise, verify, and preserve artifacts: software, documents, designs, plans, research, operating procedures, business systems, learning materials, or creative work.",
-      "The human stays in the role of owner, architect, tester, and judge. The AI helps execute. The Workbench keeps the system from drifting.",
-      "The point is not that Bracketeering could not have been built another way.",
-      "The point is that it was built in a new way.",
+      "Bracketeering looks like a playful World Cup bracket site. Underneath, it is also a small experiment in how software can be made with AI without letting the work drift.",
+      "The old way would have been familiar: write a spec, make tickets, assign developers, build, test, fix, and deploy.",
+      "Raw AI can move faster than that. A prompt can become code in minutes. But fast is not the same as trustworthy. Without memory, rules, tests, and source truth, the project can lose its shape.",
+      "Bracketeering was built a third way: Workbench + AI.",
+      "The AI helped make things. The Workbench kept the work coherent.",
     ],
   },
 ]);
 
 const WORKBENCH_PARAGRAPHS = Object.freeze([
-  "Most AI tools are optimized for immediate output. They answer, draft, summarize, and generate.",
-  "But much valuable human work does not begin as a clean prompt or end as a clean answer.",
-  "It begins as a half-seen pattern, a fragment, a drawing, a sentence, a source excerpt, a question, or a recurring intuition.",
-  "The Workbench preserves the middle: the movement from source to observation to mark to phrase to question to reflection to judgment.",
-  "That makes Workbench larger than coding.",
-  "Workbench is for any workflow where AI can help produce, revise, verify, and preserve artifacts: software, documents, designs, plans, research, operating procedures, business systems, learning materials, or creative work.",
-  "AI is a companion, not the authority.",
-  "The human stays in the role of owner, architect, tester, and judge. The AI helps execute. The Workbench keeps the system from drifting.",
-  "A founder building with AI does not only need faster generation.",
+  "Most AI tools are built for the moment. They answer, draft, summarize, and generate.",
+  "But serious work does not usually begin as a perfect prompt or end as a perfect answer.",
+  "It starts as a hunch, a sketch, a source, a question, a half-finished idea, or something you keep returning to.",
+  "Workbench keeps the middle from disappearing.",
+  "It remembers the source truth, decisions, tests, captures, and reasons behind the work.",
+  "It lets AI help without making AI the authority.",
+  "A founder, learner, builder, or project keeper does not only need faster generation.",
   "They need continuity.",
-  "The Workbench turns valuable language into durable infrastructure: customer insight, product judgment, source evidence, decision history, pitch language, implementation rules, and next action.",
-  "The app implementation is not the memory.",
-  "The Workbench is the memory.",
 ]);
 
 const WORKBENCH_CLOSING_LINES = Object.freeze([
   "Prompts are the interface.",
   "Continuity is the product.",
   "Capture Back is the protocol.",
-  "Language Infrastructure is the compounding business win.",
+  "Language Infrastructure is the compounding win.",
 ]);
 
 const STORY_CLOSING_LINE =
-  "The Bracketeering site is the product. The Workbench is the factory.";
+  "The site is the product. The Workbench is the factory.";
 
 const C64_WORKBENCH_LOOP_IMAGE_SRC = "./assets/workflow/c64_workbench_stage0_learning_loop.jpeg";
 const C64_WORKBENCH_LOOP_TITLE = "The C64 Workbench Loop";
 const C64_WORKBENCH_LOOP_PARAGRAPHS = Object.freeze([
-  "This picture shows the workflow behind the Commodore 64 Learning Lab. The important idea is that the project is not just a folder of code examples. It is a repeatable learning loop.",
-  "The loop starts in a conversation. The conversation is used to think through what the next small learning step should be: a C64 concept, a tiny program, an expected behavior, and a way to verify that the work was actually captured. In this project, the conversation is doing two jobs at once. It helps reason creatively about what to build next, and it also acts as a Workbench guide that keeps the project organized, durable, and re-enterable.",
-  "From there, the work moves into the local repo. This is where the conversation becomes real project material: source code, lab folders, documentation, prompts, cards, captures, and verification scripts. The repo is the durable memory of the project. The conversation can suggest a change, but the repo is where that change becomes inspectable and reusable.",
-  "Each C64 lab follows the same pattern. A lab teaches one machine idea, such as screen memory, color memory, PETSCII characters, keyboard input, sprites, or SID sound. The lab includes a small C program, an expected result, and a build target. The goal is not to make a large application all at once. The goal is to make one concept visible and runnable.",
-  "The terminal is the handoff point between the idea and the machine. make verify checks that the Workbench structure still makes sense. make lab001, make lab002, and the other lab targets build real Commodore 64 .prg files using cc65. Then VICE runs those .prg files in an emulator, giving visible evidence that the lab works.",
-  "That emulator evidence matters. It keeps the loop grounded. The project does not only say \u201cthis should work.\u201d It builds a real C64 program and runs it. The visible screen, color, sprite, sound, or interaction becomes the proof that the lesson is correct.",
-  "Capture Back is the continuity layer. When a useful step is completed, it gets captured back into the Workbench as docs, cards, prompts, and verification rules. That means the project can be resumed later without depending on memory or on a single chat thread. The repo remembers the path.",
-  "The result is a small learning system:",
-  "Conversation \u2192 repo change \u2192 verification \u2192 C64 build \u2192 emulator evidence \u2192 capture back \u2192 next lab.",
-  "That is the Workbench Loop. It lets a beginner-friendly C64 project grow one durable lesson at a time while preserving both the code and the reasoning behind it."
+  "The Commodore 64 makes the Workbench idea easy to see. The machine is small. The rules are visible. A tiny change has to become a real program that the emulator can prove.",
+  "The loop starts with a conversation: what should this little program teach, what should it do on the screen, and how will we know it worked?",
+  "Then the idea becomes a repo change: source files, lab notes, cards, captures, and verification rules.",
+  "The terminal builds the program. The emulator shows the result. The evidence comes back into the Workbench.",
+  "Conversation -> repo change -> verification -> C64 build -> emulator evidence -> Capture Back -> next lab.",
+  "The C64 is not the point. It is just a tiny world where the rules are visible.",
+]);
+
+const PERSONAL_BEAROCRAT_TITLE = "Your Personal Bearocrat";
+const PERSONAL_BEAROCRAT_SUBHEAD = "Every Inference Interface needs one.";
+const PERSONAL_BEAROCRAT_PARAGRAPHS = Object.freeze([
+  "The C64 shows the loop in miniature: language becomes code, code becomes machine behavior, and the emulator proves whether the claim is real.",
+  "But this is not really about retro computing, or even about coding. Coding is just a concrete example.",
+  "The same loop shows up across a life of learning and work. Language becomes decisions. Decisions become artifacts. Artifacts create consequences. Memory has to be kept.",
+  "Your work is full of projects, sources, evidence, health observations, family context, creative drafts, repos, domains, unfinished ideas, and promises to your future self.",
+  "A WB is your personal bearocrat: the continuity layer that curates authority, memory, evidence, approvals, and Capture Back so any Inference Interface can reason safely without becoming the authority.",
+]);
+
+const PERSONAL_BEAROCRAT_LOOP_LINES = Object.freeze([
+  "Inference Interface asks.",
+  "WB Loop curates.",
+  "Registry routes.",
+  "Target WB proves.",
+  "Owner approves.",
+  "Capture Back remembers.",
 ]);
 
 
@@ -143,6 +120,7 @@ export function setupBracketeeringWorkflowPanel(root) {
         ${tabButtonHtml({ id: "story", label: "Story", selected: true })}
         ${tabButtonHtml({ id: "workbench", label: "Workbench", selected: false })}
         ${tabButtonHtml({ id: "c64-loop", label: "C64 Loop", selected: false })}
+        ${tabButtonHtml({ id: "personal-bearocrat", label: "Personal Bearocrat", selected: false })}
       </div>
 
       <section
@@ -191,6 +169,22 @@ export function setupBracketeeringWorkflowPanel(root) {
             >
           </figure>
           ${paragraphsHtml(C64_WORKBENCH_LOOP_PARAGRAPHS)}
+        </section>
+      </section>
+
+      <section
+        class="workflow-panel-tabpanel"
+        role="tabpanel"
+        id="workflow-tabpanel-personal-bearocrat"
+        aria-labelledby="workflow-tab-personal-bearocrat"
+        data-workflow-tabpanel="personal-bearocrat"
+        hidden
+      >
+        <section class="workflow-panel-section workflow-panel-copy workflow-panel-personal-bearocrat">
+          <h3 class="workflow-panel-subheading">${PERSONAL_BEAROCRAT_TITLE}</h3>
+          <p class="workflow-panel-kicker">${PERSONAL_BEAROCRAT_SUBHEAD}</p>
+          ${paragraphsHtml(PERSONAL_BEAROCRAT_PARAGRAPHS)}
+          <p class="workflow-panel-closing">${PERSONAL_BEAROCRAT_LOOP_LINES.join("<br>")}</p>
         </section>
       </section>
 

@@ -495,7 +495,7 @@ export function createBracketView(root) {
     boardNativeSize = nativeSize;
     applyBoardRenderScale(boardScale);
     boardPlane.innerHTML = `
-      <img class="board-background-layer" src="assets/board/knockout_pub_background.jpeg" alt="" aria-hidden="true">
+      <img class="board-background-layer" src="assets/board/pub_background_game1.jpeg" alt="" aria-hidden="true">
       <img class="board-linework-layer" src="assets/playfield/uniform_pick_card_gameboard.svg" alt="" aria-hidden="true">
       <div class="board-pick-layer" data-pick-layer></div>
       <div class="board-final-four-layer" data-final-four-layer></div>
@@ -648,6 +648,9 @@ export function createBracketView(root) {
             ? `${playerFacingSlotLabel(slot)}: pick hidden during Group Stage`
             : `${playerFacingSlotLabel(slot)}: ${slot.pickable ? "choose team" : "waiting for earlier picks"}`
       );
+      if (isR32Slot && displayTeam) {
+        button.title = fullTeamLabel(displayTeam);
+      }
       applyBounds(button, slot.boundsPx);
 
       if (!pickFillSuppressed) {
@@ -688,6 +691,11 @@ export function createBracketView(root) {
             correct.className = "picked-cell-official-truth";
             correct.textContent = `Correct: ${officialTruthLabel(slot.officialTruthTeam)}`;
             value.append(identity, correct);
+          } else if (slot.officialPickComparison?.state === "unreachable") {
+            const eliminated = document.createElement("span");
+            eliminated.className = "picked-cell-eliminated-truth";
+            eliminated.textContent = "Eliminated";
+            value.append(identity, eliminated);
           } else {
             value.append(identity);
           }
@@ -743,18 +751,45 @@ export function createBracketView(root) {
         button.dataset.r32GroupShortcut = r32GroupShortcutId;
         button.dataset.r32GroupPanelShortcut = "true";
         button.setAttribute("data-r32-group-panel-shortcut", "true");
-        button.title = `Open ${r32GroupShortcutLabel} panel`;
+        button.title = `${fullTeamLabel(displayTeam)} — Open ${r32GroupShortcutLabel} panel`;
       }
-      if (slot.officialPickComparison?.state === "correct") {
+      const officialPickState = slot.officialPickComparison?.state || "";
+      const officialTruthMatchedDisplayTeam = Boolean(
+        displayTeam?.id && slot.officialTruthTeam?.id && displayTeam.id === slot.officialTruthTeam.id
+      );
+      const renderedTeamMatchesOfficialWinner = officialTruthMatchedDisplayTeam;
+      const effectiveOfficialPickState = officialPickState === "correct" && renderedTeamMatchesOfficialWinner
+        ? "correct"
+        : officialPickState === "incorrect" || officialPickState === "unreachable"
+          ? officialPickState
+          : renderedTeamMatchesOfficialWinner
+            ? "correct"
+            : "";
+      const slotIdForResultClassification = String(slot.id || slot.slotId || "");
+      const isKnockoutResultSlot = /-R(16|8|4|2|QF|SF|F)-/.test(slotIdForResultClassification)
+        || /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification);
+
+      if (effectiveOfficialPickState && isKnockoutResultSlot) {
+        button.classList.add("is-knockout-result-classified");
+        button.classList.add(`is-knockout-result-${effectiveOfficialPickState}`);
+        button.setAttribute("data-knockout-result-state", effectiveOfficialPickState);
+      }
+
+      if (effectiveOfficialPickState === "correct") {
         button.classList.add("has-official-correct-pick");
         button.setAttribute("data-official-pick-state", "correct");
       }
-      if (slot.officialPickComparison?.state === "incorrect") {
+      if (officialPickState === "incorrect") {
         button.classList.add("has-official-incorrect-pick");
         button.setAttribute("data-official-pick-state", "incorrect");
         if (slot.officialTruthTeam) {
           button.title = `Official result: ${fullTeamLabel(slot.officialTruthTeam)}`;
         }
+      }
+      if (officialPickState === "unreachable") {
+        button.classList.add("is-unreachable-pick");
+        button.setAttribute("data-official-pick-state", "unreachable");
+        button.title = "Eliminated by an earlier official result";
       }
 
       if (!pickFillSuppressed && displayTeam && slot.pickValidity?.state === "valid") {
@@ -903,11 +938,79 @@ export function createBracketView(root) {
 
 
   function playerFacingPickMenuTitle(menu, slot) {
+    if (menu?.matchDisplay?.completed) return "Match result";
+    if (menu?.matchDisplay) return "Match details";
+
     const title = String(menu?.title || "").trim();
     if (title && !isInternalPickSlotId(title) && isPlayerFacingPickMenuSourceLabel(title)) {
       return title;
     }
     return "Make your pick";
+  }
+
+  function formatKnockoutMatchDate(matchDisplay) {
+    if (matchDisplay?.kickoffIso) {
+      try {
+        return new Date(matchDisplay.kickoffIso).toLocaleString([], {
+          weekday: "short",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+        });
+      } catch {
+        // Fall through to checked-in text fields.
+      }
+    }
+    if (matchDisplay?.date && matchDisplay?.kickoffEt) return `${matchDisplay.date} · ${matchDisplay.kickoffEt} ET`;
+    if (matchDisplay?.date) return matchDisplay.date;
+    return "Date/time TBD";
+  }
+
+  function renderKnockoutMatchDisplay(popover, matchDisplay) {
+    if (!matchDisplay) return;
+
+    const panel = document.createElement("section");
+    panel.className = "pick-menu-match-details";
+
+    const date = document.createElement("div");
+    date.className = "pick-menu-match-date";
+    date.textContent = formatKnockoutMatchDate(matchDisplay);
+    panel.append(date);
+
+    const fixture = document.createElement("div");
+    fixture.className = "pick-menu-match-fixture";
+    fixture.textContent = matchDisplay.completed
+      ? (matchDisplay.resultLabel || "Official result")
+      : (matchDisplay.fixtureLabel || `${matchDisplay.homeSlot || "TBD"} vs ${matchDisplay.awaySlot || "TBD"}`);
+    panel.append(fixture);
+
+    if (matchDisplay.completed && matchDisplay.winnerTeamName) {
+      const winner = document.createElement("div");
+      winner.className = "pick-menu-match-winner";
+      winner.textContent = `Winner: ${matchDisplay.winnerTeamName}`;
+      panel.append(winner);
+    }
+
+    const venueParts = [matchDisplay.venue, matchDisplay.city].filter(Boolean);
+    if (venueParts.length) {
+      const venue = document.createElement("div");
+      venue.className = "pick-menu-match-venue";
+      venue.textContent = venueParts.join(" · ");
+      panel.append(venue);
+    }
+
+    if (matchDisplay.extendedHighlightsUrl) {
+      const link = document.createElement("a");
+      link.className = "pick-menu-highlight-link";
+      link.href = matchDisplay.extendedHighlightsUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Extended highlights ↗";
+      panel.append(link);
+    }
+
+    popover.append(panel);
   }
 
   function visibleBoardViewport() {
@@ -1063,14 +1166,16 @@ export function createBracketView(root) {
     topbar.append(titleBlock, close);
     popover.append(topbar);
 
-    if (menuModel.currentPick) {
+    renderKnockoutMatchDisplay(popover, menuModel.matchDisplay);
+
+    if (menuModel.currentPick && !menuModel.matchDisplay) {
       const current = document.createElement("div");
       current.className = "pick-menu-current-pick";
       current.textContent = `Current pick: ${fullTeamLabel(menuModel.currentPick)}`;
       popover.append(current);
     }
 
-    if (menuModel.canClear) {
+    if (menuModel.canClear && !menuModel.matchDisplay) {
       const clear = document.createElement("button");
       clear.type = "button";
       clear.className = "pick-menu-clear-top";
@@ -1246,11 +1351,7 @@ export function createBracketView(root) {
     const title = document.createElement("h2");
     title.textContent = groupContext.label || `Group ${groupContext.groupId}`;
 
-    const sourceStatus = document.createElement("p");
-    sourceStatus.className = "group-panel-source-status";
-    sourceStatus.textContent = groupContext.sourceSummary || "Local checked-in standings snapshot.";
-
-    titleBlock.append(title, sourceStatus);
+    titleBlock.append(title);
 
     const close = document.createElement("button");
     close.type = "button";
@@ -1274,12 +1375,6 @@ export function createBracketView(root) {
     panel.append(table);
 
     renderMatchEvidence(panel, "Completed matches", groupContext.completedMatches || [], "No completed matches in the local snapshot yet.");
-    renderMatchEvidence(panel, "Upcoming matches", groupContext.upcomingMatches || [], "No upcoming matches in the local snapshot.");
-
-    const source = document.createElement("p");
-    source.className = "group-panel-source";
-    source.textContent = "Local checked-in model data only. Runtime does not scrape ESPN.";
-    panel.append(source);
 
     layer.append(panel);
 
