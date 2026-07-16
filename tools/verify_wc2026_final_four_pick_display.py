@@ -45,6 +45,8 @@ require("site/css/board.css", 'grid-template-areas: "missed-pick-stack"', "misse
 require("site/css/board.css", "transform: translateX(-6px)", "missed flag uses half left offset")
 require("site/css/board.css", "transform: translateX(6px)", "struck code uses half right offset")
 require("site/css/board.css", ".picked-cell-result-comparison .picked-cell-official-truth .picked-cell-correct-flag", "winning flag remains unobscured")
+require("site/css/board.css", 'grid-template-areas: "winning-pick-stack"', "winning flag and code share a layered stack")
+require("site/css/board.css", ".picked-cell-result-comparison .picked-cell-official-truth .picked-cell-correct-code", "winning code paints above winning flag")
 
 require("site/css/board.css", ".board-final-four-layer", "Final Four board layer style")
 require("site/css/board.css", ".final-four-pick-row", "Final Four pick row style")
