@@ -1,5 +1,5 @@
-import { createBracketModel } from "./mvc/model.js?v=remove-old-saved-board-choice-1782492355";
-import { createBracketView } from "./mvc/view.js?v=remove-old-saved-board-choice-1782492355";
+import { createBracketModel } from "./mvc/model.js?v=semifinal-results-72ebf60";
+import { createBracketView } from "./mvc/view.js?v=semifinal-results-72ebf60";
 import { createBracketController } from "./mvc/controller.js?v=remove-old-saved-board-choice-1782492355";
 import { createSupabaseAuthService } from "./services/SupabaseAuthService.js?v=remove-old-saved-board-choice-1782492355";
 import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js?v=remove-old-saved-board-choice-1782492355";
@@ -43,6 +43,7 @@ function setupInfoPanel(root) {
     if (event.key === "Escape" && !panel.hidden) closeInfoPanel();
   });
 }
+
 
 
 const ACTIVE_GAME_BACKGROUND_IMAGES = Object.freeze({
@@ -164,5 +165,3 @@ if (new URLSearchParams(window.location.search).get("devSupabaseBracketSmoke") =
       console.error("[SupabaseBracketStoreSmokeTest] module load failed", error);
     });
 }
-
-
