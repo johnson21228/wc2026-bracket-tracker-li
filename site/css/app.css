@@ -3112,3 +3112,66 @@ body [data-supabase-identity-surface] .identity-compact-card .identity-status-bu
 .pool-chat-form button:focus-visible {
   background: rgba(255, 255, 255, 0.2);
 }
+
+/* Stable official-result feedback for missed picks.
+   Keep the correct winner visible as a badge rather than squeezing it into the team row. */
+.pick-slot-button.has-official-incorrect-pick {
+  position: absolute;
+  overflow: visible;
+}
+
+.pick-slot-button.has-official-incorrect-pick > .picked-cell-official-truth {
+  position: absolute;
+  left: 50%;
+  bottom: -16px;
+  z-index: 6;
+  display: block;
+  max-width: calc(100% + 36px);
+  padding: 2px 5px;
+  border: 1px solid rgba(255, 104, 104, .92);
+  border-radius: 999px;
+  background: rgba(72, 10, 14, .94);
+  color: #fff0f0;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: .01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, .54);
+  pointer-events: none;
+}
+
+/* Center Final Four rows use the same official-result visual language. */
+.final-four-pick-row.has-official-correct-pick {
+  outline: 2px solid rgba(96, 190, 132, .88);
+  outline-offset: 1px;
+  box-shadow: 0 0 8px rgba(96, 190, 132, .28);
+}
+
+.final-four-pick-row.has-official-incorrect-pick {
+  grid-template-columns: 1fr auto;
+  position: relative;
+  outline: 2px solid rgba(255, 83, 83, .95);
+  outline-offset: 1px;
+  background: rgba(92, 29, 31, .78);
+  border-color: rgba(255, 106, 106, .82);
+  box-shadow: 0 0 8px rgba(255, 83, 83, .30);
+}
+
+.final-four-pick-row.has-official-incorrect-pick .final-four-pick-value {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.final-four-pick-official-truth {
+  grid-column: 1 / -1;
+  justify-self: end;
+  color: #ffe4e4;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
