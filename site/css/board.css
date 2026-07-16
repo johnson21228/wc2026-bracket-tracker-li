@@ -668,6 +668,26 @@
   gap: 4px;
 }
 
+.picked-cell-result-comparison .picked-cell-identity {
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: 1fr;
+  grid-template-areas: "missed-pick-stack";
+}
+
+.picked-cell-result-comparison .picked-cell-identity .picked-cell-flag {
+  grid-area: missed-pick-stack;
+  z-index: 0;
+  opacity: .58;
+}
+
+.picked-cell-result-comparison .picked-cell-identity .picked-cell-code {
+  grid-area: missed-pick-stack;
+  z-index: 1;
+  justify-self: center;
+  align-self: center;
+}
+
 .picked-cell-correct-flag {
   display: flex;
   align-items: center;
