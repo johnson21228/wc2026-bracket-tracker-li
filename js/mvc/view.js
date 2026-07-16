@@ -771,7 +771,9 @@ export function createBracketView(root) {
             : "";
       const slotIdForResultClassification = String(slot.id || slot.slotId || "");
       const isKnockoutResultSlot = /-R(16|8|4|2|QF|SF|F)-/.test(slotIdForResultClassification)
-        || /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification);
+        || /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification)
+        || slotIdForResultClassification === "FINAL-LEFT"
+        || slotIdForResultClassification === "FINAL-RIGHT";
 
       if (effectiveOfficialPickState && isKnockoutResultSlot) {
         button.classList.add("is-knockout-result-classified");
@@ -867,13 +869,6 @@ export function createBracketView(root) {
       button.className = "final-four-pick-row";
       button.dataset.slotId = pick.slotId;
       button.dataset.round = pick.round;
-      const isOfficialSemifinalWinner =
-        (pick.slotId === "FINAL-LEFT" || pick.slotId === "FINAL-RIGHT")
-        && Boolean(pick.officialResultTeam);
-      if (isOfficialSemifinalWinner) {
-        button.classList.add("has-official-semifinal-winner");
-        button.dataset.knockoutResultState = "correct";
-      }
       button.disabled = !pick.pickable || pickInteractionSuppressed;
       if (pickInteractionSuppressed) {
         button.classList.add("is-pick-interaction-suppressed");
