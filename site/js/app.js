@@ -45,19 +45,13 @@ function setupInfoPanel(root) {
 }
 
 function setupCurrentPlayerScore({ root, authService, standingsStore }) {
-  const totalPossiblePoints = 80;
   const scoreDisplay = root?.querySelector?.("[data-current-player-score]");
   if (!scoreDisplay || !authService?.subscribe || !standingsStore?.listPlayerStandings) return;
 
   let refreshVersion = 0;
 
   function renderScore(value) {
-    if (!Number.isFinite(Number(value))) {
-      scoreDisplay.textContent = "Pool pts: — = 80 possible pts - — missed pts";
-      return;
-    }
-    const score = Math.max(0, Math.min(totalPossiblePoints, Number(value)));
-    scoreDisplay.textContent = `Pool pts: ${score} = ${totalPossiblePoints} possible pts - ${totalPossiblePoints - score} missed pts`;
+    scoreDisplay.textContent = Number.isFinite(Number(value)) ? `Score ${Number(value)}` : "Score —";
   }
 
   authService.subscribe(async (authState) => {
@@ -68,7 +62,7 @@ function setupCurrentPlayerScore({ root, authService, standingsStore }) {
       return;
     }
 
-    scoreDisplay.textContent = "Pool pts: …";
+    scoreDisplay.textContent = "Score …";
     try {
       const rows = await standingsStore.listPlayerStandings();
       if (version !== refreshVersion) return;

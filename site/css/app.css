@@ -1863,7 +1863,7 @@ body {
 
   --wc-top-profile-width: 118px;
   --wc-top-standings-width: 168px;
-  --wc-top-score-width: 300px;
+  --wc-top-score-width: 88px;
 }
 
 /* Zoom group: + and − only. */
@@ -1934,7 +1934,7 @@ body {
   color: rgba(255, 255, 255, .94);
   box-shadow: 0 6px 18px rgba(0, 0, 0, .28);
   backdrop-filter: blur(10px);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 850;
   line-height: 1;
   white-space: nowrap;
@@ -2057,12 +2057,9 @@ body {
 
   --wc-top-profile-width: 118px;
   --wc-top-standings-width: 138px;
-  --wc-top-score-width: 300px;
 }
 
 /* Put the actual info button next to Profile. */
-.map-board-icon-controls [data-info-panel-open],
-.map-board-icon-controls [data-rules-panel-open],
 .map-icon-controls [data-info-panel-open],
 .map-icon-controls [data-rules-panel-open] {
   position: fixed !important;
@@ -2077,11 +2074,11 @@ body {
   z-index: 19000 !important;
 }
 
-/* Profile immediately follows the points equation. */
+/* Profile immediately follows info. */
 .supabase-identity-surface .identity-status-button {
   position: fixed !important;
   top: var(--wc-top-chrome-top) !important;
-  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap) + var(--wc-top-score-width) + var(--wc-top-connected-gap)) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap)) !important;
   width: var(--wc-top-profile-width) !important;
   min-width: var(--wc-top-profile-width) !important;
   max-width: var(--wc-top-profile-width) !important;
@@ -2095,7 +2092,7 @@ body {
 .player-standings-control .standings-icon-button {
   position: fixed !important;
   top: var(--wc-top-chrome-top) !important;
-  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap) + var(--wc-top-score-width) + var(--wc-top-connected-gap) + var(--wc-top-profile-width) + var(--wc-top-connected-gap)) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap) + var(--wc-top-profile-width) + var(--wc-top-connected-gap)) !important;
   width: var(--wc-top-standings-width) !important;
   min-width: var(--wc-top-standings-width) !important;
   max-width: var(--wc-top-standings-width) !important;
