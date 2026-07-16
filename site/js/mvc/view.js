@@ -545,6 +545,16 @@ export function createBracketView(root) {
     return false;
   }
 
+  function missedPointsForSlot(slotId) {
+    const id = String(slotId || "").toUpperCase();
+    if (/^[LR]-R16-\d{2}$/.test(id)) return 1;
+    if (/^[LR]-QF-\d{2}$/.test(id)) return 2;
+    if (/^[LR]-SF-\d{2}$/.test(id)) return 4;
+    if (id === "FINAL-LEFT" || id === "FINAL-RIGHT") return 8;
+    if (id === "CHAMPION") return 16;
+    return 0;
+  }
+
   function normalizeTeamKey(value) {
     return String(value || "").trim().toUpperCase();
   }
@@ -704,6 +714,14 @@ export function createBracketView(root) {
 
             correct.append(correctFlag, correctCode);
             comparison.append(identity, correct);
+
+            const missedPoints = missedPointsForSlot(slot.slotId);
+            if (missedPoints > 0) {
+              const missedBadge = document.createElement("span");
+              missedBadge.className = "picked-cell-missed-points";
+              missedBadge.textContent = `${missedPoints} ${missedPoints === 1 ? "pt" : "pts"} missed`;
+              comparison.append(missedBadge);
+            }
             value.append(comparison);
           } else if (slot.officialPickComparison?.state === "unreachable") {
             const eliminated = document.createElement("span");
