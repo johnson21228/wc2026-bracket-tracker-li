@@ -7,9 +7,6 @@ checks = {
     "site/js/app.js": [
         "createSupabaseIdentitySurface",
         "createPlayerStandingsSurface",
-        "setupCurrentPlayerScore",
-        "standingsStore.listPlayerStandings()",
-        "currentPlayer?.score ?? 0",
     ],
     "site/css/app.css": [
         "CB 1026 hard override: identity child stays inside right-pinned card",
@@ -27,9 +24,6 @@ checks = {
         "border-radius: 999px !important",
         "font-size: 17px !important",
         "content: none !important",
-        ".current-player-score",
-        "--wc-top-score-width: 88px",
-        "font-variant-numeric: tabular-nums",
     ],
     "site/js/standings/PlayerStandingsSurface.js": [
         "button.textContent = \"Pool\"",

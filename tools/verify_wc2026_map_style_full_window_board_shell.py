@@ -32,7 +32,7 @@ def main() -> int:
     ]:
         require_contains(index, hook, "required runtime hook")
 
-    require_contains(index, "css/app.css?v=current-player-score-20260716", "current map-style CSS cache tag")
+    require_contains(index, "css/app.css?v=map-style-full-window-board", "map-style CSS cache tag")
     require_contains(view_js, 'src="assets/playfield/uniform_pick_card_gameboard.svg"', "single SVG truth linework source")
 
     require_contains(app_css, "Card 260: map-style full-window board shell", "Card 260 CSS marker")

@@ -6,7 +6,7 @@
   <title>WC2026 Bracket Tracker</title>
   <link rel="preload" as="image" href="assets/board/pub_background_game1.jpeg">
   <link rel="preload" as="image" href="assets/playfield/uniform_pick_card_gameboard.svg">
-  <link rel="stylesheet" href="css/app.css?v=current-player-score-20260716">
+  <link rel="stylesheet" href="css/app.css?v=map-style-full-window-board">
   <link rel="stylesheet" href="css/board.css?v=eliminated-missed-points-badge-20260716">
   <link rel="stylesheet" href="css/dev.css?v=active-game-background">
 </head>
@@ -31,7 +31,6 @@
                 <path d="M22 18.6v14.2" fill="none" stroke="currentColor" stroke-width="3.25" stroke-linecap="round"/>
           </svg>
         </button>
-        <output class="current-player-score" data-current-player-score aria-live="polite" aria-label="Current player score">Score —</output>
       </div>
 
       <header class="app-header">
@@ -173,6 +172,6 @@
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/services/PickLockdownPolicy.js"></script>
-  <script type="module" src="js/app.js?v=current-player-score-20260716"></script>
+  <script type="module" src="js/app.js?v=eliminated-missed-points-badge-20260716"></script>
 </body>
 </html>
