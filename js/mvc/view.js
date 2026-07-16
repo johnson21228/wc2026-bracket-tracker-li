@@ -762,13 +762,11 @@ export function createBracketView(root) {
         displayTeam?.id && slot.officialTruthTeam?.id && displayTeam.id === slot.officialTruthTeam.id
       );
       const renderedTeamMatchesOfficialWinner = officialTruthMatchedDisplayTeam;
-      const effectiveOfficialPickState = renderedTeamMatchesOfficialWinner
-        ? "correct"
-        : officialPickState === "incorrect" || officialPickState === "unreachable"
-          ? officialPickState
-          : renderedTeamMatchesOfficialWinner
-            ? "correct"
-            : "";
+      const effectiveOfficialPickState = officialPickState === "incorrect" || officialPickState === "unreachable"
+        ? officialPickState
+        : renderedTeamMatchesOfficialWinner
+          ? "correct"
+          : "";
       const slotIdForResultClassification = String(slot.id || slot.slotId || "");
       const isKnockoutResultSlot = /-R(16|8|4|2|QF|SF|F)-/.test(slotIdForResultClassification)
         || /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification)
