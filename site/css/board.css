@@ -944,6 +944,15 @@
   border-color: rgba(198, 255, 211, .58);
 }
 
+.final-four-pick-row.has-pick.has-official-semifinal-winner {
+  border-color: rgba(96, 190, 132, .88);
+  outline: 2px solid rgba(96, 190, 132, .88);
+  outline-offset: 2px;
+  box-shadow:
+    0 0 0 1px rgba(96, 190, 132, .42),
+    0 0 10px rgba(96, 190, 132, .32);
+}
+
 .final-four-pick-row:not(:disabled):hover,
 .final-four-pick-row:not(:disabled):focus-visible {
   outline: 2px solid rgba(255, 229, 159, .86);
