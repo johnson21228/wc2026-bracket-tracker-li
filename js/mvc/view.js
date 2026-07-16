@@ -691,10 +691,7 @@ export function createBracketView(root) {
             && slot.officialTruthTeam
             && displayTeam.id !== slot.officialTruthTeam.id
           ) {
-            const correct = document.createElement("span");
-            correct.className = "picked-cell-official-truth";
-            correct.textContent = `Correct: ${officialTruthLabel(slot.officialTruthTeam)}`;
-            value.append(identity, correct);
+            value.append(identity);
           } else if (slot.officialPickComparison?.state === "unreachable") {
             const eliminated = document.createElement("span");
             eliminated.className = "picked-cell-eliminated-truth";
@@ -788,6 +785,11 @@ export function createBracketView(root) {
         button.setAttribute("data-official-pick-state", "incorrect");
         if (slot.officialTruthTeam) {
           button.title = `Official result: ${fullTeamLabel(slot.officialTruthTeam)}`;
+          const correct = document.createElement("span");
+          correct.className = "picked-cell-official-truth";
+          correct.textContent = `Correct: ${officialTruthLabel(slot.officialTruthTeam)}`;
+          correct.setAttribute("aria-label", `Correct pick: ${fullTeamLabel(slot.officialTruthTeam)}`);
+          button.append(correct);
         }
       }
       if (officialPickState === "unreachable") {
@@ -890,7 +892,33 @@ export function createBracketView(root) {
         button.classList.add("is-unpicked");
       }
 
-      button.append(label, value);
+      const officialPickState = pick.officialPickComparison?.state || "";
+      if (officialPickState === "correct") {
+        button.classList.add("has-official-correct-pick");
+        button.classList.add("is-knockout-result-classified");
+        button.classList.add("is-knockout-result-correct");
+        button.dataset.officialPickState = "correct";
+        button.dataset.knockoutResultState = "correct";
+      }
+      if (officialPickState === "incorrect") {
+        button.classList.add("has-official-incorrect-pick");
+        button.classList.add("is-knockout-result-classified");
+        button.classList.add("is-knockout-result-incorrect");
+        button.dataset.officialPickState = "incorrect";
+        button.dataset.knockoutResultState = "incorrect";
+        if (pick.officialTruthTeam) {
+          const correct = document.createElement("span");
+          correct.className = "final-four-pick-official-truth";
+          correct.textContent = `Correct: ${officialTruthLabel(pick.officialTruthTeam)}`;
+          correct.setAttribute("aria-label", `Correct pick: ${fullTeamLabel(pick.officialTruthTeam)}`);
+          button.append(label, value, correct);
+          button.title = `Official result: ${fullTeamLabel(pick.officialTruthTeam)}`;
+        } else {
+          button.append(label, value);
+        }
+      } else {
+        button.append(label, value);
+      }
       list.append(button);
     }
 
