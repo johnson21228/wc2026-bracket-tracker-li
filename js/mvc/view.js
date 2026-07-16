@@ -867,6 +867,13 @@ export function createBracketView(root) {
       button.className = "final-four-pick-row";
       button.dataset.slotId = pick.slotId;
       button.dataset.round = pick.round;
+      const isOfficialSemifinalWinner =
+        (pick.slotId === "FINAL-LEFT" || pick.slotId === "FINAL-RIGHT")
+        && Boolean(pick.officialResultTeam);
+      if (isOfficialSemifinalWinner) {
+        button.classList.add("has-official-semifinal-winner");
+        button.dataset.knockoutResultState = "correct";
+      }
       button.disabled = !pick.pickable || pickInteractionSuppressed;
       if (pickInteractionSuppressed) {
         button.classList.add("is-pick-interaction-suppressed");
