@@ -41,8 +41,9 @@ require("site/css/board.css", ".picked-cell-result-comparison", "incorrect and c
 require("site/css/board.css", ".picked-cell-correct-flag", "correct winner flag inside missed-pick slot")
 require("site/css/board.css", ".picked-cell-result-comparison .picked-cell-identity .picked-cell-flag", "missed flag left-side element")
 require("site/css/board.css", ".picked-cell-result-comparison .picked-cell-identity .picked-cell-code", "struck code right-side element")
-require("site/css/board.css", "justify-content: flex-start", "missed and winning flags align left")
-require("site/css/board.css", "justify-self: end", "three-letter codes align right of their flags")
+require("site/css/board.css", 'grid-template-areas: "missed-pick-stack"', "missed flag and code share a layered stack")
+require("site/css/board.css", "transform: translateX(-6px)", "missed flag uses half left offset")
+require("site/css/board.css", "transform: translateX(6px)", "struck code uses half right offset")
 require("site/css/board.css", ".picked-cell-result-comparison .picked-cell-official-truth .picked-cell-correct-flag", "winning flag remains unobscured")
 
 require("site/css/board.css", ".board-final-four-layer", "Final Four board layer style")
