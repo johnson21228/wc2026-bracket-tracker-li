@@ -5,10 +5,13 @@ import sys
 errors = []
 
 view = Path("site/js/mvc/view.js").read_text()
+model = Path("site/js/mvc/model.js").read_text()
 makefile = Path("Makefile").read_text()
 
 required_view = [
     "const officialPickState = slot.officialPickComparison?.state || \"\";",
+    "return slot.officialResultTeam || slot.selectedTeam;",
+    "&& displayTeam.id !== slot.officialTruthTeam.id",
     "const slotIdForResultClassification = String(slot.id || slot.slotId || \"\");",
     "const isKnockoutResultSlot = /-R(16|8|4|2|QF|SF|F)-/.test(slotIdForResultClassification)",
     "|| /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification);",
@@ -22,6 +25,13 @@ required_view = [
 for token in required_view:
     if token not in view:
         errors.append(f"site/js/mvc/view.js missing {token}")
+
+for token in [
+    "const officialResult = officialKnockoutResultsByWinnerSlotId.get(slot.slotId) || null;",
+    "officialResultTeam,",
+]:
+    if token not in model:
+        errors.append(f"site/js/mvc/model.js missing {token}")
 
 for forbidden in [
     "site/data/current/official_truth.json",

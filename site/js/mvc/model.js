@@ -1534,6 +1534,10 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       const choices = getChoices(slot.slotId);
       const logic = r32LogicByGeometryId.get(slot.slotId);
       const game2ResolvedTeam = slot.round === "R32" ? resolvedGame2R32Team(slot.slotId) : null;
+      const officialResult = officialKnockoutResultsByWinnerSlotId.get(slot.slotId) || null;
+      const officialResultTeam = officialResult?.winnerTeamId
+        ? teamById.get(officialResult.winnerTeamId) || null
+        : null;
       return {
         slotId: slot.slotId,
         round: slot.round,
@@ -1545,6 +1549,7 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
         r32ReadOnlyForPlayer: slot.round === "R32" && !adminOfficialR32EditorActive,
         choices,
         selectedTeam: team,
+        officialResultTeam,
         game2ResolvedTeam,
         game2ResolvedSource: game2ResolvedTeam?.game2R32Source || null,
         pickValidity: pickValidityForSlot(slot, team),

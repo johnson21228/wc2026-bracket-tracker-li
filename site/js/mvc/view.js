@@ -538,7 +538,7 @@ export function createBracketView(root) {
     if (shouldSuppressPickFillForSlot(slot)) {
       return null;
     }
-    return slot.selectedTeam;
+    return slot.officialResultTeam || slot.selectedTeam;
   }
 
   function isGame2ResolvedR32Display(slot, displayTeam) {
@@ -686,7 +686,11 @@ export function createBracketView(root) {
             warning.setAttribute("aria-label", slot.pickValidity.reason || "Invalid pick");
             identity.append(warning);
           }
-          if (slot.officialPickComparison?.state === "incorrect" && slot.officialTruthTeam) {
+          if (
+            slot.officialPickComparison?.state === "incorrect"
+            && slot.officialTruthTeam
+            && displayTeam.id !== slot.officialTruthTeam.id
+          ) {
             const correct = document.createElement("span");
             correct.className = "picked-cell-official-truth";
             correct.textContent = `Correct: ${officialTruthLabel(slot.officialTruthTeam)}`;
@@ -758,7 +762,7 @@ export function createBracketView(root) {
         displayTeam?.id && slot.officialTruthTeam?.id && displayTeam.id === slot.officialTruthTeam.id
       );
       const renderedTeamMatchesOfficialWinner = officialTruthMatchedDisplayTeam;
-      const effectiveOfficialPickState = officialPickState === "correct" && renderedTeamMatchesOfficialWinner
+      const effectiveOfficialPickState = renderedTeamMatchesOfficialWinner
         ? "correct"
         : officialPickState === "incorrect" || officialPickState === "unreachable"
           ? officialPickState
