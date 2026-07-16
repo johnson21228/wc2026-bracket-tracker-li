@@ -10,6 +10,9 @@ makefile = Path("Makefile").read_text()
 
 required_view = [
     "const officialPickState = slot.officialPickComparison?.state || \"\";",
+    'const effectiveOfficialPickState = officialPickState === "incorrect" || officialPickState === "unreachable"',
+    '? officialPickState',
+    ': renderedTeamMatchesOfficialWinner',
     "return slot.officialResultTeam || slot.selectedTeam;",
     "&& displayTeam.id !== slot.officialTruthTeam.id",
     "const slotIdForResultClassification = String(slot.id || slot.slotId || \"\");",
