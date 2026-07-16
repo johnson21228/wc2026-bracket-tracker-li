@@ -1,5 +1,5 @@
 import { createBracketModel } from "./mvc/model.js?v=final-four-official-winners-20260715";
-import { createBracketView } from "./mvc/view.js?v=restore-incorrect-pick-outlines-20260716";
+import { createBracketView } from "./mvc/view.js?v=restore-missed-pick-dual-flags-20260716";
 import { createBracketController } from "./mvc/controller.js?v=remove-old-saved-board-choice-1782492355";
 import { createSupabaseAuthService } from "./services/SupabaseAuthService.js?v=remove-old-saved-board-choice-1782492355";
 import { createSupabaseProfileStore } from "./services/SupabaseProfileStore.js?v=remove-old-saved-board-choice-1782492355";
