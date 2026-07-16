@@ -44,44 +44,6 @@ function setupInfoPanel(root) {
   });
 }
 
-function setupCurrentPlayerScore({ root, authService, standingsStore }) {
-  const totalPossiblePoints = 80;
-  const scoreDisplay = root?.querySelector?.("[data-current-player-score]");
-  if (!scoreDisplay || !authService?.subscribe || !standingsStore?.listPlayerStandings) return;
-
-  let refreshVersion = 0;
-
-  function renderScore(value) {
-    if (!Number.isFinite(Number(value))) {
-      scoreDisplay.textContent = "Pool pts: — = 80 possible pts - — missed pts";
-      return;
-    }
-    const score = Math.max(0, Math.min(totalPossiblePoints, Number(value)));
-    scoreDisplay.textContent = `Pool pts: ${score} = ${totalPossiblePoints} possible pts - ${totalPossiblePoints - score} missed pts`;
-  }
-
-  authService.subscribe(async (authState) => {
-    const version = ++refreshVersion;
-    const userId = authState?.status === "signed-in" ? authState?.user?.id : "";
-    if (!userId) {
-      renderScore(null);
-      return;
-    }
-
-    scoreDisplay.textContent = "Pool pts: …";
-    try {
-      const rows = await standingsStore.listPlayerStandings();
-      if (version !== refreshVersion) return;
-      const currentPlayer = rows.find((row) => String(row?.userId || "") === String(userId));
-      renderScore(currentPlayer?.score ?? 0);
-    } catch (error) {
-      if (version !== refreshVersion) return;
-      console.warn("[CurrentPlayerScore] score unavailable", error);
-      renderScore(null);
-    }
-  });
-}
-
 
 
 const ACTIVE_GAME_BACKGROUND_IMAGES = Object.freeze({
@@ -172,7 +134,6 @@ async function main() {
   const identitySurface = createSupabaseIdentitySurface({ root, authService, profileStore });
   identitySurface.start();
   const standingsStore = createSupabasePlayerStandingsStore();
-  setupCurrentPlayerScore({ root, authService, standingsStore });
   const standingsSurface = createPlayerStandingsSurface({ root, authService, profileStore, standingsStore });
   standingsSurface.start();
   createAccountSaveActionSurface({

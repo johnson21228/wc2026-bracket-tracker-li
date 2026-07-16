@@ -1863,7 +1863,6 @@ body {
 
   --wc-top-profile-width: 118px;
   --wc-top-standings-width: 168px;
-  --wc-top-score-width: 300px;
 }
 
 /* Zoom group: + and − only. */
@@ -1915,37 +1914,11 @@ body {
   margin: 0 !important;
 }
 
-/* Current player score sits immediately after info. */
-.current-player-score {
-  position: fixed !important;
-  top: var(--wc-top-chrome-top) !important;
-  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-chrome-gap)) !important;
-  z-index: 19000 !important;
-  width: var(--wc-top-score-width) !important;
-  height: var(--wc-top-chrome-size) !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 0 9px;
-  border: 2px solid rgba(255, 255, 255, .26);
-  border-radius: 999px;
-  background: rgba(15, 23, 42, .76);
-  color: rgba(255, 255, 255, .94);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .28);
-  backdrop-filter: blur(10px);
-  font-size: 11px;
-  font-weight: 850;
-  line-height: 1;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Profile sits immediately after score. */
+/* Profile sits immediately after info. */
 .supabase-identity-surface .identity-status-button {
   position: fixed !important;
   top: var(--wc-top-chrome-top) !important;
-  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-chrome-gap) + var(--wc-top-score-width) + var(--wc-top-chrome-gap)) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-chrome-gap)) !important;
   z-index: 19000 !important;
 }
 
@@ -1953,7 +1926,7 @@ body {
 .player-standings-control .standings-icon-button {
   position: fixed !important;
   top: var(--wc-top-chrome-top) !important;
-  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-chrome-gap) + var(--wc-top-score-width) + var(--wc-top-chrome-gap) + var(--wc-top-profile-width) + var(--wc-top-chrome-gap)) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-chrome-gap) + var(--wc-top-profile-width) + var(--wc-top-chrome-gap)) !important;
   z-index: 19000 !important;
 }
 
@@ -2057,12 +2030,9 @@ body {
 
   --wc-top-profile-width: 118px;
   --wc-top-standings-width: 138px;
-  --wc-top-score-width: 300px;
 }
 
 /* Put the actual info button next to Profile. */
-.map-board-icon-controls [data-info-panel-open],
-.map-board-icon-controls [data-rules-panel-open],
 .map-icon-controls [data-info-panel-open],
 .map-icon-controls [data-rules-panel-open] {
   position: fixed !important;
@@ -2077,11 +2047,11 @@ body {
   z-index: 19000 !important;
 }
 
-/* Profile immediately follows the points equation. */
+/* Profile immediately follows info. */
 .supabase-identity-surface .identity-status-button {
   position: fixed !important;
   top: var(--wc-top-chrome-top) !important;
-  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap) + var(--wc-top-score-width) + var(--wc-top-connected-gap)) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap)) !important;
   width: var(--wc-top-profile-width) !important;
   min-width: var(--wc-top-profile-width) !important;
   max-width: var(--wc-top-profile-width) !important;
@@ -2095,7 +2065,7 @@ body {
 .player-standings-control .standings-icon-button {
   position: fixed !important;
   top: var(--wc-top-chrome-top) !important;
-  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap) + var(--wc-top-score-width) + var(--wc-top-connected-gap) + var(--wc-top-profile-width) + var(--wc-top-connected-gap)) !important;
+  left: calc(var(--wc-top-info-left) + var(--wc-top-chrome-size) + var(--wc-top-connected-gap) + var(--wc-top-profile-width) + var(--wc-top-connected-gap)) !important;
   width: var(--wc-top-standings-width) !important;
   min-width: var(--wc-top-standings-width) !important;
   max-width: var(--wc-top-standings-width) !important;
