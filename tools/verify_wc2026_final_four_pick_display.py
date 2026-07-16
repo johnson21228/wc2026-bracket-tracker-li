@@ -33,6 +33,10 @@ require("site/js/mvc/view.js", "function renderFinalFourPanel", "Final Four rend
 require("site/js/mvc/view.js", "final-four-panel", "Final Four panel class")
 require("site/js/mvc/view.js", "handlers.onFinalFourSlotClick", "Final Four click handler")
 require("site/js/mvc/view.js", "renderFinalFourPanel(state.finalFour)", "Final Four render call")
+require("site/js/mvc/view.js", 'slotIdForResultClassification === "FINAL-LEFT"', "left semifinal winner result classification")
+require("site/js/mvc/view.js", 'slotIdForResultClassification === "FINAL-RIGHT"', "right semifinal winner result classification")
+
+require("site/css/app.css", '.pick-slot-button.has-pick.has-valid-pick[data-knockout-result-state="correct"]', "double-line official winner frame")
 
 require("site/css/board.css", ".board-final-four-layer", "Final Four board layer style")
 require("site/css/board.css", ".final-four-pick-row", "Final Four pick row style")
