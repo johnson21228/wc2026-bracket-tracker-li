@@ -545,11 +545,6 @@ export function createBracketView(root) {
     return false;
   }
 
-  function officialTruthLabel(team) {
-    if (!team) return "";
-    return `${team.flag ? `${team.flag} ` : ""}${team.abbr || team.id || ""}`.trim();
-  }
-
   function normalizeTeamKey(value) {
     return String(value || "").trim().toUpperCase();
   }
@@ -662,12 +657,16 @@ export function createBracketView(root) {
         value.className = "pick-slot-value";
 
         if (displayTeam) {
+          const isIncorrectOfficialPick = slot.officialPickComparison?.state === "incorrect"
+            && Boolean(slot.selectedTeam)
+            && Boolean(slot.officialTruthTeam);
+          const renderedPickTeam = isIncorrectOfficialPick ? slot.selectedTeam : displayTeam;
           const identity = document.createElement("span");
           identity.className = "picked-cell-identity";
 
           const flag = document.createElement("span");
           flag.className = "picked-cell-flag";
-          flag.textContent = displayTeam.flag || "";
+          flag.textContent = renderedPickTeam.flag || "";
           flag.setAttribute("aria-hidden", "true");
 
           if (slot.boundsPx?.height) {
@@ -676,7 +675,7 @@ export function createBracketView(root) {
 
           const code = document.createElement("span");
           code.className = "picked-cell-code";
-          code.textContent = displayTeam.abbr || displayTeam.id || "";
+          code.textContent = renderedPickTeam.abbr || renderedPickTeam.id || "";
 
           identity.append(flag, code);
           if (slot.selectedTeam && slot.pickValidity?.state === "invalid") {
@@ -686,15 +685,26 @@ export function createBracketView(root) {
             warning.setAttribute("aria-label", slot.pickValidity.reason || "Invalid pick");
             identity.append(warning);
           }
-          if (
-            slot.officialPickComparison?.state === "incorrect"
-            && slot.officialTruthTeam
-            && displayTeam.id !== slot.officialTruthTeam.id
-          ) {
+          if (isIncorrectOfficialPick) {
+            const comparison = document.createElement("span");
+            comparison.className = "picked-cell-result-comparison";
+
             const correct = document.createElement("span");
             correct.className = "picked-cell-official-truth";
-            correct.textContent = `Correct: ${officialTruthLabel(slot.officialTruthTeam)}`;
-            value.append(identity, correct);
+            correct.setAttribute("aria-label", `Correct winner: ${fullTeamLabel(slot.officialTruthTeam)}`);
+
+            const correctFlag = document.createElement("span");
+            correctFlag.className = "picked-cell-correct-flag";
+            correctFlag.textContent = slot.officialTruthTeam.flag || "";
+            correctFlag.setAttribute("aria-hidden", "true");
+
+            const correctCode = document.createElement("span");
+            correctCode.className = "picked-cell-correct-code";
+            correctCode.textContent = slot.officialTruthTeam.abbr || slot.officialTruthTeam.id || "";
+
+            correct.append(correctFlag, correctCode);
+            comparison.append(identity, correct);
+            value.append(comparison);
           } else if (slot.officialPickComparison?.state === "unreachable") {
             const eliminated = document.createElement("span");
             eliminated.className = "picked-cell-eliminated-truth";

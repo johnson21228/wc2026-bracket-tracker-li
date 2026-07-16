@@ -37,6 +37,8 @@ require("site/js/mvc/view.js", 'slotIdForResultClassification === "FINAL-LEFT"',
 require("site/js/mvc/view.js", 'slotIdForResultClassification === "FINAL-RIGHT"', "right semifinal winner result classification")
 
 require("site/css/app.css", '.pick-slot-button.has-pick.has-valid-pick[data-knockout-result-state="correct"]', "double-line official winner frame")
+require("site/css/board.css", ".picked-cell-result-comparison", "incorrect and correct flags share one slot")
+require("site/css/board.css", ".picked-cell-correct-flag", "correct winner flag inside missed-pick slot")
 
 require("site/css/board.css", ".board-final-four-layer", "Final Four board layer style")
 require("site/css/board.css", ".final-four-pick-row", "Final Four pick row style")
