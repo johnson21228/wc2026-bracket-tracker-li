@@ -10,6 +10,8 @@ checks = {
         "setupCurrentPlayerScore",
         "standingsStore.listPlayerStandings()",
         "currentPlayer?.score ?? 0",
+        "totalPossiblePoints = 80",
+        "Pool pts: ${score} = ${totalPossiblePoints} possible pts - ${totalPossiblePoints - score} missed pts",
     ],
     "site/css/app.css": [
         "CB 1026 hard override: identity child stays inside right-pinned card",
@@ -28,8 +30,9 @@ checks = {
         "font-size: 17px !important",
         "content: none !important",
         ".current-player-score",
-        "--wc-top-score-width: 88px",
+        "--wc-top-score-width: 300px",
         "font-variant-numeric: tabular-nums",
+        ".map-board-icon-controls [data-info-panel-open]",
     ],
     "site/js/standings/PlayerStandingsSurface.js": [
         "button.textContent = \"Pool\"",
