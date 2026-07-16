@@ -22,6 +22,7 @@ required_view = [
     'function missedPointsForSlot(slotId)',
     'missedBadge.className = "picked-cell-missed-points";',
     'missedBadge.textContent = `${missedPoints} ${missedPoints === 1 ? "pt" : "pts"} missed`;',
+    'value.classList.add("has-eliminated-points");',
     "const slotIdForResultClassification = String(slot.id || slot.slotId || \"\");",
     "const isKnockoutResultSlot = /-R(16|8|4|2|QF|SF|F)-/.test(slotIdForResultClassification)",
     "|| /-(R16|QF|SF|FINAL)-/.test(slotIdForResultClassification)",

@@ -727,7 +727,16 @@ export function createBracketView(root) {
             const eliminated = document.createElement("span");
             eliminated.className = "picked-cell-eliminated-truth";
             eliminated.textContent = "Eliminated";
+            value.classList.add("has-eliminated-points");
             value.append(identity, eliminated);
+
+            const missedPoints = missedPointsForSlot(slot.slotId);
+            if (missedPoints > 0) {
+              const missedBadge = document.createElement("span");
+              missedBadge.className = "picked-cell-missed-points";
+              missedBadge.textContent = `${missedPoints} ${missedPoints === 1 ? "pt" : "pts"} missed`;
+              value.append(missedBadge);
+            }
           } else {
             value.append(identity);
           }

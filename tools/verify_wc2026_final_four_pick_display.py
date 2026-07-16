@@ -51,6 +51,7 @@ require("site/css/board.css", ".picked-cell-missed-points", "small rounded red m
 require("site/css/board.css", "bottom: 3px", "missed-points badge offset below flag and code row")
 require("site/css/board.css", "z-index: 5", "missed-points badge paints on top")
 require("site/css/board.css", "transform: translateY(-5px)", "flag and code row moves up for badge readability")
+require("site/css/board.css", ".pick-slot-value.has-eliminated-points", "eliminated slots anchor missed-points badge")
 
 require("site/css/board.css", ".board-final-four-layer", "Final Four board layer style")
 require("site/css/board.css", ".final-four-pick-row", "Final Four pick row style")
