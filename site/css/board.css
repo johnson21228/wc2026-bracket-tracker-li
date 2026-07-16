@@ -669,23 +669,32 @@
 }
 
 .picked-cell-result-comparison .picked-cell-identity {
-  position: relative;
-  isolation: isolate;
-  grid-template-columns: 1fr;
-  grid-template-areas: "missed-pick-stack";
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 6px;
 }
 
 .picked-cell-result-comparison .picked-cell-identity .picked-cell-flag {
-  grid-area: missed-pick-stack;
-  z-index: 0;
-  opacity: .58;
+  justify-content: flex-start;
+  opacity: .82;
 }
 
 .picked-cell-result-comparison .picked-cell-identity .picked-cell-code {
-  grid-area: missed-pick-stack;
-  z-index: 1;
-  justify-self: center;
+  justify-self: end;
   align-self: center;
+}
+
+.picked-cell-result-comparison .picked-cell-official-truth {
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 6px;
+}
+
+.picked-cell-result-comparison .picked-cell-official-truth .picked-cell-correct-flag {
+  justify-content: flex-start;
+  opacity: 1;
+}
+
+.picked-cell-result-comparison .picked-cell-official-truth .picked-cell-correct-code {
+  justify-self: end;
 }
 
 .picked-cell-correct-flag {
