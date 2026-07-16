@@ -954,8 +954,10 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   }
 
   function loserFromSemifinal(finalSlotId, sourceSlotIds) {
-    const winner = selectedTeam(finalSlotId);
-    const teams = teamsFromSlotIds(sourceSlotIds);
+    const winner = officialTeam(finalSlotId) || selectedTeam(finalSlotId);
+    const teams = uniqueTeams((sourceSlotIds || [])
+      .map((sourceSlotId) => officialTeam(sourceSlotId) || selectedTeam(sourceSlotId))
+      .filter(Boolean));
     if (!winner || teams.length < 2) return null;
     return teams.find((team) => team.id !== winner.id) || null;
   }
@@ -1478,7 +1480,9 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
   function getFinalFourSlotViewModel(slotId) {
     const slot = finalFourSlotsById.get(slotId);
     if (!slot) return null;
-    const team = selectedTeam(slotId);
+    const playerPickTeam = selectedTeam(slotId);
+    const officialResultTeam = officialTeam(slotId);
+    const team = officialResultTeam || playerPickTeam;
     const choices = getChoices(slotId);
     return {
       slotId,
@@ -1489,8 +1493,10 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
       editableByAdminOfficial: adminOfficialEditorActive && choices.length > 0,
       choices,
       selectedTeam: team,
+      playerPickTeam,
+      officialResultTeam,
       pickValidity: pickValidityForSlot(slot, team),
-      officialPickComparison: officialPickComparisonForSlot(slotId, team),
+      officialPickComparison: officialPickComparisonForSlot(slotId, playerPickTeam),
       officialTruthTeam: officialTeam(slotId),
       feederSlotIds: [...(slot.sourceSlotIds || [])],
       label: slot.displayLabel || slotId,
@@ -1512,14 +1518,14 @@ const FINAL_FOUR_PRECEDENT_CONSTRAINTS = Object.freeze({
         {
           label: "Left SF",
           teams: teamsFromSlotIds(["L-SF-01", "L-SF-02"]),
-          winner: selectedTeam("FINAL-LEFT"),
+          winner: officialTeam("FINAL-LEFT") || selectedTeam("FINAL-LEFT"),
           loser: loserFromSemifinal("FINAL-LEFT", ["L-SF-01", "L-SF-02"]),
           matchDisplay: knockoutMatchDisplayForSlot("FINAL-LEFT"),
         },
         {
           label: "Right SF",
           teams: teamsFromSlotIds(["R-SF-01", "R-SF-02"]),
-          winner: selectedTeam("FINAL-RIGHT"),
+          winner: officialTeam("FINAL-RIGHT") || selectedTeam("FINAL-RIGHT"),
           loser: loserFromSemifinal("FINAL-RIGHT", ["R-SF-01", "R-SF-02"]),
           matchDisplay: knockoutMatchDisplayForSlot("FINAL-RIGHT"),
         },

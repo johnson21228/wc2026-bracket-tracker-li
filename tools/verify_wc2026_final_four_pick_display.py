@@ -20,6 +20,9 @@ require("site/js/mvc/model.js", '"THIRD-PLACE-WINNER"', "third-place winner slot
 require("site/js/mvc/model.js", "function getFinalFourChoices", "Final Four choice resolver")
 require("site/js/mvc/model.js", "function getFinalFourViewModel", "Final Four view model")
 require("site/js/mvc/model.js", "loserFromSemifinal", "third-place semifinal loser resolver")
+require("site/js/mvc/model.js", "const winner = officialTeam(finalSlotId) || selectedTeam(finalSlotId);", "official semifinal winner precedence")
+require("site/js/mvc/model.js", "const team = officialResultTeam || playerPickTeam;", "official semifinal winner display precedence")
+require("site/js/mvc/model.js", "officialPickComparisonForSlot(slotId, playerPickTeam)", "player pick retained for scoring comparison")
 require("site/js/mvc/model.js", "getSlotDefinition(slotId)", "canonical slot lookup beyond geometry slots")
 
 require("site/js/mvc/controller.js", "finalFour: model.getFinalFourViewModel()", "controller final four state")
