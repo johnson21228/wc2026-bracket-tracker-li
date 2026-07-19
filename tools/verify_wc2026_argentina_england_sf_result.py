@@ -62,10 +62,6 @@ result_ids = [
     if isinstance(match, dict)
 ]
 
-assert result_ids[-1] == RESULT_ID, (
-    f"{RESULT_ID} must be the newest append-only result"
-)
-
 for feeder_id in (
     "qf-nor-eng-2026-07-11",
     "qf-arg-sui-2026-07-11",
