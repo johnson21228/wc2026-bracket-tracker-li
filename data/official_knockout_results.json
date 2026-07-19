@@ -669,7 +669,30 @@
       "resultLabel": "England 1–2 Argentina",
       "advancementLabel": "Argentina advances to the World Cup Final; England advances to the third-place playoff",
       "resultSource": "user-supplied-knockout-result-2026-07-15"
+    },
+    {
+      "resultId": "final-esp-arg-2026-07-19",
+      "matchId": "104",
+      "matchNumber": 104,
+      "round": "Final",
+      "status": "final",
+      "siteWinnerSlotId": "CHAMPION",
+      "siteSlotPair": [
+        "FINAL-LEFT",
+        "FINAL-RIGHT"
+      ],
+      "homeTeamId": "ESP",
+      "homeTeamName": "Spain",
+      "homeScore": 1,
+      "awayTeamId": "ARG",
+      "awayTeamName": "Argentina",
+      "awayScore": 0,
+      "winnerTeamId": "ESP",
+      "winnerTeamName": "Spain",
+      "resultLabel": "Spain 1–0 Argentina",
+      "advancementLabel": "Spain wins the 2026 FIFA World Cup; Argentina finishes as runner-up",
+      "resultSource": "user-supplied-knockout-result-2026-07-19"
     }
   ],
-  "updatedAt": "2026-07-15T21:19:12Z"
+  "updatedAt": "2026-07-19T22:13:16Z"
 }
